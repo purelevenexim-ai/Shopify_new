@@ -132,6 +132,18 @@
 
     #price-{{ section.id }} .price__badge { display: none !important; }
 
+    #price-{{ section.id }} .price--on-sale .price-item--sale {
+      font-size: 2.4rem !important;
+      font-weight: 700 !important;
+      color: #16443A !important;
+    }
+    #price-{{ section.id }} .price--on-sale .price-item--regular {
+      font-size: 1.5rem !important;
+      font-weight: 400 !important;
+      color: #9B9488 !important;
+      text-decoration: line-through !important;
+    }
+
     @media screen and (max-width: 749px) {
       #MainProduct-{{ section.id }} .product__title h1,
       #MainProduct-{{ section.id }} .product__title .h1 {

@@ -320,8 +320,8 @@ button.sr-headless-checkout,
 .pl-img-badge--sale { background: #2E7D6E; color: #fff; }
 .pl-img-badge--save { background: #D4821A; color: #fff; }
 
-/* Hide old save badge (replaced by image overlay) */
-.pl-save-badge { display: none !important; }
+/* Hide old save badge (replaced by image overlay) — but not the below-variant one */
+.pl-save-badge:not(.pl-save-badge--below-variant) { display: none !important; }
 
 /* ── Remove variant option label ("Size") ── */
 .product-form__input legend.form__label { display: none !important; }

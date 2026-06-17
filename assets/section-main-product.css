@@ -1594,8 +1594,8 @@ product-info > .page-width {
 
 @media screen and (max-width: 749px) {
   product-info > .page-width {
-    padding-left: max(1.2rem, env(safe-area-inset-left));
-    padding-right: max(1.2rem, env(safe-area-inset-right));
+    padding-left: max(0.4rem, env(safe-area-inset-left));
+    padding-right: max(0.4rem, env(safe-area-inset-right));
   }
 
   .product__info-wrapper {
@@ -1604,14 +1604,14 @@ product-info > .page-width {
 
   .product__info-container {
     border-radius: 1.8rem;
-    padding: 1.8rem 0.8rem;
+    padding: 1.8rem 0.6rem;
   }
 }
 
 @media screen and (min-width: 750px) {
   product-info > .page-width {
-    padding-left: max(4.8rem, env(safe-area-inset-left));
-    padding-right: max(4.8rem, env(safe-area-inset-right));
+    padding-left: max(1.2rem, env(safe-area-inset-left));
+    padding-right: max(1.2rem, env(safe-area-inset-right));
   }
 }
 
