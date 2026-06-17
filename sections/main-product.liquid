@@ -255,6 +255,11 @@
           class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
         >
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
+          {%- assign pl_variant = product.selected_or_first_available_variant -%}
+          {%- assign pl_save_pct = 0 -%}
+          {%- if pl_variant.compare_at_price > pl_variant.price -%}
+            {%- assign pl_save_pct = pl_variant.compare_at_price | minus: pl_variant.price | times: 100 | divided_by: pl_variant.compare_at_price -%}
+          {%- endif -%}
 
           {%- for block in section.blocks -%}
             {%- case block.type -%}
@@ -293,11 +298,6 @@
                 {%- endif -%}
               {%- when 'price' -%}
                 {%- liquid
-                  assign pl_variant = product.selected_or_first_available_variant
-                  assign pl_save_pct = 0
-                  if pl_variant.compare_at_price > pl_variant.price
-                    assign pl_save_pct = pl_variant.compare_at_price | minus: pl_variant.price | times: 100 | divided_by: pl_variant.compare_at_price
-                  endif
                   assign pl_freeship_threshold = 64900
                 -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
