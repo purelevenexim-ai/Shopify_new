@@ -581,6 +581,13 @@
 
     {{ 'pureleven-redesign.css' | asset_url | stylesheet_tag }}
 
+    {%- if request.page_type == 'index' -%}
+      {{ 'pl-home.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+    {%- if request.page_type == 'product' -%}
+      {{ 'pl-product.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
     <script>
       if (Shopify.designMode) {
         document.documentElement.classList.add('shopify-design-mode');

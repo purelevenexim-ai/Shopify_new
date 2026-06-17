@@ -17,6 +17,7 @@
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
   {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+  {{ 'pl-product.css' | asset_url | stylesheet_tag }}
 
   {% unless product.has_only_default_variant %}
     {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
@@ -38,57 +39,57 @@
       max-width: none !important;
       margin: 0 0 8px !important;
       color: var(--pl-green-deep) !important;
-      font-family: var(--pl-font-heading) !important;
-      font-size: clamp(2.6rem, 2rem + 2.1vw, 4.2rem) !important;
-      font-weight: 600 !important;
-      letter-spacing: -0.02em !important;
-      line-height: 1.08 !important;
+      font-family: var(--font-heading-family) !important;
+      font-size: clamp(3.2rem, 2rem + 2.6vw, 4.8rem) !important;
+      font-weight: 400 !important;
+      letter-spacing: 0.01em !important;
+      line-height: 1.2 !important;
       text-wrap: balance;
     }
 
     #MainProduct-{{ section.id }} .product-form__submit {
-      min-height: 48px !important;
-      padding: 12px 18px !important;
+      min-height: 52px !important;
+      padding: 14px 18px !important;
       border: 0 !important;
-      border-radius: 12px !important;
-      background: #0c7a66 !important;
-      color: #ffffff !important;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-      font-size: 15px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.01em !important;
+      border-radius: 10px !important;
+      background: #FCE477 !important;
+      color: #1A1A1A !important;
+      font-family: var(--font-body-family), -apple-system, sans-serif !important;
+      font-size: 1.4rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.14em !important;
       line-height: 1.1 !important;
-      text-transform: none !important;
+      text-transform: uppercase !important;
       white-space: nowrap;
-      box-shadow: 0 6px 18px -10px rgba(12, 122, 102, 0.7) !important;
+      box-shadow: 0 6px 18px -10px rgba(252, 228, 119, 0.9) !important;
       transform: none !important;
     }
 
     #MainProduct-{{ section.id }} .product-form__submit:hover,
     #MainProduct-{{ section.id }} .product-form__submit:focus-visible,
     #MainProduct-{{ section.id }} .product-form__submit:active {
-      background: #063a34 !important;
-      border-color: #063a34 !important;
-      color: #ffffff !important;
-      box-shadow: 0 10px 24px -10px rgba(6, 58, 52, 0.75) !important;
+      background: #F4D138 !important;
+      border-color: #F4D138 !important;
+      color: #1A1A1A !important;
+      box-shadow: 0 10px 24px -10px rgba(244, 209, 56, 0.85) !important;
       transform: translateY(-1px) !important;
     }
 
     #MainProduct-{{ section.id }} .shopify-payment-button__button,
     #MainProduct-{{ section.id }} .shopify-payment-button__button--unbranded,
     #MainProduct-{{ section.id }} .product-mobile-buy-bar__submit {
-      min-height: 46px !important;
-      padding: 10px 14px !important;
-      border: 0 !important;
-      border-radius: 12px !important;
-      background: #0c7a66 !important;
-      color: #ffffff !important;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.01em !important;
+      min-height: 52px !important;
+      padding: 14px 14px !important;
+      border: 1px solid #16443A !important;
+      border-radius: 10px !important;
+      background: transparent !important;
+      color: #16443A !important;
+      font-family: var(--font-body-family), -apple-system, sans-serif !important;
+      font-size: 1.4rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.14em !important;
       line-height: 1.1 !important;
-      text-transform: none !important;
+      text-transform: uppercase !important;
       text-align: center;
       box-shadow: none !important;
       transform: none !important;
@@ -105,8 +106,8 @@
     #MainProduct-{{ section.id }} .shopify-payment-button__button--unbranded:focus-visible,
     #MainProduct-{{ section.id }} .product-mobile-buy-bar__submit:hover,
     #MainProduct-{{ section.id }} .product-mobile-buy-bar__submit:focus-visible {
-      background: #063a34 !important;
-      border-color: #063a34 !important;
+      background: #16443A !important;
+      border-color: #16443A !important;
       color: #ffffff !important;
       box-shadow: none !important;
       transform: none !important;
@@ -129,18 +130,13 @@
       }
     }
 
+    #price-{{ section.id }} .price__badge { display: none !important; }
+
     @media screen and (max-width: 749px) {
       #MainProduct-{{ section.id }} .product__title h1,
       #MainProduct-{{ section.id }} .product__title .h1 {
         font-size: clamp(2.7rem, 6.8vw, 3.4rem) !important;
         line-height: 1.1 !important;
-      }
-
-      #MainProduct-{{ section.id }} .product-form__submit {
-        min-height: 45px !important;
-        padding: 10px 16px !important;
-        font-size: 14px !important;
-        letter-spacing: 0.06em !important;
       }
 
       #MainProduct-{{ section.id }} .shopify-payment-button__button,
@@ -150,6 +146,52 @@
         padding: 10px 12px !important;
         font-size: 13px !important;
         letter-spacing: 0.02em !important;
+      }
+
+      #MainProduct-{{ section.id }} .pl-form-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.8rem !important;
+        align-items: center !important;
+      }
+      #MainProduct-{{ section.id }} .pl-form-row > .product-form__quantity {
+        margin: 0 !important;
+        min-width: 0 !important;
+      }
+      #MainProduct-{{ section.id }} .pl-form-row > div:last-child {
+        min-width: 0 !important;
+        align-self: stretch !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      #MainProduct-{{ section.id }} .pl-form-row > div:last-child product-form,
+      #MainProduct-{{ section.id }} .pl-form-row > div:last-child .product-form,
+      #MainProduct-{{ section.id }} .pl-form-row > div:last-child .form,
+      #MainProduct-{{ section.id }} .pl-form-row .product-form__buttons {
+        width: 100% !important;
+        max-width: none !important;
+      }
+      /* button column should contain ONLY the cart submit button */
+      #MainProduct-{{ section.id }} .pl-form-row .product-form__buttons > *:not(.product-form__submit),
+      #MainProduct-{{ section.id }} .pl-form-row .shopify-payment-button,
+      #MainProduct-{{ section.id }} .pl-form-row pickup-availability,
+      #MainProduct-{{ section.id }} .pl-form-row .quantity__label,
+      #MainProduct-{{ section.id }} .pl-form-row .quantity__rules,
+      #MainProduct-{{ section.id }} .pl-form-row volume-pricing { display: none !important; }
+      #MainProduct-{{ section.id }} .pl-form-row quantity-input,
+      #MainProduct-{{ section.id }} .pl-form-row .quantity {
+        width: 100% !important;
+        height: 5.2rem !important;
+      }
+      #MainProduct-{{ section.id }} .pl-form-row .product-form__submit {
+        width: 100% !important;
+        height: 5.2rem !important;
+        min-height: 5.2rem !important;
+        margin: 0 !important;
+        padding: 0 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
     }
   {%- endstyle -%}
@@ -193,7 +235,18 @@
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
-      <div class="grid__item product__media-wrapper">
+      <div class="grid__item product__media-wrapper" style="position:relative;">
+        {%- if product.tags contains 'bestseller' or product.tags contains 'Bestseller' -%}
+          <span class="pl-bestseller-ribbon">Bestseller</span>
+        {%- endif -%}
+        {%- assign _pl_img_v = product.selected_or_first_available_variant -%}
+        {%- if _pl_img_v.compare_at_price > _pl_img_v.price -%}
+          {%- assign _pl_img_pct = _pl_img_v.compare_at_price | minus: _pl_img_v.price | times: 100 | divided_by: _pl_img_v.compare_at_price -%}
+          <div class="pl-img-badges">
+            <span class="pl-img-badge pl-img-badge--sale">Sale</span>
+            <span class="pl-img-badge pl-img-badge--save">Save {{ _pl_img_pct }}%</span>
+          </div>
+        {%- endif -%}
         {% render 'product-media-gallery', variant_images: variant_images %}
       </div>
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
@@ -216,10 +269,10 @@
                 </p>
               {%- when 'title' -%}
                 <div class="product__title" {{ block.shopify_attributes }}>
-                  <h1>{{ product.title | escape }}</h1>
+                  <h1>{{ product.title | split: ' | ' | first | escape }}</h1>
                   <a href="{{ product.url }}" class="product__title">
                     <h2 class="h1">
-                      {{ product.title | escape }}
+                      {{ product.title | split: ' | ' | first | escape }}
                     </h2>
                   </a>
                 </div>
@@ -239,6 +292,14 @@
                   </div>
                 {%- endif -%}
               {%- when 'price' -%}
+                {%- liquid
+                  assign pl_variant = product.selected_or_first_available_variant
+                  assign pl_save_pct = 0
+                  if pl_variant.compare_at_price > pl_variant.price
+                    assign pl_save_pct = pl_variant.compare_at_price | minus: pl_variant.price | times: 100 | divided_by: pl_variant.compare_at_price
+                  endif
+                  assign pl_freeship_threshold = 64900
+                -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   {%- render 'price',
                     product: product,
@@ -246,24 +307,28 @@
                     show_badges: true,
                     price_class: 'price--large'
                   -%}
+                  {%- if pl_save_pct > 0 -%}
+                    <span class="pl-save-badge">Save {{ pl_save_pct }}%</span>
+                  {%- endif -%}
+                  <span class="pl-variant-spinner" aria-hidden="true"></span>
+                </div>
+                {%- if product.metafields.custom.short_description != blank -%}
+                  <p class="pl-short-desc">{{ product.metafields.custom.short_description }}</p>
+                {%- elsif product.description != blank -%}
+                  <p class="pl-short-desc">{{ product.description | strip_html | split: '. ' | first }}.</p>
+                {%- endif -%}
+                <div class="pl-freeship">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  {%- if pl_variant.price >= pl_freeship_threshold -%}
+                    <span>Qualifies for <strong>FREE delivery</strong></span>
+                  {%- else -%}
+                    {%- assign pl_remaining = pl_freeship_threshold | minus: pl_variant.price -%}
+                    <span>Add <strong>{{ pl_remaining | money }}</strong> more for FREE delivery</span>
+                  {%- endif -%}
                 </div>
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
-                  </div>
-                {%- endif -%}
-                {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
-                  <div class="product__tax caption rte">
-                    {%- if cart.duties_included and cart.taxes_included -%}
-                      {{ 'products.product.duties_and_taxes_included' | t }}
-                    {%- elsif cart.taxes_included -%}
-                      {{ 'products.product.taxes_included' | t }}
-                    {%- elsif cart.duties_included -%}
-                      {{ 'products.product.duties_included' | t }}
-                    {%- endif -%}
-                    {%- if shop.shipping_policy.body != blank -%}
-                      {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-                    {%- endif -%}
                   </div>
                 {%- endif -%}
                 <div {{ block.shopify_attributes }}>
@@ -360,6 +425,7 @@
                   </details>
                 </div>
               {%- when 'quantity_selector' -%}
+                <div class="pl-form-row">
                 <div
                   id="Quantity-Form-{{ section.id }}"
                   class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
@@ -617,6 +683,27 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                </div>
+                {%- if block.settings.show_dynamic_checkout -%}
+                  {%- unless product.selected_or_first_available_variant.available -%}
+                    <style>.sr-headless-checkout{opacity:0.5;cursor:not-allowed;pointer-events:none;}</style>
+                  {%- endunless -%}
+                  <div class="shiprocket-headless" data-type="product"></div>
+                {%- endif -%}
+                {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
+                  <div class="product__tax product__tax--below-btn caption rte">
+                    {%- if cart.duties_included and cart.taxes_included -%}
+                      {{ 'products.product.duties_and_taxes_included' | t }}
+                    {%- elsif cart.taxes_included -%}
+                      {{ 'products.product.taxes_included' | t }}
+                    {%- elsif cart.duties_included -%}
+                      {{ 'products.product.duties_included' | t }}
+                    {%- endif -%}
+                    {%- if shop.shipping_policy.body != blank -%}
+                      {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
               {%- when 'quick_guide' -%}
                 {%- capture quick_guide_content -%}
                   {% render 'product-quick-guide-content',

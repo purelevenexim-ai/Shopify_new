@@ -193,6 +193,8 @@ if (!customElements.get('product-info')) {
         this.abortController?.abort();
         this.abortController = new AbortController();
 
+        this.classList.add('pl-variant-loading');
+
         fetch(requestUrl, { signal: this.abortController.signal })
           .then((response) => response.text())
           .then((responseText) => {
@@ -210,6 +212,9 @@ if (!customElements.get('product-info')) {
             } else {
               console.error(error);
             }
+          })
+          .finally(() => {
+            this.classList.remove('pl-variant-loading');
           });
       }
 

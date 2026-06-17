@@ -1512,12 +1512,12 @@ a.product__text {
 
 /* ── Page wrapper ── */
 product-info {
-  background: var(--pl-cream);
+  background: #fff;
   display: block;
 }
 
 .product {
-  background: var(--pl-cream);
+  background: #fff;
   padding: 3.2rem 0 5.6rem;
 }
 
@@ -1594,8 +1594,8 @@ product-info > .page-width {
 
 @media screen and (max-width: 749px) {
   product-info > .page-width {
-    padding-left: max(2.4rem, env(safe-area-inset-left));
-    padding-right: max(2.4rem, env(safe-area-inset-right));
+    padding-left: max(1.2rem, env(safe-area-inset-left));
+    padding-right: max(1.2rem, env(safe-area-inset-right));
   }
 
   .product__info-wrapper {
@@ -1604,7 +1604,7 @@ product-info > .page-width {
 
   .product__info-container {
     border-radius: 1.8rem;
-    padding: 1.8rem 1.6rem;
+    padding: 1.8rem 0.8rem;
   }
 }
 

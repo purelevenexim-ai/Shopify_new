@@ -35,7 +35,7 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "dropdown",
+            "picker_type": "button",
             "swatch_shape": "circle"
           }
         },
@@ -50,34 +50,6 @@
             "show_gift_card_recipient": true
           }
         },
-        "quick_guide": {
-          "type": "quick_guide",
-          "settings": {}
-        },
-        "hero_upsell_strip": {
-          "type": "hero_upsell_strip",
-          "settings": {}
-        },
-        "offer_ladder": {
-          "type": "offer_ladder",
-          "settings": {}
-        },
-        "bundle_widget": {
-          "type": "bundle_widget",
-          "settings": {}
-        },
-        "merchandising_cards": {
-          "type": "merchandising_cards",
-          "settings": {}
-        },
-        "conversion_panel": {
-          "type": "conversion_panel",
-          "settings": {}
-        },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
         "share": {
           "type": "share",
           "settings": {
@@ -88,18 +60,11 @@
       "block_order": [
         "title",
         "price",
-        "inventory",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
-        "hero_upsell_strip",
+        "inventory",
         "seo_summary",
-        "quick_guide",
-        "offer_ladder",
-        "bundle_widget",
-        "merchandising_cards",
-        "conversion_panel",
-        "description",
         "share"
       ],
       "settings": {
@@ -117,6 +82,24 @@
         "padding_top": 16,
         "padding_bottom": 0
       }
+    },
+    "product_description_section": {
+      "type": "product-description-section",
+      "settings": {}
+    },
+    "pl_what_were_cooking": {
+      "type": "pl-what-were-cooking",
+      "blocks": {
+        "r1": { "type": "recipe", "settings": { "name": "Pepper Rasam", "icon": "bowl" } },
+        "r2": { "type": "recipe", "settings": { "name": "Black Pepper Chicken", "icon": "pan" } },
+        "r3": { "type": "recipe", "settings": { "name": "Masala Chai", "icon": "cup" } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {}
+    },
+    "pl_frequently_bought": {
+      "type": "pl-frequently-bought",
+      "settings": {}
     },
     "product_dossier_hW4mQb": {
       "type": "product-dossier",
@@ -196,6 +179,9 @@
   },
   "order": [
     "main",
+    "product_description_section",
+    "pl_what_were_cooking",
+    "pl_frequently_bought",
     "product_dossier_hW4mQb",
     "custom_liquid_mfDEHn",
     "product_comparison_Mt6aQp",

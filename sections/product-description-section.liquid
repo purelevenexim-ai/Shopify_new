@@ -1,0 +1,190 @@
+{%- if product.description != blank -%}
+<section class="pl-desc-section">
+  <div class="pl-desc-container{% if section.settings.image == blank %} pl-desc-container--no-img{% endif %}">
+
+    {%- if section.settings.image != blank -%}
+    <div class="pl-desc-image-col">
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          alt="{{ section.settings.image.alt | default: product.title | escape }}"
+          width="900"
+          height="{{ 900 | divided_by: section.settings.image.aspect_ratio | round }}"
+          loading="lazy"
+          class="pl-desc-img"
+        >
+    </div>
+    {%- elsif request.design_mode -%}
+    <div class="pl-desc-image-col">
+        <div class="pl-desc-img-placeholder">
+          <span>Add image in theme editor</span>
+        </div>
+    </div>
+    {%- endif -%}
+
+    <div class="pl-desc-text-col">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="pl-desc-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pl-desc-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      <div class="pl-desc-body rte">{{ product.description }}</div>
+    </div>
+
+  </div>
+</section>
+{%- endif -%}
+
+<style>
+.pl-desc-section {
+  background: #F4F1EB !important;
+  padding: 80px 0;
+}
+
+.pl-desc-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Image column */
+.pl-desc-image-col {
+  position: relative;
+}
+
+.pl-desc-img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 4/5;
+}
+
+.pl-desc-img-placeholder {
+  width: 100%;
+  aspect-ratio: 4/5;
+  border-radius: 18px;
+  background: #F4F1EB;
+  border: 2px dashed #C8C2B4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pl-desc-img-placeholder span {
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1.4rem;
+  color: #9B9488;
+  letter-spacing: 0.05em;
+}
+
+/* Text column */
+.pl-desc-eyebrow {
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pl-green, #2E7D6E);
+  margin: 0 0 16px;
+}
+
+.pl-desc-heading {
+  font-family: var(--font-heading-family, serif);
+  font-size: 3.6rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--pl-green-dark, #16443A);
+  margin: 0 0 28px;
+  letter-spacing: -0.02em;
+}
+
+.pl-desc-body {
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1.6rem;
+  line-height: 1.8;
+  color: var(--pl-ink, #1A1A1A);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
+}
+
+.pl-desc-body p { margin: 0 0 1.4em; }
+.pl-desc-body p:last-child { margin-bottom: 0; }
+
+.pl-desc-body strong {
+  color: var(--pl-green-dark, #16443A);
+  font-weight: 600;
+}
+
+.pl-desc-container--no-img {
+  grid-template-columns: 1fr;
+  max-width: 860px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 48px;
+}
+
+/* Tablet */
+@media screen and (max-width: 1024px) {
+  .pl-desc-container {
+    gap: 48px;
+    padding: 0 32px;
+  }
+  .pl-desc-heading { font-size: 3rem; }
+}
+
+/* Mobile */
+@media screen and (max-width: 749px) {
+  .pl-desc-section { padding: 56px 0; }
+  .pl-desc-container {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 0 20px;
+  }
+  .pl-desc-img {
+    aspect-ratio: 3/2;
+  }
+  .pl-desc-img-placeholder {
+    aspect-ratio: 3/2;
+  }
+  .pl-desc-heading { font-size: 2.6rem; }
+  .pl-desc-body { font-size: 1.5rem; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Product Description",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Section image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "placeholder": "e.g. About this spice"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (leave blank to use product title)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Description"
+    }
+  ]
+}
+{% endschema %}

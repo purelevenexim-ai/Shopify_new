@@ -1,34 +1,27 @@
 :root {
-  /* Brand Color Variables — PureLeven */
-  --pl-green: #2E7D6E;          /* Leven Green — primary brand */
-  --pl-green-dark: #16443A;     /* Deep Forest — dark sections, footer */
-  --pl-ink: #1A1A1A;            /* Ink — body text */
-  --pl-white: #FFFFFF;          /* White — page background */
-
-  /* Action Yellow — ALWAYS for Add to Cart / Buy Now */
-  --pl-yellow: #FCE477;         /* Sunray Yellow */
-  --pl-yellow-hover: #F4D138;   /* Yellow Deep */
-
-  /* Supporting */
-  --pl-mint: #E9F3EF;           /* Mint Wash — soft backgrounds */
-  --pl-sage: #7FA89F;           /* Sage — muted accents */
-  --pl-stone: #6B7A76;          /* Stone — secondary text */
-  --pl-line: #E6E3DA;           /* Line — borders/dividers */
-  --pl-amber: #D4821A;          /* Clay Amber — sale badges only */
-
-  /* Legacy aliases (keep for compatibility) */
-  --pl-primary: #2E7D6E;
-  --pl-primary-dark: #16443A;
-  --pl-secondary: #7FA89F;
-  --pl-background: #FFFFFF;
-  --pl-surface: #E9F3EF;
-  --pl-text-primary: #1A1A1A;
-  --pl-text-secondary: #6B7A76;
-  --pl-text-muted: #7FA89F;
-
+  /* Brand Color Variables — Pureleven */
+  --pl-primary: #1B5E56;
+  --pl-primary-dark: #154039;
+  --pl-secondary: #4D9B93;
+  --pl-sage: #7FA89F;
+  --pl-background: #F8F5EE;
+  --pl-surface: #E8E5DC;
+  --pl-white: #FFFFFF;
+  --pl-text-primary: #2C2C2C;
+  --pl-text-secondary: #666666;
+  --pl-text-muted: #888888;
+  
+  /* Category Colors */
+  --pl-category-spices: #B45E3C;
+  --pl-category-honey: #C89A3D;
+  --pl-category-tea: #4D9B93;
+  --pl-category-coffee: #5A3E36;
+  --pl-category-grains: #E8E5DC;
+  --pl-category-wellness: #7FA89F;
+  
   /* Utility Colors */
-  --pl-success: #2E7D6E;
-  --pl-warning: #D4821A;
+  --pl-success: #2E7D32;
+  --pl-warning: #F57C00;
   --pl-error: #C62828;
   --pl-info: #1976D2;
   
@@ -1332,9 +1325,9 @@ deferred-media {
 .shopify-challenge__button,
 .customer button,
 button.shopify-payment-button__button--unbranded {
-  border-radius: 10px;
+  border-radius: 6px;
   position: relative;
-  border: none;
+  border: 2px solid var(--pl-primary);
 }
 
 .button,
@@ -1351,21 +1344,22 @@ button.shopify-payment-button__button--unbranded {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: none;
-  padding: .8125em 1.3125em;
+  border: 2px solid var(--pl-primary);
+  padding: 0.8rem 2.4rem;
   cursor: pointer;
   font-family: inherit;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.5rem;
-  letter-spacing: .14em;
+  letter-spacing: 0.05rem;
   text-decoration: none;
   text-transform: uppercase;
-  color: #1a1a1a;
-  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  color: white;
+  transition: all var(--duration-short) ease;
   -webkit-appearance: none;
   appearance: none;
-  background-color: #fce477;
-  box-shadow: 0 4px 16px rgba(252, 228, 119, 0.35);
+  background-color: var(--pl-primary);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
 }
 
 /* Remove default Dawn double-border artifacts */
@@ -1383,35 +1377,33 @@ button.shopify-payment-button__button--unbranded {
   display: none;
 }
 
-/* Secondary Button Styling — Leven Green outline */
+/* Secondary Button Styling */
 .button--secondary {
   background-color: transparent;
-  color: #2e7d6e;
-  border: 2px solid #2e7d6e;
-  box-shadow: none;
+  color: var(--pl-secondary);
+  border: 2px solid var(--pl-secondary);
 }
 
 .button--secondary:not([disabled]):hover {
-  background-color: #2e7d6e;
-  color: #ffffff;
+  background-color: var(--pl-secondary);
+  color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(46, 125, 110, 0.2);
+  box-shadow: 0 8px 16px rgba(77, 155, 147, 0.2);
 }
 
-/* Tertiary Button (Text link style) */
+/* Tertiary Button (Text) Styling */
 .button--tertiary {
   background-color: transparent;
-  color: #2e7d6e;
+  color: var(--pl-primary);
   border: none;
-  box-shadow: none;
   text-decoration: underline;
   padding: 0.8rem 1.6rem;
   text-transform: none;
 }
 
 .button--tertiary:not([disabled]):hover {
-  color: #16443a;
-  background-color: rgba(46, 125, 110, 0.05);
+  color: var(--pl-secondary);
+  background-color: rgba(77, 155, 147, 0.05);
   transform: none;
   box-shadow: none;
 }
@@ -1446,9 +1438,8 @@ button.shopify-payment-button__button--unbranded {
 .customer button:hover,
 .shopify-payment-button__button--unbranded:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(252, 228, 119, 0.45);
-  background-color: #f4d138;
-  color: #1a1a1a;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  background-color: var(--pl-primary-dark);
 }
 
 .button--secondary:after {

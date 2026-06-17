@@ -1,0 +1,83 @@
+{{ 'pl-product.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign has_blocks = section.blocks.size
+-%}
+{%- if has_blocks > 0 -%}
+<section class="pl-cooking">
+  <div class="pl-cooking__inner">
+    <h2 class="pl-cooking__heading">{{ section.settings.heading | default: "What we're cooking" }}</h2>
+    <div class="pl-cooking__list">
+      {%- for block in section.blocks -%}
+        <div class="pl-cooking__row" {{ block.shopify_attributes }}>
+          <span class="pl-cooking__icon">
+            {%- case block.settings.icon -%}
+              {%- when 'cup' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+              {%- when 'pot' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v7a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><line x1="1" y1="9" x2="3" y2="9"/><line x1="21" y1="9" x2="23" y2="9"/><path d="M8 6c0-1.5 1-2 2-2"/><path d="M14 6c0-1.5 1-2 2-2"/></svg>
+              {%- when 'bowl' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11h20a10 10 0 0 1-20 0z"/><path d="M7 7c0-1.5 1-2.5 2.5-2.5"/><path d="M12 6c0-1.5 1-2.5 2.5-2.5"/></svg>
+              {%- when 'pan' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="13" r="7"/><line x1="16" y1="13" x2="23" y2="13"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+            {%- endcase -%}
+          </span>
+          <span class="pl-cooking__name">{{ block.settings.name }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "What we're cooking",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What we're cooking"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "recipe",
+      "name": "Recipe",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Recipe name",
+          "default": "Haldi Doodh (Golden Milk)"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "cup",
+          "options": [
+            { "value": "cup", "label": "Cup (drinks)" },
+            { "value": "pot", "label": "Pot (curry/dal)" },
+            { "value": "bowl", "label": "Bowl" },
+            { "value": "pan", "label": "Pan" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "What we're cooking",
+      "blocks": [
+        { "type": "recipe", "settings": { "name": "Haldi Doodh (Golden Milk)", "icon": "cup" } },
+        { "type": "recipe", "settings": { "name": "Dal (Spiced Lentils)", "icon": "pot" } },
+        { "type": "recipe", "settings": { "name": "Masala Chai", "icon": "cup" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

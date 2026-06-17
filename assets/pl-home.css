@@ -1,0 +1,445 @@
+/* PureLeven home page — Diaspora Co design system. Palette: yellow #FCE477, green #2E7D6E, deep #16443A, mint #E9F3EF */
+
+/* ── Root typography defaults ── */
+:root {
+  --pl-yellow: #FCE477;
+  --pl-yellow-hover: #F4D138;
+  --pl-green: #2E7D6E;
+  --pl-deep: #16443A;
+  --pl-mint: #E9F3EF;
+  --pl-border: #E6E3DA;
+  --pl-muted: #6B7A76;
+  --pl-ink: #1A1A1A;
+}
+
+/* ── Image banner heading ── */
+.image-banner h1,
+.image-banner .h1 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2.8rem, 1.5rem + 3vw, 4.8rem) !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.2 !important;
+  text-wrap: balance;
+}
+
+.banner .banner__box {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-radius: 1.4rem !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.image-banner__text p {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 400 !important;
+  color: var(--pl-muted) !important;
+  line-height: 1.5 !important;
+}
+
+/* ── Buttons across all sections ── */
+.button.button--primary {
+  background: var(--pl-yellow) !important;
+  color: var(--pl-ink) !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: 14px 18px !important;
+  box-shadow: 0 6px 18px -10px rgba(252, 228, 119, 0.9) !important;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
+}
+
+.button.button--primary:hover,
+.button.button--primary:focus {
+  background: var(--pl-yellow-hover) !important;
+  color: var(--pl-ink) !important;
+  box-shadow: 0 10px 24px -10px rgba(244, 209, 56, 0.85) !important;
+  transform: translateY(-1px) !important;
+}
+
+.button.button--secondary {
+  background: transparent !important;
+  color: var(--pl-deep) !important;
+  border: 1px solid var(--pl-deep) !important;
+  border-radius: 10px !important;
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: 14px 18px !important;
+  transition: background 0.2s ease, color 0.2s ease !important;
+}
+
+.button.button--secondary:hover,
+.button.button--secondary:focus {
+  background: var(--pl-green) !important;
+  color: #fff !important;
+  border-color: var(--pl-green) !important;
+}
+
+/* ── Featured collection heading ── */
+.collection h2,
+.collection .h2 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2.4rem, 1.5rem + 2vw, 4rem) !important;
+  font-weight: 400 !important;
+  color: var(--pl-deep) !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.2 !important;
+  margin-bottom: 1.6rem !important;
+}
+
+.collection h3,
+.collection .h3 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2rem, 1.2rem + 1.5vw, 3.2rem) !important;
+  font-weight: 400 !important;
+  color: var(--pl-deep) !important;
+}
+
+.collection .collection__description {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 400 !important;
+  color: var(--pl-ink) !important;
+  line-height: 1.6 !important;
+}
+
+/* ── Product cards in collections ── */
+.card {
+  border: 1px solid var(--pl-border) !important;
+  border-radius: 1.4rem !important;
+  background: #fff !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease !important;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px -8px rgba(22, 68, 58, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+.card__image {
+  border-radius: 1.4rem 1.4rem 0 0 !important;
+  overflow: hidden !important;
+}
+
+.card__image img {
+  border-radius: 0 !important;
+}
+
+.card__heading,
+.card__heading a {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  color: var(--pl-deep) !important;
+  line-height: 1.3 !important;
+}
+
+.card__heading a:hover {
+  color: var(--pl-green) !important;
+}
+
+.card-information p {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.4rem !important;
+  color: var(--pl-muted) !important;
+  line-height: 1.5 !important;
+}
+
+.price-item {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 600 !important;
+  color: var(--pl-deep) !important;
+}
+
+/* ── Alternating section backgrounds ── */
+.image-banner,
+.featured-collection,
+.section-featured-product,
+.custom-idukki-origin,
+.custom-farmer-sketch {
+  background: #fff !important;
+}
+
+.homepage-category-ecosystem,
+.homepage-value-props,
+.homepage-faq,
+.custom-spice-stories,
+.pureleven-heritage-banner {
+  background: var(--pl-mint) !important;
+}
+
+.image-with-text {
+  background: #fff !important;
+}
+
+.kerala-hero {
+  background: var(--pl-deep) !important;
+}
+
+/* ── Custom section: Idukki origin ── */
+.custom-idukki-origin h2,
+.custom-idukki-origin .h2 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2.4rem, 1.5rem + 2vw, 4rem) !important;
+  font-weight: 400 !important;
+  color: var(--pl-deep) !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.2 !important;
+}
+
+.custom-idukki-origin p,
+.custom-idukki-origin .rte p {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 400 !important;
+  color: var(--pl-ink) !important;
+  line-height: 1.6 !important;
+}
+
+/* ── Category/Value Props ── */
+.homepage-category-ecosystem h2,
+.homepage-value-props h2 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2.4rem, 1.5rem + 2vw, 4rem) !important;
+  font-weight: 400 !important;
+  color: var(--pl-deep) !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 2.4rem !important;
+}
+
+.homepage-category-ecosystem .card,
+.homepage-value-props .card {
+  background: #fff !important;
+  border: 1px solid var(--pl-border) !important;
+  border-radius: 1.4rem !important;
+}
+
+.homepage-category-ecosystem h3,
+.homepage-value-props h3 {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 600 !important;
+  color: var(--pl-deep) !important;
+}
+
+.homepage-category-ecosystem p,
+.homepage-value-props p {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.6rem !important;
+  color: var(--pl-muted) !important;
+  line-height: 1.5 !important;
+}
+
+/* ── FAQ sections ── */
+.homepage-faq h2 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2.4rem, 1.5rem + 2vw, 4rem) !important;
+  font-weight: 400 !important;
+  color: var(--pl-deep) !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 2.4rem !important;
+}
+
+.homepage-faq .accordion__item {
+  border: 1px solid var(--pl-border) !important;
+  border-radius: 1.4rem !important;
+  margin-bottom: 1rem !important;
+  background: #fff !important;
+  overflow: hidden !important;
+}
+
+.homepage-faq .accordion__button {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 600 !important;
+  color: var(--pl-deep) !important;
+  padding: 1.6rem !important;
+}
+
+.homepage-faq .accordion__button:hover {
+  background: #f5f5f5 !important;
+}
+
+.homepage-faq .accordion__body {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.6rem !important;
+  color: var(--pl-ink) !important;
+  line-height: 1.6 !important;
+  padding: 1.6rem !important;
+  background: #fff !important;
+}
+
+/* ── Reviews/testimonials ── */
+.custom-spice-stories h2,
+.custom-spice-stories .h2 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2.4rem, 1.5rem + 2vw, 4rem) !important;
+  font-weight: 400 !important;
+  color: var(--pl-deep) !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.2 !important;
+}
+
+.custom-spice-stories .review-card {
+  background: #fff !important;
+  border: 1px solid var(--pl-border) !important;
+  border-radius: 1.4rem !important;
+  padding: 2rem !important;
+}
+
+.custom-spice-stories .review-card__text {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.6rem !important;
+  color: var(--pl-ink) !important;
+  line-height: 1.6 !important;
+  margin-bottom: 1.2rem !important;
+}
+
+.custom-spice-stories .review-card__author {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+  color: var(--pl-deep) !important;
+}
+
+/* ── Video section ── */
+.video h1,
+.video .h1 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2.4rem, 1.5rem + 2vw, 4rem) !important;
+  font-weight: 400 !important;
+  color: var(--pl-deep) !important;
+  letter-spacing: -0.01em !important;
+}
+
+.video .video__description {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.8rem !important;
+  color: var(--pl-ink) !important;
+  line-height: 1.6 !important;
+}
+
+.video__poster-button {
+  background: var(--pl-yellow) !important;
+  border-radius: 50% !important;
+  width: 4.8rem !important;
+  height: 4.8rem !important;
+}
+
+/* ── Heritage banner ── */
+.pureleven-heritage-banner h2,
+.pureleven-heritage-banner .h2 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2.4rem, 1.5rem + 2vw, 4rem) !important;
+  font-weight: 400 !important;
+  color: var(--pl-deep) !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.2 !important;
+}
+
+.pureleven-heritage-banner p {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.8rem !important;
+  color: var(--pl-ink) !important;
+  line-height: 1.6 !important;
+}
+
+.pureleven-heritage-banner .badge {
+  background: #fff !important;
+  color: var(--pl-deep) !important;
+  border: 1px solid var(--pl-border) !important;
+  border-radius: 4rem !important;
+  padding: 0.6rem 1.2rem !important;
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+}
+
+/* ── Divider sections ── */
+.pureleven-section-divider h2,
+.pureleven-section-divider .h2 {
+  font-family: var(--font-heading-family), serif !important;
+  font-size: clamp(2.4rem, 1.5rem + 2vw, 4rem) !important;
+  font-weight: 400 !important;
+  color: var(--pl-deep) !important;
+  letter-spacing: -0.01em !important;
+}
+
+.pureleven-section-divider .eyebrow {
+  font-family: var(--font-body-family), sans-serif !important;
+  font-size: 1.4rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: var(--pl-green) !important;
+  margin-bottom: 0.8rem !important;
+}
+
+/* ── Mobile adjustments ── */
+@media screen and (max-width: 749px) {
+  .image-banner h1,
+  .image-banner .h1 {
+    font-size: clamp(2rem, 1.2rem + 2vw, 3.2rem) !important;
+  }
+
+  .image-banner .image-banner__content--overlay-top .image-banner__text-content,
+  .image-banner .image-banner__content--overlay-bottom .image-banner__text-content,
+  .image-banner .image-banner__content--overlay-middle .image-banner__text-content {
+    padding: 1.6rem 2rem !important;
+  }
+
+  .image-banner__text p {
+    font-size: 1.6rem !important;
+  }
+
+  .collection h2,
+  .collection .h2,
+  .custom-idukki-origin h2,
+  .custom-idukki-origin .h2 {
+    font-size: 2.4rem !important;
+  }
+
+  .button.button--primary,
+  .button.button--secondary {
+    font-size: 1.2rem !important;
+    padding: 12px 16px !important;
+  }
+
+  .collection .collection__description {
+    font-size: 1.6rem !important;
+  }
+
+  .card__heading,
+  .card__heading a {
+    font-size: 1.4rem !important;
+  }
+
+  .price-item {
+    font-size: 1.6rem !important;
+  }
+
+  .homepage-category-ecosystem h2,
+  .homepage-value-props h2,
+  .homepage-faq h2,
+  .custom-spice-stories h2,
+  .custom-spice-stories .h2,
+  .pureleven-heritage-banner h2,
+  .pureleven-heritage-banner .h2 {
+    font-size: 2.4rem !important;
+  }
+
+  .custom-idukki-origin p,
+  .custom-idukki-origin .rte p,
+  .custom-spice-stories .review-card__text {
+    font-size: 1.6rem !important;
+  }
+}

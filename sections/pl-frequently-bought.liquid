@@ -1,0 +1,320 @@
+{{ 'pl-product.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign source = product.collections.first
+  unless source and source.products.size > 1
+    assign source = collections.all
+  endunless
+  assign rec_products = source.products
+-%}
+{%- if rec_products.size > 1 -%}
+<section class="pl-fbt">
+  <div class="pl-fbt__inner">
+    <div class="pl-fbt__head">
+      <h2 class="pl-fbt__heading">{{ section.settings.heading | default: 'Customers Also Love' }}</h2>
+      <div class="pl-fbt__nav">
+        <button type="button" aria-label="Previous" data-fbt-prev>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" aria-label="Next" data-fbt-next>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="pl-fbt__track" data-fbt-track>
+      {%- for item in rec_products limit: 8 -%}
+        {%- unless item.id == product.id -%}
+          {%- assign fv = item.selected_or_first_available_variant -%}
+          <div class="pl-fbt__card">
+            <a href="{{ item.url }}" class="pl-fbt__card-img-link">
+              <img class="pl-fbt__card-img" src="{{ item.featured_image | image_url: width: 500 }}" alt="{{ item.featured_image.alt | escape }}" loading="lazy" width="500" height="500">
+            </a>
+            <div class="pl-fbt__card-body">
+              <h3 class="pl-fbt__card-name"><a href="{{ item.url }}">{{ item.title | split: ' | ' | first }}</a></h3>
+              <div class="pl-fbt__card-meta">
+                <span class="pl-fbt__card-price" data-fbt-price>{{ fv.price | money }}</span>
+                {%- if fv.compare_at_price > fv.price -%}
+                  <span class="pl-fbt__card-compare" data-fbt-compare>{{ fv.compare_at_price | money }}</span>
+                  {%- assign _pct = fv.compare_at_price | minus: fv.price | times: 100 | divided_by: fv.compare_at_price -%}
+                  <span class="pl-fbt__card-save-badge" data-fbt-save>{{ _pct }}% off</span>
+                {%- endif -%}
+                <span class="pl-fbt__card-weight" data-fbt-weight>{{ fv.title }}</span>
+              </div>
+              {%- if item.description != blank -%}
+                <p class="pl-fbt__card-desc">{{ item.description | strip_html | truncatewords: 14 }}</p>
+              {%- endif -%}
+              {%- if item.variants.size > 1 -%}
+                <div class="pl-fbt__card-vars">
+                  {%- for v in item.variants limit: 4 -%}
+                    <button
+                      type="button"
+                      class="pl-fbt__card-var{% if forloop.first %} is-active{% endif %}"
+                      data-vid="{{ v.id }}"
+                      data-price="{{ v.price | money }}"
+                      data-compare="{{ v.compare_at_price | money }}"
+                      data-has-compare="{% if v.compare_at_price > v.price %}true{% else %}false{% endif %}"
+                      data-save="{% if v.compare_at_price > v.price %}{{ v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price }}{% endif %}"
+                      data-weight="{{ v.title }}"
+                      {% unless v.available %}disabled{% endunless %}
+                    >{{ v.title }}</button>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+            <form method="post" action="/cart/add" class="pl-fbt__card-form">
+              <input type="hidden" name="id" value="{{ fv.id }}" class="pl-fbt__vid">
+              <button type="submit" class="pl-fbt__add-btn" {% unless item.available %}disabled{% endunless %}>
+                {%- if item.available -%}Add to Cart{%- else -%}Sold Out{%- endif -%}
+              </button>
+            </form>
+          </div>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.pl-fbt { background: #fff; padding: 4.8rem 0; }
+.pl-fbt__inner { max-width: 1200px; margin: 0 auto; padding: 0 4.8rem; }
+.pl-fbt__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.8rem; gap: 1.6rem; }
+.pl-fbt__heading {
+  font-family: var(--font-heading-family, serif);
+  font-size: 4rem; font-weight: 700; line-height: 1.1;
+  letter-spacing: -0.02em; color: #16443A; margin: 0;
+}
+.pl-fbt__nav { display: flex; gap: 1rem; flex-shrink: 0; }
+.pl-fbt__nav button {
+  width: 4.8rem; height: 4.8rem; border-radius: 50%;
+  border: 1.5px solid #2E7D6E; background: #fff; color: #2E7D6E;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.18s, color 0.18s;
+}
+.pl-fbt__nav button:hover { background: #2E7D6E; color: #fff; }
+
+/* Track */
+.pl-fbt__track {
+  display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.4rem;
+}
+.pl-fbt__track::-webkit-scrollbar { height: 0; }
+
+/* Card */
+.pl-fbt__card {
+  flex: 0 0 calc(33.333% - 1.4rem);
+  scroll-snap-align: start;
+  background: #fff;
+  border: 1px solid #E6E3DA;
+  border-radius: 1.6rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image */
+.pl-fbt__card-img-link {
+  display: block; flex-shrink: 0;
+  aspect-ratio: 1 / 1; overflow: hidden;
+}
+.pl-fbt__card-img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block;
+}
+
+/* Body */
+.pl-fbt__card-body {
+  padding: 1.6rem 1.6rem 1.4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Name */
+.pl-fbt__card-name {
+  font-family: var(--font-heading-family, serif);
+  font-size: 1.8rem; font-weight: 700; color: #16443A;
+  line-height: 1.25; margin: 0;
+}
+.pl-fbt__card-name a { color: inherit; text-decoration: none; }
+.pl-fbt__card-name a:hover { text-decoration: underline; }
+
+/* Price row */
+.pl-fbt__card-meta {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+.pl-fbt__card-price {
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1.8rem; font-weight: 700; color: #16443A;
+}
+.pl-fbt__card-compare {
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1.4rem; font-weight: 400; color: #9B9488;
+  text-decoration: line-through;
+}
+.pl-fbt__card-save-badge {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  background: #D4821A; color: #fff;
+  border-radius: 4rem;
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.pl-fbt__card-weight {
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1.4rem; font-weight: 400; color: #6B7A76;
+  padding-left: 0.4rem;
+}
+.pl-fbt__card-weight::before { content: '·'; margin-right: 0.5rem; }
+
+/* Description */
+.pl-fbt__card-desc {
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1.3rem; font-weight: 400; color: #6B7A76; line-height: 1.55;
+  margin: 0.2rem 0 0;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* Variant buttons */
+.pl-fbt__card-vars {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+.pl-fbt__card-var {
+  padding: 0.7rem 1.2rem;
+  border-radius: 4rem;
+  border: 1.5px solid #2E7D6E;
+  background: #fff; color: #2E7D6E;
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1.2rem; font-weight: 700; letter-spacing: 0.06em;
+  cursor: pointer; transition: background 0.15s, color 0.15s;
+  line-height: 1;
+}
+.pl-fbt__card-var.is-active {
+  background: #2E7D6E; color: #fff;
+}
+.pl-fbt__card-var:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* Add to cart form */
+.pl-fbt__card-form { margin-top: auto; padding: 0; }
+.pl-fbt__add-btn {
+  display: block; width: 100%;
+  padding: 1.4rem 1.6rem;
+  background: #16443A; color: #fff;
+  border: none; cursor: pointer;
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 1.3rem; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  transition: background 0.18s;
+  border-radius: 0 0 1.5rem 1.5rem;
+}
+.pl-fbt__add-btn:hover { background: #2E7D6E; }
+.pl-fbt__add-btn:disabled { background: #C8C2B4; cursor: not-allowed; }
+
+/* Mobile */
+@media screen and (max-width: 749px) {
+  .pl-fbt { padding: 3.6rem 0; }
+  .pl-fbt__inner { padding: 0 2rem; }
+  .pl-fbt__heading { font-size: 2.8rem; }
+  .pl-fbt__card { flex: 0 0 78%; }
+}
+</style>
+
+<script>
+(function () {
+  var s = document.currentScript.previousElementSibling.previousElementSibling;
+  if (!s || !s.classList.contains('pl-fbt')) return;
+  var track = s.querySelector('[data-fbt-track]');
+  if (!track) return;
+
+  // Carousel nav
+  var cardWidth = function () {
+    var c = track.querySelector('.pl-fbt__card');
+    return c ? c.offsetWidth + 20 : 320;
+  };
+  s.querySelector('[data-fbt-prev]').addEventListener('click', function () {
+    track.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
+  });
+  s.querySelector('[data-fbt-next]').addEventListener('click', function () {
+    track.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+  });
+
+  // Variant switching
+  track.addEventListener('click', function (e) {
+    var btn = e.target.closest('.pl-fbt__card-var');
+    if (!btn || btn.disabled) return;
+    var card = btn.closest('.pl-fbt__card');
+
+    // Update active state
+    card.querySelectorAll('.pl-fbt__card-var').forEach(function (b) { b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+
+    // Update hidden input
+    card.querySelector('.pl-fbt__vid').value = btn.dataset.vid;
+
+    // Update price
+    card.querySelector('[data-fbt-price]').textContent = btn.dataset.price;
+
+    // Update weight
+    card.querySelector('[data-fbt-weight]').textContent = btn.dataset.weight;
+
+    // Update compare/save
+    var compareEl = card.querySelector('[data-fbt-compare]');
+    var saveEl = card.querySelector('[data-fbt-save]');
+    if (btn.dataset.hasCompare === 'true') {
+      if (compareEl) compareEl.textContent = btn.dataset.compare;
+      if (saveEl) saveEl.textContent = btn.dataset.save + '% off';
+    } else {
+      if (compareEl) compareEl.textContent = '';
+      if (saveEl) saveEl.textContent = '';
+    }
+  });
+
+  // AJAX add to cart
+  track.addEventListener('submit', function (e) {
+    var form = e.target.closest('.pl-fbt__card-form');
+    if (!form) return;
+    e.preventDefault();
+    var btn = form.querySelector('.pl-fbt__add-btn');
+    var orig = btn.textContent;
+    btn.textContent = 'Adding…';
+    btn.disabled = true;
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'id=' + form.querySelector('.pl-fbt__vid').value + '&quantity=1'
+    }).then(function (r) {
+      if (r.ok) {
+        btn.textContent = 'Added ✓';
+        setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 1800);
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+      } else {
+        btn.textContent = 'Error';
+        setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 1800);
+      }
+    }).catch(function () {
+      btn.textContent = orig; btn.disabled = false;
+    });
+  });
+})();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Frequently bought",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Customers Also Love"
+    }
+  ],
+  "presets": [
+    { "name": "Frequently bought" }
+  ]
+}
+{% endschema %}
