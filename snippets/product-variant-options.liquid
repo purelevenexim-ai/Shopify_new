@@ -80,6 +80,19 @@
       additional_props: input_dataset
     %}
   {%- elsif picker_type == 'button' -%}
+    {%- liquid
+      assign _pl_var_save = 0
+      for v in product.variants
+        if v.option1 == value or v.option2 == value or v.option3 == value
+          if v.compare_at_price > v.price
+            assign _pl_var_save = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price
+          else
+            assign _pl_var_save = 0
+          endif
+          break
+        endif
+      endfor
+    -%}
     <input
       type="radio"
       id="{{ input_id }}"
@@ -95,7 +108,10 @@
       {{ input_dataset }}
     >
     <label for="{{ input_id }}">
-      {{ value -}}
+      <span class="pl-var-label">{{ value }}</span>
+      {%- if _pl_var_save > 0 -%}
+        <span class="pl-var-save">SAVE {{ _pl_var_save }}%</span>
+      {%- endif -%}
       {{ label_unavailable }}
     </label>
   {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
