@@ -71,11 +71,11 @@
   font-weight: 400;
   font-size: 1.6rem;
 }
-.pl-save-badge {
+.pl-save-badge:not(.pl-save-badge--below-variant) {
   display: none !important;
 }
 .pl-save-badge--below-variant {
-  display: inline-block;
+  display: block;
   margin-top: 1rem;
   margin-bottom: 1.2rem;
   padding: 0.4rem 1rem;
