@@ -327,6 +327,10 @@
                         aria-label="{{ option_label | escape }}"
                       >
                         {%- for variant in card_product.variants -%}
+                          {%- assign _cv_save = 0 -%}
+                          {%- if variant.compare_at_price > variant.price -%}
+                            {%- assign _cv_save = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
+                          {%- endif -%}
                           <option
                             value="{{ variant.id }}"
                             data-price="{{ variant.price }}"
@@ -338,7 +342,7 @@
                               disabled
                             {% endunless %}
                           >
-                            {{ variant.title | escape }}
+                            {{ variant.title | escape }}{% if _cv_save > 0 %} — SAVE {{ _cv_save }}%{% endif %}
                           </option>
                         {%- endfor -%}
                       </select>

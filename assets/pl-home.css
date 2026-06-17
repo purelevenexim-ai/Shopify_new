@@ -443,3 +443,31 @@
     font-size: 1.6rem !important;
   }
 }
+
+/* ── Global margin reduction (75%) for all pages ── */
+/* Slider section padding overrides: 1.5rem → 0.375rem */
+.section-collection-list .collection-list:not(.slider),
+.slider.collection-list,
+.slider.product-list,
+.slider.grid {
+  padding-left: 0.4rem !important;
+  padding-right: 0.4rem !important;
+}
+
+/* Override section-collection-list mobile padding */
+@media screen and (max-width: 749px) {
+  .section-collection-list .page-width,
+  .section-featured-collection .page-width,
+  .section-collection-list .collection-list:not(.slider),
+  [class*="section-"] .page-width {
+    padding-left: 0.4rem !important;
+    padding-right: 0.4rem !important;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  [class*="section-"] .page-width {
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+  }
+}
