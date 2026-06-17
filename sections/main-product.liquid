@@ -307,9 +307,6 @@
                     show_badges: true,
                     price_class: 'price--large'
                   -%}
-                  {%- if pl_save_pct > 0 -%}
-                    <span class="pl-save-badge">Save {{ pl_save_pct }}%</span>
-                  {%- endif -%}
                   <span class="pl-variant-spinner" aria-hidden="true"></span>
                 </div>
                 {%- if product.metafields.custom.short_description != blank -%}
@@ -675,6 +672,9 @@
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+                {%- if pl_save_pct > 0 -%}
+                  <span class="pl-save-badge pl-save-badge--below-variant">Save {{ pl_save_pct }}%</span>
+                {%- endif -%}
               {%- when 'buy_buttons' -%}
                 {%- render 'buy-buttons',
                   block: block,
