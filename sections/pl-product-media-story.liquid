@@ -56,7 +56,7 @@
       assign quality_title = 'Fuller cinnamon warmth'
       assign quality_copy = 'Cassia is stronger than delicate Ceylon, making it a practical daily-use spice for bold Indian cooking.'
       assign source_title = 'Clean sticks, clear use'
-      assign source_copy = 'The page answers what cassia is, where it fits, and how shoppers should use and store it.'
+      assign source_copy = 'Whole sticks packed in small batches, so the warm, sweet oils are still there when you break one.'
     when 'ceylon'
       assign eyebrow = 'True Ceylon cinnamon'
       assign heading = 'Light, layered cinnamon for gentle aroma and everyday sweetness.'
@@ -76,7 +76,7 @@
       assign quality_title = 'Gentler cinnamon profile'
       assign quality_copy = 'Ceylon has a lighter aroma than cassia, which helps buyers choose the right cinnamon for their recipe.'
       assign source_title = 'A better cinnamon decision'
-      assign source_copy = 'Comparison-friendly answers help customers, Google, and AI assistants understand when Ceylon is the better pick.'
+      assign source_copy = 'Pick Ceylon for a softer, sweeter cinnamon in tea, coffee and desserts; choose cassia for bold warmth in masala and biryani.'
     when 'clove'
       assign eyebrow = 'Kerala clove buds'
       assign heading = 'Small whole buds with a deep, sweet-spicy lift.'
@@ -93,7 +93,7 @@
       assign quality_title = 'Whole-bud aroma'
       assign quality_copy = 'Good cloves should smell sweet, warm, and concentrated before they ever touch the pan.'
       assign source_title = 'Useful in small amounts'
-      assign source_copy = 'The story block keeps buying answers short, direct, and easy to scan on mobile.'
+      assign source_copy = 'Two or three buds perfume a whole pot of chai or biryani, so a small pack lasts a long time.'
     when 'star_anise'
       assign eyebrow = 'Premium star anise'
       assign heading = 'Beautiful whole pods with a sweet liquorice-style aroma.'
@@ -110,7 +110,7 @@
       assign quality_title = 'Whole-pod presentation'
       assign quality_copy = 'Whole pods look premium, dose easily, and hold their aroma better than broken pieces.'
       assign source_title = 'A clear spice role'
-      assign source_copy = 'Short answers help shoppers quickly understand how star anise fits into everyday cooking.'
+      assign source_copy = 'One pod is enough for a pot of chai or a biryani. Add it early and remove it before serving.'
     when 'white_pepper'
       assign eyebrow = 'Kerala white pepper'
       assign heading = 'Clean pepper heat without the dark peppercorn look.'
@@ -130,7 +130,7 @@
       assign quality_title = 'Pepper heat, cleaner look'
       assign quality_copy = 'White pepper is useful when you want pepper bite without visible black specks in lighter dishes.'
       assign source_title = 'Direct answer buying help'
-      assign source_copy = 'This section explains use cases, storage, and difference-making cues in a format search and AI systems can parse.'
+      assign source_copy = 'Crush it fresh for soups and white sauces and you get the pepper heat without dark specks in the dish.'
     when 'turmeric'
       assign eyebrow = 'Turmeric powder'
       assign heading = 'Golden daily spice for color, warmth, and routine cooking.'
@@ -145,9 +145,9 @@
       assign use_tip = 'Bloom a small amount in warm oil to build color and earthy aroma.'
       assign store_tip = 'Keep sealed, dry, and away from sunlight to preserve color and freshness.'
       assign quality_title = 'Daily kitchen color'
-      assign quality_copy = 'A good turmeric page should explain practical use, freshness cues, and storage without overwhelming mobile shoppers.'
+      assign quality_copy = 'Good turmeric turns warm oil golden within seconds and smells earthy, not dusty.'
       assign source_title = 'Root-to-kitchen clarity'
-      assign source_copy = 'Real turmeric visuals make the page feel less generic and more connected to the ingredient.'
+      assign source_copy = 'Dried from whole roots and packed in small batches for colour and warmth.'
   endcase
 -%}
 
@@ -179,12 +179,12 @@
             >
               <source src="{{ video_file | asset_url }}" type="video/mp4">
             </video>
-            <span>1:1 product video · compressed for fast mobile playback</span>
+            <span>Up close</span>
           </div>
         {%- else -%}
           <figure class="pl-spice-story__video-card pl-spice-story__video-card--image">
             <img src="{{ closeup_image | asset_url }}" alt="{{ closeup_alt | escape }}" loading="lazy" width="1200" height="900">
-            <figcaption>Close-up quality cue</figcaption>
+            <figcaption>Up close</figcaption>
           </figure>
         {%- endif -%}
 
@@ -213,7 +213,7 @@
       <div class="pl-spice-story__source">
         <img src="{{ process_image | asset_url }}" alt="{{ process_alt | escape }}" loading="lazy" width="1200" height="900">
         <div class="pl-spice-story__source-copy">
-          <p class="pl-spice-story__eyebrow">Search-friendly source notes</p>
+          <p class="pl-spice-story__eyebrow">From the source</p>
           <h3>{{ source_title }}</h3>
           <p>{{ source_copy }}</p>
         </div>
@@ -254,6 +254,73 @@
     }
   </script>
 {%- endif -%}
+
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  /* Spice story — skillies language, px only. Styles sit on the inner section so empty renders leave no trace. */
+  #shopify-section-{{ section.id }} .pl-spice-story { display: block; padding: 56px 0; background: var(--sk-bg2) !important; border-top: 1px solid var(--sk-line); color: var(--sk-fg); font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} .pl-spice-story * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .pl-spice-story__inner { display: grid; gap: 28px; max-width: var(--sk-wrap) !important; margin: 0 auto; padding: 0 var(--sk-gutter) !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__header { display: grid; gap: 14px; }
+  #shopify-section-{{ section.id }} .pl-spice-story__header > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__eyebrow { margin: 0 !important; color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__title {
+    max-width: 20ch; margin: 0 !important; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important;
+    font-size: clamp(30px, 3.8vw, 56px) !important; font-weight: 500 !important; line-height: 1.08 !important; letter-spacing: -0.05em !important; text-transform: none !important;
+  }
+  #shopify-section-{{ section.id }} .pl-spice-story__lead { max-width: 58ch; color: var(--sk-muted) !important; font-size: 17px !important; line-height: 1.6 !important; letter-spacing: 0 !important; }
+
+  #shopify-section-{{ section.id }} .pl-spice-story__showcase { display: grid; gap: 12px; }
+  #shopify-section-{{ section.id }} .pl-spice-story__hero, #shopify-section-{{ section.id }} .pl-spice-story__video-card {
+    position: relative; display: block; margin: 0; overflow: hidden;
+    background: var(--sk-card) !important; border: 1px solid var(--sk-line) !important; border-radius: 3px !important; box-shadow: none !important;
+  }
+  #shopify-section-{{ section.id }} .pl-spice-story__hero img, #shopify-section-{{ section.id }} .pl-spice-story__video-card img, #shopify-section-{{ section.id }} .pl-spice-story__video-card video { display: block; width: 100%; aspect-ratio: 1 / 1; height: auto; object-fit: cover; border-radius: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__hero figcaption, #shopify-section-{{ section.id }} .pl-spice-story__video-card figcaption, #shopify-section-{{ section.id }} .pl-spice-story__video-card > span {
+    display: block; width: auto !important; max-width: none !important; margin: 0 !important; padding: 10px 14px !important;
+    border: 0 !important; border-top: 1px solid var(--sk-line) !important; border-radius: 0 !important; box-shadow: none !important;
+    background: var(--sk-card) !important; backdrop-filter: none !important; transform: none !important;
+    color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; letter-spacing: 0.08em !important;
+    position: static !important; inset: auto !important;
+  }
+  #shopify-section-{{ section.id }} .pl-spice-story__proof { display: grid; gap: 12px; align-content: start; }
+  #shopify-section-{{ section.id }} .pl-spice-story__proof-card, #shopify-section-{{ section.id }} .pl-spice-story__copy-card {
+    display: grid; grid-template-columns: 104px minmax(0, 1fr); align-items: stretch; overflow: hidden; margin: 0;
+    background: var(--sk-card) !important; border: 1px solid var(--sk-line) !important; border-radius: 3px !important; box-shadow: none !important;
+  }
+  #shopify-section-{{ section.id }} .pl-spice-story__proof-card > img, #shopify-section-{{ section.id }} .pl-spice-story__proof-card > video { display: block; width: 104px; height: 100%; min-height: 104px; object-fit: cover; border-right: 1px solid var(--sk-line); border-radius: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__proof-card > div, #shopify-section-{{ section.id }} .pl-spice-story__copy-card { display: grid; gap: 4px; align-content: start; padding: 14px 16px; }
+  #shopify-section-{{ section.id }} .pl-spice-story__copy-card { grid-template-columns: 1fr; }
+  #shopify-section-{{ section.id }} .pl-spice-story__proof-card span, #shopify-section-{{ section.id }} .pl-spice-story__copy-card span { color: var(--sk-acc) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__proof-card h3, #shopify-section-{{ section.id }} .pl-spice-story__copy-card h3 { margin: 0 !important; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 17px !important; font-weight: 600 !important; line-height: 1.25 !important; letter-spacing: -0.02em !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__proof-card p, #shopify-section-{{ section.id }} .pl-spice-story__copy-card p { margin: 0 !important; color: var(--sk-muted) !important; font-size: 14px !important; line-height: 1.5 !important; letter-spacing: 0 !important; }
+
+  #shopify-section-{{ section.id }} .pl-spice-story__answers { display: grid; margin: 0; background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px; overflow: hidden; }
+  #shopify-section-{{ section.id }} .pl-spice-story__answers article { display: grid; gap: 4px; padding: 14px 16px; margin: 0; background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__answers article + article { border-top: 1px solid var(--sk-line) !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__answers span { color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__answers strong { color: var(--sk-fg) !important; font-size: 15px !important; font-weight: 500 !important; line-height: 1.45 !important; letter-spacing: -0.01em !important; }
+
+  #shopify-section-{{ section.id }} .pl-spice-story__source { display: grid; gap: 0; overflow: hidden; background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px; }
+  #shopify-section-{{ section.id }} .pl-spice-story__source > img { display: block; width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; border-radius: 0 !important; border-bottom: 1px solid var(--sk-line); }
+  #shopify-section-{{ section.id }} .pl-spice-story__source-copy { display: grid; gap: 8px; align-content: center; padding: 20px 18px; }
+  #shopify-section-{{ section.id }} .pl-spice-story__source-copy > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__source-copy h3 { color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 24px !important; font-weight: 500 !important; line-height: 1.12 !important; letter-spacing: -0.035em !important; }
+  #shopify-section-{{ section.id }} .pl-spice-story__source-copy p:not(#shopify-section-{{ section.id }} .pl-spice-story__eyebrow) { color: var(--sk-muted) !important; font-size: 15px !important; line-height: 1.6 !important; letter-spacing: 0 !important; }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .pl-spice-story { padding: 88px 0; }
+    #shopify-section-{{ section.id }} .pl-spice-story__inner { gap: 40px; }
+    #shopify-section-{{ section.id }} .pl-spice-story__showcase { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+    #shopify-section-{{ section.id }} .pl-spice-story__answers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #shopify-section-{{ section.id }} .pl-spice-story__answers article + article { border-top: 0 !important; border-left: 1px solid var(--sk-line) !important; }
+    #shopify-section-{{ section.id }} .pl-spice-story__answers article { padding: 20px 22px; }
+    #shopify-section-{{ section.id }} .pl-spice-story__source { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+    #shopify-section-{{ section.id }} .pl-spice-story__source > img { aspect-ratio: auto; height: 100%; min-height: 320px; border-bottom: 0; border-right: 1px solid var(--sk-line); }
+    #shopify-section-{{ section.id }} .pl-spice-story__source-copy { padding: 40px; }
+    #shopify-section-{{ section.id }} .pl-spice-story__source-copy h3 { font-size: 30px !important; }
+  }
+{%- endstyle -%}
 
 {% schema %}
 {

@@ -460,6 +460,45 @@
   </div>
 {%- endif -%}
 
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  /* Skillies layer — after the older rules so it wins. px only. */
+  #shopify-section-{{ section.id }} > div { background: var(--sk-bg2) !important; border-top: 1px solid var(--sk-line); color: var(--sk-fg); font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} > div .page-width { max-width: var(--sk-wrap) !important; padding-left: var(--sk-gutter) !important; padding-right: var(--sk-gutter) !important; }
+  #shopify-section-{{ section.id }} > div * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .product-faq__header, #shopify-section-{{ section.id }} .product-faq__lead { display: grid; gap: 14px; margin: 0 0 24px !important; text-align: left !important; max-width: none !important; }
+  #shopify-section-{{ section.id }} .product-faq__header > *, #shopify-section-{{ section.id }} .product-faq__lead > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .product-faq__eyebrow { color: var(--sk-muted) !important; background: none !important; padding: 0 !important; border: 0 !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  #shopify-section-{{ section.id }} .product-faq__heading { max-width: 22ch; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: clamp(28px, 3.2vw, 44px) !important; font-weight: 500 !important; line-height: 1.1 !important; letter-spacing: -0.045em !important; text-transform: none !important; text-align: left !important; }
+  #shopify-section-{{ section.id }} .product-faq__intro, #shopify-section-{{ section.id }} .product-faq__intro p { max-width: 60ch; margin: 0 !important; color: var(--sk-muted) !important; font-size: 16px !important; line-height: 1.6 !important; letter-spacing: 0 !important; text-align: left !important; }
+
+  #shopify-section-{{ section.id }} .product-faq__list { display: grid !important; gap: 0 !important; margin: 0 !important; padding: 0 !important; background: none !important; border: 0 !important; border-bottom: 1px solid var(--sk-line) !important; border-radius: 0 !important; box-shadow: none !important; }
+  #shopify-section-{{ section.id }} .product-faq__item { margin: 0 !important; padding: 0 !important; background: none !important; border: 0 !important; border-top: 1px solid var(--sk-line) !important; border-radius: 0 !important; box-shadow: none !important; }
+  #shopify-section-{{ section.id }} .product-faq__question {
+    display: flex !important; align-items: flex-start; justify-content: space-between; gap: 16px; margin: 0 !important; padding: 20px 0 !important;
+    background: none !important; cursor: pointer; list-style: none;
+  }
+  #shopify-section-{{ section.id }} .product-faq__question::-webkit-details-marker { display: none; }
+  #shopify-section-{{ section.id }} .product-faq__question::marker { content: none; }
+  #shopify-section-{{ section.id }} .product-faq__question-text { color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 16px !important; font-weight: 600 !important; line-height: 1.45 !important; letter-spacing: -0.01em !important; text-transform: none !important; }
+  #shopify-section-{{ section.id }} .product-faq__icon { position: relative; flex: none; width: 14px; height: 14px; margin-top: 5px; background: none !important; border: 0 !important; border-radius: 0 !important; }
+  #shopify-section-{{ section.id }} .product-faq__icon > * { display: none !important; }
+  #shopify-section-{{ section.id }} .product-faq__icon::before, #shopify-section-{{ section.id }} .product-faq__icon::after {
+    content: '' !important; position: absolute; left: 0; top: 6px; width: 14px; height: 1.5px; background: var(--sk-fg) !important; border: 0 !important;
+    transform: none; transition: transform 0.25s var(--sk-ease);
+  }
+  #shopify-section-{{ section.id }} .product-faq__icon::after { transform: rotate(90deg); }
+  #shopify-section-{{ section.id }} .product-faq__item[open] .product-faq__icon::after { transform: rotate(0deg); }
+  #shopify-section-{{ section.id }} .product-faq__answer { max-width: 70ch; margin: 0 !important; padding: 0 30px 20px 0 !important; background: none !important; }
+  #shopify-section-{{ section.id }} .product-faq__answer, #shopify-section-{{ section.id }} .product-faq__answer p, #shopify-section-{{ section.id }} .product-faq__answer li { color: var(--sk-fg2) !important; font-family: var(--sk-sans) !important; font-size: 15px !important; line-height: 1.65 !important; letter-spacing: 0 !important; }
+  #shopify-section-{{ section.id }} .product-faq__answer p + p { margin-top: 8px !important; }
+  #shopify-section-{{ section.id }} .product-faq__answer a { color: var(--sk-acc) !important; text-decoration: underline; text-underline-offset: 3px; }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} > div section.page-width { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: 64px; align-items: start; }
+    #shopify-section-{{ section.id }} .product-faq__header { margin: 0 !important; }
+  }
+{%- endstyle -%}
+
 {% schema %}
 {
   "name": "Product FAQ",

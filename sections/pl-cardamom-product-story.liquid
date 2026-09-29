@@ -85,7 +85,7 @@
           <p class="pl-cardamom-story__eyebrow">Source transparency</p>
           <h3>Real cardamom, real people, cleaner buying decisions.</h3>
           <p>
-            This page is written to answer the questions shoppers, Google, and AI assistants ask before recommending a spice: what it is, where it fits, how to use it, and how to keep it fresh.
+            We buy close to the spice gardens of Idukki and pack whole pods in small batches, so the aroma is still there when you open the pouch.
           </p>
         </div>
       </div>
@@ -125,6 +125,73 @@
     }
   </script>
 {%- endif -%}
+
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  /* Spice story — skillies language, px only. Styles sit on the inner section so empty renders leave no trace. */
+  #shopify-section-{{ section.id }} .pl-cardamom-story { display: block; padding: 56px 0; background: var(--sk-bg2) !important; border-top: 1px solid var(--sk-line); color: var(--sk-fg); font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} .pl-cardamom-story * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__inner { display: grid; gap: 28px; max-width: var(--sk-wrap) !important; margin: 0 auto; padding: 0 var(--sk-gutter) !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__header { display: grid; gap: 14px; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__header > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__eyebrow { margin: 0 !important; color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__title {
+    max-width: 20ch; margin: 0 !important; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important;
+    font-size: clamp(30px, 3.8vw, 56px) !important; font-weight: 500 !important; line-height: 1.08 !important; letter-spacing: -0.05em !important; text-transform: none !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__lead { max-width: 58ch; color: var(--sk-muted) !important; font-size: 17px !important; line-height: 1.6 !important; letter-spacing: 0 !important; }
+
+  #shopify-section-{{ section.id }} .pl-cardamom-story__grid { display: grid; gap: 12px; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__hero, #shopify-section-{{ section.id }} .pl-cardamom-story__video-card {
+    position: relative; display: block; margin: 0; overflow: hidden;
+    background: var(--sk-card) !important; border: 1px solid var(--sk-line) !important; border-radius: 3px !important; box-shadow: none !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__hero img, #shopify-section-{{ section.id }} .pl-cardamom-story__video-card img, #shopify-section-{{ section.id }} .pl-cardamom-story__video-card video { display: block; width: 100%; aspect-ratio: 1 / 1; height: auto; object-fit: cover; border-radius: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__hero figcaption, #shopify-section-{{ section.id }} .pl-cardamom-story__video-card figcaption, #shopify-section-{{ section.id }} .pl-cardamom-story__video-card > span {
+    display: block; width: auto !important; max-width: none !important; margin: 0 !important; padding: 10px 14px !important;
+    border: 0 !important; border-top: 1px solid var(--sk-line) !important; border-radius: 0 !important; box-shadow: none !important;
+    background: var(--sk-card) !important; backdrop-filter: none !important; transform: none !important;
+    color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; letter-spacing: 0.08em !important;
+    position: static !important; inset: auto !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__proof { display: grid; gap: 12px; align-content: start; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__proof-card, #shopify-section-{{ section.id }} .pl-cardamom-story__copy-card {
+    display: grid; grid-template-columns: 104px minmax(0, 1fr); align-items: stretch; overflow: hidden; margin: 0;
+    background: var(--sk-card) !important; border: 1px solid var(--sk-line) !important; border-radius: 3px !important; box-shadow: none !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__proof-card > img, #shopify-section-{{ section.id }} .pl-cardamom-story__proof-card > video { display: block; width: 104px; height: 100%; min-height: 104px; object-fit: cover; border-right: 1px solid var(--sk-line); border-radius: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__proof-card > div, #shopify-section-{{ section.id }} .pl-cardamom-story__copy-card { display: grid; gap: 4px; align-content: start; padding: 14px 16px; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__copy-card { grid-template-columns: 1fr; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__proof-card span, #shopify-section-{{ section.id }} .pl-cardamom-story__copy-card span { color: var(--sk-acc) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__proof-card h3, #shopify-section-{{ section.id }} .pl-cardamom-story__copy-card h3 { margin: 0 !important; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 17px !important; font-weight: 600 !important; line-height: 1.25 !important; letter-spacing: -0.02em !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__proof-card p, #shopify-section-{{ section.id }} .pl-cardamom-story__copy-card p { margin: 0 !important; color: var(--sk-muted) !important; font-size: 14px !important; line-height: 1.5 !important; letter-spacing: 0 !important; }
+
+  #shopify-section-{{ section.id }} .pl-cardamom-story__answers { display: grid; margin: 0; background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px; overflow: hidden; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__answers article { display: grid; gap: 4px; padding: 14px 16px; margin: 0; background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__answers article + article { border-top: 1px solid var(--sk-line) !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__answers span { color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__answers strong { color: var(--sk-fg) !important; font-size: 15px !important; font-weight: 500 !important; line-height: 1.45 !important; letter-spacing: -0.01em !important; }
+
+  #shopify-section-{{ section.id }} .pl-cardamom-story__source { display: grid; gap: 0; overflow: hidden; background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__source > img { display: block; width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; border-radius: 0 !important; border-bottom: 1px solid var(--sk-line); }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__source-copy { display: grid; gap: 8px; align-content: center; padding: 20px 18px; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__source-copy > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__source-copy h3 { color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 24px !important; font-weight: 500 !important; line-height: 1.12 !important; letter-spacing: -0.035em !important; }
+  #shopify-section-{{ section.id }} .pl-cardamom-story__source-copy p:not(#shopify-section-{{ section.id }} .pl-cardamom-story__eyebrow) { color: var(--sk-muted) !important; font-size: 15px !important; line-height: 1.6 !important; letter-spacing: 0 !important; }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .pl-cardamom-story { padding: 88px 0; }
+    #shopify-section-{{ section.id }} .pl-cardamom-story__inner { gap: 40px; }
+    #shopify-section-{{ section.id }} .pl-cardamom-story__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+    #shopify-section-{{ section.id }} .pl-cardamom-story__answers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #shopify-section-{{ section.id }} .pl-cardamom-story__answers article + article { border-top: 0 !important; border-left: 1px solid var(--sk-line) !important; }
+    #shopify-section-{{ section.id }} .pl-cardamom-story__answers article { padding: 20px 22px; }
+    #shopify-section-{{ section.id }} .pl-cardamom-story__source { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+    #shopify-section-{{ section.id }} .pl-cardamom-story__source > img { aspect-ratio: auto; height: 100%; min-height: 320px; border-bottom: 0; border-right: 1px solid var(--sk-line); }
+    #shopify-section-{{ section.id }} .pl-cardamom-story__source-copy { padding: 40px; }
+    #shopify-section-{{ section.id }} .pl-cardamom-story__source-copy h3 { font-size: 30px !important; }
+  }
+{%- endstyle -%}
 
 {% schema %}
 {

@@ -65,6 +65,37 @@
   </div>
 </section>
 
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  /* What we're cooking — skillies numbered list, px only. */
+  #shopify-section-{{ section.id }} .pl-cooking { display: block; padding: 56px 0; background: var(--sk-bg2) !important; border-top: 1px solid var(--sk-line); color: var(--sk-fg); font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} .pl-cooking * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .pl-cooking__inner { display: grid; gap: 20px; max-width: var(--sk-wrap) !important; margin: 0 auto; padding: 0 var(--sk-gutter) !important; background: none !important; border: 0 !important; box-shadow: none !important; }
+  #shopify-section-{{ section.id }} .pl-cooking__heading {
+    margin: 0 !important; color: var(--sk-fg) !important; text-align: left !important; font-family: var(--sk-sans) !important;
+    font-size: clamp(28px, 3.2vw, 44px) !important; font-weight: 500 !important; line-height: 1.1 !important; letter-spacing: -0.045em !important; text-transform: none !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cooking__heading::before { content: 'In the kitchen'; display: block; margin-bottom: 14px; color: var(--sk-muted); font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  #shopify-section-{{ section.id }} .pl-cooking__list { display: grid; gap: 0 !important; margin: 0; padding: 0; background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px; overflow: hidden; counter-reset: ck; }
+  #shopify-section-{{ section.id }} .pl-cooking__row {
+    display: flex !important; align-items: center; gap: 14px; margin: 0 !important; padding: 16px !important;
+    background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; counter-increment: ck;
+  }
+  #shopify-section-{{ section.id }} .pl-cooking__row + .pl-cooking__row { border-top: 1px solid var(--sk-line) !important; }
+  #shopify-section-{{ section.id }} .pl-cooking__row::before { content: counter(ck, decimal-leading-zero); flex: none; width: 22px; color: var(--sk-acc); font: 700 11px/1 var(--sk-mono); }
+  #shopify-section-{{ section.id }} .pl-cooking__icon {
+    display: grid !important; place-items: center; flex: none; width: 36px; height: 36px;
+    background: var(--sk-acc-soft) !important; border: 1px solid var(--sk-line) !important; border-radius: 2px !important; color: var(--sk-acc) !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cooking__icon svg { width: 18px; height: 18px; }
+  #shopify-section-{{ section.id }} .pl-cooking__name { color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 16px !important; font-weight: 500 !important; letter-spacing: -0.01em !important; }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .pl-cooking { padding: 72px 0; }
+    #shopify-section-{{ section.id }} .pl-cooking__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #shopify-section-{{ section.id }} .pl-cooking__row + .pl-cooking__row { border-top: 0 !important; border-left: 1px solid var(--sk-line) !important; }
+    #shopify-section-{{ section.id }} .pl-cooking__row { padding: 20px 22px !important; }
+  }
+{%- endstyle -%}
 {% schema %}
 {
   "name": "What we're cooking",

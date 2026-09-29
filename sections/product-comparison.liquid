@@ -427,6 +427,44 @@
   </div>
 {%- endif -%}
 
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  /* Skillies layer — after the older rules so it wins. px only. */
+  #shopify-section-{{ section.id }} > div { background: var(--sk-bg) !important; border-top: 1px solid var(--sk-line); color: var(--sk-fg); font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} > div .page-width { max-width: var(--sk-wrap) !important; padding-left: var(--sk-gutter) !important; padding-right: var(--sk-gutter) !important; }
+  #shopify-section-{{ section.id }} > div * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .product-comparison__header, #shopify-section-{{ section.id }} .product-comparison__lead { display: grid; gap: 14px; margin: 0 0 24px !important; text-align: left !important; max-width: none !important; }
+  #shopify-section-{{ section.id }} .product-comparison__header > *, #shopify-section-{{ section.id }} .product-comparison__lead > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .product-comparison__eyebrow { color: var(--sk-muted) !important; background: none !important; padding: 0 !important; border: 0 !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  #shopify-section-{{ section.id }} .product-comparison__heading { max-width: 22ch; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: clamp(28px, 3.2vw, 44px) !important; font-weight: 500 !important; line-height: 1.1 !important; letter-spacing: -0.045em !important; text-transform: none !important; text-align: left !important; }
+  #shopify-section-{{ section.id }} .product-comparison__intro, #shopify-section-{{ section.id }} .product-comparison__intro p { max-width: 60ch; margin: 0 !important; color: var(--sk-muted) !important; font-size: 16px !important; line-height: 1.6 !important; letter-spacing: 0 !important; text-align: left !important; }
+
+  #shopify-section-{{ section.id }} .product-comparison__table-wrap { overflow-x: auto; margin: 0 !important; background: var(--sk-card) !important; border: 1px solid var(--sk-line) !important; border-radius: 3px !important; box-shadow: none !important; }
+  #shopify-section-{{ section.id }} .product-comparison__table { width: 100%; min-width: 0 !important; margin: 0 !important; border: 0 !important; border-collapse: collapse !important; table-layout: fixed; background: none !important; }
+  #shopify-section-{{ section.id }} .product-comparison__table th {
+    padding: 12px 14px !important; background: var(--sk-bg2) !important; border: 0 !important; border-bottom: 1px solid var(--sk-line) !important; text-align: left !important;
+    color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; letter-spacing: 0.08em !important;
+  }
+  #shopify-section-{{ section.id }} .product-comparison__table td {
+    padding: 14px !important; background: none !important; border: 0 !important; border-top: 1px solid var(--sk-line) !important; vertical-align: top;
+    color: var(--sk-fg2) !important; font-size: 14px !important; line-height: 1.5 !important; letter-spacing: 0 !important; overflow-wrap: anywhere;
+  }
+  #shopify-section-{{ section.id }} .product-comparison__table tbody tr:first-child td { border-top: 0 !important; }
+  #shopify-section-{{ section.id }} .product-comparison__table .product-comparison__attribute { color: var(--sk-fg) !important; font-weight: 600 !important; }
+  #shopify-section-{{ section.id }} .product-comparison__table td.product-comparison__pureleven { background: var(--sk-acc-soft) !important; color: var(--sk-fg) !important; }
+  #shopify-section-{{ section.id }} .product-comparison__table th.product-comparison__pureleven { color: var(--sk-acc) !important; }
+  #shopify-section-{{ section.id }} .product-comparison__footer, #shopify-section-{{ section.id }} .product-comparison__footer p { margin: 16px 0 0 !important; color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; letter-spacing: 0.08em !important; }
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .product-comparison__table th, #shopify-section-{{ section.id }} .product-comparison__table td { padding: 10px !important; font-size: 13px !important; }
+    #shopify-section-{{ section.id }} .product-comparison__table th:first-child, #shopify-section-{{ section.id }} .product-comparison__table td:first-child { width: auto; }
+    #shopify-section-{{ section.id }} .product-comparison__table td { border-top: 0 !important; border-radius: 2px !important; box-shadow: none !important; }
+    #shopify-section-{{ section.id }} .product-comparison__table tbody tr + tr { border-top: 1px solid var(--sk-line) !important; }
+    #shopify-section-{{ section.id }} .product-comparison__table tbody tr::before, #shopify-section-{{ section.id }} .product-comparison__table tbody tr::after { content: none !important; display: none !important; }
+    #shopify-section-{{ section.id }} .product-comparison__table td::before { font: 400 10px/1.5 var(--sk-mono) !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; }
+  }
+  @media screen and (min-width: 750px) { #shopify-section-{{ section.id }} .product-comparison__header { margin-bottom: 40px !important; } }
+{%- endstyle -%}
+
 {% schema %}
 {
   "name": "Product comparison",

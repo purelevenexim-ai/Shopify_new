@@ -1,4 +1,6 @@
 {{ 'pl-product.css' | asset_url | stylesheet_tag }}
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer></script>
 {%- liquid
   assign source = product.collections.first
   unless source and source.products.size > 1
@@ -31,9 +33,9 @@
             <div class="pl-fbt__card-body">
               <h3 class="pl-fbt__card-name"><a href="{{ item.url }}">{{ item.title | split: ' | ' | first }}</a></h3>
               <div class="pl-fbt__card-meta">
-                <span class="pl-fbt__card-price" data-fbt-price>{{ fv.price | money }}</span>
+                <span class="pl-fbt__card-price" data-fbt-price>{{ fv.price | money_without_currency | remove: '.00' | prepend: '₹' }}</span>
                 {%- if fv.compare_at_price > fv.price -%}
-                  <span class="pl-fbt__card-compare" data-fbt-compare>{{ fv.compare_at_price | money }}</span>
+                  <span class="pl-fbt__card-compare" data-fbt-compare>{{ fv.compare_at_price | money_without_currency | remove: '.00' | prepend: '₹' }}</span>
                   {%- assign pct = fv.compare_at_price | minus: fv.price | times: 100 | divided_by: fv.compare_at_price -%}
                   <span class="pl-fbt__card-save-badge" data-fbt-save>{{ pct }}% off</span>
                 {%- endif -%}
@@ -49,8 +51,8 @@
                       type="button"
                       class="pl-fbt__card-var{% if forloop.first %} is-active{% endif %}"
                       data-vid="{{ v.id }}"
-                      data-price="{{ v.price | money }}"
-                      data-compare="{{ v.compare_at_price | money }}"
+                      data-price="{{ v.price | money_without_currency | remove: '.00' | prepend: '₹' }}"
+                      data-compare="{{ v.compare_at_price | money_without_currency | remove: '.00' | prepend: '₹' }}"
                       data-has-compare="{% if v.compare_at_price > v.price %}true{% else %}false{% endif %}"
                       data-save="{% if v.compare_at_price > v.price %}{{ v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price }}{% endif %}"
                       data-weight="{{ v.title }}"
@@ -60,10 +62,10 @@
                 </div>
               {%- endif -%}
             </div>
-            <form method="post" action="{{ routes.cart_add_url }}" class="pl-fbt__card-form">
+            <form method="post" action="{{ routes.cart_add_url }}" class="pl-fbt__card-form tc-product-form">
               <input type="hidden" name="id" value="{{ fv.id }}" class="pl-fbt__vid">
-              <button type="submit" class="pl-fbt__add-btn" {% unless item.available %}disabled{% endunless %}>
-                {%- if item.available -%}Add to Cart{%- else -%}Sold Out{%- endif -%}
+              <button type="submit" name="add" class="pl-fbt__add-btn" {% unless item.available %}disabled{% endunless %}>
+                {%- if item.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
               </button>
             </form>
           </div>
@@ -74,186 +76,74 @@
 </section>
 
 <style>
-.pl-fbt { background: #fff; padding: 4.8rem 0; }
-.pl-fbt__inner { max-width: 1200px; margin: 0 auto; padding: 0 4.8rem; }
-.pl-fbt__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.8rem; gap: 1.6rem; }
-.pl-fbt__heading {
-  font-family: var(--font-heading-family, serif);
-  font-size: 4rem; font-weight: 700; line-height: 1.1;
-  letter-spacing: -0.02em; color: #16443A; margin: 0;
-}
-.pl-fbt__nav { display: flex; gap: 1rem; flex-shrink: 0; }
-.pl-fbt__nav button {
-  width: 4.8rem; height: 4.8rem; border-radius: 50%;
-  border: 1.5px solid #2E7D6E; background: #fff; color: #2E7D6E;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: background 0.18s, color 0.18s;
-}
-.pl-fbt__nav button:hover { background: #2E7D6E; color: #fff; }
-
-/* Track */
-.pl-fbt__track {
-  display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth;
-  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-  padding-bottom: 0.4rem;
-}
-.pl-fbt__track::-webkit-scrollbar { height: 0; }
-
-/* Card */
-.pl-fbt__card {
-  flex: 0 0 calc(33.333% - 1.4rem);
-  scroll-snap-align: start;
-  background: #fff;
-  border: 1px solid #E6E3DA;
-  border-radius: 1.6rem;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Image */
-.pl-fbt__card-img-link {
-  display: block; flex-shrink: 0;
-  aspect-ratio: 1 / 1; overflow: hidden;
-}
-.pl-fbt__card-img {
-  width: 100%; height: 100%; object-fit: cover;
-  display: block;
-}
-
-/* Body */
-.pl-fbt__card-body {
-  padding: 1.6rem 1.6rem 1.4rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-/* Name */
-.pl-fbt__card-name {
-  font-family: var(--font-heading-family, serif);
-  font-size: 1.8rem; font-weight: 700; color: #16443A;
-  line-height: 1.25; margin: 0;
-}
-.pl-fbt__card-name a { color: inherit; text-decoration: none; }
-.pl-fbt__card-name a:hover { text-decoration: underline; }
-
-/* Price row */
-.pl-fbt__card-meta {
-  display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
-  margin-top: 0.2rem;
-}
-.pl-fbt__card-price {
-  font-family: var(--font-body-family, sans-serif);
-  font-size: 1.8rem; font-weight: 700; color: #16443A;
-}
-.pl-fbt__card-compare {
-  font-family: var(--font-body-family, sans-serif);
-  font-size: 1.4rem; font-weight: 400; color: #9B9488;
-  text-decoration: line-through;
-}
-.pl-fbt__card-save-badge {
-  display: inline-block;
-  padding: 0.2rem 0.7rem;
-  background: #D4821A; color: #fff;
-  border-radius: 4rem;
-  font-family: var(--font-body-family, sans-serif);
-  font-size: 1rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
-}
-.pl-fbt__card-weight {
-  font-family: var(--font-body-family, sans-serif);
-  font-size: 1.4rem; font-weight: 400; color: #6B7A76;
-  padding-left: 0.4rem;
-}
-.pl-fbt__card-weight::before { content: '·'; margin-right: 0.5rem; }
-
-/* Description */
-.pl-fbt__card-desc {
-  font-family: var(--font-body-family, sans-serif);
-  font-size: 1.3rem; font-weight: 400; color: #6B7A76; line-height: 1.55;
-  margin: 0.2rem 0 0;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-}
-
-/* Variant buttons */
-.pl-fbt__card-vars {
-  display: flex; flex-wrap: wrap; gap: 0.6rem;
-  margin-top: 0.8rem;
-}
-.pl-fbt__card-var {
-  padding: 0.7rem 1.2rem;
-  border-radius: 4rem;
-  border: 1.5px solid #2E7D6E;
-  background: #fff; color: #2E7D6E;
-  font-family: var(--font-body-family, sans-serif);
-  font-size: 1.2rem; font-weight: 700; letter-spacing: 0.06em;
-  cursor: pointer; transition: background 0.15s, color 0.15s;
-  line-height: 1;
-}
-.pl-fbt__card-var.is-active {
-  background: #2E7D6E; color: #fff;
-}
-.pl-fbt__card-var:disabled { opacity: 0.35; cursor: not-allowed; }
-
-/* Add to cart form */
-.pl-fbt__card-form { margin-top: auto; padding: 0; }
-.pl-fbt__add-btn {
-  display: block; width: 100%;
-  padding: 1.4rem 1.6rem;
-  background: #16443A; color: #fff;
-  border: none; cursor: pointer;
-  font-family: var(--font-body-family, sans-serif);
-  font-size: 1.3rem; font-weight: 800;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  transition: background 0.18s;
-  border-radius: 0 0 1.5rem 1.5rem;
-}
-.pl-fbt__add-btn:hover { background: #2E7D6E; }
-.pl-fbt__add-btn:disabled { background: #C8C2B4; cursor: not-allowed; }
-
-/* Mobile */
-@media screen and (max-width: 749px) {
-  .pl-fbt { padding: 2.4rem 0; }
-  .pl-fbt__inner { padding: 0 1.6rem; }
-  .pl-fbt__head { margin-bottom: 1.4rem; }
-  .pl-fbt__heading { font-size: 2rem; line-height: 1.1; }
-  .pl-fbt__nav button { width: 3.8rem; height: 3.8rem; }
-  .pl-fbt__track { gap: 1.2rem; }
-  .pl-fbt__card {
-    flex: 0 0 60%;
-    border-radius: 1.2rem;
+  /* Customers also love — same card as the rest of the store, px only. */
+  #shopify-section-{{ section.id }} .pl-fbt { display: block; padding: 56px 0; background: var(--sk-bg) !important; border-top: 1px solid var(--sk-line); color: var(--sk-fg); font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} .pl-fbt * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .pl-fbt__inner { display: grid; gap: 20px; max-width: var(--sk-wrap) !important; margin: 0 auto; padding: 0 var(--sk-gutter) !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__heading {
+    margin: 0 !important; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: clamp(28px, 3.2vw, 44px) !important;
+    font-weight: 500 !important; line-height: 1.1 !important; letter-spacing: -0.045em !important; text-transform: none !important; text-align: left !important;
   }
-  .pl-fbt__card-img-link {
-    aspect-ratio: 1.18 / 1;
+  #shopify-section-{{ section.id }} .pl-fbt__heading::before { content: 'Pairs well'; display: block; margin-bottom: 14px; color: var(--sk-muted); font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__nav { display: flex; gap: 8px; }
+  #shopify-section-{{ section.id }} .pl-fbt__nav button {
+    display: grid; place-items: center; width: 40px; height: 40px; min-height: 0; margin: 0; padding: 0;
+    background: var(--sk-card) !important; border: 1px solid var(--sk-line2) !important; border-radius: 2px !important; box-shadow: none !important; color: var(--sk-fg) !important; cursor: pointer;
   }
-  .pl-fbt__card-body {
-    padding: 1rem;
-    gap: 0.45rem;
+  #shopify-section-{{ section.id }} .pl-fbt__nav button:hover { border-color: var(--sk-fg) !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__nav svg { width: 16px; height: 16px; }
+  #shopify-section-{{ section.id }} .pl-fbt__track {
+    display: grid !important; grid-auto-flow: column; grid-auto-columns: 46%; gap: 12px !important; margin: 0 !important; padding: 0 0 4px !important;
+    overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
   }
-  .pl-fbt__card-name {
-    font-size: 1.35rem;
-    line-height: 1.2;
+  #shopify-section-{{ section.id }} .pl-fbt__track::-webkit-scrollbar { display: none; }
+  #shopify-section-{{ section.id }} .pl-fbt__card {
+    display: flex !important; flex-direction: column; min-width: 0; width: auto !important; margin: 0 !important; padding: 0 !important; overflow: hidden; scroll-snap-align: start;
+    background: var(--sk-card) !important; border: 1px solid var(--sk-line) !important; border-radius: 3px !important; box-shadow: none !important;
   }
-  .pl-fbt__card-desc,
-  .pl-fbt__card-weight,
-  .pl-fbt__card-vars {
-    display: none !important;
+  #shopify-section-{{ section.id }} .pl-fbt__card-img-link { display: block; aspect-ratio: 1 / 1; overflow: hidden; background: var(--sk-bg2); border-bottom: 1px solid var(--sk-line); border-radius: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-body { display: flex; flex-direction: column; gap: 6px; flex: 1; padding: 12px !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-body > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-name {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+    font-family: var(--sk-sans) !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.3 !important; letter-spacing: -0.01em !important; text-transform: none !important;
   }
-  .pl-fbt__card-price {
-    font-size: 1.4rem;
+  #shopify-section-{{ section.id }} .pl-fbt__card-name a { color: var(--sk-fg) !important; text-decoration: none !important; font: inherit !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-price { color: var(--sk-fg) !important; font-size: 17px !important; font-weight: 600 !important; letter-spacing: -0.02em !important; font-variant-numeric: tabular-nums; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-compare { color: var(--sk-faint) !important; font-size: 12px !important; text-decoration: line-through; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-save-badge { padding: 0 !important; background: none !important; border: 0 !important; color: var(--sk-acc) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10px !important; letter-spacing: 0.06em !important; font-weight: 700 !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-weight { flex-basis: 100%; color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10px !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-desc { display: none; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-vars {
+    display: flex; flex-wrap: wrap; gap: 1px !important; margin-top: 2px !important;
+    background: var(--sk-line2); border: 1px solid var(--sk-line2); border-radius: 2px; overflow: hidden;
   }
-  .pl-fbt__card-compare,
-  .pl-fbt__card-save-badge {
-    font-size: 1rem;
+  #shopify-section-{{ section.id }} .pl-fbt__card-var {
+    flex: 1 1 0; min-width: calc(33.333% - 1px); min-height: 34px; margin: 0 !important; padding: 4px !important; white-space: normal !important; overflow-wrap: anywhere; line-height: 1.25 !important;
+    background: #fff !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; color: var(--sk-fg) !important; cursor: pointer;
+    font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; letter-spacing: 0.04em !important;
   }
-  .pl-fbt__add-btn {
-    padding: 1rem 1.2rem;
-    font-size: 1.1rem;
-    letter-spacing: 0.02em;
-    text-transform: none;
+  #shopify-section-{{ section.id }} .pl-fbt__card-var.is-active { background: var(--sk-acc-soft) !important; color: var(--sk-acc) !important; font-weight: 700 !important; box-shadow: inset 0 0 0 1px var(--sk-acc) !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-var:disabled { color: var(--sk-faint) !important; text-decoration: line-through; cursor: not-allowed; }
+  #shopify-section-{{ section.id }} .pl-fbt__card-form { margin: 0 !important; padding: 0 12px 12px !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__add-btn {
+    display: flex; align-items: center; justify-content: center; width: 100%; min-height: 44px; margin: 0 !important; padding: 10px 12px !important;
+    background: var(--sk-yellow) !important; border: 1px solid var(--sk-yellow) !important; border-radius: 2px !important; box-shadow: none !important;
+    color: var(--sk-on-yellow) !important; cursor: pointer; font-family: var(--sk-sans) !important; font-size: 13px !important; font-weight: 600 !important;
+    letter-spacing: -0.01em !important; text-transform: none !important;
   }
-}
+  #shopify-section-{{ section.id }} .pl-fbt__add-btn:hover:not(:disabled) { background: var(--sk-yellow-hover) !important; border-color: var(--sk-yellow-hover) !important; }
+  #shopify-section-{{ section.id }} .pl-fbt__add-btn:disabled { background: var(--sk-bg2) !important; border-color: var(--sk-line) !important; color: var(--sk-faint) !important; cursor: not-allowed; }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .pl-fbt { padding: 80px 0; }
+    #shopify-section-{{ section.id }} .pl-fbt__track { grid-auto-columns: calc((100% - 36px) / 4); gap: 12px !important; }
+    #shopify-section-{{ section.id }} .pl-fbt__card-body { padding: 16px 18px !important; gap: 8px; }
+    #shopify-section-{{ section.id }} .pl-fbt__card-desc { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--sk-muted) !important; font-size: 14px !important; line-height: 1.5 !important; }
+    #shopify-section-{{ section.id }} .pl-fbt__card-form { padding: 0 18px 18px !important; }
+  }
 </style>
 
 <script>
@@ -306,32 +196,6 @@
     }
   });
 
-  // AJAX add to cart
-  track.addEventListener('submit', function (e) {
-    var form = e.target.closest('.pl-fbt__card-form');
-    if (!form) return;
-    e.preventDefault();
-    var btn = form.querySelector('.pl-fbt__add-btn');
-    var orig = btn.textContent;
-    btn.textContent = 'Adding…';
-    btn.disabled = true;
-    fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'id=' + form.querySelector('.pl-fbt__vid').value + '&quantity=1'
-    }).then(function (r) {
-      if (r.ok) {
-        btn.textContent = 'Added ✓';
-        setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 1800);
-        document.dispatchEvent(new CustomEvent('cart:refresh'));
-      } else {
-        btn.textContent = 'Error';
-        setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 1800);
-      }
-    }).catch(function () {
-      btn.textContent = orig; btn.disabled = false;
-    });
-  });
 })();
 </script>
 {%- endif -%}

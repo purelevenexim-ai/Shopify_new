@@ -149,6 +149,39 @@
   </div>
 {%- endif -%}
 
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  /* Skillies layer — after the older rules so it wins. px only. */
+  #shopify-section-{{ section.id }} > div { background: var(--sk-bg2) !important; border-top: 1px solid var(--sk-line); color: var(--sk-fg); font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} > div .page-width { max-width: var(--sk-wrap) !important; padding-left: var(--sk-gutter) !important; padding-right: var(--sk-gutter) !important; }
+  #shopify-section-{{ section.id }} > div * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .product-dossier__header, #shopify-section-{{ section.id }} .product-dossier__lead { display: grid; gap: 14px; margin: 0 0 24px !important; text-align: left !important; max-width: none !important; }
+  #shopify-section-{{ section.id }} .product-dossier__header > *, #shopify-section-{{ section.id }} .product-dossier__lead > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .product-dossier__eyebrow { color: var(--sk-muted) !important; background: none !important; padding: 0 !important; border: 0 !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  #shopify-section-{{ section.id }} .product-dossier__heading { max-width: 22ch; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: clamp(28px, 3.2vw, 44px) !important; font-weight: 500 !important; line-height: 1.1 !important; letter-spacing: -0.045em !important; text-transform: none !important; text-align: left !important; }
+  #shopify-section-{{ section.id }} .product-dossier__intro, #shopify-section-{{ section.id }} .product-dossier__intro p { max-width: 60ch; margin: 0 !important; color: var(--sk-muted) !important; font-size: 16px !important; line-height: 1.6 !important; letter-spacing: 0 !important; text-align: left !important; }
+
+  #shopify-section-{{ section.id }} .product-dossier__shell { display: grid; gap: 0; padding: 0 !important; background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+  #shopify-section-{{ section.id }} .product-dossier__ribbon {
+    width: fit-content; padding: 6px 8px !important; background: var(--sk-acc-soft) !important; border: 0 !important; border-radius: 2px !important;
+    color: var(--sk-acc) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10.5px !important; font-weight: 700 !important; letter-spacing: 0.08em !important;
+  }
+  #shopify-section-{{ section.id }} .product-dossier__grid { display: grid; gap: 12px; }
+  #shopify-section-{{ section.id }} .product-dossier__card {
+    display: grid; gap: 8px; align-content: start; margin: 0 !important; padding: 20px 18px !important;
+    background: var(--sk-card) !important; border: 1px solid var(--sk-line) !important; border-radius: 3px !important; box-shadow: none !important;
+  }
+  #shopify-section-{{ section.id }} .product-dossier__card > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .product-dossier__index { color: var(--sk-acc) !important; background: none !important; font: 700 14px/1 var(--sk-mono) !important; letter-spacing: 0 !important; }
+  #shopify-section-{{ section.id }} .product-dossier__label { color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 19px !important; font-weight: 500 !important; line-height: 1.2 !important; letter-spacing: -0.025em !important; text-transform: none !important; }
+  #shopify-section-{{ section.id }} .product-dossier__copy { color: var(--sk-muted) !important; font-size: 15px !important; line-height: 1.55 !important; letter-spacing: 0 !important; }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .product-dossier__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    #shopify-section-{{ section.id }} .product-dossier__lead { margin-bottom: 40px !important; }
+  }
+  @media screen and (min-width: 1200px) { #shopify-section-{{ section.id }} .product-dossier__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+{%- endstyle -%}
+
 {% schema %}
 {
   "name": "Product dossier",
