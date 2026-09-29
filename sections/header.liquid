@@ -545,6 +545,62 @@
   </script>
 {%- endif -%}
 
+{%- style -%}
+  /* Skillies header — one row, hairline base, px only. Placed last so it wins over the older header rules. */
+  #shopify-section-{{ section.id }} .header-wrapper { background: #F9F9F6 !important; background-image: none !important; border-bottom: 1px solid #DEDEDB !important; box-shadow: none !important; }
+  #shopify-section-{{ section.id }} .header {
+    max-width: 1440px !important; min-height: 60px; column-gap: 16px !important;
+    padding: 6px clamp(20px, 4vw, 56px) !important;
+  }
+  #shopify-section-{{ section.id }} .header__heading, #shopify-section-{{ section.id }} .header__heading-link { margin: 0 !important; padding: 0 !important; }
+  #shopify-section-{{ section.id }} .header__heading-link:hover { opacity: 0.85; }
+  #shopify-section-{{ section.id }} .header__inline-menu .list-menu--inline { gap: 2px; }
+  #shopify-section-{{ section.id }} .header__menu-item {
+    padding: 10px 12px !important; color: #3D4250 !important; background: none !important;
+    font-family: 'Manrope', 'Segoe UI', Helvetica, Arial, sans-serif !important; font-size: 14px !important; font-weight: 500 !important; line-height: 1.2 !important;
+    letter-spacing: -0.01em !important; text-transform: none !important; text-decoration: none !important;
+    transition: color 0.2s;
+  }
+  #shopify-section-{{ section.id }} .header__menu-item span { text-decoration: none !important; }
+  #shopify-section-{{ section.id }} .header__menu-item:hover { color: #0B0B0F !important; }
+  #shopify-section-{{ section.id }} .header__menu-item:hover span, #shopify-section-{{ section.id }} .header__active-menu-item, #shopify-section-{{ section.id }} .header__menu-item[aria-current='page'] span {
+    color: #0B0B0F !important; text-decoration: underline !important; text-decoration-color: #1F6B5C !important;
+    text-decoration-thickness: 1px !important; text-underline-offset: 6px !important;
+  }
+  #shopify-section-{{ section.id }} .header__icons { gap: 2px; }
+  #shopify-section-{{ section.id }} .header__icon {
+    width: 40px !important; height: 40px !important; margin: 0 !important; border-radius: 2px !important;
+    color: #0B0B0F !important; background: none !important; transition: background-color 0.2s;
+  }
+  #shopify-section-{{ section.id }} .header__icon:hover { background: #F1F1ED !important; }
+  #shopify-section-{{ section.id }} .header__icon .svg-wrapper, #shopify-section-{{ section.id }} .header__icon > svg { width: 20px !important; height: 20px !important; }
+  #shopify-section-{{ section.id }} .header__icon--cart .svg-wrapper, #shopify-section-{{ section.id }} .header__icon--cart svg { width: 36px !important; height: 36px !important; }
+  #shopify-section-{{ section.id }} header-drawer { margin-left: 0 !important; }
+  #shopify-section-{{ section.id }} .header__icon:not(.header__icon--summary) span { display: flex; align-items: center; justify-content: center; }
+  #shopify-section-{{ section.id }} .cart-count-bubble {
+    top: 4px !important; right: 2px !important; bottom: auto !important; left: auto !important; width: 17px !important; height: 17px !important;
+    background: #FCE477 !important; color: #16140D !important; border: 1px solid #F9F9F6 !important;
+    font: 700 9.5px/1 ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace !important; letter-spacing: 0 !important;
+  }
+  #shopify-section-{{ section.id }} .localization-form__select, #shopify-section-{{ section.id }} .disclosure__button {
+    font: 400 11px/1.5 ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; color: #3D4250 !important;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .header { min-height: 76px; padding-top: 10px !important; padding-bottom: 10px !important; column-gap: 32px !important; }
+  }
+
+  /* announcement bar (same header group) */
+  .announcement-bar-minimal { padding: 8px 16px !important; background: #004438 !important; border: 0 !important; }
+  .announcement-bar-minimal__message {
+    margin: 0 !important; color: #FFFFFF !important; text-align: center;
+    font: 400 11px/1.5 ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace !important; letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  }
+  @media screen and (max-width: 749px) {
+    .announcement-bar-minimal { padding: 8px 12px !important; }
+    .announcement-bar-minimal__message { padding: 0 !important; font-size: 10px !important; letter-spacing: 0.02em !important; }
+  }
+{%- endstyle -%}
+
 {% schema %}
 {
   "name": "t:sections.header.name",

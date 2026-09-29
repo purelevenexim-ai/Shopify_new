@@ -15,7 +15,7 @@
       "type": "header",
       "custom_css": [],
       "settings": {
-        "logo_position": "top-center",
+        "logo_position": "middle-left",
         "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "dropdown",
@@ -27,7 +27,7 @@
         "enable_language_selector": true,
         "enable_customer_avatar": true,
         "margin_bottom": 0,
-        "padding_top": 36,
+        "padding_top": 12,
         "padding_bottom": 12
       }
     },
