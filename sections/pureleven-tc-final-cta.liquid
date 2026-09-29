@@ -1,0 +1,101 @@
+{%- comment -%}
+Tea & Coffee Final CTA Section
+- Bottom of page conversion push
+- "Your everyday cup, selected better"
+- Primary + Secondary CTAs + tertiary link to trial pack
+{%- endcomment -%}
+
+<link rel="stylesheet" href="{{ 'tc-design-tokens.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'tc-page.css' | asset_url }}">
+
+<section class="tc-final-cta">
+  <div class="tc-final-cta__container">
+    <p class="tc-eyebrow"><i>Kerala</i> · Idukki · Wayanad</p>
+    {%- if section.settings.heading -%}
+      <h2 class="tc-final-cta__heading tc-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="tc-final-cta__buttons">
+      {%- if section.settings.primary_cta_text and section.settings.primary_cta_link -%}
+        <a href="{{ section.settings.primary_cta_link }}" class="tc-final-cta__button tc-final-cta__button--primary">
+          {{ section.settings.primary_cta_text }}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.secondary_cta_text and section.settings.secondary_cta_link -%}
+        <a href="{{ section.settings.secondary_cta_link }}" class="tc-final-cta__button tc-final-cta__button--secondary">
+          {{ section.settings.secondary_cta_text }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.tertiary_text and section.settings.tertiary_cta_text and section.settings.tertiary_cta_link -%}
+      <p class="tc-final-cta__tertiary">
+        {{ section.settings.tertiary_text }}
+        <a href="{{ section.settings.tertiary_cta_link }}" class="tc-final-cta__tertiary-link">
+          {{ section.settings.tertiary_cta_text }} →
+        </a>
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} Section Settings Schema {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Tea & Coffee Final CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main heading",
+      "default": "Your everyday cup, selected better."
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary CTA text",
+      "default": "Shop Tea"
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_link",
+      "label": "Primary CTA link (anchor or URL)"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary CTA text",
+      "default": "Shop Coffee"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_link",
+      "label": "Secondary CTA link (anchor or URL)"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_text",
+      "label": "Tertiary text",
+      "default": "Not sure?"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_cta_text",
+      "label": "Tertiary CTA text",
+      "default": "Try the Starter Pack"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_cta_link",
+      "label": "Tertiary CTA link (anchor or URL)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tea & Coffee Final CTA"
+    }
+  ]
+}
+{% endschema %}

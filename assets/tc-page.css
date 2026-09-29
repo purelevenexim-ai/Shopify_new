@@ -1,0 +1,492 @@
+/* Tea & Coffee page — skillies language, px only (needs tc-design-tokens.css).
+   Theme sheets force font/letter-spacing on h1-h3, p, a, button, so the visible
+   type properties are restated with !important (same approach as pl-cart-b.css). */
+
+/* ---------- section shell ---------- */
+.tc-hero, .tc-othercats, .tc-products, .tc-trial-pack, .tc-coffee, .tc-drink-selector,
+.tc-reviews, .tc-comparison, .tc-brewing, .tc-story, .tc-faq, .tc-final-cta {
+  display: block;
+  padding: 56px 0;
+  background: var(--sk-bg) !important;
+  border-top: 1px solid var(--sk-line);
+  color: var(--sk-fg);
+  font-family: var(--sk-sans);
+  font-size: 15px;
+  line-height: 1.65;
+  overflow-x: clip;
+}
+.tc-othercats, .tc-trial-pack, .tc-drink-selector, .tc-comparison, .tc-story { background: var(--sk-bg2) !important; }
+.tc-hero { border-top: 0; }
+
+.tc-hero *, .tc-othercats *, .tc-products *, .tc-trial-pack *, .tc-coffee *, .tc-drink-selector *,
+.tc-reviews *, .tc-comparison *, .tc-brewing *, .tc-story *, .tc-faq *, .tc-final-cta * { box-sizing: border-box; }
+
+.tc-hero__wrapper, .tc-othercats__container, .tc-products__container, .tc-trial-pack__container,
+.tc-coffee__container, .tc-drink-selector__container, .tc-reviews__container, .tc-comparison__container,
+.tc-brewing__container, .tc-story__container, .tc-faq__container, .tc-final-cta__container {
+  width: 100%;
+  max-width: var(--sk-wrap);
+  margin: 0 auto;
+  padding: 0 var(--sk-gutter);
+  text-align: left;
+}
+
+/* section headings: eyebrow → h2 → lead */
+.tc-products__heading, .tc-trial-pack__heading, .tc-coffee__heading, .tc-drink-selector__heading,
+.tc-reviews__heading, .tc-comparison__heading, .tc-brewing__heading, .tc-story__heading,
+.tc-faq__heading, .tc-final-cta__heading, .tc-othercats__heading {
+  max-width: 18ch;
+  margin: 0 0 28px !important;
+  text-align: left !important;
+}
+.tc-products__description, .tc-story__intro, .tc-trial-pack__subheading {
+  max-width: 58ch;
+  margin: -12px 0 28px !important;
+  color: var(--sk-muted);
+  font-family: var(--sk-sans) !important;
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0 !important;
+  text-align: left !important;
+}
+
+/* small mono meta line */
+.tc-hero__trust-line, .tc-reviews__rating, .tc-comparison__sizes-note p, .tc-coffee__kicker {
+  color: var(--sk-muted);
+  font: 400 11px/1.6 var(--sk-mono) !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+/* mono text link with arrow */
+.tc-brewing__product-link, .tc-othercats__cta, .tc-drink-selector__button, .tc-final-cta__tertiary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 0 2px !important;
+  background: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid currentColor !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  min-height: 0 !important;
+  width: auto !important;
+  color: var(--sk-acc) !important;
+  cursor: pointer;
+  font: 400 11px/1.5 var(--sk-mono) !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  transition: color 0.2s;
+}
+.tc-brewing__product-link:hover, .tc-othercats__card:hover .tc-othercats__cta,
+.tc-drink-selector__button:hover, .tc-final-cta__tertiary-link:hover { color: var(--sk-acc-hover) !important; }
+
+/* shared button look for the section-level buttons */
+.tc-hero__button, .tc-final-cta__button, .tc-trial-pack__button, .tc-coffee__add-to-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin: 0 !important;
+  padding: 14px 24px 14px 26px !important;
+  border: 1px solid var(--sk-dark) !important;
+  border-radius: 2px !important;
+  background: var(--sk-dark) !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  cursor: pointer;
+  font-family: var(--sk-sans) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.25s var(--sk-ease);
+}
+.tc-hero__button:hover, .tc-final-cta__button:hover, .tc-trial-pack__button:hover, .tc-coffee__add-to-cart:hover {
+  transform: translateY(-1px);
+}
+.tc-hero__button--primary:hover { background: var(--sk-acc-hover) !important; border-color: var(--sk-acc-hover) !important; }
+.tc-hero__button--secondary { background: transparent !important; color: var(--sk-fg) !important; }
+.tc-hero__button--secondary:hover { background: var(--sk-dark) !important; color: #fff !important; }
+.tc-trial-pack__button, .tc-coffee__add-to-cart, .tc-final-cta__button--primary {
+  background: var(--sk-yellow) !important;
+  border-color: var(--sk-yellow) !important;
+  color: var(--sk-on-yellow) !important;
+}
+.tc-trial-pack__button:hover, .tc-coffee__add-to-cart:hover, .tc-final-cta__button--primary:hover {
+  background: var(--sk-yellow-hover) !important;
+  border-color: var(--sk-yellow-hover) !important;
+}
+.tc-trial-pack__button:disabled, .tc-coffee__add-to-cart:disabled {
+  background: var(--sk-bg2) !important; border-color: var(--sk-line) !important; color: var(--sk-faint) !important;
+  cursor: not-allowed; transform: none;
+}
+
+/* hairline panel (cart style) */
+.tc-trial-pack__wrapper, .tc-coffee__wrapper {
+  display: grid;
+  background: var(--sk-card);
+  border: 1px solid var(--sk-line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.tc-trial-pack__visual, .tc-coffee__visual {
+  order: -1;
+  aspect-ratio: 4 / 3;
+  background: var(--sk-bg2);
+  border-bottom: 1px solid var(--sk-line);
+  overflow: hidden;
+}
+.tc-trial-pack__visual img, .tc-coffee__visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.tc-trial-pack__content, .tc-coffee__content { display: grid; align-content: start; gap: 16px; padding: 22px 18px 20px; min-width: 0; }
+.tc-trial-pack__content > *, .tc-coffee__content > * { margin: 0 !important; }
+
+/* ================= 01 hero ================= */
+.tc-hero { padding: 36px 0 48px; }
+.tc-hero__wrapper { display: grid; gap: 28px; }
+.tc-hero__content { display: grid; gap: 18px; min-width: 0; }
+.tc-hero__content > * { margin: 0 !important; }
+.tc-hero__content .tc-eyebrow { margin: 0 !important; }
+.tc-hero__heading {
+  max-width: 14ch;
+  color: var(--sk-fg) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: clamp(40px, 5.4vw, 78px) !important;
+  font-weight: 600 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.05em !important;
+  text-transform: none !important;
+}
+.tc-hero__subheading {
+  max-width: 46ch;
+  color: var(--sk-muted);
+  font-family: var(--sk-sans) !important;
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0 !important;
+}
+.tc-hero__ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px !important; }
+.tc-hero__trust-line { padding-top: 16px; border-top: 1px solid var(--sk-line); }
+.tc-hero__visual { aspect-ratio: 4 / 3; border: 1px solid var(--sk-line); border-radius: 3px; overflow: hidden; background: var(--sk-bg2); }
+.tc-hero__visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ================= also from PureLeven ================= */
+.tc-othercats { padding: 40px 0; }
+.tc-othercats__heading { font-size: clamp(24px, 2.6vw, 36px) !important; margin-bottom: 20px !important; }
+.tc-othercats__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.tc-othercats__card {
+  display: flex; flex-direction: column; min-width: 0;
+  background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px; overflow: hidden;
+  color: var(--sk-fg) !important; text-decoration: none !important;
+  transition: border-color 0.2s;
+}
+.tc-othercats__card:hover { border-color: #BFC3CC; }
+.tc-othercats__img-wrap { aspect-ratio: 16 / 10; background: var(--sk-bg2); border-bottom: 1px solid var(--sk-line); overflow: hidden; }
+.tc-othercats__img-wrap img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.tc-othercats__img-placeholder { display: grid; place-items: center; height: 100%; font-size: 32px; }
+.tc-othercats__card-body { display: grid; gap: 4px; padding: 12px 12px 14px; }
+.tc-othercats__card-body > * { margin: 0 !important; }
+.tc-othercats__label {
+  font-family: var(--sk-sans) !important; font-size: 15px !important; font-weight: 600 !important;
+  line-height: 1.3 !important; letter-spacing: -0.01em !important; color: var(--sk-fg) !important;
+}
+.tc-othercats__sub { display: none; color: var(--sk-muted); font-size: 14px !important; line-height: 1.5 !important; letter-spacing: 0 !important; }
+.tc-othercats__cta { margin-top: 6px !important; justify-self: start; }
+
+/* ================= 02 teas ================= */
+.tc-products__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns-mobile, 2), minmax(0, 1fr));
+  gap: 12px;
+}
+.tc-products__item { min-width: 0; }
+
+/* ================= 03 trial pack ================= */
+.tc-trial-pack__heading { max-width: 16ch; }
+.tc-trial-pack__subheading { margin: 0 !important; font-size: 15px !important; }
+.tc-trial-pack__contents { display: grid; border-top: 1px solid var(--sk-line); counter-reset: tp; }
+.tc-trial-pack__content-item {
+  display: flex; align-items: baseline; gap: 14px;
+  padding: 12px 0; border-bottom: 1px solid var(--sk-line);
+  counter-increment: tp;
+}
+.tc-trial-pack__content-item::before {
+  content: counter(tp, decimal-leading-zero);
+  color: var(--sk-acc);
+  font: 700 11px/1 var(--sk-mono);
+}
+.tc-trial-pack__content-icon { display: none; }
+.tc-trial-pack__content-text { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.tc-trial-pack__price-display { display: flex; flex-direction: row-reverse; justify-content: flex-end; align-items: baseline; gap: 10px; }
+.tc-trial-pack__price-current { font-size: 28px; font-weight: 600; line-height: 1.1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.tc-trial-pack__price-original { font-size: 14px; color: var(--sk-faint); text-decoration: line-through; }
+.tc-trial-pack-form .tc-trial-pack__button { width: 100%; min-height: 52px; }
+
+/* ================= 04 coffee ================= */
+.tc-coffee__product-title {
+  font-family: var(--sk-sans) !important; font-size: 22px !important; font-weight: 600 !important;
+  line-height: 1.2 !important; letter-spacing: -0.03em !important; text-transform: none !important;
+}
+.tc-coffee__product-link { color: var(--sk-fg) !important; text-decoration: none !important; font: inherit !important; letter-spacing: inherit !important; }
+.tc-coffee__product-link:hover { color: var(--sk-acc) !important; }
+.tc-coffee__kicker { color: var(--sk-acc); }
+.tc-coffee__description {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;
+  color: var(--sk-fg2); font-size: 15px !important; line-height: 1.65 !important; letter-spacing: 0 !important;
+}
+.tc-coffee__specs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tc-coffee__spec-badge {
+  padding: 6px 8px; background: var(--sk-bg); border: 1px solid var(--sk-line2); border-radius: 2px;
+  color: var(--sk-fg2); font: 400 10.5px/1.2 var(--sk-mono) !important; letter-spacing: 0.08em !important; text-transform: uppercase !important;
+}
+.tc-coffee__pricing { display: flex; flex-direction: row-reverse; justify-content: flex-end; align-items: baseline; gap: 10px; }
+.tc-coffee__price-current { font-size: 28px; font-weight: 600; line-height: 1.1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.tc-coffee__price-original { font-size: 14px; color: var(--sk-faint); text-decoration: line-through; }
+.tc-coffee-form { display: grid; gap: 10px; }
+.tc-coffee__variant-selector {
+  position: relative; display: flex; flex-wrap: wrap; gap: 1px;
+  background: var(--sk-line2); border: 1px solid var(--sk-line2); border-radius: 2px; overflow: hidden;
+}
+.tc-coffee__variant-radio { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; }
+.tc-coffee__variant-pill {
+  flex: 1 1 0; min-width: calc(25% - 1px); display: flex; align-items: center; justify-content: center;
+  min-height: 44px; margin: 0 !important; padding: 6px; background: #fff; color: var(--sk-fg); cursor: pointer; text-align: center;
+  font: 400 11px/1.25 var(--sk-mono) !important; letter-spacing: 0.06em !important; text-transform: uppercase !important;
+  transition: background-color 0.2s, color 0.2s;
+}
+.tc-coffee__variant-pill:hover { background: var(--sk-bg2); }
+.tc-coffee__variant-radio:checked + .tc-coffee__variant-pill {
+  background: var(--sk-acc-soft); color: var(--sk-acc); font-weight: 700 !important; box-shadow: inset 0 0 0 1px var(--sk-acc);
+}
+.tc-coffee__variant-radio:focus-visible + .tc-coffee__variant-pill { outline: 2px solid var(--sk-acc); outline-offset: -3px; }
+.tc-coffee__add-to-cart { width: 100%; min-height: 52px; }
+
+/* ================= 05 find your cup ================= */
+.tc-drink-selector__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; counter-reset: dk; }
+.tc-drink-selector__card {
+  display: flex; flex-direction: column; gap: 10px; min-width: 0; min-height: 150px;
+  padding: 18px 16px; background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px;
+  counter-increment: dk;
+}
+.tc-drink-selector__card > * { margin: 0 !important; }
+.tc-drink-selector__card::before { content: counter(dk, decimal-leading-zero); color: var(--sk-acc); font: 700 14px/1 var(--sk-mono); }
+.tc-drink-selector__icon { display: none; }
+.tc-drink-selector__card-title {
+  color: var(--sk-muted) !important; font: 400 10.5px/1.5 var(--sk-mono) !important;
+  letter-spacing: 0.1em !important; text-transform: uppercase !important;
+}
+.tc-drink-selector__card-use-case {
+  color: var(--sk-fg); font-family: var(--sk-sans) !important; font-size: 17px !important; font-weight: 600 !important;
+  line-height: 1.25 !important; letter-spacing: -0.02em !important;
+}
+.tc-drink-selector__button { margin-top: auto !important; align-self: flex-start; }
+.tc-drink-selector__button::after { content: '\2192'; }
+
+/* ================= 06 reviews ================= */
+.tc-reviews__rating { margin: -16px 0 24px !important; }
+.tc-reviews__grid { display: grid; gap: 12px; }
+.tc-reviews__card {
+  display: flex; flex-direction: column; gap: 12px; min-width: 0;
+  padding: 18px; background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 2px;
+}
+.tc-reviews__card > * { margin: 0 !important; }
+.tc-reviews__stars { color: var(--sk-acc); font-size: 13px; letter-spacing: 2px; line-height: 1; }
+.tc-reviews__quote {
+  color: var(--sk-fg); font-family: var(--sk-sans) !important; font-size: 17px !important; font-weight: 600 !important;
+  line-height: 1.45 !important; letter-spacing: -0.02em !important;
+}
+.tc-reviews__author {
+  margin-top: auto !important; padding-top: 12px; border-top: 1px solid var(--sk-line);
+  color: var(--sk-muted); font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important;
+}
+
+/* ================= 07 compare ================= */
+.tc-comparison__table-wrapper { background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px; overflow: hidden; }
+.tc-comparison__table { width: 100%; margin: 0; border: 0; border-collapse: collapse; table-layout: fixed; }
+.tc-comparison__header-row { display: none; }
+.tc-comparison__body-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; padding: 16px; border-top: 1px solid var(--sk-line); }
+.tc-comparison__body-row:first-child { border-top: 0; }
+.tc-comparison__body-cell {
+  display: block; min-width: 0; padding: 0; border: 0; text-align: left;
+  color: var(--sk-fg2); font-size: 14px; line-height: 1.45;
+}
+.tc-comparison__body-cell::before {
+  content: attr(data-label); display: block; margin-bottom: 2px;
+  color: var(--sk-muted); font: 400 10px/1.5 var(--sk-mono); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.tc-comparison__body-cell--label { grid-column: 1 / -1; }
+.tc-comparison__body-cell--label::before { content: none; }
+.tc-comparison__product-link {
+  color: var(--sk-fg) !important; text-decoration: none !important;
+  font-family: var(--sk-sans) !important; font-size: 16px !important; font-weight: 600 !important; letter-spacing: -0.01em !important;
+}
+.tc-comparison__product-link:hover { color: var(--sk-acc) !important; }
+.tc-comparison__sizes-note { margin-top: 16px; }
+.tc-comparison__sizes-note p { margin: 0 !important; }
+
+/* ================= 08 brewing ================= */
+.tc-brewing__tabs {
+  display: flex; gap: 1px; max-width: 560px;
+  background: var(--sk-line2); border: 1px solid var(--sk-line2); border-radius: 2px; overflow: hidden;
+}
+.tc-brewing__tab-button {
+  flex: 1 1 0; min-width: 0; min-height: 48px; margin: 0 !important; padding: 8px 6px !important;
+  background: #fff !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+  color: var(--sk-fg) !important; cursor: pointer;
+  font: 400 11px/1.3 var(--sk-mono) !important; letter-spacing: 0.08em !important; text-transform: uppercase !important;
+  transition: background-color 0.2s, color 0.2s;
+}
+.tc-brewing__tab-button:hover { background: var(--sk-bg2) !important; }
+.tc-brewing__tab-button.is-active {
+  background: var(--sk-acc-soft) !important; color: var(--sk-acc) !important; font-weight: 700 !important;
+  box-shadow: inset 0 0 0 1px var(--sk-acc) !important;
+}
+.tc-brewing__panels { max-width: 760px; margin-top: 24px; }
+.tc-brewing__panel { display: none; }
+.tc-brewing__panel.is-active { display: block; }
+.tc-brewing__steps { margin: 0 0 20px !important; padding: 0 !important; list-style: none !important; counter-reset: bs; border-top: 1px solid var(--sk-line); }
+.tc-brewing__steps li {
+  position: relative; margin: 0 !important; padding: 16px 0 16px 40px !important; border-bottom: 1px solid var(--sk-line);
+  counter-increment: bs; color: var(--sk-fg);
+  font-family: var(--sk-sans) !important; font-size: 16px !important; font-weight: 500 !important; line-height: 1.5 !important; letter-spacing: -0.01em !important;
+  list-style: none !important;
+}
+.tc-brewing__steps li::before {
+  content: counter(bs, decimal-leading-zero); position: absolute; left: 0; top: 20px;
+  color: var(--sk-acc); font: 700 11px/1 var(--sk-mono);
+}
+.tc-brewing__steps li::marker { content: none; }
+
+/* ================= 09 story ================= */
+.tc-story__steps { display: grid; gap: 12px; }
+.tc-story__connector { display: none; }
+.tc-story__step {
+  display: flex; flex-direction: column; gap: 10px; min-width: 0;
+  padding: 20px 18px; background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px; text-align: left;
+}
+.tc-story__step > * { margin: 0 !important; }
+.tc-story__step-number { color: var(--sk-acc); font: 700 14px/1 var(--sk-mono) !important; letter-spacing: 0 !important; }
+.tc-story__step-title {
+  color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 22px !important; font-weight: 500 !important;
+  line-height: 1.1 !important; letter-spacing: -0.03em !important; text-transform: none !important;
+}
+.tc-story__step-copy { max-width: none; color: var(--sk-muted); font-size: 15px !important; line-height: 1.45 !important; letter-spacing: 0 !important; }
+
+/* ================= 10 faq ================= */
+.tc-faq__container { display: grid; }
+.tc-faq__list { display: grid; border-bottom: 1px solid var(--sk-line); }
+.tc-faq__item { margin: 0; padding: 0; background: none; border: 0; border-top: 1px solid var(--sk-line); border-radius: 0; box-shadow: none; }
+.tc-faq__question {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  padding: 20px 0; cursor: pointer; list-style: none;
+  color: var(--sk-fg); font-family: var(--sk-sans) !important; font-size: 16px !important; font-weight: 600 !important;
+  line-height: 1.45 !important; letter-spacing: -0.01em !important;
+}
+.tc-faq__question::-webkit-details-marker { display: none; }
+.tc-faq__question::marker { content: none; }
+.tc-faq__icon { position: relative; flex: none; width: 14px; height: 14px; margin-top: 5px; }
+.tc-faq__icon::before, .tc-faq__icon::after {
+  content: ''; position: absolute; left: 0; top: 6px; width: 14px; height: 1.5px; background: var(--sk-fg);
+  transition: transform 0.25s var(--sk-ease);
+}
+.tc-faq__icon::after { transform: rotate(90deg); }
+.tc-faq__item[open] .tc-faq__icon::after { transform: rotate(0deg); }
+.tc-faq__answer { max-width: 68ch; padding: 0 30px 20px 0; color: var(--sk-fg2); font-size: 15px; line-height: 1.65; }
+.tc-faq__answer p { margin: 0 0 8px !important; font-size: 15px !important; line-height: 1.65 !important; letter-spacing: 0 !important; color: inherit; }
+.tc-faq__answer p:last-child { margin-bottom: 0 !important; }
+
+/* ================= closing band ================= */
+.tc-final-cta { padding: 64px 0; background: #0B0B0F !important; border-top: 0; color: #fff; }
+.tc-final-cta__container { display: grid; gap: 20px; }
+.tc-final-cta__container > * { margin: 0 !important; }
+.tc-final-cta .tc-eyebrow { color: #9AA0AD; }
+.tc-final-cta .tc-eyebrow i { color: var(--sk-yellow); }
+.tc-final-cta .tc-final-cta__heading { max-width: 16ch; color: #fff !important; }
+.tc-final-cta__buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tc-final-cta__button--secondary { background: transparent !important; border-color: rgba(255, 255, 255, 0.35) !important; color: #fff !important; }
+.tc-final-cta__button--secondary:hover { background: #fff !important; border-color: #fff !important; color: var(--sk-fg) !important; }
+.tc-final-cta__tertiary { color: #9AA0AD; font-size: 14px !important; letter-spacing: 0 !important; }
+.tc-final-cta__tertiary-link { margin-left: 8px; color: var(--sk-yellow) !important; }
+.tc-final-cta__tertiary-link:hover { color: #fff !important; }
+
+/* ================= tablet / desktop ================= */
+@media (min-width: 750px) {
+  .tc-hero, .tc-othercats, .tc-products, .tc-trial-pack, .tc-coffee, .tc-drink-selector,
+  .tc-reviews, .tc-comparison, .tc-brewing, .tc-story, .tc-faq { padding: 80px 0; }
+  .tc-othercats { padding: 56px 0; }
+  .tc-final-cta { padding: 96px 0; }
+
+  .tc-products__heading, .tc-trial-pack__heading, .tc-coffee__heading, .tc-drink-selector__heading,
+  .tc-reviews__heading, .tc-comparison__heading, .tc-brewing__heading, .tc-story__heading,
+  .tc-faq__heading, .tc-othercats__heading { margin-bottom: 40px !important; }
+  .tc-products__description, .tc-story__intro { margin-top: -24px !important; margin-bottom: 40px !important; }
+
+  .tc-hero__ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tc-othercats__card-body { padding: 16px 18px 18px; }
+  .tc-othercats__label { font-size: 20px !important; font-weight: 500 !important; letter-spacing: -0.03em !important; }
+  .tc-othercats__sub { display: block; }
+
+  .tc-products__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .tc-drink-selector__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .tc-drink-selector__card { min-height: 190px; padding: 22px 20px; }
+  .tc-drink-selector__card-use-case { font-size: 20px !important; }
+  .tc-reviews__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .tc-story__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .tc-story__step { padding: 24px 22px; }
+  .tc-story__step-title { font-size: 24px !important; }
+
+  .tc-final-cta__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .tc-comparison__header-row { display: table-row; }
+  .tc-comparison__body-row { display: table-row; padding: 0; }
+  .tc-comparison__header-cell {
+    padding: 12px 18px; background: var(--sk-bg2); border: 0; border-bottom: 1px solid var(--sk-line); text-align: left;
+    color: var(--sk-muted); font: 400 11px/1.4 var(--sk-mono) !important; letter-spacing: 0.1em !important; text-transform: uppercase !important;
+  }
+  .tc-comparison__body-cell { display: table-cell; padding: 16px 18px; border-top: 1px solid var(--sk-line); vertical-align: top; }
+  .tc-comparison__body-row:first-child .tc-comparison__body-cell { border-top: 0; }
+  .tc-comparison__body-cell::before { content: none; }
+  .tc-comparison__header-cell--label, .tc-comparison__body-cell--label { width: 26%; }
+}
+
+@media (min-width: 990px) {
+  .tc-hero { padding: 72px 0 96px; }
+  .tc-hero__wrapper { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 56px; align-items: center; }
+  .tc-hero__content { gap: 22px; }
+  .tc-hero__visual { aspect-ratio: 5 / 4; }
+
+  .tc-products__grid { grid-template-columns: repeat(var(--columns-desktop, 4), minmax(0, 1fr)); gap: 20px; }
+
+  .tc-trial-pack__wrapper, .tc-coffee__wrapper { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .tc-trial-pack__wrapper, .tc-coffee__wrapper { min-height: 460px; }
+  .tc-trial-pack__visual, .tc-coffee__visual { position: relative; order: 0; aspect-ratio: auto; border-bottom: 0; }
+  .tc-trial-pack__visual img, .tc-coffee__visual img { position: absolute; inset: 0; }
+  .tc-trial-pack__visual { border-left: 1px solid var(--sk-line); }
+  .tc-coffee__visual { order: -1; border-right: 1px solid var(--sk-line); }
+  .tc-coffee--image-right .tc-coffee__visual { order: 1; border-right: 0; border-left: 1px solid var(--sk-line); }
+  .tc-trial-pack__content, .tc-coffee__content { gap: 20px; padding: 44px 40px; }
+  .tc-trial-pack-form .tc-trial-pack__button, .tc-coffee__add-to-cart { width: auto; min-width: 240px; justify-self: start; }
+  .tc-coffee-form { justify-items: start; }
+  .tc-coffee__variant-selector { width: 100%; max-width: 420px; }
+  .tc-coffee__product-title { font-size: 30px !important; font-weight: 500 !important; }
+
+  .tc-faq__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: 64px; align-items: start; }
+  .tc-faq__container > .tc-eyebrow, .tc-faq__heading { grid-column: 1; }
+  .tc-faq__list { grid-column: 2; grid-row: 1 / span 3; }
+}
+
+/* panel headings sit in a grid with its own gap */
+.tc-trial-pack__content > .tc-trial-pack__heading { margin: 0 !important; }
+
+@media (min-width: 750px) {
+  .tc-othercats__card { flex-direction: row; align-items: stretch; }
+  .tc-othercats__img-wrap { flex: none; width: 168px; aspect-ratio: 1 / 1; border-bottom: 0; border-right: 1px solid var(--sk-line); }
+  .tc-othercats__card-body { align-content: center; padding: 18px 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-hero *, .tc-final-cta *, .tc-faq *, .tc-brewing *, .tc-coffee *, .tc-trial-pack * { transition: none !important; }
+}

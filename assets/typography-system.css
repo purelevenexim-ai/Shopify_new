@@ -1,0 +1,158 @@
+/* PureLeven Typography System – Diaspora-Inspired */
+
+:root {
+  /* Font families — Simply Organic look: serif display + clean sans body */
+  --font-serif-family: 'Bodoni Moda', 'p22-mackinac-pro', Georgia, serif;
+  --font-sans-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Typography scale */
+  --text-eyebrow: 1rem;
+  --text-body-lg: 1.3rem;
+  --text-body: 1.1rem;
+  --text-body-sm: 1rem;
+  --text-descriptive: 1.35rem;
+  --text-button: 1.15rem;
+}
+
+/* Heading hierarchy – Serif (Simply Organic editorial: light weight, normal tracking) */
+h1,
+.h1 {
+  font-family: var(--font-serif-family);
+  font-weight: 300;
+  letter-spacing: normal;
+  line-height: 1.1;
+}
+
+h2,
+.h2 {
+  font-family: var(--font-serif-family);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.15;
+}
+
+h3,
+.h3,
+h4,
+.h4 {
+  font-family: var(--font-serif-family);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.2;
+}
+
+h5,
+.h5,
+h6,
+.h6 {
+  font-family: var(--font-sans-family);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Body text – Sans-serif */
+body,
+p,
+.body-text {
+  font-family: var(--font-sans-family);
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+/* Eyebrow/Overline – Uppercase accent */
+.eyebrow,
+.overline {
+  font-family: var(--font-sans-family);
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--pl-clay, #A67C52);
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+/* Secondary text color */
+.text-secondary {
+  color: var(--pl-text-secondary, #6B6B6B);
+}
+
+/* Muted text */
+.text-muted {
+  color: var(--pl-text-secondary, #8A8A8A);
+}
+
+/* Descriptive/lead text – larger body text */
+.text-descriptive {
+  font-family: var(--font-sans-family);
+  font-size: var(--text-descriptive);
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--pl-text-secondary, #6B6B6B);
+}
+
+/* Button text */
+.button,
+button,
+a.button {
+  font-family: var(--font-sans-family);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Responsive typography */
+@media screen and (max-width: 749px) {
+  h1,
+  .h1 {
+    font-size: clamp(2.8rem, 9vw, 3.6rem);
+  }
+
+  h2,
+  .h2 {
+    font-size: clamp(2.2rem, 6vw, 2.8rem);
+  }
+
+  h3,
+  .h3 {
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+  }
+
+  body,
+  p,
+  .body-text {
+    font-size: var(--text-body-sm);
+    line-height: 1.7;
+  }
+
+  .text-descriptive {
+    font-size: 1.1rem;
+  }
+
+  .text-body-lg {
+    font-size: 1.15rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  h1,
+  .h1 {
+    font-size: clamp(5.2rem, 12vw, 6.4rem);
+  }
+
+  h2,
+  .h2 {
+    font-size: clamp(3.6rem, 8vw, 4.4rem);
+  }
+
+  h3,
+  .h3 {
+    font-size: clamp(2rem, 5vw, 2.4rem);
+  }
+
+  body,
+  p,
+  .body-text {
+    font-size: var(--text-body);
+    line-height: 1.75;
+  }
+}

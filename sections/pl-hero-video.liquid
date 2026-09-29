@@ -1,0 +1,455 @@
+{% comment %}PureLeven Custom Hero — text left, video right (desktop) / video top (mobile){% endcomment %}
+
+<style>
+.pl-hero-wrap { width: 100%; }
+
+/* ── ANNOUNCEMENT BAR ── */
+.pl-announcement {
+  background: #078362;
+  color: #fff;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+/* ── HERO SECTION: split layout ── */
+.pl-hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+  background: #ffffff;
+}
+
+/* LEFT — text */
+.pl-hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 56px 48px 56px 56px;
+  background: #ffffff;
+}
+
+.pl-eyebrow-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.pl-eyebrow-rule {
+  width: 2px;
+  height: 28px;
+  background: #078362;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+.pl-eyebrow-text {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #078362;
+  font-weight: 600;
+}
+
+.pl-hero-heading {
+  font-size: clamp(28px, 3vw, 46px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #121212;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.pl-hero-sub {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #4a5e58;
+  max-width: 420px;
+  margin-bottom: 32px;
+}
+
+.pl-hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.pl-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fce477;
+  color: #121212;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 13px 28px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: background 0.18s, transform 0.12s;
+}
+.pl-btn-primary:hover { background: #f7d84a; transform: translateY(-1px); }
+
+.pl-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #078362;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 13px 20px;
+  border-radius: 4px;
+  border: 1.5px solid #078362;
+  transition: background 0.18s, color 0.18s;
+}
+.pl-btn-secondary:hover { background: #078362; color: #fff; }
+
+.pl-stat-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: #f0f8f5;
+  border: 1.5px solid #c2dfd8;
+  border-radius: 10px;
+  padding: 16px 22px;
+}
+.pl-stat-num {
+  font-size: 36px;
+  font-weight: 800;
+  color: #078362;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.pl-stat-meta { display: flex; flex-direction: column; gap: 2px; }
+.pl-stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4a6e64;
+  font-weight: 600;
+}
+.pl-stat-place {
+  font-size: 11px;
+  color: #056B50; /* was #078362 — 4.39:1 on white, just under the 4.5 AA floor */
+  font-weight: 500;
+}
+
+/* RIGHT — video */
+.pl-hero-right {
+  position: relative;
+  overflow: hidden;
+  background: #0a2820;
+}
+.pl-hero-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(12, 32, 27, 0.55);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(6px);
+}
+.pl-hero-play[hidden] { display: none; }
+.pl-hero-play:focus-visible {
+  outline: 3px solid #FACA5A;
+  outline-offset: 3px;
+}
+
+.pl-hero-right video,
+.pl-hero-right img.pl-hero-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── TRUST BAR ── */
+.pl-trust-bar {
+  background: #e4edeb;
+  border-top: 1px solid #c8ddd8;
+}
+.pl-trust-inner {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.pl-trust-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 16px;
+  border-right: 1px solid rgba(11,79,69,0.12);
+}
+.pl-trust-item:last-child { border-right: none; }
+.pl-trust-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.pl-trust-text strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #121212;
+}
+.pl-trust-text span {
+  font-size: 12px;
+  color: #4a6e64;
+}
+
+/* ── MOBILE ── */
+@media screen and (max-width: 749px) {
+  .pl-hero-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    min-height: unset;
+  }
+  .pl-hero-right {
+    order: -1;
+    position: relative;
+    aspect-ratio: 16 / 9;
+    height: unset;
+  }
+  .pl-hero-right video,
+  .pl-hero-right img.pl-hero-poster {
+    position: absolute;
+  }
+  .pl-hero-left {
+    padding: 28px 20px 24px;
+  }
+  .pl-hero-heading { font-size: 28px; }
+  .pl-hero-sub { font-size: 14px; margin-bottom: 24px; max-width: 100%; }
+  .pl-hero-ctas { margin-bottom: 24px; }
+  .pl-stat-card { width: 100%; }
+  .pl-trust-inner {
+    flex-wrap: wrap;
+    padding: 0 16px;
+  }
+  .pl-trust-item {
+    width: 50%;
+    flex: none;
+    padding: 14px 8px;
+    border-bottom: 1px solid rgba(11,79,69,0.1);
+    border-right: 1px solid rgba(11,79,69,0.1);
+  }
+  .pl-trust-item:nth-child(2) { border-right: none; }
+  .pl-trust-item:nth-child(3),
+  .pl-trust-item:nth-child(4) { border-bottom: none; }
+  .pl-trust-item:last-child { border-right: none; }
+  .pl-trust-text strong { font-size: 12px; }
+  .pl-trust-text span { font-size: 11px; }
+  .pl-trust-icon { font-size: 17px; }
+}
+</style>
+
+<div class="pl-hero-wrap">
+
+  {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
+  <div class="pl-announcement">{{ section.settings.announcement_text }}</div>
+  {%- endif -%}
+
+  <div class="pl-hero-section">
+
+    <div class="pl-hero-left">
+      {%- if section.settings.eyebrow != blank -%}
+      <div class="pl-eyebrow-wrap">
+        <span class="pl-eyebrow-rule"></span>
+        <span class="pl-eyebrow-text">{{ section.settings.eyebrow }}</span>
+      </div>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+      <h1 class="pl-hero-heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.subtext != blank -%}
+      <p class="pl-hero-sub">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+
+      <div class="pl-hero-ctas">
+        {%- if section.settings.cta1_label != blank -%}
+        <a href="{{ section.settings.cta1_url | default: '/collections/all' }}" class="pl-btn-primary">{{- section.settings.cta1_label -}}</a>
+        {%- endif -%}
+        {%- if section.settings.cta2_label != blank -%}
+        <a href="{{ section.settings.cta2_url | default: '/blogs/cooking-spices' }}" class="pl-btn-secondary">{{- section.settings.cta2_label -}}</a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.stat_number != blank -%}
+      <div class="pl-stat-card">
+        <div class="pl-stat-num">{{ section.settings.stat_number }}</div>
+        <div class="pl-stat-meta">
+          <span class="pl-stat-label">{{ section.settings.stat_label }}</span>
+          <span class="pl-stat-place">{{ section.settings.stat_place }}</span>
+        </div>
+      </div>
+      {%- endif -%}
+    </div>
+
+    <div class="pl-hero-right">
+      {%- if section.settings.video != blank -%}
+        {%- comment -%}
+          Shopify only exposes two sources to the storefront for this video and
+          both are 1080p — the 480p and 720p renditions exist in the CDN but a
+          theme cannot reach them. So the lever is *when* the bytes arrive, not
+          which file.
+
+          Phones get the poster and nothing else until they tap: 2.7 MB of
+          decoration is not worth a mobile data plan. Desktop keeps the ambient
+          loop but only after load, so it never competes with LCP.
+
+          If the source video is ever re-uploaded at 720p, every visitor gets the
+          smaller file automatically and this still holds.
+        {%- endcomment -%}
+        {%- comment -%}
+          The poster is the largest thing on the first screen, so the browser is
+          told about it now, at high priority, instead of finding it late.
+          900px covers a phone at 2x and a laptop column at 1.5x.
+        {%- endcomment -%}
+        {%- capture pl_hero_video_html -%}
+          {{- section.settings.video
+              | video_tag: loop: true, muted: true, playsinline: true,
+                           preload: 'none', class: 'pl-hero-video', image_size: '900x' -}}
+        {%- endcapture -%}
+        {%- assign pl_poster = pl_hero_video_html | split: 'poster="' | last | split: '"' | first -%}
+        {%- if pl_hero_video_html contains 'poster="' and pl_poster != blank -%}
+          <link rel="preload" as="image" href="{{ pl_poster }}" fetchpriority="high">
+        {%- endif -%}
+        {{- pl_hero_video_html -}}
+        <button type="button" class="pl-hero-play" aria-label="Play the film">
+          <span aria-hidden="true">&#9654;</span>
+        </button>
+        <script>
+          (function () {
+            var wrap = document.currentScript.parentNode;
+            var v = wrap.querySelector('video.pl-hero-video');
+            var btn = wrap.querySelector('.pl-hero-play');
+            if (!v) return;
+
+            // Detach the sources so preload="none" cannot be second-guessed.
+            var held = [].slice.call(v.querySelectorAll('source'));
+            held.forEach(function (s) { s.parentNode.removeChild(s); });
+
+            var started = false;
+            function start() {
+              if (started) return;
+              started = true;
+              if (btn) btn.hidden = true;
+              held.forEach(function (s) { v.appendChild(s); });
+              v.load();
+              var p = v.play();
+              if (p && p.catch) p.catch(function () { if (btn) btn.hidden = false; started = false; });
+            }
+
+            var slow = navigator.connection && (navigator.connection.saveData ||
+                       /2g/.test(navigator.connection.effectiveType || ''));
+
+            if (slow) {
+              // Data saver / 2G only: poster, the visitor decides.
+              if (btn) btn.hidden = false;
+              btn && btn.addEventListener('click', start);
+              v.addEventListener('click', start);
+            } else {
+              if (btn) btn.hidden = true;
+              var kick = function () {
+                if (window.requestIdleCallback) requestIdleCallback(start, { timeout: 2000 });
+                else setTimeout(start, 600);
+              };
+              if (document.readyState === 'complete') kick();
+              else window.addEventListener('load', kick);
+            }
+          })();
+        </script>
+      {%- elsif section.settings.cover_image != blank -%}
+        <img src="{{ section.settings.cover_image | image_url: width: 1200 }}" alt="{{ section.settings.heading | escape }}" class="pl-hero-poster" loading="eager">
+      {%- endif -%}
+    </div>
+
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+  <div class="pl-trust-bar">
+    <div class="pl-trust-inner">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'trust_item' -%}
+        <div class="pl-trust-item" {{ block.shopify_attributes }}>
+          <span class="pl-trust-icon">{{ block.settings.icon }}</span>
+          <div class="pl-trust-text">
+            <strong>{{ block.settings.title }}</strong>
+            <span>{{ block.settings.subtitle }}</span>
+          </div>
+        </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "PL Hero Video",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {"type": "header", "content": "Announcement"},
+    {"type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": false},
+    {"type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Farm-to-Home Spices from Kerala · Free Shipping on orders above ₹649"},
+    {"type": "header", "content": "Video"},
+    {"type": "video", "id": "video", "label": "Video (Shopify-hosted)"},
+    {"type": "image_picker", "id": "cover_image", "label": "Fallback image (shown if no video)"},
+    {"type": "header", "content": "Content"},
+    {"type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "Kerala · Harvested to order"},
+    {"type": "text", "id": "heading", "label": "Heading", "default": "Fresh Spices, Chosen at Origin"},
+    {"type": "textarea", "id": "subtext", "label": "Subtext", "default": "We source directly from small-batch farms in Idukki and Wayanad — no middlemen, no warehouse months."},
+    {"type": "header", "content": "CTAs"},
+    {"type": "text", "id": "cta1_label", "label": "Primary button label", "default": "Shop Spices"},
+    {"type": "url", "id": "cta1_url", "label": "Primary button URL"},
+    {"type": "text", "id": "cta2_label", "label": "Secondary button label", "default": "Read our guides"},
+    {"type": "url", "id": "cta2_url", "label": "Secondary button URL"},
+    {"type": "header", "content": "Provenance stat"},
+    {"type": "text", "id": "stat_number", "label": "Stat number", "default": "12+"},
+    {"type": "text", "id": "stat_label", "label": "Stat label", "default": "Farm partners"},
+    {"type": "text", "id": "stat_place", "label": "Location", "default": "Idukki & Wayanad"}
+  ],
+  "blocks": [
+    {
+      "name": "Trust item",
+      "type": "trust_item",
+      "limit": 4,
+      "settings": [
+        {"type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🌿"},
+        {"type": "text", "id": "title", "label": "Title", "default": "No middlemen"},
+        {"type": "text", "id": "subtitle", "label": "Subtitle", "default": "Farm → your door"}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PL Hero Video",
+      "blocks": [
+        {"type": "trust_item", "settings": {"icon": "🌿", "title": "No middlemen", "subtitle": "Farm → your door"}},
+        {"type": "trust_item", "settings": {"icon": "📦", "title": "Free shipping", "subtitle": "Orders above ₹649"}},
+        {"type": "trust_item", "settings": {"icon": "⚡", "title": "Dispatched in 24h", "subtitle": "Mon – Sat"}},
+        {"type": "trust_item", "settings": {"icon": "✦", "title": "Small batch only", "subtitle": "Seasonal harvests"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

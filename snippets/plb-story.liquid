@@ -1,0 +1,59 @@
+{%- comment -%}
+  plb-story.liquid — founder note + real Google reviews.
+  Defaults are repeated in Liquid rather than left to the schema because the
+  theme editor writes empty strings on save, which counts as "set".
+{%- endcomment -%}
+
+{%- liquid
+  assign f_name = founder_name | default: 'Basil Thomas'
+  assign f_role = founder_role | default: 'Founder'
+  assign f_quote = founder_quote | default: 'We grow and pack from our own farm in Idukki — no middlemen, no warehouse months. Every order leaves within 24 hours of being packed, which is why it still smells like the farm when it reaches you.'
+
+  assign r1n = 'Abu George'
+  assign r1t = 'I purchased 3 in 1 combo pack online. All the items are very good quality. Thank you Pure Leven team.'
+  assign r1a = 'https://lh3.googleusercontent.com/a-/ALV-UjXwkW7qXRIi1i_fzWnvRirAM5daQ3ly0_sm0YW2HvqqT1P0iJs=w120-h120-p-rp-mo-br100'
+  assign r2n = 'Amal P'
+  assign r2t = 'The tea is amazing! Personal favourite is the Cardamom Chai. The packaging is top notch and the delivery was quick.'
+  assign r2a = 'https://lh3.googleusercontent.com/a/ACg8ocKs-CaXGC5edM8qEJJkJr9QLz34JWGjAge55k8pyyEjHMTcN6E=w120-h120-p-rp-mo-ba12-br100'
+  assign r3n = 'Md. Kalim'
+  assign r3t = 'Quality is very good and quick delivery, same quality for each and every dispatch. I am a regular buyer.'
+  assign r3a = 'https://lh3.googleusercontent.com/a-/ALV-UjU2WcwEPcuMqjP3dgrS9vEFN3Lww90xxxLoCE-nLCEFY_g2EcowyA=w120-h120-p-rp-mo-ba12-br100'
+-%}
+
+{%- comment -%}
+  The full quote belongs on the About page. A shopper this far down the cart
+  needs one line of provenance, not a paragraph between them and checkout.
+{%- endcomment -%}
+<div class="plb-card plb-founder">
+  <img src="{{ 'pl-founder-basil.webp' | asset_url }}" alt="{{ f_name | escape }}" width="74" height="74" loading="lazy">
+  <div>
+    <h4>{{ f_name }}</h4>
+    <p class="plb-founder__role">{{ f_role }}</p>
+    <p class="plb-founder__q">&ldquo;We grow it, we pack it, we send it. If anything is off, message me.&rdquo;</p>
+    <a class="plb-founder__more" href="/pages/about">Meet the founder</a>
+  </div>
+</div>
+
+<section class="plb-card plb-rev" aria-label="Customer reviews">
+  <div class="plb-rev__h">
+    <span class="plb-rev__score">4.9</span>
+    <span>
+      <span class="plb-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span class="plb-rev__n">56 Google reviews</span>
+    </span>
+  </div>
+  <div class="plb-rev__list">
+    <div class="plb-rev__one">
+      <img src="{{ r1a }}" alt="" width="34" height="34" loading="lazy" referrerpolicy="no-referrer">
+      <div><b>{{ r1n }}</b><p>{{ r1t }}</p></div>
+    </div>
+    <div class="plb-rev__one">
+      <img src="{{ r2a }}" alt="" width="34" height="34" loading="lazy" referrerpolicy="no-referrer">
+      <div><b>{{ r2n }}</b><p>{{ r2t }}</p></div>
+    </div>
+    <div class="plb-rev__one">
+      <img src="{{ r3a }}" alt="" width="34" height="34" loading="lazy" referrerpolicy="no-referrer">
+      <div><b>{{ r3n }}</b><p>{{ r3t }}</p></div>
+    </div>
+  </div>
+</section>

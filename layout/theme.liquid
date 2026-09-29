@@ -12,23 +12,35 @@
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
+    {%- comment -%}
+      Fastrr / Shiprocket checkout is off in this theme: the cart hands over to the
+      PureLeven checkout page. The flag stays defined because an inline script
+      further down still reads it.
+
+      pl_checkout_page: the PureLeven checkout page, shown without header or footer.
+      pl_lean: cart and checkout skip the welcome-offer popup and its stylesheet.
+    {%- endcomment -%}
     {%- liquid
       assign enable_shiprocket_checkout = false
-      if request.page_type == 'product' or request.page_type == 'cart'
-        assign enable_shiprocket_checkout = true
+      assign pl_checkout_page = false
+      if request.page_type == 'page' and page.template_suffix == 'plcheckout'
+        assign pl_checkout_page = true
+      endif
+      assign pl_lean = pl_checkout_page
+      if request.page_type == 'cart'
+        assign pl_lean = true
       endif
     -%}
-    {% if enable_shiprocket_checkout %}
-      {% render 'sr-checkout' %}
-    {% endif %}
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
+    {% comment %}theme-check-disable RemoteAsset{% endcomment %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300..800&display=swap" rel="stylesheet">
+    {% comment %}theme-check-enable RemoteAsset{% endcomment %}
     {%- liquid
       assign resolved_page_title = page_title
       assign resolved_page_description = page_description
@@ -41,7 +53,7 @@
           if shop.metafields.global.homepage_title_tag != blank
             assign resolved_page_title = shop.metafields.global.homepage_title_tag
           else
-            assign resolved_page_title = 'Fresh Kerala Spices Online | Farm-Origin Natural Foods - Pureleven'
+            assign resolved_page_title = 'Fresh Kerala Spices Online | Farm-Origin Foods'
           endif
 
           if shop.metafields.global.homepage_description_tag != blank
@@ -49,7 +61,7 @@
           else
             assign resolved_page_description = 'Shop fresh Kerala spices, raw honey, tea, coffee, and natural foods sourced directly from small family farms in Kerala hill regions for authentic aroma and flavor.'
           endif
-        elsif request.page_type == 'product'
+      elsif request.page_type == 'product'
         if product.metafields.global.title_tag != blank
           assign resolved_page_title = product.metafields.global.title_tag
         endif
@@ -57,6 +69,21 @@
         if product.metafields.global.description_tag != blank
           assign resolved_page_description = product.metafields.global.description_tag
         endif
+
+        case product.handle
+          when 'kerala-cardamom'
+            if product.metafields.global.title_tag == blank
+              assign resolved_page_title = 'Kerala Cardamom (Elaichi) Pods'
+            endif
+            if product.metafields.global.description_tag == blank
+              assign resolved_page_description = 'Shop Kerala cardamom (elaichi) whole pods with bright aroma and fuller green pods, packed fresh for chai, desserts, biryani, and everyday cooking.'
+            endif
+          when 'kerala-white-pepper'
+            assign resolved_page_description = 'Shop aromatic Kerala white pepper with smooth heat and earthy flavor, packed fresh for soups, sauces, marinades, and everyday seasoning.'
+          when 'star-anise-chakra-phool-premium-whole-spice'
+            assign resolved_page_title = 'Premium Whole Star Anise (Chakra Phool)'
+            assign resolved_page_description = 'Shop premium whole star anise with a naturally sweet, warm aroma for biryani, masala, chai, desserts, broths, and slow-cooked dishes.'
+        endcase
       elsif request.page_type == 'article'
         if article.metafields.global.title_tag != blank
           assign resolved_page_title = article.metafields.global.title_tag
@@ -69,6 +96,15 @@
         elsif article.content != blank
           assign resolved_page_description = article.content | strip_html | strip_newlines | replace: '  ', ' ' | strip | truncatewords: 28
         endif
+
+        case article.handle
+          when 'kerala-spices-online-kso-vs-farm-sourced-kerala-spices-what-buyers-should-know-1'
+            assign resolved_page_title = 'Kerala Spices Online vs Farm-Sourced Spices'
+          when 'kerala-cardamom-grade-guide-8mm-vs-7mm'
+            assign resolved_page_title = 'Kerala Cardamom Grades: 8mm vs 7mm'
+          when 'malabar-vs-tellicherry-black-pepper-guide'
+            assign resolved_page_title = 'Malabar vs Tellicherry Black Pepper Guide'
+        endcase
       elsif request.page_type == 'blog'
         if blog.metafields.global.title_tag != blank
           assign resolved_page_title = blog.metafields.global.title_tag
@@ -98,10 +134,55 @@
         if collection.handle == 'products-for-cart-push' or collection.handle == 'frontpage'
           assign should_noindex = true
         endif
+
+
+        if collection.handle == 'coffee'
+          assign resolved_page_description = 'Shop Kerala coffee powder and beans from Idukki, including naadan coffee, ginger coffee, cardamom coffee, and fresh whole beans.'
+        endif
+      elsif request.page_type == 'page'
+        if page.handle == 'flexy-checkout' or page.handle == 'checkout-prep' or page.handle == 'blogs' or page.handle == 'secure-checkout' or page.template_suffix == 'plcheckout'
+          assign should_noindex = true
+        endif
+
+
+        case page.handle
+          when 'contact'
+            assign resolved_page_description = 'Contact Pure Leven in Idukki, Kerala for product questions, order support, sourcing information, wholesale enquiries, and customer care.'
+          when 'coffee-page', 'kerala-coffee-from-idukki'
+            assign resolved_page_description = 'Explore Pure Leven coffee from Idukki, Kerala, including naadan coffee powder, ginger coffee, cardamom coffee, and whole coffee beans.'
+          when 'shipping-delivery-returns'
+            assign resolved_page_description = 'Read Pure Leven shipping, delivery, tracking, cancellation, return, replacement, and refund information for orders across India.'
+          when 'about-pure-leven'
+            assign resolved_page_description = 'Learn how Pure Leven connects farming families in Idukki, Kerala with customers seeking fresh, carefully sourced spices and natural foods.'
+          when 'privacy-policy'
+            assign resolved_page_description = 'Read how Pure Leven collects, uses, protects, retains, and responds to requests concerning customer and order information.'
+          when 'terms-of-service'
+            assign resolved_page_description = 'Review Pure Leven terms covering products, orders, pricing, shipping, returns, consumer rights, payments, and customer support.'
+        endcase
+
+        if page.title == 'Coffee Page' or page.title == 'Kerala Coffee from Idukki'
+          assign resolved_page_description = 'Explore Pure Leven coffee from Idukki, Kerala, including naadan coffee powder, ginger coffee, cardamom coffee, and whole coffee beans.'
+        endif
+      elsif request.page_type == '404'
+        assign should_noindex = true
+      endif
+
+      if template.name == '404'
+        assign should_noindex = true
       endif
 
       if append_shop_name and resolved_page_title contains shop.name
         assign append_shop_name = false
+      endif
+
+
+      if resolved_page_title.size > 35
+        assign append_shop_name = false
+      endif
+
+
+      if resolved_page_description.size > 180
+        assign resolved_page_description = resolved_page_description | strip_html | strip_newlines | replace: '  ', ' ' | strip | truncatewords: 24
       endif
     -%}
 
@@ -134,11 +215,48 @@
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
+    {%- liquid
+      assign pl_tags_on = 'true'
+      if settings.pl_delay_tags == false
+        assign pl_tags_on = 'false'
+      endif
+      assign pl_tags_ms = settings.pl_tag_delay | default: 3 | times: 1000
+    -%}
     <script>
       window.dataLayer = window.dataLayer || [];
       window.gtag = window.gtag || function() {
         window.dataLayer.push(arguments);
       };
+      window.plDefer = (function(w, on, wait) {
+        var q = [], go = false, loaded = false, touched = false;
+        var evs = ['pointerdown', 'touchstart', 'keydown', 'wheel', 'mousemove'];
+        function flush() {
+          if (go) return;
+          go = true;
+          evs.forEach(function(e) { w.removeEventListener(e, touch, true); });
+          var i = 0;
+          (function step() {
+            if (i >= q.length) return;
+            try { q[i++](); } catch (err) {}
+            if (w.requestIdleCallback) w.requestIdleCallback(step, { timeout: 1500 });
+            else setTimeout(step, 250);
+          })();
+        }
+        function touch() {
+          touched = true;
+          if (loaded) flush();
+        }
+        if (on) {
+          evs.forEach(function(e) { w.addEventListener(e, touch, { capture: true, passive: true, once: true }); });
+          w.addEventListener('load', function() {
+            loaded = true;
+            setTimeout(flush, touched ? 400 : wait);
+          }, { once: true });
+        }
+        return function(fn) {
+          if (!on || go) { try { fn(); } catch (err) {} } else { q.push(fn); }
+        };
+      })(window, {{ pl_tags_on }}, {{ pl_tags_ms }});
     </script>
 
     <script>
@@ -148,14 +266,28 @@
           'gtm.start': new Date().getTime(),
           event: 'gtm.js'
         });
-        var firstScript = d.getElementsByTagName(s)[0];
-        var tag = d.createElement(s);
-        var dataLayerParam = l !== 'dataLayer' ? '&l=' + l : '';
-        tag.async = true;
-        tag.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dataLayerParam;
-        firstScript.parentNode.insertBefore(tag, firstScript);
+        w.plDefer(function() {
+          var firstScript = d.getElementsByTagName(s)[0];
+          var tag = d.createElement(s);
+          var dataLayerParam = l !== 'dataLayer' ? '&l=' + l : '';
+          tag.async = true;
+          tag.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dataLayerParam;
+          firstScript.parentNode.insertBefore(tag, firstScript);
+        });
       })(window, document, 'script', 'dataLayer', 'GTM-TFHBWPLM');
     </script>
+
+    <script>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];f.plDefer(function(){t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)})}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '609256704464862');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=609256704464862&ev=PageView&noscript=1"/></noscript>
 
     <script>
       (function() {
@@ -302,6 +434,7 @@
     } else {
       modifiedCSS = `
         .shiprocket-headless{display:none !important;}
+        .shopify-payment-button__button.shopify-payment-button__button--unbranded{display:none !important;}
       `;
     }
     const styleElement = document.createElement("style");
@@ -324,6 +457,7 @@
     %}
 
     {% style %}
+      {% assign scheme_classes = '' %}
       {{ settings.type_body_font | font_face: font_display: 'swap' }}
       {{ body_font_bold | font_face: font_display: 'swap' }}
       {{ body_font_italic | font_face: font_display: 'swap' }}
@@ -532,11 +666,16 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'typography-system.css' | asset_url | stylesheet_tag }}
+    {{ 'spacing-system.css' | asset_url | stylesheet_tag }}
     {{ 'pureleven-live.css' | asset_url | stylesheet_tag }}
     {{ 'pureleven-mobile-commerce.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'pureleven-premium-system.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="{{ 'pureleven-premium-system.css' | asset_url }}"></noscript>
-    {%- if settings.anu_login_enabled -%}
+    {%- if request.page_type == 'index' -%}
+      {{ 'pl-home-system.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+    {%- if settings.anu_login_enabled and pl_lean == false -%}
       {{ 'anu-login.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -549,15 +688,17 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
-    {%- unless settings.type_body_font.system? -%}
-      {% comment %}theme-check-disable AssetPreload{% endcomment %}
-      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
-      {% comment %}theme-check-enable AssetPreload{% endcomment %}
-    {%- endunless -%}
-    {%- unless settings.type_header_font.system? -%}
-      {% comment %}theme-check-disable AssetPreload{% endcomment %}
-      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
-      {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {%- unless request.page_type == 'index' or pl_lean -%}
+      {%- unless settings.type_body_font.system? -%}
+        {% comment %}theme-check-disable AssetPreload{% endcomment %}
+        <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+        {% comment %}theme-check-enable AssetPreload{% endcomment %}
+      {%- endunless -%}
+      {%- unless settings.type_header_font.system? -%}
+        {% comment %}theme-check-disable AssetPreload{% endcomment %}
+        <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+        {% comment %}theme-check-enable AssetPreload{% endcomment %}
+      {%- endunless -%}
     {%- endunless -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
@@ -587,16 +728,17 @@
     {%- if request.page_type == 'product' -%}
       {{ 'pl-product.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
+    {{ 'pureleven-clean-system.css' | asset_url | stylesheet_tag }}
 
     <script>
       if (Shopify.designMode) {
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-  <script src="https://cdn.jsdelivr.net/gh/shopifycdn-prod/core-vitals-extension@main/019ec663-2924-7167-ba01-c6099282b1337.js"></script>
 </head>
 
   <body class="gradient template-{{ request.page_type | handle }}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    {% render 'legacy-redirects' %}
     <noscript>
       <iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-TFHBWPLM"
@@ -615,15 +757,15 @@
 
     {%- comment -%}── Basil Commerce OS: QA only ──{%- endcomment -%}
 
-    {% sections 'header-group' %}
+    {%- unless pl_checkout_page -%}{% sections 'header-group' %}{%- endunless -%}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    {% sections 'footer-group' %}
+    {%- unless pl_checkout_page -%}{% sections 'footer-group' %}{%- endunless -%}
 
-    {%- render 'anu-login' -%}
+    {%- unless pl_lean -%}{%- render 'anu-login' -%}{%- endunless -%}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
@@ -682,8 +824,9 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+    {{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}
 
-    {%- if settings.anu_login_enabled -%}
+    {%- if settings.anu_login_enabled and pl_lean == false -%}
       <script src="{{ 'anu-login-providers.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 

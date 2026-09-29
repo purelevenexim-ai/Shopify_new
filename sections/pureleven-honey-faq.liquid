@@ -1,0 +1,83 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background: #fff;
+    padding: 72px 0;
+  }
+  .hn-faq { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+  .hn-faq__eyebrow {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #9A5C0A;
+    text-align: center; margin-bottom: 0.6rem;
+  }
+  .hn-faq__title {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    font-weight: 800; color: #1C1008;
+    text-align: center; letter-spacing: -0.02em;
+    margin: 0 0 2.8rem;
+  }
+  .hn-faq__item {
+    border-bottom: 1px solid #EEDDC5;
+  }
+  .hn-faq__item:first-of-type { border-top: 1px solid #EEDDC5; }
+  .hn-faq__q {
+    width: 100%; text-align: left; list-style: none;
+    padding: 1.15rem 0;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.97rem; font-weight: 700;
+    color: #1C1008; gap: 1rem;
+  }
+  .hn-faq__q::-webkit-details-marker { display: none; }
+  .hn-faq__icon {
+    flex-shrink: 0; width: 26px; height: 26px;
+    background: #F5EBD8;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 400; color: #9A5C0A;
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+  details[open] .hn-faq__icon { transform: rotate(45deg); }
+  .hn-faq__a {
+    font-size: 0.93rem; line-height: 1.75;
+    color: #6B4C28;
+    padding-bottom: 1.2rem;
+    margin: 0;
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} { padding: 48px 0; }
+  }
+{%- endstyle -%}
+
+<div class="hn-faq">
+  <p class="hn-faq__eyebrow">Common Questions</p>
+  <h2 class="hn-faq__title">Honey FAQ</h2>
+
+  {%- assign faqs = "Is this wild forest honey or farm honey?|Our Naadan Pure Honey is sourced from traditional Kerala beekeepers in the Idukki and Wayanad regions. The bees forage freely across wild flora, cardamom estates, and forest blooms. It is not industrial farm honey.||Why has my honey crystallised?|Crystallisation is completely natural in pure, unprocessed honey — it is a sign of quality, not spoilage. To re-liquify, place the jar in warm water (not boiling). Never microwave honey as it destroys its natural properties.||What is the difference between Naadan honey and processed honey?|Naadan (traditional) honey is filtered but not heated. This preserves natural enzymes, pollen, and the distinct forest aroma. Commercially processed honey is heat-treated to prevent crystallisation, which strips away most of these properties.||Is this honey from Idukki or Wayanad?|Our honey is sourced from both regions depending on season and harvest. Idukki's high-altitude forests and Wayanad's rich biodiversity both produce exceptional honey. Both are wild and unprocessed.||Can I use this honey for tea?|Yes. Kerala Naadan honey works beautifully in tea, especially black tea or kadak chai. Add after brewing — not during boiling — to preserve its natural properties and flavour.||How should I store honey?|Store in a cool, dry place away from direct sunlight. Do not refrigerate — it accelerates crystallisation. A tightly sealed jar at room temperature keeps well for 12–18 months.||Is free delivery available?|Yes — free delivery on all orders above ₹649." | split: "||" -%}
+
+  {%- for faq_raw in faqs -%}
+    {%- assign faq = faq_raw | strip -%}
+    {%- if faq != blank -%}
+      {%- assign parts = faq | split: "|" -%}
+      {%- if parts.size >= 2 -%}
+        <details class="hn-faq__item">
+          <summary class="hn-faq__q">
+            {{ parts[0] | strip }}
+            <span class="hn-faq__icon">+</span>
+          </summary>
+          <p class="hn-faq__a">{{ parts[1] | strip }}</p>
+        </details>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Honey FAQ",
+  "settings": [],
+  "presets": [{ "name": "Honey FAQ" }]
+}
+{% endschema %}

@@ -1,0 +1,185 @@
+/* ============================================================
+   PureLeven split card — shared by the featured strip and the
+   category grid. Layout responds to the card's own container
+   width, so the same markup works at 165px and at 700px.
+   ============================================================ */
+
+:root {
+  --plc-line: rgba(27, 94, 86, 0.16);
+  --plc-line-soft: rgba(27, 94, 86, 0.09);
+  --plc-ink: #12241F;
+  --plc-soft: #54655E;
+  --plc-faint: #7C8B84;
+  --plc-teal: #004438;
+  --plc-teal-2: #2E7D6E;
+  --plc-gold: #F4D976;
+  --plc-gold-2: #EFC948;
+  --plc-clay: #A8563C;
+  --plc-card: #FFFFFF;
+  --plc-tint: #F6F4EE;
+}
+
+/* ================= the card ================= */
+.plc-slot { container-type: inline-size; display: block; height: 100%; }
+
+.plc {
+  background: var(--plc-card);
+  border: 1px solid var(--plc-line);
+  border-radius: 1.4rem;
+  box-shadow: 0 2px 4px rgba(18,36,31,.06), 0 8px 24px rgba(18,36,31,.09);
+  overflow: hidden;
+  display: flex; flex-direction: column; height: 100%;
+}
+
+.plc__shot {
+  position: relative; display: block; aspect-ratio: 1;
+  background: var(--plc-tint); flex: none; overflow: hidden;
+}
+.plc__shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.plc__flag {
+  position: absolute; top: 0.8rem; left: 0.8rem;
+  padding: 0.4rem 0.8rem; border-radius: 0.5rem;
+  background: var(--plc-clay); color: #fff;
+  font-size: 1rem; font-weight: 800; line-height: 1; letter-spacing: .02em;
+}
+
+.plc__body { padding: 1rem; display: flex; flex-direction: column; flex: 1; gap: 0.7rem; }
+
+.plc__kicker {
+  display: none; margin: 0;
+  font-size: 0.95rem; font-weight: 750; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--plc-teal-2);
+}
+
+.plc__title { margin: 0; font-size: 1.25rem; font-weight: 650; line-height: 1.3; }
+.plc__title a {
+  color: var(--plc-ink); text-decoration: none;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; min-height: 2.6em;
+}
+.plc__title a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+.plc__note {
+  display: none; margin: 0; font-size: 1.2rem; color: var(--plc-soft); line-height: 1.45;
+  -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+
+.plc__meta {
+  display: none; gap: 1rem; padding: 0.7rem 0;
+  border-top: 1px solid var(--plc-line-soft); border-bottom: 1px solid var(--plc-line-soft);
+}
+.plc__meta span { font-size: 1rem; color: var(--plc-faint); line-height: 1.3; }
+.plc__meta b { display: block; color: var(--plc-ink); font-size: 1.1rem; font-weight: 650; }
+.plc__meta span.plc__meta--3 { display: none; }
+
+.plc__form, .plc__formel, .plc__buy {
+  display: flex; flex-direction: column; flex: 1 1 auto; margin: 0; min-width: 0;
+}
+
+.plc__chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.plc__radio {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.plc__chip {
+  flex: 1 1 auto; min-width: 0; text-align: center;
+  padding: 0.5rem 0.5rem;
+  border: 1px solid var(--plc-line); border-radius: 0.6rem;
+  font-size: 0.95rem; font-weight: 700; color: var(--plc-soft);
+  line-height: 1.2; cursor: pointer;
+  white-space: normal; overflow-wrap: anywhere; hyphens: none;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.plc__chip-name { display: block; overflow-wrap: anywhere; }
+.plc__chip-off { display: none; font-style: normal; font-size: 0.85rem; font-weight: 700; opacity: .72; }
+.plc__radio:checked + .plc__chip {
+  background: var(--plc-teal); border-color: var(--plc-teal); color: #fff;
+}
+.plc__radio:focus-visible + .plc__chip { outline: 2px solid var(--plc-teal); outline-offset: 2px; }
+.plc__chip--out { opacity: .4; text-decoration: line-through; cursor: not-allowed; }
+
+.plc__price {
+  display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+  font-variant-numeric: tabular-nums; margin-top: auto; padding-top: 0.9rem;
+}
+.plc__now { font-size: 1.5rem; font-weight: 700; color: var(--plc-ink); }
+.plc__was { font-size: 1.1rem; color: var(--plc-faint); text-decoration: line-through; }
+
+.plc__cta {
+  margin-top: 0.8rem; width: 100%; padding: 0.9rem;
+  border: none; border-radius: 0.7rem;
+  background: var(--plc-gold); color: #20180A;
+  font-family: inherit; font-size: 1.2rem; font-weight: 750;
+  cursor: pointer; text-align: center; text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  min-height: auto;
+}
+.plc__cta:hover { background: var(--plc-gold-2); }
+.plc__cta[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* ---- tier 2 : ≥200px ---- */
+@container (min-width: 200px) {
+  .plc__body { padding: 1.2rem; gap: 0.8rem; }
+  .plc__kicker { display: block; }
+  .plc__title { font-size: 1.4rem; }
+  .plc__note { display: -webkit-box; }
+  .plc__chip { font-size: 1.05rem; padding: 0.6rem 0.3rem; }
+  .plc__now { font-size: 1.7rem; }
+  .plc__was { font-size: 1.2rem; }
+  .plc__cta { padding: 1.1rem; font-size: 1.3rem; }
+  .plc__flag { top: 1rem; left: 1rem; font-size: 1.05rem; padding: 0.5rem 0.9rem; }
+}
+
+/* ---- tier 3 : ≥260px ---- */
+@container (min-width: 260px) {
+  .plc__body { padding: 1.4rem; gap: 0.9rem; }
+  .plc__title { font-size: 1.55rem; }
+  .plc__note { font-size: 1.25rem; }
+  .plc__meta { display: flex; }
+  .plc__chip { font-size: 1.1rem; padding: 0.7rem 0.4rem; }
+  .plc__chip-off { display: block; }
+  .plc__now { font-size: 1.9rem; }
+  .plc__cta { padding: 1.2rem; font-size: 1.35rem; }
+}
+
+/* ---- tier 4 : ≥430px — the horizontal split ---- */
+@container (min-width: 430px) {
+  .plc { flex-direction: row; }
+  .plc__shot { flex: 0 0 40%; aspect-ratio: auto; }
+  .plc__body { padding: 1.8rem; gap: 1rem; }
+  .plc__title { font-size: 1.9rem; font-weight: 600; }
+  .plc__note { font-size: 1.35rem; -webkit-line-clamp: 3; }
+  .plc__meta span.plc__meta--3 { display: block; }
+  .plc__now { font-size: 2.1rem; }
+}
+
+/* ---- featured card: chips carry size + price, so they need room ---- */
+.plc-slot--featured .plc__chip {
+  flex: 0 1 auto;
+  padding: 0.7rem 1.1rem;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+}
+.plc-slot--featured .plc__chip-name {
+  font-variant-numeric: tabular-nums;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.plc__delivery {
+  margin: 0.4rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--plc-teal-2);
+}
+.plc__delivery::before {
+  content: '';
+  display: inline-block;
+  width: 1.4rem;
+  height: 1px;
+  margin-right: 0.7rem;
+  vertical-align: middle;
+  background: var(--plc-gold-2);
+}

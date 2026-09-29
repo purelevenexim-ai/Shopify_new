@@ -81,31 +81,31 @@
 }
 .pl-values__header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3.2rem;
 }
 .pl-values__eyebrow {
   display: inline-block;
-  font-family: var(--font-body-family, 'Inter', sans-serif);
-  font-size: 1.15rem;
+  font-family: 'Fustat', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #D4821A;
-  margin: 0 0 1rem 0;
+  color: var(--pl-category-honey, #D4821A);
+  margin: 0 0 1.2rem 0;
 }
 .pl-values__heading {
-  font-family: var(--font-heading-family, 'Bodoni Moda', serif);
-  font-size: clamp(2.4rem, 4vw, 3.6rem);
-  font-weight: 400;
-  color: #1B3A30;
+  font-family: 'p22-mackinac-pro', 'Bodoni Moda', serif;
+  font-size: clamp(3.2rem, 6vw, 4rem);
+  font-weight: 700;
+  color: var(--pl-text-primary, #1A1A1A);
   margin: 0;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 .pl-values__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  gap: 1.8rem;
 }
 @media screen and (min-width: 750px) {
   .pl-values__grid {
@@ -115,12 +115,12 @@
 }
 .pl-values__card {
   background: #FFFFFF;
-  border: 1.5px solid #E8E5DC;
-  border-radius: 16px;
-  padding: 2.8rem 2.4rem 2.4rem;
+  border: 1px solid rgba(27, 94, 86, 0.12);
+  border-radius: 1.8rem;
+  padding: 3rem 2.4rem 2.8rem;
   position: relative;
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .pl-values__card::before {
   content: '';
@@ -128,19 +128,13 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #1B5E56, #4D9B93);
-  border-radius: 16px 16px 0 0;
-  opacity: 0;
-  transition: opacity 0.25s ease;
+  height: 2px;
+  background: linear-gradient(90deg, var(--pl-primary, #2E7D6E), rgba(27, 94, 86, 0.4));
+  border-radius: 1.8rem 1.8rem 0 0;
 }
 .pl-values__card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(27, 94, 86, 0.12);
-  border-color: #B8D8D5;
-}
-.pl-values__card:hover::before {
-  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(27, 94, 86, 0.12);
 }
 .pl-values__card-top {
   display: flex;
@@ -171,20 +165,21 @@
   letter-spacing: 0.02em;
 }
 .pl-values__title {
-  font-family: var(--font-heading-family, 'Bodoni Moda', serif);
-  font-size: 2rem;
-  font-weight: 500;
-  color: #1B3A30;
-  margin: 0 0 0.9rem 0;
-  letter-spacing: 0em;
+  font-family: 'p22-mackinac-pro', 'Bodoni Moda', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--pl-text-primary, #1A1A1A);
+  margin: 0 0 1.2rem 0;
+  letter-spacing: -0.01em;
   line-height: 1.25;
 }
 .pl-values__text {
-  font-family: var(--font-body-family, 'Inter', sans-serif);
-  font-size: 1.45rem;
-  color: #5A6B67;
-  line-height: 1.7;
-  margin: 0 0 1.5rem 0;
+  font-family: 'Fustat', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1.15rem;
+  color: var(--pl-text-primary, #1A1A1A);
+  opacity: 0.85;
+  line-height: 1.75;
+  margin: 0 0 1.8rem 0;
 }
 .pl-values__accent-line {
   width: 32px;

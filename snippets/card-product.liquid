@@ -317,35 +317,31 @@
                     data-type: 'add-to-cart-form'
                   -%}
                     <div class="pl-card-purchase" role="group" aria-label="{{ card_product.title | escape }} options">
-                      <label class="visually-hidden" for="{{ product_form_id }}-variant-select">
-                        {{ option_label }}
-                      </label>
-                      <select
-                        id="{{ product_form_id }}-variant-select"
-                        name="id"
-                        class="pl-card-variant-select product-variant-id"
-                        aria-label="{{ option_label | escape }}"
-                      >
+                      <div class="pl-cv-pills" aria-label="{{ option_label | escape }}">
                         {%- for variant in card_product.variants -%}
                           {%- assign _cv_save = 0 -%}
                           {%- if variant.compare_at_price > variant.price -%}
-                            {%- assign _cv_save = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
+                            {%- assign _cv_save = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round -%}
                           {%- endif -%}
-                          <option
+                          <input
+                            type="radio"
+                            id="cv-{{ product_form_id }}-{{ forloop.index }}"
+                            name="id"
                             value="{{ variant.id }}"
+                            class="pl-cv-radio product-variant-id"
                             data-price="{{ variant.price }}"
-                            data-compare-price="{{ variant.compare_at_price }}"
-                            {% if variant.id == selected_card_variant.id %}
-                              selected="selected"
-                            {% endif %}
-                            {% unless variant.available %}
-                              disabled
-                            {% endunless %}
+                            data-compare-price="{{ variant.compare_at_price | default: 0 }}"
+                            {% if variant.id == selected_card_variant.id %}checked{% endif %}
+                            {% unless variant.available %}disabled{% endunless %}
                           >
-                            {{ variant.title | escape }}{% if _cv_save > 0 %} — SAVE {{ _cv_save }}%{% endif %}
-                          </option>
+                          <label for="cv-{{ product_form_id }}-{{ forloop.index }}" class="pl-cv-pill{% unless variant.available %} pl-cv-pill--disabled{% endunless %}">
+                            <span class="pl-cv-label">{{ variant.title | upcase | escape }}</span>
+                            {%- if _cv_save > 0 -%}
+                              <span class="pl-cv-save">{{ _cv_save }}% OFF</span>
+                            {%- endif -%}
+                          </label>
                         {%- endfor -%}
-                      </select>
+                      </div>
                       <button
                         id="{{ product_form_id }}-submit"
                         type="submit"
@@ -376,9 +372,9 @@
                 </product-form>
               <script>
               (function(){
-                var sel = document.getElementById('{{ product_form_id }}-variant-select');
-                if (!sel) return;
-                var card = sel.closest('.product-card-wrapper');
+                var form = document.getElementById('{{ product_form_id }}');
+                if (!form) return;
+                var card = form.closest('.product-card-wrapper');
                 if (!card) return;
                 function animateVal(el, text, show) {
                   if (!el) return;
@@ -387,16 +383,13 @@
                   el.style.display = show ? '' : 'none';
                   if (show) { void el.offsetWidth; el.classList.add('pl-val-updating'); }
                 }
-                sel.addEventListener('change', function(){
-                  var opt = sel.options[sel.selectedIndex];
-                  var price = parseInt(opt.dataset.price || '0', 10);
-                  var cp = parseInt(opt.dataset.comparePrice || '0', 10);
+                function updateCard(price, cp) {
                   var compareEl = card.querySelector('.pl-price-compare');
                   var saleEl = card.querySelector('.pl-price-sale');
                   var regularEl = card.querySelector('.pl-price-regular');
                   var badgeEls = card.querySelectorAll('.pl-card-sale-badge');
-                  function fmt(c) { var n=c/100; return '\u20b9'+n.toFixed(2); }
-                  function fmtShort(c) { var n=c/100; return '\u20b9'+(n%1===0?Math.round(n):n.toFixed(2)); }
+                  function fmt(c) { var n=c/100; return '₹'+n.toFixed(2); }
+                  function fmtShort(c) { var n=c/100; return '₹'+(n%1===0?Math.round(n):n.toFixed(2)); }
                   if (cp > price) {
                     var pct = Math.round((cp - price) * 100 / cp);
                     animateVal(compareEl, fmtShort(cp), true);
@@ -409,6 +402,15 @@
                     if (saleEl) saleEl.style.display = 'none';
                     badgeEls.forEach(function(b){ b.style.display = 'none'; });
                   }
+                }
+                form.querySelectorAll('.pl-cv-radio').forEach(function(radio) {
+                  radio.addEventListener('change', function() {
+                    var price = parseInt(this.dataset.price || '0', 10);
+                    var cp = parseInt(this.dataset.comparePrice || '0', 10);
+                    updateCard(price, cp);
+                    var btn = form.querySelector('.pl-card-add-button');
+                    if (btn) { btn.disabled = this.disabled; }
+                  });
                 });
               })();
               </script>

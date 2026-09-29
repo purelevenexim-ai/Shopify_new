@@ -1,0 +1,21 @@
+{%- comment -%}
+  pl-avatar-url.liquid — right-sizes an avatar URL so a 32-50px face is not a
+  120-1000px download. Google profile photos take =s<px>-c; files on Shopify's
+  CDN take ?width=<px>. Anything else is returned untouched.
+  Use inside {% capture %}, then strip. Params: url, px
+{%- endcomment -%}
+{%- liquid
+  assign u = url | strip
+  if u contains 'googleusercontent.com'
+    assign base = u | split: '=' | first
+    echo base | append: '=s' | append: px | append: '-c'
+  elsif u contains '/cdn/shop/' or u contains 'cdn.shopify.com'
+    if u contains '?'
+      echo u | append: '&width=' | append: px
+    else
+      echo u | append: '?width=' | append: px
+    endif
+  else
+    echo u
+  endif
+-%}

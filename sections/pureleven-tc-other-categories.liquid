@@ -1,0 +1,125 @@
+<link rel="stylesheet" href="{{ 'tc-design-tokens.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'tc-page.css' | asset_url }}">
+
+<section class="tc-othercats">
+  <div class="tc-othercats__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="tc-othercats__heading tc-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="tc-othercats__grid">
+      {%- comment -%} Spices — image from the spices collection {%- endcomment -%}
+      {%- assign spices_col = collections['spices'] -%}
+      <a href="{{ section.settings.spices_link }}" class="tc-othercats__card tc-othercats__card--spices">
+        <div class="tc-othercats__img-wrap">
+          {%- if section.settings.spices_image -%}
+            {{- section.settings.spices_image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '360,540,720,800', alt: 'Kerala Spices' -}}
+          {%- elsif spices_col.image -%}
+            {{- spices_col.image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '360,540,720,800', alt: 'Kerala Spices' -}}
+          {%- elsif spices_col.products.first.featured_image -%}
+            {{- spices_col.products.first.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '360,540,720,800', alt: 'Kerala Spices' -}}
+          {%- else -%}
+            <div class="tc-othercats__img-placeholder"><span>🌶</span></div>
+          {%- endif -%}
+        </div>
+        <div class="tc-othercats__card-body">
+          <p class="tc-othercats__label">{{ section.settings.spices_label | default: 'Kerala Spices' }}</p>
+          <p class="tc-othercats__sub">{{ section.settings.spices_sub | default: 'Pepper, cardamom, turmeric & more' }}</p>
+          <span class="tc-othercats__cta">Shop Spices →</span>
+        </div>
+      </a>
+
+      {%- comment -%} Honey — image from the honey product {%- endcomment -%}
+      {%- assign honey_product = all_products['naadan-pure-honey'] -%}
+      <a href="{{ section.settings.honey_link }}" class="tc-othercats__card tc-othercats__card--honey">
+        <div class="tc-othercats__img-wrap">
+          {%- if section.settings.honey_image -%}
+            {{- section.settings.honey_image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '360,540,720,800', alt: 'Naadan Pure Honey' -}}
+          {%- elsif honey_product.featured_image -%}
+            {{- honey_product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '360,540,720,800', alt: 'Naadan Pure Honey' -}}
+          {%- else -%}
+            <div class="tc-othercats__img-placeholder"><span>🍯</span></div>
+          {%- endif -%}
+        </div>
+        <div class="tc-othercats__card-body">
+          <p class="tc-othercats__label">{{ section.settings.honey_label | default: 'Naadan Honey' }}</p>
+          <p class="tc-othercats__sub">{{ section.settings.honey_sub | default: 'Raw, unfiltered Kerala honey' }}</p>
+          <span class="tc-othercats__cta">Shop Honey →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "TC Other Categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Also from PureLeven"
+    },
+    {
+      "type": "header",
+      "content": "Spices card"
+    },
+    {
+      "type": "image_picker",
+      "id": "spices_image",
+      "label": "Spices image"
+    },
+    {
+      "type": "text",
+      "id": "spices_label",
+      "label": "Spices title",
+      "default": "Kerala Spices"
+    },
+    {
+      "type": "text",
+      "id": "spices_sub",
+      "label": "Spices subtitle",
+      "default": "Pepper, cardamom, turmeric & more"
+    },
+    {
+      "type": "text",
+      "id": "spices_link",
+      "label": "Spices link",
+      "default": "/"
+    },
+    {
+      "type": "header",
+      "content": "Honey card"
+    },
+    {
+      "type": "image_picker",
+      "id": "honey_image",
+      "label": "Honey image"
+    },
+    {
+      "type": "text",
+      "id": "honey_label",
+      "label": "Honey title",
+      "default": "Naadan Honey"
+    },
+    {
+      "type": "text",
+      "id": "honey_sub",
+      "label": "Honey subtitle",
+      "default": "Raw, unfiltered Kerala honey"
+    },
+    {
+      "type": "text",
+      "id": "honey_link",
+      "label": "Honey link",
+      "default": "/products/naadan-pure-honey"
+    }
+  ],
+  "presets": [
+    {
+      "name": "TC Other Categories"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,182 @@
+{%- comment -%}
+Tea & Coffee Brewing Guide Section
+- Tabbed interface: Milk Tea | Black Tea | Filter Coffee (via blocks)
+- Each block = one tab with up to 4 steps
+- Pure CSS/JS tab switching, first tab active by default
+{%- endcomment -%}
+
+<link rel="stylesheet" href="{{ 'tc-design-tokens.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'tc-page.css' | asset_url }}">
+
+<section class="tc-brewing" id="tc-brewing-{{ section.id }}">
+  <div class="tc-brewing__container">
+    <p class="tc-eyebrow"><i>07</i> / How To Brew</p>
+    {%- if section.settings.heading -%}
+      <h2 class="tc-brewing__heading tc-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      {%- comment -%} Tab buttons {%- endcomment -%}
+      <div class="tc-brewing__tabs" role="tablist">
+        {%- for block in section.blocks -%}
+          <button
+            type="button"
+            class="tc-brewing__tab-button{% if forloop.first %} is-active{% endif %}"
+            data-tc-tab="{{ forloop.index0 }}"
+            role="tab"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {{ block.settings.tab_name }}
+          </button>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Tab panels {%- endcomment -%}
+      <div class="tc-brewing__panels">
+        {%- for block in section.blocks -%}
+          <div
+            class="tc-brewing__panel{% if forloop.first %} is-active{% endif %}"
+            data-tc-panel="{{ forloop.index0 }}"
+            role="tabpanel"
+          >
+            <ol class="tc-brewing__steps">
+              {%- if block.settings.step_1 != blank -%}<li>{{ block.settings.step_1 }}</li>{%- endif -%}
+              {%- if block.settings.step_2 != blank -%}<li>{{ block.settings.step_2 }}</li>{%- endif -%}
+              {%- if block.settings.step_3 != blank -%}<li>{{ block.settings.step_3 }}</li>{%- endif -%}
+              {%- if block.settings.step_4 != blank -%}<li>{{ block.settings.step_4 }}</li>{%- endif -%}
+            </ol>
+
+            {%- assign brew_product = all_products[block.settings.product_handle] -%}
+            {%- if brew_product -%}
+              <a href="{{ brew_product.url }}" class="tc-brewing__product-link">
+                Shop {{ brew_product.title }} →
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} Tab switching JS {%- endcomment -%}
+<script>
+  (function () {
+    var section = document.getElementById('tc-brewing-{{ section.id }}');
+    if (!section) return;
+    var buttons = section.querySelectorAll('[data-tc-tab]');
+    var panels = section.querySelectorAll('[data-tc-panel]');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var index = btn.getAttribute('data-tc-tab');
+        buttons.forEach(function (b) {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        panels.forEach(function (p) { p.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected', 'true');
+        var panel = section.querySelector('[data-tc-panel="' + index + '"]');
+        if (panel) panel.classList.add('is-active');
+        if (window.gtag) {
+          gtag('event', 'tea_coffee_brewing_guide_open', { tab: btn.textContent.trim() });
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TC Brewing Guide",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How do you like your cup?"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Brewing Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_name",
+          "label": "Tab name",
+          "default": "Milk Tea"
+        },
+        {
+          "type": "text",
+          "id": "product_handle",
+          "label": "Linked product handle",
+          "default": "premium-milk-tea-powder"
+        },
+        {
+          "type": "text",
+          "id": "step_1",
+          "label": "Step 1",
+          "default": "Boil 1 cup water with 1 tsp tea"
+        },
+        {
+          "type": "text",
+          "id": "step_2",
+          "label": "Step 2",
+          "default": "Add milk, bring to a boil"
+        },
+        {
+          "type": "text",
+          "id": "step_3",
+          "label": "Step 3",
+          "default": "Simmer 30 seconds, strain"
+        },
+        {
+          "type": "text",
+          "id": "step_4",
+          "label": "Step 4 (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TC Brewing Guide",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Milk Tea",
+            "product_handle": "premium-milk-tea-powder",
+            "step_1": "Boil 1 cup water with 1 tsp tea",
+            "step_2": "Add milk, bring to a boil",
+            "step_3": "Simmer 30 seconds, strain"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Black Tea",
+            "product_handle": "premium-black-tea-granules",
+            "step_1": "Boil 1 cup water",
+            "step_2": "Add 1 tsp tea, steep 3-4 minutes",
+            "step_3": "Strain and serve"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Filter Coffee",
+            "product_handle": "naadan-kerala-coffee",
+            "step_1": "Add 2 tbsp coffee to the filter",
+            "step_2": "Pour hot water slowly, let it drip",
+            "step_3": "Mix decoction with hot milk to taste"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

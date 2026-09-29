@@ -1,0 +1,117 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background: var(--tc-background, #F6F0E6);
+  }
+
+  /* ── Cinematic banner ── */
+  .hn-banner {
+    position: relative;
+    width: 100%;
+    height: 72vh; min-height: 420px; max-height: 640px;
+    overflow: hidden;
+    background: #2B1A00;
+  }
+  .hn-banner__img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.82;
+  }
+  .hn-banner__overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(28,16,0,0.88) 0%, rgba(28,16,0,0.18) 55%, transparent 100%);
+  }
+  .hn-banner__text {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 3rem 2rem 2.8rem;
+    max-width: 700px;
+  }
+  .hn-banner__eyebrow {
+    font-size: 0.76rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #FCE477;
+    margin-bottom: 0.8rem;
+  }
+  .hn-banner__heading {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 800; color: #fff;
+    line-height: 1.08; letter-spacing: -0.03em;
+    margin: 0 0 1rem;
+  }
+  .hn-banner__sub {
+    font-size: 1rem; color: rgba(255,250,242,0.8);
+    line-height: 1.6; margin: 0 0 1.8rem;
+    max-width: 46ch;
+  }
+  .hn-banner__cta {
+    display: inline-block;
+    padding: 0.85rem 2.2rem;
+    background: #FCE477; color: #1C1008;
+    font-size: 0.9rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    border-radius: 0.5rem; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .hn-banner__cta:hover { background: #F4D138; }
+
+  /* ── Trust bar ── */
+  .hn-trust {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    background: #1C1008; padding: 0.9rem 1.5rem;
+  }
+  .hn-trust__item {
+    flex: 1; min-width: 130px; max-width: 220px;
+    text-align: center;
+    font-size: 0.8rem; font-weight: 600; color: rgba(255,250,242,0.8);
+    padding: 0.35rem 0.5rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .hn-trust__item:last-child { border-right: none; }
+
+  @media (max-width: 749px) {
+    .hn-banner { height: 65vh; min-height: 360px; }
+    .hn-banner__text { padding: 2rem 1.25rem 2.2rem; }
+    .hn-banner__heading { font-size: clamp(2rem, 8vw, 2.6rem); }
+    .hn-trust__item { min-width: 100px; font-size: 0.74rem; }
+  }
+{%- endstyle -%}
+
+<div>
+  <div class="hn-banner">
+    {%- if section.settings.hero_image != blank -%}
+      <img class="hn-banner__img"
+        src="{{ section.settings.hero_image | image_url: width: 1400 }}"
+        srcset="{{ section.settings.hero_image | image_url: width: 600 }} 600w, {{ section.settings.hero_image | image_url: width: 900 }} 900w, {{ section.settings.hero_image | image_url: width: 1400 }} 1400w"
+        sizes="100vw" alt="Kerala Wild Honey" loading="eager">
+    {%- else -%}
+      <img class="hn-banner__img" src="{{ 'pl-brew-honey.webp' | asset_url }}" alt="Kerala Wild Honey" loading="eager">
+    {%- endif -%}
+    <div class="hn-banner__overlay"></div>
+    <div class="hn-banner__text">
+      <p class="hn-banner__eyebrow">Idukki · Wayanad · Kerala</p>
+      <h1 class="hn-banner__heading">Pure Kerala<br>Wild Honey</h1>
+      <p class="hn-banner__sub">Naadan forest honey from Kerala's high ranges — unprocessed, raw, and real.</p>
+      <a href="#honey-products" class="hn-banner__cta">Shop Honey</a>
+    </div>
+  </div>
+
+  <div class="hn-trust">
+    <div class="hn-trust__item">🌿 Wild Forest Sourced</div>
+    <div class="hn-trust__item">🍯 Naadan &amp; Unprocessed</div>
+    <div class="hn-trust__item">📦 Direct from Kerala</div>
+    <div class="hn-trust__item">🚚 Free Delivery ₹649+</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Honey Hero",
+  "settings": [
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" }
+  ],
+  "presets": [{ "name": "Honey Hero" }]
+}
+{% endschema %}

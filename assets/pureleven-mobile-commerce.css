@@ -77,6 +77,18 @@
     padding: 1.6rem;
   }
 
+  body.template-index .banner--pureleven-home-hero.banner--mobile-bottom .banner__media {
+    height: clamp(24rem, 62vw, 29rem) !important;
+    min-height: 0 !important;
+  }
+
+  body.template-index .banner--pureleven-home-hero .banner__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   body.template-index .banner--pureleven-home-hero:not(.banner--mobile-bottom) .banner__box {
     width: 100%;
     max-width: none;
@@ -139,7 +151,7 @@
 
   body.template-index .banner--pureleven-home-hero .banner__buttons > *:nth-child(2) {
     background: rgba(27, 94, 86, 0.08) !important;
-    color: #1b5e56 !important;
+    color: #004438 !important;
     border: 1px solid rgba(27, 94, 86, 0.18) !important;
     box-shadow: none !important;
   }
@@ -289,13 +301,13 @@
     padding: 0.65rem 1rem;
     border-radius: 999px;
     background: rgba(27, 94, 86, 0.08);
-    color: #1b5e56;
+    color: #004438;
     font-size: 1.2rem;
     font-weight: 700;
   }
 
   body.template-product .product__inventory .svg-wrapper {
-    color: #1b5e56 !important;
+    color: #004438 !important;
   }
 
   body.template-product .product__info-container > * + * {

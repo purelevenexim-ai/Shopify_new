@@ -1,0 +1,323 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign members = section.settings.members
+-%}
+
+<div class="section-{{ section.id }}-padding pl-team">
+  {%- if section.settings.heading != blank -%}
+    <div class="pl-team__header page-width">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="pl-team__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="pl-team__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.description != blank -%}
+        <p class="pl-team__description">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="pl-team__viewport">
+    <button type="button" class="pl-team__nav pl-team__nav--prev" aria-label="Previous">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <ul class="pl-team__track" role="list">
+      <li class="pl-team__card">
+        <div class="pl-team__photo">
+          {% render 'pl-asset-img', name: 'pl-team-basil', widths: '640,900', sizes: '300px', alt: 'Basil Thomas, Founder', width: 900, height: 1200 %}
+        </div>
+        <div class="pl-team__caption">
+          <p class="pl-team__name">Basil Thomas</p>
+          <p class="pl-team__role">Founder</p>
+        </div>
+      </li>
+      <li class="pl-team__card">
+        <div class="pl-team__photo">
+          {% render 'pl-asset-img', name: 'pl-team-sunitha', widths: '640,900', sizes: '300px', alt: 'Sunitha Prasanth, Operations', width: 900, height: 794 %}
+        </div>
+        <div class="pl-team__caption">
+          <p class="pl-team__name">Sunitha Prasanth</p>
+          <p class="pl-team__role">Operations</p>
+        </div>
+      </li>
+      <li class="pl-team__card">
+        <div class="pl-team__photo">
+          {% render 'pl-asset-img', name: 'pl-team-sushma', widths: '640,900', sizes: '300px', alt: 'Sushma Chechi, Ground Works', width: 900, height: 885 %}
+        </div>
+        <div class="pl-team__caption">
+          <p class="pl-team__name">Sushma Chechi</p>
+          <p class="pl-team__role">Ground Works</p>
+        </div>
+      </li>
+      <li class="pl-team__card">
+        <div class="pl-team__photo">
+          {% render 'pl-asset-img', name: 'pl-team-staffs', widths: '640,900', sizes: '300px', alt: 'PureLeven staff', width: 900, height: 900 %}
+        </div>
+        <div class="pl-team__caption">
+          <p class="pl-team__name">Our Staff</p>
+          <p class="pl-team__role">Super Hero Staff</p>
+        </div>
+      </li>
+    </ul>
+
+    <button type="button" class="pl-team__nav pl-team__nav--next" aria-label="Next">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <div class="pl-team__dots" data-pl-team-dots></div>
+</div>
+
+<style>
+  .pl-team {
+    background: #fff;
+  }
+
+  .pl-team__header {
+    text-align: center;
+    margin-bottom: 3.2rem;
+  }
+
+  .pl-team__eyebrow {
+    display: inline-block;
+    margin: 0 0 0.8rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--pl-teal-mid, #2e7d6e);
+  }
+
+  .pl-team__heading {
+    margin: 0 0 1.2rem;
+    font-family: var(--font-fraunces, 'Fraunces', serif) !important;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 400;
+    color: var(--pl-near-black, #1a1a1a);
+  }
+
+  .pl-team__description {
+    margin: 0 auto;
+    max-width: 600px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: var(--pl-text-muted, #5c5648);
+  }
+
+  .pl-team__viewport {
+    position: relative;
+  }
+
+  .pl-team__track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.4rem 1.4rem 1.2rem;
+    margin: 0;
+    list-style: none;
+    scrollbar-width: none;
+  }
+  .pl-team__track::-webkit-scrollbar { display: none; }
+
+  .pl-team__card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+
+  .pl-team__photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #ede4d3;
+    box-shadow: 0 4px 12px rgba(27, 58, 48, 0.12);
+  }
+
+  .pl-team__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pl-team__caption {
+    padding: 1.2rem 0.2rem 0;
+    text-align: left;
+  }
+
+  .pl-team__name {
+    margin: 0 0 0.2rem;
+    font-family: var(--font-fraunces, 'Fraunces', serif) !important;
+    font-size: 1.7rem;
+    font-weight: 400;
+    color: var(--pl-near-black, #1a1a1a);
+  }
+
+  .pl-team__role {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--pl-teal-mid, #2e7d6e);
+  }
+
+  .pl-team__nav {
+    display: none;
+  }
+
+  .pl-team__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1.6rem;
+  }
+  .pl-team__dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pl-near-black, #1a1a1a);
+    opacity: 0.2;
+    transition: opacity 0.2s;
+  }
+  .pl-team__dots span.is-active {
+    opacity: 0.9;
+  }
+
+  @media screen and (min-width: 750px) {
+    .pl-team__card { flex-basis: 40%; }
+  }
+
+  @media screen and (min-width: 990px) {
+    .pl-team__track {
+      padding: 0.4rem 4rem 1.2rem;
+      gap: 2.4rem;
+    }
+    .pl-team__card { flex-basis: 22%; }
+    .pl-team__nav {
+      display: flex;
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid rgba(27, 58, 48, 0.12);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--pl-near-black, #1a1a1a);
+      z-index: 2;
+      box-shadow: 0 4px 14px rgba(27, 58, 48, 0.1);
+    }
+    .pl-team__nav:hover { background: var(--pl-teal-mid, #2e7d6e); color: #fff; }
+    .pl-team__nav--prev { left: 0.4rem; }
+    .pl-team__nav--next { right: 0.4rem; }
+    .pl-team__dots { display: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    document.querySelectorAll('.pl-team').forEach(function (root) {
+      var track = root.querySelector('.pl-team__track');
+      var prev = root.querySelector('.pl-team__nav--prev');
+      var next = root.querySelector('.pl-team__nav--next');
+      var dotsWrap = root.querySelector('[data-pl-team-dots]');
+      var cards = track.querySelectorAll('.pl-team__card');
+
+      cards.forEach(function (_, i) {
+        var dot = document.createElement('span');
+        if (i === 0) dot.classList.add('is-active');
+        dotsWrap.appendChild(dot);
+      });
+      var dots = dotsWrap.querySelectorAll('span');
+
+      function scrollByCard(dir) {
+        var card = track.querySelector('.pl-team__card');
+        var amount = card ? card.getBoundingClientRect().width + 16 : 300;
+        track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+      }
+
+      if (prev) prev.addEventListener('click', function () { scrollByCard(-1); });
+      if (next) next.addEventListener('click', function () { scrollByCard(1); });
+
+      track.addEventListener('scroll', function () {
+        var idx = Math.round(track.scrollLeft / (track.scrollWidth / cards.length));
+        dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
+      }, { passive: true });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PureLeven Team",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Meet the people behind it"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The PureLeven Team"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "From the farm to your kitchen — the hands that make it happen."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 56
+    }
+  ],
+  "presets": [
+    {
+      "name": "PureLeven Team"
+    }
+  ]
+}
+{% endschema %}

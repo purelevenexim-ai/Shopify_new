@@ -48,6 +48,10 @@
     }
 
     #MainProduct-{{ section.id }} .product-form__submit {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
       min-height: 52px !important;
       padding: 14px 18px !important;
       border: 0 !important;
@@ -144,11 +148,124 @@
       text-decoration: line-through !important;
     }
 
+    #MainProduct-{{ section.id }} .product__info-container {
+      display: grid !important;
+      grid-template-columns: minmax(10rem, 0.42fr) minmax(0, 1fr) !important;
+      column-gap: 1rem !important;
+      row-gap: 1.2rem !important;
+      align-items: start !important;
+    }
+
+    #MainProduct-{{ section.id }} .product__info-container > * {
+      grid-column: 1 / -1 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    #MainProduct-{{ section.id }} .product__info-container > .pl-purchase-quantity {
+      grid-column: 1 !important;
+      margin: 0 !important;
+      min-width: 0 !important;
+    }
+
+    #MainProduct-{{ section.id }} .product__info-container > .pl-purchase-buy {
+      grid-column: 2 !important;
+      min-width: 0 !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-quantity .quantity__label,
+    #MainProduct-{{ section.id }} .pl-purchase-quantity .quantity__rules,
+    #MainProduct-{{ section.id }} .pl-purchase-quantity volume-pricing {
+      display: none !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-quantity .price-per-item__container {
+      width: 100% !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-quantity quantity-input,
+    #MainProduct-{{ section.id }} .pl-purchase-quantity .quantity {
+      width: 100% !important;
+      max-width: none !important;
+      min-height: 5.2rem !important;
+      border-radius: 10px !important;
+      overflow: hidden !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-quantity .quantity__button {
+      min-height: 5.2rem !important;
+      flex-shrink: 0 !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-buy {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.8rem !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-buy .product-form,
+    #MainProduct-{{ section.id }} .pl-purchase-buy .form,
+    #MainProduct-{{ section.id }} .pl-purchase-buy .product-form__buttons {
+      width: 100% !important;
+      max-width: none !important;
+      margin-top: 0 !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-buy .product-form__buttons {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.8rem !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-buy .product-form__submit,
+    #MainProduct-{{ section.id }} .pl-purchase-buy .shiprocket-headless,
+    #MainProduct-{{ section.id }} .pl-purchase-buy .shiprocket-headless > *,
+    #MainProduct-{{ section.id }} .pl-purchase-buy .sr-headless-checkout {
+      width: 100% !important;
+      max-width: none !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-buy .shiprocket-headless {
+      display: block !important;
+      margin: 0 !important;
+    }
+
+    #MainProduct-{{ section.id }} .pl-purchase-buy .product-form__buttons .shopify-payment-button {
+      display: none !important;
+    }
+
     @media screen and (max-width: 749px) {
       #MainProduct-{{ section.id }} .product__title h1,
       #MainProduct-{{ section.id }} .product__title .h1 {
         font-size: clamp(2.7rem, 6.8vw, 3.4rem) !important;
         line-height: 1.1 !important;
+      }
+
+      #MainProduct-{{ section.id }} .product__info-container {
+        grid-template-columns: minmax(8.6rem, 0.86fr) minmax(0, 1.14fr) !important;
+        column-gap: 0.8rem !important;
+        row-gap: 1rem !important;
+      }
+
+      #MainProduct-{{ section.id }} .product__info-container > .pl-purchase-buy {
+        display: contents !important;
+      }
+
+      #MainProduct-{{ section.id }} .pl-purchase-buy .product-form {
+        grid-column: 2 !important;
+        min-width: 0 !important;
+      }
+
+      #MainProduct-{{ section.id }} .pl-purchase-buy .shiprocket-headless {
+        grid-column: 1 / -1 !important;
+        margin-top: 0.4rem !important;
+      }
+
+      #MainProduct-{{ section.id }} .pl-purchase-buy button.sr-headless-checkout {
+        min-height: 52px !important;
+        border-radius: 12px !important;
+        letter-spacing: 0.04em !important;
+        text-transform: none !important;
       }
 
       #MainProduct-{{ section.id }} .shopify-payment-button__button,
@@ -159,53 +276,31 @@
         font-size: 13px !important;
         letter-spacing: 0.02em !important;
       }
-
-      #MainProduct-{{ section.id }} .pl-form-row {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 0.8rem !important;
-        align-items: center !important;
-      }
-      #MainProduct-{{ section.id }} .pl-form-row > .product-form__quantity {
-        margin: 0 !important;
-        min-width: 0 !important;
-      }
-      #MainProduct-{{ section.id }} .pl-form-row > div:last-child {
-        min-width: 0 !important;
-        align-self: stretch !important;
-        display: flex !important;
-        align-items: center !important;
-      }
-      #MainProduct-{{ section.id }} .pl-form-row > div:last-child product-form,
-      #MainProduct-{{ section.id }} .pl-form-row > div:last-child .product-form,
-      #MainProduct-{{ section.id }} .pl-form-row > div:last-child .form,
-      #MainProduct-{{ section.id }} .pl-form-row .product-form__buttons {
-        width: 100% !important;
-        max-width: none !important;
-      }
-      /* button column should contain ONLY the cart submit button */
-      #MainProduct-{{ section.id }} .pl-form-row .product-form__buttons > *:not(.product-form__submit),
-      #MainProduct-{{ section.id }} .pl-form-row .shopify-payment-button,
-      #MainProduct-{{ section.id }} .pl-form-row pickup-availability,
-      #MainProduct-{{ section.id }} .pl-form-row .quantity__label,
-      #MainProduct-{{ section.id }} .pl-form-row .quantity__rules,
-      #MainProduct-{{ section.id }} .pl-form-row volume-pricing { display: none !important; }
-      #MainProduct-{{ section.id }} .pl-form-row quantity-input,
-      #MainProduct-{{ section.id }} .pl-form-row .quantity {
-        width: 100% !important;
-        height: 5.2rem !important;
-      }
-      #MainProduct-{{ section.id }} .pl-form-row .product-form__submit {
-        width: 100% !important;
-        height: 5.2rem !important;
-        min-height: 5.2rem !important;
-        margin: 0 !important;
-        padding: 0 8px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-      }
     }
+  /* === PL Overrides (inline — pl-product.css not loading) === */
+
+  /* Hide Sale text badge next to price */
+  .price--on-sale .price__badge-sale,
+  .price .price__badge-sale {
+    display: none !important;
+  }
+
+  /* Quantity stepper — rounded pill style (width fix is in .pl-purchase-quantity rule above) */
+  .quantity__button:first-child {
+    border-radius: 10px 0 0 10px !important;
+  }
+  .quantity__button:last-child {
+    border-radius: 0 10px 10px 0 !important;
+  }
+
+  /* In-stock badge — brand teal dot and text */
+  .product__inventory.subtitle {
+    color: #078362 !important;
+  }
+  .product__inventory .svg-wrapper {
+    color: #078362 !important;
+  }
+
   {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
@@ -251,12 +346,11 @@
         {%- if product.tags contains 'bestseller' or product.tags contains 'Bestseller' -%}
           <span class="pl-bestseller-ribbon">Bestseller</span>
         {%- endif -%}
-        {%- assign _pl_img_v = product.selected_or_first_available_variant -%}
-        {%- if _pl_img_v.compare_at_price > _pl_img_v.price -%}
-          {%- assign _pl_img_pct = _pl_img_v.compare_at_price | minus: _pl_img_v.price | times: 100 | divided_by: _pl_img_v.compare_at_price -%}
+        {%- assign pl_img_v = product.selected_or_first_available_variant -%}
+        {%- if pl_img_v.compare_at_price > pl_img_v.price -%}
+          {%- assign pl_img_pct = pl_img_v.compare_at_price | minus: pl_img_v.price | times: 100 | divided_by: pl_img_v.compare_at_price -%}
           <div class="pl-img-badges">
-            <span class="pl-img-badge pl-img-badge--sale">Sale</span>
-            <span class="pl-img-badge pl-img-badge--save">Save {{ _pl_img_pct }}%</span>
+            <span class="pl-img-badge pl-img-badge--pct">-{{ pl_img_pct }}%</span>
           </div>
         {%- endif -%}
         {% render 'product-media-gallery', variant_images: variant_images %}
@@ -268,11 +362,6 @@
         >
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
           {%- assign pl_variant = product.selected_or_first_available_variant -%}
-          {%- assign pl_save_pct = 0 -%}
-          {%- if pl_variant.compare_at_price > pl_variant.price -%}
-            {%- assign pl_save_pct = pl_variant.compare_at_price | minus: pl_variant.price | times: 100 | divided_by: pl_variant.compare_at_price -%}
-          {%- endif -%}
-
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
@@ -434,12 +523,11 @@
                   </details>
                 </div>
               {%- when 'quantity_selector' -%}
-                <div class="pl-form-row">
                 <div
-                  id="Quantity-Form-{{ section.id }}"
-                  class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
+                  class="pl-purchase-quantity product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
                   {{ block.shopify_attributes }}
                 >
+                  <div id="Quantity-Form-{{ section.id }}">
                   {% comment %} TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter {% endcomment %}
                   {% # theme-check-disable %}
                   {%- assign cart_qty = cart
@@ -660,6 +748,7 @@
                       {%- endif -%}
                     </volume-pricing>
                   {%- endif -%}
+                  </div>
                 </div>
               {%- when 'popup' -%}
                 <modal-opener
@@ -685,34 +774,35 @@
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
-                {%- render 'buy-buttons',
-                  block: block,
-                  product: product,
-                  product_form_id: product_form_id,
-                  section_id: section.id,
-                  show_pickup_availability: true
-                -%}
+                <div class="pl-purchase-buy">
+                  {%- render 'buy-buttons',
+                    block: block,
+                    product: product,
+                    product_form_id: product_form_id,
+                    section_id: section.id,
+                    show_pickup_availability: true
+                  -%}
+                  {%- if block.settings.show_dynamic_checkout -%}
+                    {%- unless product.selected_or_first_available_variant.available -%}
+                      <style>.sr-headless-checkout{opacity:0.5;cursor:not-allowed;pointer-events:none;}</style>
+                    {%- endunless -%}
+                    <div class="shiprocket-headless" data-type="product"></div>
+                  {%- endif -%}
+                  {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
+                    <div class="product__tax product__tax--below-btn caption rte">
+                      {%- if cart.duties_included and cart.taxes_included -%}
+                        {{ 'products.product.duties_and_taxes_included' | t }}
+                      {%- elsif cart.taxes_included -%}
+                        {{ 'products.product.taxes_included' | t }}
+                      {%- elsif cart.duties_included -%}
+                        {{ 'products.product.duties_included' | t }}
+                      {%- endif -%}
+                      {%- if shop.shipping_policy.body != blank -%}
+                        {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
                 </div>
-                {%- if block.settings.show_dynamic_checkout -%}
-                  {%- unless product.selected_or_first_available_variant.available -%}
-                    <style>.sr-headless-checkout{opacity:0.5;cursor:not-allowed;pointer-events:none;}</style>
-                  {%- endunless -%}
-                  <div class="shiprocket-headless" data-type="product"></div>
-                {%- endif -%}
-                {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
-                  <div class="product__tax product__tax--below-btn caption rte">
-                    {%- if cart.duties_included and cart.taxes_included -%}
-                      {{ 'products.product.duties_and_taxes_included' | t }}
-                    {%- elsif cart.taxes_included -%}
-                      {{ 'products.product.taxes_included' | t }}
-                    {%- elsif cart.duties_included -%}
-                      {{ 'products.product.duties_included' | t }}
-                    {%- endif -%}
-                    {%- if shop.shipping_policy.body != blank -%}
-                      {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
               {%- when 'quick_guide' -%}
                 {%- capture quick_guide_content -%}
                   {% render 'product-quick-guide-content',
@@ -842,9 +932,10 @@
                                 {% endif %}
                               >
                                 <ul class="list-unstyled" role="list">
+                                  {%- assign recommendations_offset = block.settings.products_per_page | times: forloop.index0 -%}
                                   {%- for product in recommendations.products
                                     limit: block.settings.products_per_page
-                                    offset: continue
+                                    offset: recommendations_offset
                                   -%}
                                     <li>
                                       {%- if block.settings.enable_quick_add -%}
@@ -965,7 +1056,7 @@
         {% endif %}
       >
         {%- if mobile_bar_variant.available -%}
-          ADD TO KITCHEN
+          Add to cart
         {%- else -%}
           Sold Out
         {%- endif -%}
@@ -1011,14 +1102,6 @@
       </script>
       <script src="{{ 'product-model.js' | asset_url }}" defer></script>
     {%- endif -%}
-
-    {%- liquid
-      if product.selected_or_first_available_variant.featured_media
-        assign seo_media = product.selected_or_first_available_variant.featured_media
-      else
-        assign seo_media = product.featured_media
-      endif
-    -%}
 
     <script type="application/ld+json">
       {{ product | structured_data }}
@@ -1087,6 +1170,9 @@
     </script>
   </div>
 </product-info>
+
+
+{%- render 'schema-product-faq' -%}
 
 {% schema %}
 {
@@ -2658,3 +2744,5 @@
   ]
 }
 {% endschema %}
+
+{% comment %} Availability markup refresh 2026-07-13 {% endcomment %}

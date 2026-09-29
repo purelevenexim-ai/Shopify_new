@@ -67,17 +67,196 @@
     color: #D4821A;
     margin-bottom: 2rem;
   }
+
+  .farmer-sketch--real-media {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(252, 228, 119, 0.18), transparent 28rem),
+      linear-gradient(180deg, #ffffff 0%, #f6f6f6 100%);
+    text-align: left;
+  }
+
+  .farmer-sketch--real-media .farmer-sketch__wrapper {
+    align-items: stretch;
+    gap: 2rem;
+  }
+
+  .farmer-sketch__story-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .farmer-sketch__eyebrow {
+    margin: 0 0 0.6rem;
+    color: #004438;
+    font-family: var(--font-body-family);
+    font-size: 1.15rem;
+    font-weight: 800;
+  }
+
+  .farmer-sketch__story-title {
+    margin: 0;
+    max-width: 72rem;
+    color: #212121;
+    font-family: var(--font-heading-family);
+    font-size: clamp(2.8rem, 4.6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+  }
+
+  .farmer-sketch__story-note {
+    margin: 0;
+    max-width: 34rem;
+    color: #6B6B6B;
+    font-family: var(--font-body-family);
+    font-size: 1.45rem;
+    line-height: 1.65;
+  }
+
+  .farmer-sketch__media-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: 1.6rem;
+  }
+
+  .farmer-sketch__media-card {
+    position: relative;
+    min-height: 31rem;
+    overflow: hidden;
+    border: 1px solid #D0D5D2;
+    border-radius: 2.4rem;
+    background: #E3E8DD;
+    box-shadow: 0 2rem 5rem rgba(0, 68, 56, 0.08);
+  }
+
+  .farmer-sketch__media-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .farmer-sketch__media-card--stack {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 1.6rem;
+    min-height: 31rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .farmer-sketch__media-card--stack .farmer-sketch__media-tile {
+    overflow: hidden;
+    border: 1px solid #D0D5D2;
+    border-radius: 2.4rem;
+    background: #E3E8DD;
+  }
+
+  .farmer-sketch__media-caption {
+    position: absolute;
+    left: 1.6rem;
+    right: 1.6rem;
+    bottom: 1.6rem;
+    display: inline-flex;
+    width: fit-content;
+    max-width: calc(100% - 3.2rem);
+    padding: 0.8rem 1.2rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #003527;
+    font-family: var(--font-body-family);
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.2;
+    box-shadow: 0 1rem 2.4rem rgba(0, 53, 39, 0.12);
+  }
+
+  @media(max-width: 749px) {
+    .farmer-sketch--real-media {
+      padding: 3.2rem 1.4rem;
+    }
+
+    .farmer-sketch__story-header {
+      display: block;
+    }
+
+    .farmer-sketch__story-note {
+      margin-top: 1.2rem;
+      font-size: 1.35rem;
+    }
+
+    .farmer-sketch__media-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .farmer-sketch__media-card,
+    .farmer-sketch__media-card--stack {
+      min-height: 24rem;
+    }
+  }
 </style>
 
-<div class="farmer-sketch">
+{%- assign pl_home_real_story = false -%}
+{%- if request.page_type == 'index' and section.id contains 'farmer_sketch_mobile_story' -%}
+  {%- assign pl_home_real_story = true -%}
+{%- endif -%}
+
+<div class="farmer-sketch{% if pl_home_real_story %} farmer-sketch--real-media{% endif %}">
   <div class="farmer-sketch__wrapper">
-    <div class="farmer-sketch__image-container">
-      {%- if section.settings.image != blank -%}
-        <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.title | escape }}" class="farmer-sketch__image" loading="lazy">
-      {%- else -%}
-        <img src="{{ 'pureleven-origin-sketch.svg' | asset_url }}" alt="Kerala spice farming sketch" class="farmer-sketch__image" loading="lazy">
-      {%- endif -%}
-    </div>
+    {%- if pl_home_real_story -%}
+      <div class="farmer-sketch__story-header">
+        <div>
+          <p class="farmer-sketch__eyebrow">Real Kerala sourcing</p>
+          <h2 class="farmer-sketch__story-title">From spice garden to your kitchen shelf.</h2>
+        </div>
+        <p class="farmer-sketch__story-note">
+          These are not stock promises. They are the people, plants, and packing moments behind the spices you cook with.
+        </p>
+      </div>
+
+      <div class="farmer-sketch__media-grid" aria-label="PureLeven sourcing and harvest photos">
+        <figure class="farmer-sketch__media-card">
+          {% render 'pl-asset-img', name: 'pl-home-farm-team', widths: '640,1200', sizes: '(min-width: 750px) 560px, calc(100vw - 106px)', alt: 'Kerala spice growers working together in a cardamom garden', width: 1400, height: 933 %}
+          <figcaption class="farmer-sketch__media-caption">Small batches, real hands</figcaption>
+        </figure>
+
+        <div class="farmer-sketch__media-card farmer-sketch__media-card--stack">
+          <figure class="farmer-sketch__media-tile">
+            {% render 'pl-asset-img', name: 'pl-home-pepper-hand', widths: '640,1200', sizes: '(min-width: 750px) 460px, calc(100vw - 106px)', alt: 'Fresh pepper berries held in hand at the farm', width: 1200, height: 800 %}
+          </figure>
+          <figure class="farmer-sketch__media-tile">
+            {% render 'pl-asset-img', name: 'pl-home-farm-work', widths: '640,1200', sizes: '(min-width: 750px) 460px, calc(100vw - 106px)', alt: 'PureLeven sourcing team inspecting spice plants', width: 1200, height: 800 %}
+          </figure>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="farmer-sketch__image-container">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 1600 }}"
+            alt="{{ section.settings.title | escape }}"
+            class="farmer-sketch__image"
+            loading="lazy"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+          >
+        {%- else -%}
+          <img
+            src="{{ 'pureleven-origin-sketch.svg' | asset_url }}"
+            alt="Kerala spice farming sketch"
+            class="farmer-sketch__image"
+            loading="lazy"
+            width="1080"
+            height="640"
+          >
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 

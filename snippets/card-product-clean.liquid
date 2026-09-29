@@ -1,0 +1,131 @@
+{% comment %}
+  Clean product card — custom Liquid version of the "Our top spices" redesign.
+  Drop-in for snippets/card-product.liquid usage sites (collection grids, featured collection sections).
+
+  Accepts:
+  - card_product: {Object} Product Liquid object
+  - section_id: {String} id of the parent section
+  - tag_label: {String} optional small chip above the title, e.g. "Best Product", "Fresh Harvest" (optional)
+
+  Usage:
+  {% render 'card-product-clean', card_product: product, section_id: section.id, tag_label: 'Fresh Harvest' %}
+{% endcomment %}
+
+{{ 'component-card-clean.css' | asset_url | stylesheet_tag }}
+
+{%- if card_product and card_product != empty -%}
+  {%- assign compare = card_product.selected_or_first_available_variant.compare_at_price | default: 0 -%}
+  {%- assign price = card_product.selected_or_first_available_variant.price -%}
+  {%- assign has_compare = false -%}
+  {%- if compare > price -%}{%- assign has_compare = true -%}{%- endif -%}
+  {%- assign discount_pct = 0 -%}
+  {%- if has_compare -%}
+    {%- assign discount_pct = compare | minus: price | times: 100.0 | divided_by: compare | round -%}
+  {%- endif -%}
+
+  <div class="cc-card" data-product-id="{{ card_product.id }}">
+    <div class="cc-card__accent" style="background: {{ card_product.metafields.custom.category_color | default: '#B45E3C' }};"></div>
+
+    <a href="{{ card_product.url }}" class="cc-card__media-link" aria-label="{{ card_product.title | escape }}">
+      <div class="cc-card__media">
+        {%- if tag_label -%}
+          <span class="cc-card__tag">{{ tag_label }}</span>
+        {%- endif -%}
+        <img
+          srcset="
+            {{ card_product.featured_media | image_url: width: 360 }} 360w,
+            {{ card_product.featured_media | image_url: width: 533 }} 533w,
+            {{ card_product.featured_media | image_url: width: 720 }} 720w
+          "
+          src="{{ card_product.featured_media | image_url: width: 533 }}"
+          sizes="(min-width: 750px) 280px, calc((100vw - 48px) / 2)"
+          alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
+          loading="lazy"
+          width="{{ card_product.featured_media.width }}"
+          height="{{ card_product.featured_media.height }}"
+        >
+        <span class="cc-card__badge" aria-label="{{ discount_pct }}% off"{% unless has_compare %} style="display: none;"{% endunless %}>-{{ discount_pct }}%</span>
+      </div>
+    </a>
+
+    <div class="cc-card__content">
+      <div class="cc-card__title" role="heading" aria-level="3">
+        <a href="{{ card_product.url }}" class="cc-card__title-link">{{ card_product.title | escape }}</a>
+      </div>
+
+      <div class="cc-card__price-row">
+        <s class="cc-card__price-compare"{% unless has_compare %} style="display: none;"{% endunless %}>{{ compare | money }}</s>
+        <strong class="cc-card__price-sale" data-price>{{ price | money }}</strong>
+      </div>
+
+      {%- if card_product.variants.size > 1 -%}
+        <div
+          class="cc-card__pills{% if card_product.variants.size <= 2 %} cc-card__pills--stacked{% endif %}"
+          role="radiogroup"
+          aria-label="{{ 'products.product.choose_options' | t | default: 'Choose an option' }}"
+        >
+          {%- for variant in card_product.variants -%}
+            {%- assign v_discount = 0 -%}
+            {%- if variant.compare_at_price > variant.price -%}
+              {%- assign v_discount = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round -%}
+            {%- endif -%}
+            <input
+              type="radio"
+              class="cc-card__pill-input"
+              id="cc-variant-{{ section_id }}-{{ card_product.id }}-{{ forloop.index }}"
+              name="cc-variant-{{ section_id }}-{{ card_product.id }}"
+              value="{{ variant.id }}"
+              data-price="{{ variant.price }}"
+              data-compare="{{ variant.compare_at_price | default: 0 }}"
+              {% if forloop.first %}checked{% endif %}
+              {% unless variant.available %}disabled{% endunless %}
+            >
+            <label class="cc-card__pill" for="cc-variant-{{ section_id }}-{{ card_product.id }}-{{ forloop.index }}" title="{{ variant.title | escape }}">
+              <span class="cc-card__pill-label">{{ variant.title | escape }}</span>
+              {%- if v_discount > 0 -%}
+                <span class="cc-card__pill-discount">{{ v_discount }}%</span>
+              {%- endif -%}
+            </label>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <product-form data-section-id="{{ section_id }}" class="cc-card__form">
+        {%- form 'product', card_product, class: 'cc-card__add-form', novalidate: 'novalidate' -%}
+          <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}" class="cc-card__variant-id">
+          <button type="submit" name="add" class="cc-card__add-button" aria-live="polite">
+            <span>{{ 'products.product.add_to_cart' | t | default: 'Add to cart' }}</span>
+          </button>
+        {%- endform -%}
+      </product-form>
+
+      <script>
+        (function () {
+          var card = document.currentScript.closest('.cc-card');
+          if (!card) return;
+          var priceEl = card.querySelector('[data-price]');
+          var compareEl = card.querySelector('.cc-card__price-compare');
+          var badgeEl = card.querySelector('.cc-card__badge');
+          var variantInput = card.querySelector('.cc-card__variant-id');
+          function fmt(cents) { return 'Rs. ' + (cents / 100).toFixed(2); }
+          card.querySelectorAll('.cc-card__pill-input').forEach(function (input) {
+            input.addEventListener('change', function () {
+              var price = parseInt(this.dataset.price, 10);
+              var compare = parseInt(this.dataset.compare, 10) || 0;
+              if (variantInput) variantInput.value = this.value;
+              if (priceEl) priceEl.textContent = fmt(price);
+              if (compare > price) {
+                var pct = Math.round((1 - price / compare) * 100);
+                if (compareEl) { compareEl.textContent = fmt(compare); compareEl.style.display = ''; }
+                if (badgeEl) { badgeEl.textContent = '-' + pct + '%'; badgeEl.style.display = ''; }
+              } else {
+                if (compareEl) compareEl.style.display = 'none';
+                if (badgeEl) badgeEl.style.display = 'none';
+              }
+            });
+          });
+        })();
+      </script>
+    </div>
+  </div>
+{%- endif -%}

@@ -3,6 +3,70 @@
     margin-top: 1rem;
   }
 
+  .template-404__search {
+    max-width: 480px;
+    margin: 2.5rem auto 0;
+  }
+
+  .template-404__search .search__input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid rgba(var(--color-foreground), 0.15);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+  }
+
+  .template-404__search .search__input::placeholder {
+    color: rgba(var(--color-foreground), 0.45);
+  }
+
+  .template-404__search .search__input:focus {
+    outline: none;
+    border-color: rgba(var(--color-foreground), 0.4);
+    box-shadow: 0 0 0 3px rgba(var(--color-foreground), 0.06);
+  }
+
+  .template-404__links {
+    margin-top: 2.5rem;
+  }
+
+  .template-404__links-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(var(--color-foreground), 0.6);
+    margin-bottom: 1rem;
+  }
+
+  .template-404__links-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .template-404__links-list a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(var(--color-foreground), 0.12);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: rgb(var(--color-foreground));
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .template-404__links-list a:hover {
+    border-color: rgba(var(--color-foreground), 0.3);
+    background: rgba(var(--color-foreground), 0.03);
+  }
+
   @media screen and (min-width: 750px) {
     .template-404 .title + * {
       margin-top: 2rem;
@@ -20,4 +84,34 @@
   <a href="{{ routes.all_products_collection_url }}" class="button">
     {{ 'general.continue_shopping' | t }}
   </a>
+
+  <div class="template-404__search">
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <label for="Search-404" class="visually-hidden">
+        {{ 'general.search.search' | t }}
+      </label>
+      <input
+        type="search"
+        id="Search-404"
+        name="q"
+        class="search__input"
+        placeholder="{{ 'general.search.placeholder' | t }}"
+        aria-label="{{ 'general.search.search' | t }}"
+        autocomplete="off"
+      >
+    </form>
+  </div>
+
+  <nav class="template-404__links" aria-label="Popular pages">
+    <p class="template-404__links-title">Popular pages</p>
+    <ul class="template-404__links-list">
+      <li><a href="{{ routes.all_products_collection_url }}">All Products</a></li>
+      <li><a href="/collections/spices">Spices</a></li>
+      <li><a href="/collections/honey">Honey</a></li>
+      <li><a href="/collections/tea-coffee">Tea & Coffee</a></li>
+      <li><a href="/blogs/news">Blog</a></li>
+      <li><a href="/pages/about-us">About Us</a></li>
+      <li><a href="/pages/contact">Contact</a></li>
+    </ul>
+  </nav>
 </div>

@@ -1,0 +1,230 @@
+{{ 'pl-split-card.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign mf = product.metafields.custom
+  assign ptype = product.type | downcase
+
+  assign kind = 'tea'
+  if ptype contains 'coffee'
+    assign kind = 'coffee'
+  elsif ptype contains 'honey'
+    assign kind = 'honey'
+  elsif ptype contains 'combo'
+    assign kind = 'combo'
+  endif
+
+  assign grams = 0
+  for v in product.variants
+    if v.weight > grams
+      assign grams = v.weight
+    endif
+  endfor
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .plb__eyebrow {
+    display: inline-flex; align-items: center; gap: 0.7rem; margin: 0 0 1.2rem;
+    font-family: var(--pl-font-body, "Manrope", "Inter", sans-serif);
+    font-size: 1.1rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--plc-teal-2);
+  }
+  .plb__eyebrow::before { content: ''; width: 2.4rem; height: 2px; background: var(--plc-gold-2); border-radius: 2px; }
+
+  .plb__title {
+    margin: 0 0 1rem;
+    font-family: var(--pl-font-display, "Manrope", "Inter", sans-serif);
+    font-size: 2.6rem; font-weight: 800; letter-spacing: -0.02em; color: var(--plc-ink);
+  }
+  .plb__lede { margin: 0 0 3.2rem; font-size: 1.5rem; line-height: 1.65; color: var(--plc-soft); max-width: 62ch; }
+
+  /* --- spec strip --- */
+  .plb__specs {
+    display: grid; gap: 1.2rem; margin-bottom: 3.6rem;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+  @media screen and (min-width: 750px) { .plb__specs { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+  .plb__spec {
+    background: var(--plc-card); border: 1px solid var(--plc-line-soft); border-radius: 1.4rem;
+    padding: 1.6rem 1.8rem; box-shadow: 0 1px 2px rgba(18,36,31,.05), 0 6px 18px rgba(18,36,31,.06);
+  }
+  .plb__spec-ico { display: block; font-size: 2rem; line-height: 1; margin-bottom: 0.9rem; }
+  .plb__spec-k { display: block; font-size: 1.1rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--plc-faint); margin-bottom: 0.3rem; }
+  .plb__spec-v { display: block; font-size: 1.6rem; font-weight: 750; color: var(--plc-ink); line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  /* --- method --- */
+  .plb__method { display: grid; gap: 2.4rem; align-items: start; margin-bottom: 3.6rem; }
+  @media screen and (min-width: 990px) { .plb__method { grid-template-columns: minmax(0,1fr) minmax(0,1.15fr); } }
+  .plb__shot { border-radius: 1.4rem; overflow: hidden; background: var(--plc-tint); aspect-ratio: 1; }
+  .plb__shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .plb__steps { display: flex; flex-direction: column; gap: 1.4rem; }
+  .plb__step {
+    display: flex; gap: 1.4rem; background: var(--plc-card);
+    border: 1px solid var(--plc-line-soft); border-radius: 1.4rem; padding: 1.6rem 1.8rem;
+    box-shadow: 0 1px 2px rgba(18,36,31,.05), 0 6px 18px rgba(18,36,31,.06);
+  }
+  .plb__n {
+    flex: 0 0 3.2rem; width: 3.2rem; height: 3.2rem; border-radius: 50%;
+    background: var(--plc-teal); color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 800; font-variant-numeric: tabular-nums;
+  }
+  .plb__step h4 { margin: 0 0 0.3rem; font-size: 1.5rem; font-weight: 750; color: var(--plc-ink); }
+  .plb__step p { margin: 0; font-size: 1.35rem; line-height: 1.55; color: var(--plc-soft); }
+  .plb__step b { color: var(--plc-ink); font-weight: 750; }
+
+  /* --- notes / pairings --- */
+  .plb__cards { display: grid; gap: 1.6rem; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); }
+  .plb__card {
+    background: var(--plc-tint); border: 1px solid var(--plc-line-soft); border-radius: 1.4rem; padding: 2rem;
+  }
+  .plb__card h4 { margin: 0 0 0.7rem; font-size: 1.5rem; font-weight: 800; color: var(--plc-teal); }
+  .plb__card p { margin: 0; font-size: 1.35rem; line-height: 1.6; color: var(--plc-soft); }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} isolate gradient">
+  <div class="section-{{ section.id }}-padding">
+    <div class="page-width">
+
+      {%- case kind -%}
+        {%- when 'coffee' -%}
+          {%- assign eyebrow = 'Nadan Kaapi' -%}
+          {%- assign title = 'How to brew it properly' -%}
+          {%- assign lede = 'South Indian filter coffee is a decoction, not a drip. The grind is deliberately fine so hot water sits with it and pulls a thick, dark concentrate — which is then cut with hot milk, never cold.' -%}
+        {%- when 'honey' -%}
+          {%- assign eyebrow = 'Raw & unfiltered' -%}
+          {%- assign title = 'How to use it' -%}
+          {%- assign lede = 'Raw honey keeps its enzymes, pollen and propolis — all of which heat destroys. Everything below is about not cooking it.' -%}
+        {%- when 'combo' -%}
+          {%- assign eyebrow = 'Ships as one box' -%}
+          {%- assign title = 'What to do with it' -%}
+          {%- assign lede = 'Each pack brews differently. Start with the milk tea for everyday chai, keep the orange pekoe for afternoons without milk, and use the honey wherever sugar would have gone.' -%}
+        {%- else -%}
+          {%- assign eyebrow = 'Nadan Chaya' -%}
+          {%- assign title = 'How to brew perfect Kerala tea' -%}
+          {%- assign lede = 'Kerala chaya runs about one part milk to two parts water — far lighter than the milk-heavy chai of the north — and it is finished by pulling the tea between two tumblers until it froths.' -%}
+      {%- endcase -%}
+
+      <p class="plb__eyebrow">{{ eyebrow }}</p>
+      <h2 class="plb__title">{{ title }}</h2>
+      <p class="plb__lede">{{ lede }}</p>
+
+      <div class="plb__specs">
+        {%- if mf.brew_time != blank -%}
+          <div class="plb__spec"><span class="plb__spec-ico">&#9201;</span><span class="plb__spec-k">Brew</span><span class="plb__spec-v">{{ mf.brew_time }}</span></div>
+        {%- endif -%}
+        {%- if mf.dose_g > 0 -%}
+          <div class="plb__spec"><span class="plb__spec-ico">&#9878;</span><span class="plb__spec-k">Per cup</span><span class="plb__spec-v">{{ mf.dose_g }} g</span></div>
+          {%- if grams > 0 -%}
+            {%- assign servings = grams | divided_by: mf.dose_g | round -%}
+            <div class="plb__spec"><span class="plb__spec-ico">&#9749;</span><span class="plb__spec-k">Largest pack</span><span class="plb__spec-v">~{{ servings }} cups</span></div>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if mf.grade != blank -%}
+          <div class="plb__spec"><span class="plb__spec-ico">&#10022;</span><span class="plb__spec-k">Grade</span><span class="plb__spec-v">{{ mf.grade }}</span></div>
+        {%- endif -%}
+        {%- if mf.origin != blank -%}
+          <div class="plb__spec"><span class="plb__spec-ico">&#9968;</span><span class="plb__spec-k">Origin</span><span class="plb__spec-v">{{ mf.origin }}</span></div>
+        {%- endif -%}
+        {%- if mf.harvest != blank -%}
+          <div class="plb__spec"><span class="plb__spec-ico">&#9728;</span><span class="plb__spec-k">Harvest</span><span class="plb__spec-v">{{ mf.harvest }}</span></div>
+        {%- endif -%}
+      </div>
+
+      <div class="plb__method">
+        {%- comment -%}
+          All beverages share one template, so a section-level image picker would put
+          the same photo on every product. The image is chosen from the product type
+          instead; the picker stays available as a per-page override.
+        {%- endcomment -%}
+        <div class="plb__shot">
+          {%- if section.settings.image != blank -%}
+            {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400,600,900', alt: title | escape }}
+          {%- else -%}
+            {%- case kind -%}
+              {%- when 'coffee' -%}{%- assign auto_img = 'pl-brew-coffee.webp' -%}
+              {%- when 'honey' -%}{%- assign auto_img = 'pl-brew-honey.webp' -%}
+              {%- when 'combo' -%}{%- assign auto_img = 'pl-brew-combo.webp' -%}
+              {%- else -%}{%- assign auto_img = 'pl-brew-tea.webp' -%}
+            {%- endcase -%}
+            <img
+              src="{{ auto_img | asset_url }}"
+              alt="{{ title | escape }}"
+              width="900" height="900" loading="lazy">
+          {%- endif -%}
+        </div>
+
+        <div class="plb__steps">
+          {%- case kind -%}
+            {%- when 'coffee' -%}
+              <div class="plb__step"><span class="plb__n">1</span><div><h4>Load the filter</h4><p>Roughly <b>1 part coffee to 5 parts water</b>. Press the grounds level — do not pack them tight.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>Let it drip</h4><p>Pour water just off the boil and leave it <b>4&ndash;5 minutes</b>. A rushed decoction tastes thin and sour.</p></div></div>
+              <div class="plb__step"><span class="plb__n">3</span><div><h4>Cut with hot milk</h4><p>About <b>1 part decoction to 3 parts milk</b>, heated separately. Cold milk kills the body.</p></div></div>
+              <div class="plb__step"><span class="plb__n">4</span><div><h4>Pull it</h4><p>Pour between two tumblers to aerate and cool. Sweeten while it is still hot.</p></div></div>
+            {%- when 'honey' -%}
+              <div class="plb__step"><span class="plb__n">1</span><div><h4>Keep it under 40&deg;C</h4><p>Stir into <b>warm</b> tea, milk or water &mdash; never boiling. Above 40&deg;C the live enzymes break down.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>A spoon in the morning</h4><p>One spoonful in warm water, on an empty stomach, is the traditional Kerala use.</p></div></div>
+              <div class="plb__step"><span class="plb__n">3</span><div><h4>Baking</h4><p>Swap <b>3/4 cup honey</b> for every 1 cup of sugar, and drop the oven about 15&deg;C.</p></div></div>
+              <div class="plb__step"><span class="plb__n">4</span><div><h4>If it crystallises</h4><p>That is proof it was never heated. Stand the jar in warm water &mdash; do not microwave it.</p></div></div>
+            {%- when 'combo' -%}
+              <div class="plb__step"><span class="plb__n">1</span><div><h4>Milk tea, every morning</h4><p><b>2 tsp</b> in 1 cup water, brew 2 min, add 1 cup milk, simmer 4&ndash;5 min.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>Orange pekoe, afternoons</h4><p><b>1 tsp</b> per cup at 95&deg;C for 3&ndash;4 min. Drink it black &mdash; milk buries the florals.</p></div></div>
+              <div class="plb__step"><span class="plb__n">3</span><div><h4>Coffee, as decoction</h4><p><b>1 part coffee to 5 parts water</b> in a filter, then cut with hot milk.</p></div></div>
+              <div class="plb__step"><span class="plb__n">4</span><div><h4>Honey, off the heat</h4><p>Stir in once the cup is warm rather than boiling, so the enzymes survive.</p></div></div>
+            {%- else -%}
+              <div class="plb__step"><span class="plb__n">1</span><div><h4>Boil milk and water together</h4><p>Take your preferred ratio of <b>milk and water</b> in one vessel and bring it to the boil together &mdash; not water first.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>Add the powder at half boil</h4><p>Once it is <b>half boiled</b>, stir in <b>2 teaspoons</b> of tea powder.</p></div></div>
+              <div class="plb__step"><span class="plb__n">3</span><div><h4>Boil, then rest</h4><p>Let it come to a full boil, then take it off the heat and <b>rest at least 30 seconds</b> so the colour and body settle.</p></div></div>
+              <div class="plb__step"><span class="plb__n">4</span><div><h4>Pull for froth</h4><p>Pour between two tumblers from a height. The greater the drop, the better the froth &mdash; the &ldquo;one-metre chaya&rdquo; of Kerala tea shops.</p></div></div>
+          {%- endcase -%}
+        </div>
+      </div>
+
+      <div class="plb__cards">
+        {%- case kind -%}
+          {%- when 'coffee' -%}
+            <div class="plb__card"><h4>Why Robusta</h4><p>Kerala's high-range Robusta carries close to twice the caffeine of Arabica and a much heavier body &mdash; which is exactly what stands up to hot milk in a filter kaapi.</p></div>
+            <div class="plb__card"><h4>Grind matters</h4><p>Filter coffee needs a fine grind so water sits with it. A coarse grind gives you weak, watery decoction no matter how long you wait.</p></div>
+            <div class="plb__card"><h4>No chicory here</h4><p>Many Indian filter blends carry 20&ndash;30% chicory for body and cost. This is unblended coffee &mdash; the thickness comes from the bean.</p></div>
+          {%- when 'honey' -%}
+            <div class="plb__card"><h4>Raw means unheated</h4><p>Commercial honey is usually pasteurised and filtered so it stays clear and pourable on the shelf. That process strips the pollen and enzymes.</p></div>
+            <div class="plb__card"><h4>It will set solid</h4><p>Glucose crystallises out over weeks. Runny honey that never sets has almost always been heated or cut with syrup.</p></div>
+            <div class="plb__card"><h4>Wildflower, not monofloral</h4><p>Hives sit in forest clearings, so the flavour shifts with whatever is in bloom that season. Two jars will not taste identical.</p></div>
+          {%- when 'combo' -%}
+            <div class="plb__card"><h4>Made to compare</h4><p>Brew each at the same strength for a week and you will know which one you actually reach for &mdash; cheaper than committing to a full pack first.</p></div>
+            <div class="plb__card"><h4>Store them apart</h4><p>Tea takes on smells fast. Keep each pack sealed and away from the honey and the coffee.</p></div>
+            <div class="plb__card"><h4>Ships as one box</h4><p>One package, one delivery charge, packed the day it leaves us.</p></div>
+          {%- else -%}
+            <div class="plb__card"><h4>CTC vs orthodox</h4><p>CTC &mdash; crush, tear, curl &mdash; is machine-processed into granules that brew fast and strong. Orthodox leaf is rolled whole and gives a lighter, more aromatic cup. Over 80% of Indian tea is CTC.</p></div>
+            <div class="plb__card"><h4>What the grades mean</h4><p>BOP is Broken Orange Pekoe: smaller broken leaf, quick infusion, full body and colour. Whole-leaf grades like OP brew lighter and more floral.</p></div>
+            <div class="plb__card"><h4>Water, not just leaf</h4><p>Boiling water scorches tea and pulls harsh tannin. Take it off the boil to around 95&deg;C and time the steep.</p></div>
+        {%- endcase -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Beverage Guide",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Method image" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding top", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding bottom", "default": 56 }
+  ],
+  "presets": [{ "name": "Beverage Guide" }]
+}
+{% endschema %}

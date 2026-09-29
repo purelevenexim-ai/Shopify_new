@@ -1,16 +1,51 @@
 {{ 'pl-product.css' | asset_url | stylesheet_tag }}
+
 {%- liquid
-  assign has_blocks = section.blocks.size
+  assign h = product.handle
+
+  # Per-product recipe data: name|icon triples separated by ~
+  if h contains 'black-pepper' or h contains 'pepper-masala' or h contains 'white-pepper'
+    if h contains 'white-pepper'
+      assign recipes = "Cream of Tomato Soup|bowl~White Pepper Chicken|pan~Kerala Pepper Noodles|pan"
+    else
+      assign recipes = "Pepper Rasam|bowl~Black Pepper Chicken|pan~Kerala Pepper Curry|pot"
+    endif
+  elsif h contains 'cardamom'
+    assign recipes = "Masala Chai|cup~Elaichi Kheer|bowl~Cardamom Biryani|pot"
+  elsif h contains 'star-anise'
+    assign recipes = "Dum Biryani|pot~Star Anise Chai|cup~Braised Mutton|pan"
+  elsif h contains 'clove'
+    assign recipes = "Biryani|pot~Mulled Spice Chai|cup~Kerala Beef Fry|pan"
+  elsif h contains 'cinnamon'
+    assign recipes = "Cinnamon Chai|cup~Rice Kheer|bowl~Cinnamon Oatmeal|bowl"
+  elsif h contains 'turmeric'
+    assign recipes = "Haldi Doodh (Golden Milk)|cup~Turmeric Rice|bowl~Golden Soup|bowl"
+  elsif h contains 'coffee'
+    assign recipes = "South Indian Filter Coffee|cup~Cold Brew Coffee|cup~Cardamom Coffee|cup"
+  elsif h contains 'coriander'
+    assign recipes = "Dal Tadka|pot~Coriander Chicken|pan~Fresh Coriander Chutney|bowl"
+  elsif h contains 'chilly' or h contains 'chilli' or h contains 'chili'
+    assign recipes = "Chicken Curry|pot~Chilli Paneer|pan~Kerala Egg Roast|pan"
+  elsif h contains 'ginger'
+    assign recipes = "Ginger Tea|cup~Ginger Chicken|pan~Ginger Lemonade|cup"
+  else
+    assign recipes = "Kerala Masala Curry|pot~Biryani|pot~Masala Chai|cup"
+  endif
+
+  assign recipe_parts = recipes | split: "~"
 -%}
-{%- if has_blocks > 0 -%}
+
 <section class="pl-cooking">
   <div class="pl-cooking__inner">
     <h2 class="pl-cooking__heading">{{ section.settings.heading | default: "What we're cooking" }}</h2>
     <div class="pl-cooking__list">
-      {%- for block in section.blocks -%}
-        <div class="pl-cooking__row" {{ block.shopify_attributes }}>
+      {%- for item in recipe_parts -%}
+        {%- assign parts = item | split: "|" -%}
+        {%- assign rname = parts[0] -%}
+        {%- assign ricon = parts[1] -%}
+        <div class="pl-cooking__row">
           <span class="pl-cooking__icon">
-            {%- case block.settings.icon -%}
+            {%- case ricon -%}
               {%- when 'cup' -%}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
               {%- when 'pot' -%}
@@ -23,13 +58,12 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
             {%- endcase -%}
           </span>
-          <span class="pl-cooking__name">{{ block.settings.name }}</span>
+          <span class="pl-cooking__name">{{ rname }}</span>
         </div>
       {%- endfor -%}
     </div>
   </div>
 </section>
-{%- endif -%}
 
 {% schema %}
 {
@@ -43,40 +77,10 @@
       "default": "What we're cooking"
     }
   ],
-  "blocks": [
-    {
-      "type": "recipe",
-      "name": "Recipe",
-      "settings": [
-        {
-          "type": "text",
-          "id": "name",
-          "label": "Recipe name",
-          "default": "Haldi Doodh (Golden Milk)"
-        },
-        {
-          "type": "select",
-          "id": "icon",
-          "label": "Icon",
-          "default": "cup",
-          "options": [
-            { "value": "cup", "label": "Cup (drinks)" },
-            { "value": "pot", "label": "Pot (curry/dal)" },
-            { "value": "bowl", "label": "Bowl" },
-            { "value": "pan", "label": "Pan" }
-          ]
-        }
-      ]
-    }
-  ],
+  "blocks": [],
   "presets": [
     {
-      "name": "What we're cooking",
-      "blocks": [
-        { "type": "recipe", "settings": { "name": "Haldi Doodh (Golden Milk)", "icon": "cup" } },
-        { "type": "recipe", "settings": { "name": "Dal (Spiced Lentils)", "icon": "pot" } },
-        { "type": "recipe", "settings": { "name": "Masala Chai", "icon": "cup" } }
-      ]
+      "name": "What we're cooking"
     }
   ]
 }

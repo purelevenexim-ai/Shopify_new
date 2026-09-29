@@ -74,6 +74,10 @@
         {% endif %}
       </div>
 
+      {% if item.variant.inventory_management == 'shopify' and item.variant.inventory_quantity > 10 %}
+        <p class="pl-ci-instock"><span class="pl-live-dot"></span> In stock &middot; ships within 24h</p>
+      {% endif %}
+
       <!-- Per-item line total (qty > 1) -->
       <div class="pl-ci-linetotal"
            id="lt-{{ item.key }}"

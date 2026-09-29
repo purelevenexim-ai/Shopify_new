@@ -1,0 +1,116 @@
+{%- comment -%}
+  plb-summary.liquid — order summary + the purchase zone.
+
+  Order at both breakpoints:
+    rows → total → savings → one named review → PURCHASE → trust → arrival
+
+  Two deliberate choices about wording:
+    * Shipping is always a number. "Calculated at checkout" asks the shopper
+      to commit money against an unknown, which is where carts get abandoned.
+    * The button says what they get, not where they go.
+
+  Params: mrp_p, cmp_p, disc_p, total_p, ship_free, ship_p, threshold_p,
+          mobile (boolean)
+{%- endcomment -%}
+
+{%- capture plb_rows -%}
+  {%- if cmp_p > 0 -%}
+    <div class="plb-sum__r">
+      <span>MRP ({{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %})</span>
+      <span>{% render 'plb-money', p: mrp_p %}</span>
+    </div>
+    <div class="plb-sum__r">
+      <span>You save</span>
+      <span class="plb-off">&minus;{% render 'plb-money', p: cmp_p %}</span>
+    </div>
+  {%- else -%}
+    <div class="plb-sum__r">
+      <span>Subtotal ({{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %})</span>
+      <span>{% render 'plb-money', p: mrp_p %}</span>
+    </div>
+  {%- endif -%}
+
+  {%- if disc_p > 0 -%}
+    <div class="plb-sum__r">
+      <span>Order discount</span>
+      <span class="plb-off">&minus;{% render 'plb-money', p: disc_p %}</span>
+    </div>
+  {%- endif -%}
+
+  <div class="plb-sum__r">
+    <span>Shipping</span>
+    {%- if ship_free -%}
+      <span class="plb-save">FREE</span>
+    {%- else -%}
+      <span>{% render 'plb-money', p: ship_p %}</span>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%}
+    A shipping charge is an objection. Answer it where it appears, with a way
+    out rather than an apology.
+  {%- endcomment -%}
+  {%- unless ship_free -%}
+    {%- assign gap_p = threshold_p | minus: total_p -%}
+    {%- if gap_p > 0 -%}
+      {% render 'plb-freeship-nudge', gap_p: gap_p, ship_p: ship_p %}
+    {%- endif -%}
+  {%- endunless -%}
+
+  {%- liquid
+    assign sum_grand_p = total_p
+    unless ship_free
+      assign sum_grand_p = total_p | plus: ship_p
+    endunless
+  -%}
+  <div class="plb-sum__r plb-sum__r--total">
+    <span>Total</span>
+    <span>{% render 'plb-money', p: sum_grand_p %}</span>
+  </div>
+{%- endcapture -%}
+
+{%- comment -%}
+  One reviewer with a name, sitting on the button. An aggregate score is a
+  statistic; a person who bought the same thing is a reason.
+{%- endcomment -%}
+{%- capture plb_zone -%}
+  <div class="plb-voice">
+    <span class="plb-voice__av" aria-hidden="true">AG</span>
+    <div>
+      <p class="plb-voice__q">&ldquo;All the items are very good quality. Thank you Pure Leven team.&rdquo;</p>
+      <p class="plb-voice__by">
+        <span>Abu George</span>
+        <span class="plb-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span>verified Google review &middot; 1 of 56</span>
+      </p>
+    </div>
+  </div>
+
+  {% render 'plb-checkout', total_p: total_p, mrp_p: mrp_p %}
+
+  <p class="plb-arrive">Arrives <b data-plb-eta>soon</b> &middot; cash on delivery available</p>
+
+  <div class="plb-trust">
+    <div>7-day returns</div>
+    <div>FSSAI licensed</div>
+    <div>Secure payment</div>
+    <div>Packed same day</div>
+  </div>
+{%- endcapture -%}
+
+{%- assign plb_saved = cmp_p | plus: disc_p -%}
+
+{%- capture plb_body -%}
+  <p class="plb-lbl">Order summary</p>
+  {{ plb_rows }}
+  {%- if plb_saved > 0 -%}
+    <span class="plb-savepill">You&rsquo;re saving {% render 'plb-money', p: plb_saved %} &mdash; locked in</span>
+  {%- endif -%}
+  {{ plb_zone }}
+{%- endcapture -%}
+
+{%- if mobile -%}
+  <div class="plb-card plb-sum plb-sum--m plb-only-m">{{ plb_body }}</div>
+{%- else -%}
+  <div class="plb-card plb-sum plb-only-d">{{ plb_body }}</div>
+{%- endif -%}

@@ -1,0 +1,527 @@
+/* PureLeven Clean System
+   Final visual layer: white base, teal structure, Sunray Yellow CTAs,
+   and a clean corporate Manrope typography system. */
+
+:root {
+  --pl-teal: #004438;
+  --pl-teal-hover: #003527;
+  --pl-yellow: #FCE477;
+  --pl-yellow-hover: #F4D138;
+  --pl-charcoal: #212121;
+  --pl-mid-gray: #6B6B6B;
+  --pl-line: #D0D5D2;
+  --pl-sage: #E3E8DD;
+  --pl-cream: #F2F3E5;
+  --pl-off-white: #F6F6F6;
+  --pl-white: #FFFFFF;
+
+  --pl-primary: var(--pl-teal);
+  --pl-primary-dark: var(--pl-teal-hover);
+  --pl-cta: var(--pl-yellow);
+  --pl-cta-hover: var(--pl-yellow-hover);
+  --pl-text-primary: var(--pl-charcoal);
+  --pl-text-secondary: var(--pl-mid-gray);
+  --pl-background: var(--pl-white);
+  --pl-surface: var(--pl-off-white);
+
+  --pl-font-display: "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --pl-font-body: "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --font-heading-family: var(--pl-font-display);
+  --font-body-family: var(--pl-font-body);
+  --font-body-weight: 400;
+  --font-body-weight-bold: 700;
+
+  --pl-radius-card: 14px;
+  --pl-radius-button: 10px;
+  --pl-card-shadow: 0 4px 18px rgba(0, 68, 56, 0.08);
+  --pl-card-shadow-hover: 0 10px 30px rgba(0, 68, 56, 0.12);
+}
+
+html,
+body {
+  background: var(--pl-white) !important;
+  color: var(--pl-charcoal) !important;
+  font-family: var(--pl-font-body) !important;
+  letter-spacing: normal;
+}
+
+html body,
+html body button,
+html body .button,
+html body input,
+html body select,
+html body textarea,
+html body .price,
+html body .price .price-item,
+html body .card-information,
+html body .product-form__input,
+html body .cart-item__price-wrapper {
+  font-family: var(--pl-font-body) !important;
+}
+
+body,
+p,
+.rte,
+.rte p,
+.caption,
+.subtitle,
+.collection__description,
+.product__description,
+.accordion__content,
+.card-information,
+.product-form__input,
+input,
+select,
+textarea {
+  font-family: var(--pl-font-body) !important;
+  color: var(--pl-charcoal);
+  font-weight: 400;
+  letter-spacing: normal !important;
+}
+
+p,
+.rte p,
+.collection__description p,
+.product__description p {
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+.h0,
+.h1,
+.h2,
+.h3,
+.banner__heading,
+.image-with-text__heading,
+.rich-text__heading,
+.collection__title .title,
+.title-wrapper .title,
+.title-wrapper-with-link .title,
+.product__title,
+.product__title h1,
+.main-page-title,
+.accordion__title {
+  color: var(--pl-charcoal) !important;
+  font-family: var(--pl-font-display) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: none !important;
+}
+
+h1,
+.h0,
+.h1,
+.product__title h1,
+.banner__heading.h1 {
+  font-weight: 800 !important;
+  line-height: 1.05 !important;
+}
+
+h2,
+.h2,
+.collection__title .title,
+.rich-text__heading,
+.image-with-text__heading {
+  font-size: clamp(3.2rem, 4vw, 4rem) !important;
+  line-height: 3.2rem !important;
+}
+
+h3,
+.h3,
+.accordion__title {
+  font-size: clamp(2.4rem, 3vw, 3.2rem) !important;
+  line-height: 3.52rem !important;
+  font-weight: 700 !important;
+}
+
+a,
+.link,
+.link--text {
+  color: var(--pl-teal);
+  font-family: var(--pl-font-body);
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+.button,
+button,
+.shopify-payment-button__button,
+.product-form__submit,
+.quick-add__submit,
+.cart__checkout-button,
+button.sr-headless-checkout,
+.shiprocket-headless button.sr-headless-checkout {
+  border-radius: var(--pl-radius-button) !important;
+  font-family: var(--pl-font-body) !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  letter-spacing: normal !important;
+  line-height: 2.4rem !important;
+  text-transform: none !important;
+}
+
+.button--primary,
+.button.button--primary,
+.banner__buttons .button--primary,
+.banner--pureleven-home-hero .banner__buttons .button--primary,
+.banner--pureleven-home-hero .banner__buttons > *:first-child,
+.quick-add__submit,
+.product-form__submit,
+.cart__checkout-button,
+.shopify-payment-button__button--unbranded,
+button.sr-headless-checkout,
+.shiprocket-headless button.sr-headless-checkout {
+  --color-button: 252, 228, 119;
+  --color-button-text: 33, 33, 33;
+  background: var(--pl-yellow) !important;
+  border: 1px solid var(--pl-yellow) !important;
+  color: var(--pl-charcoal) !important;
+  box-shadow: none !important;
+}
+
+.button--primary:hover,
+.button.button--primary:hover,
+.banner__buttons .button--primary:hover,
+.banner--pureleven-home-hero .banner__buttons .button--primary:hover,
+.banner--pureleven-home-hero .banner__buttons > *:first-child:hover,
+.quick-add__submit:hover,
+.product-form__submit:hover,
+.cart__checkout-button:hover,
+.shopify-payment-button__button--unbranded:hover,
+button.sr-headless-checkout:hover,
+.shiprocket-headless button.sr-headless-checkout:hover {
+  background: var(--pl-yellow-hover) !important;
+  border-color: var(--pl-yellow-hover) !important;
+  color: var(--pl-charcoal) !important;
+  transform: none !important;
+}
+
+.button--secondary,
+.button.button--secondary,
+.banner__buttons .button--secondary,
+.banner--pureleven-home-hero .banner__buttons .button--secondary,
+.banner--pureleven-home-hero .banner__buttons > *:last-child {
+  background: transparent !important;
+  border: 1px solid var(--pl-teal) !important;
+  color: var(--pl-teal) !important;
+}
+
+.button--secondary:hover,
+.button.button--secondary:hover,
+.banner__buttons .button--secondary:hover,
+.banner--pureleven-home-hero .banner__buttons .button--secondary:hover,
+.banner--pureleven-home-hero .banner__buttons > *:last-child:hover {
+  background: var(--pl-sage) !important;
+  color: var(--pl-teal-hover) !important;
+}
+
+.badge,
+.badge--sale,
+.pl-card-sale-badge,
+.pl-save-badge,
+.product__text.caption-with-letter-spacing,
+.caption-with-letter-spacing {
+  font-family: var(--pl-font-body) !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+.shopify-section,
+.gradient,
+.collection,
+.product,
+.product__info-container,
+.card,
+.card-wrapper,
+.product-card-wrapper .card:not(.card--horizontal) {
+  background-color: var(--pl-white);
+}
+
+.color-scheme-2,
+.color-scheme-3,
+.color-scheme-4,
+.color-scheme-5 {
+  background: var(--pl-teal) !important;
+  color: var(--pl-white) !important;
+}
+
+.color-scheme-2 h1,
+.color-scheme-2 h2,
+.color-scheme-2 h3,
+.color-scheme-3 h1,
+.color-scheme-3 h2,
+.color-scheme-3 h3,
+.color-scheme-4 h1,
+.color-scheme-4 h2,
+.color-scheme-4 h3,
+.color-scheme-5 h1,
+.color-scheme-5 h2,
+.color-scheme-5 h3 {
+  color: var(--pl-white) !important;
+}
+
+.banner--pureleven-home-hero .banner__box,
+.image-with-text__content,
+.rich-text__blocks,
+.product__info-container {
+  border: 1px solid var(--pl-line) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  box-shadow: none !important;
+}
+
+.banner--pureleven-home-hero .banner__heading.h1 {
+  color: var(--pl-charcoal) !important;
+  font-family: var(--pl-font-display) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.banner--pureleven-home-hero .banner__text p,
+.image-with-text__text p,
+.rich-text__text p,
+.collection__description p {
+  color: var(--pl-mid-gray) !important;
+  font-family: var(--pl-font-body) !important;
+}
+
+.announcement-bar,
+.announcement-bar-minimal,
+.announcement-bar-section {
+  background: var(--pl-teal) !important;
+  color: var(--pl-white) !important;
+}
+
+.announcement-bar__message,
+.announcement-bar__announcement,
+.announcement-bar-minimal__message {
+  color: var(--pl-white) !important;
+  font-family: var(--pl-font-body) !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+.header-wrapper,
+.header {
+  background: var(--pl-white) !important;
+  color: var(--pl-charcoal) !important;
+}
+
+.header-wrapper {
+  border-bottom: 1px solid var(--pl-line);
+}
+
+.header__menu-item,
+.header__icon,
+.header__active-menu-item {
+  color: var(--pl-charcoal) !important;
+}
+
+.collection__title,
+.title-wrapper-with-link {
+  color: var(--pl-charcoal);
+}
+
+.collection__title .title::after,
+.featured-collection h2.title::after {
+  display: none !important;
+}
+
+.product-card-wrapper .card:not(.card--horizontal),
+.card-wrapper.product-card-wrapper .card.card--standard {
+  border: 1px solid var(--pl-line) !important;
+  border-radius: var(--pl-radius-card) !important;
+  background: var(--pl-white) !important;
+  box-shadow: var(--pl-card-shadow) !important;
+  transform: none !important;
+}
+
+.product-card-wrapper .card:not(.card--horizontal):hover,
+.card-wrapper.product-card-wrapper:hover .card.card--standard {
+  border-color: var(--pl-teal) !important;
+  box-shadow: var(--pl-card-shadow-hover) !important;
+  transform: translateY(-2px) !important;
+}
+
+.product-card-wrapper .card:not(.card--horizontal) .card__heading,
+.product-card-wrapper .card:not(.card--horizontal) .card__heading a,
+.card .card__heading a,
+.card-information .card__heading a {
+  color: var(--pl-charcoal) !important;
+  font-family: var(--pl-font-body) !important;
+  font-size: 1.6rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 2rem !important;
+}
+
+html body .product-card-wrapper .card:not(.card--horizontal) .card__heading,
+html body .product-card-wrapper .card:not(.card--horizontal) .card__heading a,
+html body .card .card__heading a,
+html body .card-information .card__heading a {
+  font-family: var(--pl-font-body) !important;
+  font-weight: 800 !important;
+}
+
+.price,
+.price .price-item,
+.price-item,
+.pl-price-row,
+.pl-price-sale,
+.pl-price-regular {
+  color: var(--pl-teal) !important;
+  font-family: var(--pl-font-body) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.product__title h1,
+.product .price .price-item--sale,
+.product .price .price-item,
+.pl-price-sale,
+.pl-price-regular {
+  font-weight: 800 !important;
+}
+
+.price--on-sale .price-item--regular,
+.pl-price-compare {
+  color: var(--pl-mid-gray) !important;
+}
+
+.product-form__input--pill legend.form__label,
+.form__label,
+.quantity__label {
+  color: var(--pl-charcoal) !important;
+  font-family: var(--pl-font-body) !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+.product-form__input--pill label,
+.product-form__input input[type='radio'] + label,
+.pl-card-variant-select {
+  border-color: var(--pl-line) !important;
+  background: var(--pl-white) !important;
+  color: var(--pl-charcoal) !important;
+  font-family: var(--pl-font-body) !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+.product-form__input--pill input[type='radio']:checked + label,
+.product-form__input input[type='radio']:checked + label,
+.pl-card-variant-select.is-active,
+.pl-card-variant-select[aria-pressed='true'] {
+  background: var(--pl-teal) !important;
+  border-color: var(--pl-teal) !important;
+  color: var(--pl-white) !important;
+}
+
+.quantity,
+.quantity__input,
+.quantity__button {
+  border-color: var(--pl-line) !important;
+  color: var(--pl-charcoal) !important;
+  font-family: var(--pl-font-body) !important;
+}
+
+.accordion,
+.product__accordion,
+.collapsible-content .accordion {
+  border-color: var(--pl-line) !important;
+}
+
+.accordion summary,
+.accordion__title {
+  color: var(--pl-charcoal) !important;
+}
+
+.pl-freeship,
+.pl-trust-strip,
+.pl-cooking,
+.pl-fbt,
+.pl-values,
+.homepage-faq,
+.idukki-origin-wrapper {
+  background: var(--pl-sage) !important;
+  color: var(--pl-charcoal) !important;
+}
+
+.pl-cooking__heading,
+.pl-fbt__heading,
+.pl-values__title,
+.homepage-faq h2,
+.idukki-origin__heading,
+.pureleven-heritage-banner h2 {
+  color: var(--pl-charcoal) !important;
+  font-family: var(--pl-font-display) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+body.template-index .featured-collection h2.title,
+body.template-index .collection__title .title,
+body.template-index .banner--pureleven-home-hero .banner__heading.h1,
+body.template-index .image-with-text__heading,
+body.template-index .rich-text__heading,
+body.template-product .product__title h1,
+body.template-product .product__accordion .accordion__title,
+body.template-product .related-products__heading {
+  font-family: var(--pl-font-display) !important;
+}
+
+.idukki-origin__badge,
+.pl-values__eyebrow,
+.pl-card-sale-badge,
+.badge.color-scheme-4 {
+  background: var(--pl-yellow) !important;
+  color: var(--pl-charcoal) !important;
+}
+
+@media screen and (min-width: 990px) {
+  .product-grid.grid {
+    column-gap: 1.6rem !important;
+    row-gap: 2.4rem !important;
+  }
+
+  .product-grid.grid--4-col-desktop:not(.slider) > .grid__item {
+    flex: 0 0 calc(25% - 1.2rem) !important;
+    width: calc(25% - 1.2rem) !important;
+    max-width: calc(25% - 1.2rem) !important;
+    min-width: 0 !important;
+  }
+
+  .product-grid.grid--5-col-desktop:not(.slider) > .grid__item {
+    flex: 0 0 calc(20% - 1.28rem) !important;
+    width: calc(20% - 1.28rem) !important;
+    max-width: calc(20% - 1.28rem) !important;
+    min-width: 0 !important;
+  }
+
+  .product-grid.grid--3-col-desktop:not(.slider) > .grid__item {
+    flex: 0 0 calc(33.333% - 1.067rem) !important;
+    width: calc(33.333% - 1.067rem) !important;
+    max-width: calc(33.333% - 1.067rem) !important;
+    min-width: 0 !important;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  h2,
+  .h2,
+  .collection__title .title,
+  .rich-text__heading,
+  .image-with-text__heading {
+    font-size: clamp(2.6rem, 8vw, 3.2rem) !important;
+    line-height: 3.2rem !important;
+  }
+
+  .product-grid.grid--2-col-tablet-down > .grid__item {
+    flex: 0 0 calc(50% - 0.5rem) !important;
+    width: calc(50% - 0.5rem) !important;
+    max-width: calc(50% - 0.5rem) !important;
+  }
+}

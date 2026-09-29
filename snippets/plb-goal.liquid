@@ -1,0 +1,44 @@
+{%- comment -%}
+  plb-goal.liquid — panel 02, free delivery.
+
+  Says what is left to do in one plain sentence, shows progress, and, only
+  while the cart is one item short, offers a swipeable row of low-price picks
+  from the same range (plb-upsell-slider). Once delivery is free the row is
+  gone: there is nothing left to solve.
+
+  Params: total_p, threshold_p, remaining_p, pct, ship_free,
+          items_left, min_items
+{%- endcomment -%}
+
+<section class="plb-panel plb-goal{% if ship_free %} plb-goal--done{% endif %}" aria-label="Delivery">
+  <header class="plb-ph">
+    <p class="plb-lbl"><i>02</i> / Delivery</p>
+    <p class="plb-ph__meta">
+      {%- if ship_free -%}
+        Unlocked
+      {%- elsif items_left > 0 -%}
+        {{ cart.item_count }} of {{ min_items }} items
+      {%- else -%}
+        {% render 'plb-money', p: total_p %} of {% render 'plb-money', p: threshold_p %}
+      {%- endif -%}
+    </p>
+  </header>
+
+  <div class="plb-goal__body">
+    <p class="plb-goal__msg">
+      {%- if ship_free -%}
+        FREE delivery unlocked. <span>Nothing to pay for delivery.</span>
+      {%- elsif items_left > 0 -%}
+        Add <b>{{ items_left }} more item{% if items_left > 1 %}s{% endif %}</b> and delivery is FREE.
+      {%- else -%}
+        Add <b>{% render 'plb-money', p: remaining_p %}</b> more for FREE delivery.
+      {%- endif -%}
+    </p>
+
+    <div class="plb-track" role="progressbar" aria-label="Progress to free delivery" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ pct }}"><i style="width:{{ pct }}%"></i></div>
+
+    {%- if items_left > 0 -%}
+      {% render 'plb-upsell-slider', items_left: items_left %}
+    {%- endif -%}
+  </div>
+</section>

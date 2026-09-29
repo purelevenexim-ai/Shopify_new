@@ -1,0 +1,54 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background: #1C1008;
+    padding: 72px 0;
+    text-align: center;
+  }
+  .hn-cta { max-width: 580px; margin: 0 auto; padding: 0 1.5rem; }
+  .hn-cta__kicker {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #B8690A; margin-bottom: 1rem;
+  }
+  .hn-cta__heading {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    color: #FFFAF2;
+    letter-spacing: -0.02em; line-height: 1.2;
+    margin: 0 0 1rem;
+  }
+  .hn-cta__sub {
+    font-size: 0.97rem; color: rgba(255,250,242,0.65);
+    line-height: 1.7; margin: 0 0 2.2rem;
+  }
+  .hn-cta__btn {
+    display: inline-block;
+    padding: 1rem 2.6rem;
+    background: #FCE477;
+    color: #1C1008;
+    font-size: 0.92rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    border-radius: 0.55rem;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .hn-cta__btn:hover { background: #F4D138; }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} { padding: 48px 0; }
+  }
+{%- endstyle -%}
+
+<div class="hn-cta">
+  <p class="hn-cta__kicker">Kerala · Naadan · Pure</p>
+  <h2 class="hn-cta__heading">Pure Kerala Honey,<br>Delivered Home</h2>
+  <p class="hn-cta__sub">Wild forest honey from Idukki and Wayanad. Unprocessed, raw, and real. Free delivery on orders above ₹649.</p>
+  <a href="#honey-products" class="hn-cta__btn">Shop Honey</a>
+</div>
+
+{% schema %}
+{
+  "name": "Honey CTA",
+  "settings": [],
+  "presets": [{ "name": "Honey CTA" }]
+}
+{% endschema %}

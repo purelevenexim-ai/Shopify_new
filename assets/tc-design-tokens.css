@@ -1,0 +1,84 @@
+/* Skillies design tokens for the shared product card and the Tea & Coffee page.
+   Values measured on skillies.ai (same set as pl-cart-b.css). Everything is px:
+   this theme sets html{font-size:10px}, so rem values render at 62.5%. */
+
+:root {
+  --sk-bg: #F9F9F6;
+  --sk-bg2: #F1F1ED;
+  --sk-card: #FFFFFF;
+  --sk-fg: #0B0B0F;
+  --sk-fg2: #3D4250;
+  --sk-muted: #5F6470;
+  --sk-faint: #8A8F9C;
+  --sk-line: #DEDEDB;
+  --sk-line2: #D9DBE1;
+  --sk-dark: #17191A;
+  --sk-ink: #0B0B0F;
+  --sk-acc: #1F6B5C;
+  --sk-acc-hover: #004438;
+  --sk-acc-soft: #EAF2EE;
+  --sk-yellow: #FCE477;
+  --sk-yellow-hover: #F4D138;
+  --sk-on-yellow: #16140D;
+  --sk-sans: 'Manrope', 'Segoe UI', Helvetica, Arial, sans-serif;
+  --sk-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --sk-ease: cubic-bezier(0.2, 0.65, 0.2, 1);
+  --sk-gutter: clamp(20px, 4vw, 56px);
+  --sk-wrap: 1440px;
+
+  --tc-background: var(--sk-bg);
+}
+
+.tc-eyebrow {
+  display: block;
+  margin: 0 0 16px;
+  font: 400 11px/1.5 var(--sk-mono) !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--sk-muted);
+}
+.tc-eyebrow i { font-style: normal; color: var(--sk-acc); }
+
+.tc-h2 {
+  margin: 0;
+  font-family: var(--sk-sans) !important;
+  font-size: clamp(34px, 4.2vw, 60px) !important;
+  font-weight: 500 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.055em !important;
+  text-transform: none !important;
+  color: var(--sk-fg) !important;
+}
+
+.sk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 14px 24px 14px 26px;
+  border: 1px solid var(--sk-dark);
+  border-radius: 2px !important;
+  background: var(--sk-dark);
+  color: #fff !important;
+  font-family: var(--sk-sans) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.25s var(--sk-ease);
+}
+.sk-btn:hover { background: var(--sk-acc-hover); border-color: var(--sk-acc-hover); transform: translateY(-1px); }
+.sk-btn--yellow { background: var(--sk-yellow); border-color: var(--sk-yellow); color: var(--sk-on-yellow) !important; }
+.sk-btn--yellow:hover { background: var(--sk-yellow-hover); border-color: var(--sk-yellow-hover); }
+.sk-btn--line { background: transparent; color: var(--sk-fg) !important; }
+.sk-btn--line:hover { background: var(--sk-dark); border-color: var(--sk-dark); color: #fff !important; }
+.sk-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-btn { transition: none; }
+}

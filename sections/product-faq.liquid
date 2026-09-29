@@ -362,16 +362,7 @@
   <div class="color-{{ section.settings.color_scheme }} gradient product-faq-{{ section.id }}">
     <section class="page-width section-{{ section.id }}-padding" aria-labelledby="ProductFaq-{{ section.id }}">
       <div class="product-faq__header">
-        {% render 'product-seo-section-header',
-          mode: 'faq',
-          product_handle: product.handle,
-          custom_eyebrow: faq_eyebrow,
-          custom_heading: faq_heading,
-          custom_intro: faq_intro,
-          class_prefix: 'product-faq',
-          heading_id: 'ProductFaq-' | append: section.id,
-          heading_size: section.settings.heading_size
-        %}
+        {% render 'product-seo-section-header', mode: 'faq', product_handle: product.handle, custom_eyebrow: faq_eyebrow, custom_heading: faq_heading, custom_intro: faq_intro, class_prefix: 'product-faq', heading_id: 'ProductFaq-', append: section.id, heading_size: section.settings.heading_size %}
       </div>
 
       {%- if has_metaobject_faq -%}
@@ -579,4 +570,26 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'product-seo-section-header',
+              mode: 'faq',
+              product_handle: product.handle,
+              custom_eyebrow: faq_eyebrow,
+              custom_heading: faq_heading,
+              custom_intro: faq_intro,
+              class_prefix: 'product-faq',
+              heading_id: 'ProductFaq-' | append: section.id,
+              heading_size: section.settings.heading_size
+            %}
+  to: "{% render 'product-seo-section-header', mode: 'faq', product_handle: product.handle,
+    custom_eyebrow: faq_eyebrow, custom_heading: faq_heading, custom_intro: faq_intro,
+    class_prefix: 'product-faq', heading_id: 'ProductFaq-', append: section.id, heading_size:
+    section.settings.heading_size %}"
+  position: 13937..14227
+{%- endcomment -%}

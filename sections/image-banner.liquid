@@ -1,5 +1,12 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign is_pureleven_home_hero = false
+  if request.page_type == 'index' and section.id contains 'image_banner_DiNdUj'
+    assign is_pureleven_home_hero = true
+  endif
+-%}
+
 {%- if section.settings.image_height == 'adapt' and section.settings.image != blank -%}
   {%- style -%}
     @media screen and (max-width: 749px) {
@@ -24,9 +31,15 @@
 {%- endif -%}
 
 {%- style -%}
-  #Banner-{{ section.id }}::after {
-    opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
-  }
+  {%- if is_pureleven_home_hero -%}
+    #Banner-{{ section.id }}::after {
+      opacity: 0.25;
+    }
+  {%- else -%}
+    #Banner-{{ section.id }}::after {
+      opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 {%- liquid
@@ -49,15 +62,212 @@
   if section.index == 1
     assign fetch_priority = 'high'
   endif
-
-  assign is_pureleven_home_hero = false
-  if request.page_type == 'index' and section.id contains 'image_banner_DiNdUj'
-    assign is_pureleven_home_hero = true
-  endif
 -%}
 
 {%- if is_pureleven_home_hero -%}
   <style>
+    .banner--pureleven-home-hero .banner__media {
+      background: linear-gradient(135deg, #f8f5ee 0%, #e8f1ed 100%);
+    }
+
+    .banner--pureleven-home-hero .banner__video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader {
+      --progress: 0%;
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #f8f5ee 0%, #e8f1ed 100%);
+      color: var(--pl-primary-dark, #154039);
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+      pointer-events: none;
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-card {
+      position: relative;
+      width: min(28rem, calc(100vw - 5rem));
+      padding: 2rem 2.2rem 1.8rem;
+      border: 1px solid rgba(27, 94, 86, 0.12);
+      border-radius: 2.2rem;
+      background: rgba(255, 252, 244, 0.82);
+      box-shadow: 0 1.8rem 4rem rgba(21, 64, 57, 0.12);
+      text-align: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-eyebrow {
+      display: block;
+      margin-bottom: 1.2rem;
+      font-family: 'Fustat', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(21, 64, 57, 0.72);
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-spices {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-spice {
+      width: 1.4rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fce477 0 18%, #9b6b35 19% 50%, #3f2618 51% 100%);
+      box-shadow: 0 0.45rem 0.9rem rgba(63, 38, 24, 0.18);
+      animation: pl-spice-breathe 1.25s ease-in-out infinite;
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-spice:nth-child(2) {
+      width: 1.8rem;
+      background: radial-gradient(circle at 34% 28%, #d9f0a3 0 16%, #2e7d6e 17% 52%, #154039 53% 100%);
+      animation-delay: 0.16s;
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-spice:nth-child(3) {
+      background: radial-gradient(circle at 35% 30%, #f8c7a1 0 17%, #9a3f2e 18% 52%, #3a1c17 53% 100%);
+      animation-delay: 0.32s;
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-track {
+      position: relative;
+      height: 0.6rem;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(21, 64, 57, 0.12);
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-fill {
+      display: block;
+      width: var(--progress);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #1b5e56, #f0bb45);
+      transition: width 0.22s ease;
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-percent {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .banner--pureleven-home-hero .banner__video-loader-label {
+      margin-top: 1.2rem;
+      font-family: 'Fustat', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #1e2f2b;
+    }
+
+    @keyframes pl-spice-breathe {
+      0%, 100% {
+        transform: translateY(0) scale(0.9);
+        opacity: 0.62;
+      }
+
+      45% {
+        transform: translateY(-0.45rem) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .banner--pureleven-home-hero.is-video-ready .banner__video-loader {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Desktop hero refinements */
+    @media screen and (min-width: 750px) {
+      .banner--pureleven-home-hero {
+        --overlay-opacity: 0.25;
+      }
+
+      .banner--pureleven-home-hero .banner__box {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        background: rgba(248, 245, 238, 0.92) !important;
+        border: 1px solid rgba(27, 94, 86, 0.1) !important;
+        border-radius: 2rem !important;
+        box-shadow: 0 2rem 5rem rgba(27, 94, 86, 0.08) !important;
+        padding: 3.2rem 4rem !important;
+      }
+
+      .banner--pureleven-home-hero .banner__heading.h1 {
+        font-family: 'p22-mackinac-pro', serif !important;
+        font-size: clamp(4.8rem, 12vw, 6.4rem) !important;
+        font-weight: 800 !important;
+        line-height: 1.08 !important;
+        letter-spacing: -0.04em !important;
+        text-wrap: balance;
+        margin-bottom: 1.6rem !important;
+      }
+
+      .banner--pureleven-home-hero .banner__text p {
+        font-family: 'Fustat', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+        font-size: 1.35rem !important;
+        font-weight: 400 !important;
+        line-height: 1.8 !important;
+        color: var(--pl-primary, #2E7D6E) !important;
+        opacity: 0.75 !important;
+        max-width: 55ch;
+        margin-bottom: 2.4rem !important;
+      }
+
+      .banner--pureleven-home-hero .banner__buttons {
+        display: flex !important;
+        gap: 1.4rem;
+        flex-wrap: wrap;
+      }
+
+      .banner--pureleven-home-hero .banner__buttons .button,
+      .banner--pureleven-home-hero .banner__buttons button,
+      .banner--pureleven-home-hero .banner__buttons a.button,
+      .banner--pureleven-home-hero .banner__buttons a {
+        font-family: 'Fustat', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+        font-size: 1.15rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.02em !important;
+        min-height: 5rem;
+        padding: 1.2rem 2.4rem !important;
+        border-radius: 4rem !important;
+        text-transform: uppercase;
+      }
+
+      .banner--pureleven-home-hero .banner__buttons > *:first-child {
+        background: #FCE477 !important;
+        color: #1A1A1A !important;
+        border: none !important;
+      }
+
+      .banner--pureleven-home-hero .banner__buttons > *:last-child {
+        background: transparent !important;
+        color: var(--pl-primary, #2E7D6E) !important;
+        border: 2px solid var(--pl-primary, #2E7D6E) !important;
+      }
+    }
+
+    /* Mobile hero */
     @media screen and (max-width: 749px) {
       .banner--pureleven-home-hero:not(.banner--mobile-bottom) .banner__content {
         min-height: clamp(42rem, 112vw, 55rem);
@@ -159,14 +369,44 @@
 {%- endif -%}
 
 {%- if is_pureleven_home_hero -%}
-  <span hidden data-homepage-render-version="20260512-simple-button-system"></span>
+  <span hidden data-homepage-render-version="20260621-compressed-video-progress"></span>
 {%- endif -%}
 
 <div
   id="Banner-{{ section.id }}"
   class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if is_pureleven_home_hero %} banner--pureleven-home-hero{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
-  {%- if section.settings.image != blank -%}
+  {%- if is_pureleven_home_hero -%}
+    <div class="banner__media media{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      <video
+        class="banner__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-label="PureLeven farm origin video"
+      >
+        <source src="{{ 'pl-home-hero-mobile.mp4' | asset_url }}" type="video/mp4" media="(max-width: 749px)">
+        <source src="{{ 'pl-home-hero-desktop.mp4' | asset_url }}" type="video/mp4">
+      </video>
+      <div class="banner__video-loader" aria-live="polite">
+        <div class="banner__video-loader-card">
+          <span class="banner__video-loader-eyebrow">PureLeven harvest</span>
+          <div class="banner__video-loader-spices" aria-hidden="true">
+            <span class="banner__video-loader-spice"></span>
+            <span class="banner__video-loader-spice"></span>
+            <span class="banner__video-loader-spice"></span>
+          </div>
+          <div class="banner__video-loader-track" aria-hidden="true">
+            <span class="banner__video-loader-fill"></span>
+          </div>
+          <span class="banner__video-loader-percent">0%</span>
+          <div class="banner__video-loader-label">Preparing fresh Kerala spices</div>
+        </div>
+      </div>
+    </div>
+  {%- elsif section.settings.image != blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {%- liquid
         assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio
@@ -286,6 +526,101 @@
     </div>
   </div>
 </div>
+
+{%- if is_pureleven_home_hero -%}
+  <style>
+    #Banner-{{ section.id }} .banner__heading,
+    #Banner-{{ section.id }} .banner__heading.h1,
+    #Banner-{{ section.id }} .banner__text,
+    #Banner-{{ section.id }} .banner__text p {
+      font-family: var(--pl-font-body, "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+    }
+
+    #Banner-{{ section.id }} .banner__heading,
+    #Banner-{{ section.id }} .banner__heading.h1 {
+      font-weight: 800 !important;
+      letter-spacing: -0.03em !important;
+      line-height: 1.05 !important;
+    }
+
+    #Banner-{{ section.id }} .banner__buttons .button,
+    #Banner-{{ section.id }} .banner__buttons button,
+    #Banner-{{ section.id }} .banner__buttons a {
+      font-family: var(--pl-font-body, "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+      letter-spacing: normal !important;
+      text-transform: none !important;
+    }
+
+    #Banner-{{ section.id }} .banner__buttons .button--primary,
+    #Banner-{{ section.id }} .banner__buttons > *:first-child {
+      background: var(--pl-yellow, #FCE477) !important;
+      border-color: var(--pl-yellow, #FCE477) !important;
+      color: var(--pl-charcoal, #212121) !important;
+    }
+
+    #Banner-{{ section.id }} .banner__buttons .button--primary:hover,
+    #Banner-{{ section.id }} .banner__buttons > *:first-child:hover {
+      background: var(--pl-yellow-hover, #F4D138) !important;
+      border-color: var(--pl-yellow-hover, #F4D138) !important;
+      color: var(--pl-charcoal, #212121) !important;
+    }
+
+    #Banner-{{ section.id }} .banner__buttons .button--secondary,
+    #Banner-{{ section.id }} .banner__buttons > *:last-child {
+      background: transparent !important;
+      border-color: var(--pl-teal, #004438) !important;
+      color: var(--pl-teal, #004438) !important;
+    }
+  </style>
+  <script>
+    (function() {
+      var banner = document.getElementById('Banner-{{ section.id }}');
+      if (!banner) return;
+
+      var video = banner.querySelector('.banner__video');
+      var loader = banner.querySelector('.banner__video-loader');
+      var percent = banner.querySelector('.banner__video-loader-percent');
+      if (!video || !loader || !percent) return;
+
+      function setProgress(value) {
+        var safeValue = Math.max(0, Math.min(100, Math.round(value || 0)));
+        loader.style.setProperty('--progress', safeValue + '%');
+        percent.textContent = safeValue + '%';
+      }
+
+      function updateBufferedProgress() {
+        if (!video.duration || !video.buffered || !video.buffered.length) {
+          setProgress(video.readyState >= 2 ? 45 : 12);
+          return;
+        }
+
+        var bufferedEnd = video.buffered.end(video.buffered.length - 1);
+        setProgress((bufferedEnd / video.duration) * 100);
+      }
+
+      function markReady() {
+        setProgress(100);
+        banner.classList.add('is-video-ready');
+      }
+
+      video.addEventListener('loadstart', function() { setProgress(8); });
+      video.addEventListener('loadedmetadata', function() { setProgress(25); });
+      video.addEventListener('progress', updateBufferedProgress);
+      video.addEventListener('canplay', markReady);
+      video.addEventListener('playing', markReady);
+      video.addEventListener('waiting', function() {
+        banner.classList.remove('is-video-ready');
+        updateBufferedProgress();
+      });
+
+      if (video.readyState >= 3) {
+        markReady();
+      } else {
+        updateBufferedProgress();
+      }
+    })();
+  </script>
+{%- endif -%}
 
 {% schema %}
 {

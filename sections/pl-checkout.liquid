@@ -1,0 +1,276 @@
+{{ 'pl-checkout.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'pl-checkout.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  comment
+    One page, four fields, one button. Delivery and payment numbers come from
+    Theme settings > PureLeven cart and checkout, the same place the cart reads
+    them, so the two pages always quote the same delivery charge and date.
+    Everything is in paise, like the cart, and is only a preview: the server
+    recomputes the amount from the cart before any money moves.
+  endcomment
+  assign threshold_p = settings.pl_free_shipping_threshold | default: 649 | times: 100
+  assign ship_rate_p = settings.pl_shipping_rate | default: 60 | times: 100
+  assign cod_fee_p = settings.pl_cod_fee | default: 46 | times: 100
+  assign prepaid_pct = settings.pl_prepaid_pct | default: 2
+
+  assign total_p = cart.total_price
+
+  assign cmp_p = 0
+  for item in cart.items
+    if item.variant.compare_at_price > item.final_price
+      assign ls = item.variant.compare_at_price | minus: item.final_price | times: item.quantity
+      assign cmp_p = cmp_p | plus: ls
+    endif
+  endfor
+  assign mrp_p = cart.items_subtotal_price | plus: cmp_p
+
+  assign ship_p = ship_rate_p
+  if total_p >= threshold_p
+    assign ship_p = 0
+  endif
+-%}
+
+<div class="plck">
+  <header class="plck-top">
+    <a class="plck-back" href="{{ routes.cart_url }}" aria-label="Back to cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </a>
+    <a class="plck-brand" href="{{ routes.root_url }}">PURE LEVEN</a>
+    <span class="plck-secure">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      Secure
+    </span>
+  </header>
+
+  <div class="plck-wrap">
+    <h1 class="visually-hidden">Checkout</h1>
+
+    {%- if cart == empty -%}
+
+      <div class="plck-empty">
+        <h2 class="plck-h">Your cart is empty</h2>
+        <p>Add something you like and come back here.</p>
+        <a class="plck-btn plck-btn--solo" href="{{ routes.all_products_collection_url }}">Browse products</a>
+      </div>
+
+    {%- else -%}
+
+      <details class="plck-card plck-sum" id="plck-sum">
+        <summary>
+          <span class="plck-sum__thumbs">
+            {%- for item in cart.items limit: 3 -%}
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 80 }}" alt="" width="36" height="36" loading="lazy">
+              {%- endif -%}
+            {%- endfor -%}
+          </span>
+          <span class="plck-sum__t"><b>Order summary</b><span>{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}</span></span>
+          <b class="plck-sum__p" id="plck-sum-total"></b>
+          <svg class="plck-sum__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="plck-sum__b">
+          {%- for item in cart.items -%}
+            <div class="plck-li">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 120 }}" alt="" width="44" height="44" loading="lazy">
+              {%- else -%}
+                <span class="plck-li__ph" aria-hidden="true"></span>
+              {%- endif -%}
+              <span class="plck-li__t">
+                <b>{{ item.product.title | escape }}</b>
+                <em>Qty {{ item.quantity }}{% unless item.product.has_only_default_variant %} &middot; {{ item.variant.title }}{% endunless %}</em>
+              </span>
+              <span class="plck-li__p" data-plck-p="{{ item.final_line_price }}"></span>
+            </div>
+          {%- endfor -%}
+
+          <div class="plck-totals" id="plck-totals"></div>
+
+          {%- if section.blocks.size > 0 -%}
+            <div class="plck-cpn">
+              <button type="button" class="plck-link" id="plck-cpn-open" aria-expanded="false">Have a coupon code?</button>
+              <form class="plck-cpn__f" id="plck-cpn-form" hidden>
+                <label class="visually-hidden" for="plck-cpn-in">Coupon code</label>
+                <div class="plck-in"><input id="plck-cpn-in" type="text" autocomplete="off" autocapitalize="characters" placeholder="Enter code"></div>
+                <button type="submit" class="plck-btn plck-btn--out">Apply</button>
+              </form>
+              <p class="plck-err" id="plck-cpn-err" role="alert"></p>
+            </div>
+          {%- endif -%}
+        </div>
+      </details>
+
+      <section class="plck-sec" aria-labelledby="plck-h-delivery">
+        <h2 class="plck-h" id="plck-h-delivery">Delivery</h2>
+        <div class="plck-card plck-form">
+
+          <div class="plck-f">
+            <div class="plck-lab">
+              <label for="plck-phone">Mobile number</label>
+              <span class="plck-ok" id="plck-phone-ok" hidden>Updates on WhatsApp</span>
+            </div>
+            <div class="plck-in" id="plck-phone-box">
+              <span class="plck-pre">+91</span>
+              <input id="plck-phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="16" placeholder="98765 43210" aria-describedby="plck-phone-err">
+            </div>
+            <p class="plck-err" id="plck-phone-err" role="alert"></p>
+          </div>
+
+          <div class="plck-f">
+            <div class="plck-lab"><label for="plck-name">Full name</label></div>
+            <div class="plck-in" id="plck-name-box"><input id="plck-name" type="text" autocomplete="name" placeholder="Your name" aria-describedby="plck-name-err"></div>
+            <p class="plck-err" id="plck-name-err" role="alert"></p>
+          </div>
+
+          <div class="plck-f">
+            <div class="plck-lab"><label for="plck-pin">Pincode</label></div>
+            <div class="plck-in" id="plck-pin-box">
+              <input id="plck-pin" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="6" placeholder="682001" aria-describedby="plck-pin-err">
+              <span class="plck-place" id="plck-place" hidden></span>
+            </div>
+            <p class="plck-err" id="plck-pin-err" role="alert"></p>
+          </div>
+
+          <div class="plck-row" id="plck-manual" hidden>
+            <div class="plck-f">
+              <div class="plck-lab"><label for="plck-city">City</label></div>
+              <div class="plck-in"><input id="plck-city" type="text" autocomplete="address-level2"></div>
+            </div>
+            <div class="plck-f">
+              <div class="plck-lab"><label for="plck-state">State</label></div>
+              <div class="plck-in"><input id="plck-state" type="text" autocomplete="address-level1"></div>
+            </div>
+          </div>
+
+          <div class="plck-f">
+            <div class="plck-lab"><label for="plck-addr">House / flat, street</label></div>
+            <div class="plck-in" id="plck-addr-box"><input id="plck-addr" type="text" autocomplete="address-line1" placeholder="12A, Mullassery Lane" aria-describedby="plck-addr-err"></div>
+            <p class="plck-err" id="plck-addr-err" role="alert"></p>
+          </div>
+
+          <div class="plck-f" id="plck-lm-f" hidden>
+            <div class="plck-lab"><label for="plck-lm">Landmark <i>(optional)</i></label></div>
+            <div class="plck-in"><input id="plck-lm" type="text" autocomplete="address-line2" placeholder="Near Ernakulam North"></div>
+          </div>
+
+          <div class="plck-f" id="plck-email-f" hidden>
+            <div class="plck-lab"><label for="plck-email">Email for the invoice <i>(optional)</i></label></div>
+            <div class="plck-in"><input id="plck-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+          </div>
+
+          <div class="plck-more">
+            <button type="button" class="plck-link" id="plck-lm-open">+ Landmark</button>
+            <button type="button" class="plck-link" id="plck-email-open">+ Email for invoice</button>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="plck-sec" aria-labelledby="plck-h-pay">
+        <h2 class="plck-h" id="plck-h-pay">Payment</h2>
+        <div class="plck-pays" role="radiogroup" aria-label="Payment method">
+
+          <label class="plck-opt is-on" data-method="upi">
+            <input type="radio" name="plck-method" value="upi" checked>
+            <span class="plck-dot" aria-hidden="true"></span>
+            <span class="plck-opt__t"><b>UPI</b><small data-plck-save></small></span>
+            <b class="plck-opt__p" data-plck-price></b>
+            <span class="plck-apps" aria-hidden="true"><span>GPay</span><span>PhonePe</span><span>Paytm</span><span>BHIM</span></span>
+          </label>
+
+          <label class="plck-opt" data-method="card">
+            <input type="radio" name="plck-method" value="card">
+            <span class="plck-dot" aria-hidden="true"></span>
+            <span class="plck-opt__t"><b>Card, netbanking, wallets</b><small data-plck-save></small></span>
+            <b class="plck-opt__p" data-plck-price></b>
+          </label>
+
+          {%- if settings.pl_cod_enabled -%}
+            <label class="plck-opt" data-method="cod">
+              <input type="radio" name="plck-method" value="cod">
+              <span class="plck-dot" aria-hidden="true"></span>
+              <span class="plck-opt__t"><b>Cash on delivery</b><small data-plck-cod></small></span>
+              <b class="plck-opt__p" data-plck-price></b>
+            </label>
+          {%- endif -%}
+
+        </div>
+
+        <button type="button" class="plck-btn plck-btn--rzp" id="plck-pay-inline">
+          <svg id="plck-pay-inline-lock" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <span id="plck-pay-inline-label">Pay with Razorpay</span>
+        </button>
+      </section>
+
+      <p class="plck-secured">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        Secured by Razorpay &middot; UPI, cards, netbanking
+      </p>
+
+      <p class="plck-note" id="plck-note" role="alert" hidden></p>
+
+      <div class="plck-dock">
+        <div class="plck-dock__a">
+          <b id="plck-amt"></b>
+          <span>Arrives <b data-plck-eta>soon</b></span>
+        </div>
+        <button type="button" class="plck-btn" id="plck-pay">
+          <svg id="plck-pay-lock" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <span id="plck-pay-label">Pay now</span>
+        </button>
+      </div>
+
+      <script>
+        window.PL_CHECKOUT = {
+          subtotal: {{ total_p }},
+          mrp: {{ mrp_p }},
+          shipping: {{ ship_p }},
+          codFee: {{ cod_fee_p }},
+          codOn: {{ settings.pl_cod_enabled | json }},
+          prepaidPct: {{ prepaid_pct }},
+          etaDays: {{ settings.pl_eta_days | default: 3 }},
+          itemCount: {{ cart.item_count }},
+          cartToken: {{ cart.token | json }},
+          cartUrl: {{ routes.cart_url | json }},
+          rzpKey: {{ settings.pl_razorpay_key_id | json }},
+          orderUrl: {{ settings.pl_order_endpoint | json }},
+          verifyUrl: {{ settings.pl_verify_endpoint | json }},
+          successUrl: {{ settings.pl_success_url | default: '/pages/thank-you' | json }},
+          coupons: [
+            {%- for block in section.blocks -%}
+              { "code": {{ block.settings.code | json }}, "value": {{ block.settings.value | default: 0 | times: 100 }}, "min": {{ block.settings.min_cart | default: 0 | times: 100 }} }{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]
+        };
+      </script>
+
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PureLeven checkout",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Delivery charge, cash-on-delivery fee, prepaid discount, Razorpay key and the order endpoint live in Theme settings > PureLeven cart and checkout, so the cart and this page always agree."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "coupon",
+      "name": "Coupon",
+      "settings": [
+        { "type": "text", "id": "code", "label": "Code", "default": "FIRST100" },
+        { "type": "number", "id": "value", "label": "Discount (₹)", "default": 100 },
+        { "type": "number", "id": "min_cart", "label": "Minimum order (₹)", "default": 0 }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "PureLeven checkout", "blocks": [{ "type": "coupon" }] }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,205 @@
+{%- liquid
+  assign p = card_product
+  assign v = p.selected_or_first_available_variant
+  assign form_id = 'plsc-' | append: sec_id | append: '-' | append: p.id
+  assign disc = 0
+  if v.compare_at_price > v.price
+    assign disc = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round
+  endif
+  assign mf = p.metafields.custom
+  assign kicker_text = pl_kicker | default: mf.origin | default: p.type
+  assign note_text = pl_note | default: mf.short_description
+
+  comment
+    Stat strip. Brewables (dose_g set) show brew time + computed servings + cost per serving,
+    derived from the selected variant weight so the numbers follow price and size changes.
+    Everything else falls back to sourcing facts.
+  endcomment
+  assign stats_html = pl_stats
+  if stats_html == blank
+    assign grams = v.weight | divided_by: 1.0
+    if v.weight_unit == 'kg'
+      assign grams = v.weight | times: 1000
+    endif
+    capture stats_html
+      if mf.dose_g > 0 and grams > 0
+        assign servings = grams | divided_by: mf.dose_g | round
+        if mf.brew_time != blank
+          echo '<span>Brew<b>' | append: mf.brew_time | append: '</b></span>'
+        endif
+        if servings > 0
+          echo '<span>Serves<b>~' | append: servings | append: ' cups</b></span>'
+          assign per_cup_money = v.price | divided_by: servings | money
+          echo '<span class="plc__meta--3">Per cup<b>' | append: per_cup_money | append: '</b></span>'
+        endif
+      else
+        comment
+          Origin is already the kicker, so it is omitted here to avoid repeating it.
+        endcomment
+        if mf.grade != blank
+          echo '<span>Grade<b>' | append: mf.grade | append: '</b></span>'
+        endif
+        if mf.harvest != blank
+          echo '<span>Harvest<b>' | append: mf.harvest | append: '</b></span>'
+        endif
+        if mf.origin != blank and kicker_text != mf.origin
+          echo '<span class="plc__meta--3">Origin<b>' | append: mf.origin | append: '</b></span>'
+        endif
+      endif
+    endcapture
+  endif
+-%}
+
+<div class="product-card-wrapper plc-slot{% if pl_featured %} plc-slot--featured{% endif %}">
+  <article class="plc">
+    <a class="plc__shot" href="{{ p.url }}" tabindex="-1" aria-hidden="true">
+      {%- if p.featured_media -%}
+        {{
+          p.featured_media
+          | image_url: width: 800
+          | image_tag:
+            loading: 'lazy',
+            width: 800,
+            height: 800,
+            sizes: '(min-width: 990px) 33vw, 50vw',
+            widths: '200,300,400,560,800',
+            alt: p.featured_media.alt | default: p.title | escape
+        }}
+      {%- endif -%}
+      {%- if disc > 0 -%}
+        <span class="pl-card-sale-badge plc__flag" aria-label="{{ disc }}% off">-{{ disc }}%</span>
+      {%- endif -%}
+    </a>
+
+    <div class="plc__body">
+      {%- if kicker_text != blank -%}
+        <p class="plc__kicker">{{ kicker_text }}</p>
+      {%- endif -%}
+
+      <h3 class="plc__title">
+        <a href="{{ p.url }}" id="title-{{ sec_id }}-{{ p.id }}">{{ p.title }}</a>
+      </h3>
+
+      {%- if note_text != blank -%}
+        <p class="plc__note">{{ note_text }}</p>
+      {%- endif -%}
+
+      {%- if stats_html != blank -%}
+        <div class="plc__meta">{{ stats_html }}</div>
+      {%- endif -%}
+
+      {%- if p.available -%}
+        <product-form data-section-id="{{ sec_id }}" class="plc__form">
+          {%- form 'product', p, id: form_id, class: 'form plc__formel', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <div class="plc__buy" role="group" aria-label="{{ p.title | escape }} options">
+              {%- comment -%}
+                Single-variant products carry the id in a hidden field; there is nothing
+                to choose, but they still need a working add-to-cart rather than a link.
+              {%- endcomment -%}
+              {%- if p.variants_count == 1 -%}
+                <input type="hidden" name="id" value="{{ v.id }}">
+              {%- else -%}
+              <div class="plc__chips" aria-label="{{ p.options_with_values.first.name | default: 'Size' | escape }}">
+                {%- for variant in p.variants -%}
+                  {%- assign vsave = 0 -%}
+                  {%- if variant.compare_at_price > variant.price -%}
+                    {%- assign vsave = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round -%}
+                  {%- endif -%}
+                  <input
+                    type="radio"
+                    id="cv-{{ form_id }}-{{ forloop.index }}"
+                    name="id"
+                    value="{{ variant.id }}"
+                    class="plc__radio pl-cv-radio product-variant-id"
+                    data-price="{{ variant.price }}"
+                    data-compare-price="{{ variant.compare_at_price | default: 0 }}"
+                    {% if variant.id == v.id %}checked{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                  >
+                  <label for="cv-{{ form_id }}-{{ forloop.index }}" class="plc__chip{% unless variant.available %} plc__chip--out{% endunless %}">
+                    <span class="plc__chip-name">
+                      {{- variant.title | upcase | escape -}}
+                      {%- if pl_featured %} : {{ variant.price | money_without_trailing_zeros }}{% endif -%}
+                    </span>
+                    {%- if vsave > 0 -%}<i class="plc__chip-off">{{ vsave }}% off</i>{%- endif -%}
+                  </label>
+                {%- endfor -%}
+              </div>
+              {%- endif -%}
+
+              <div class="plc__price">
+                <strong class="pl-price-sale plc__now">{{ v.price | money }}</strong>
+                {%- if v.compare_at_price > v.price -%}
+                  <s class="pl-price-compare plc__was">{{ v.compare_at_price | money_without_trailing_zeros }}</s>
+                {%- endif -%}
+              </div>
+
+              {%- if pl_featured and pl_delivery_note != blank -%}
+                <p class="plc__delivery">{{ pl_delivery_note }}</p>
+              {%- endif -%}
+
+              <button
+                id="{{ form_id }}-submit"
+                type="submit"
+                name="add"
+                class="plc__cta pl-card-add-button quick-add__submit button button--full-width"
+                aria-haspopup="dialog"
+                aria-labelledby="{{ form_id }}-submit title-{{ sec_id }}-{{ p.id }}"
+                aria-live="polite"
+                data-sold-out-message="true"
+                {% unless v.available %}disabled{% endunless %}
+              >
+                <span>{% if v.available %}Add to cart{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+                <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                {%- render 'loading-spinner' -%}
+              </button>
+            </div>
+          {%- endform -%}
+        </product-form>
+
+        {%- if p.variants_count > 1 -%}
+        <script>
+          (function () {
+            var form = document.getElementById('{{ form_id }}');
+            if (!form) return;
+            var card = form.closest('.plc');
+            if (!card) return;
+            var saleEl = card.querySelector('.plc__now');
+            var wasEl = card.querySelector('.plc__was');
+            var badge = card.querySelector('.pl-card-sale-badge');
+            var btn = form.querySelector('.plc__cta');
+            function fmt(c) { return '₹' + (c / 100).toFixed(2); }
+            function fmtShort(c) { var n = c / 100; return '₹' + (n % 1 === 0 ? Math.round(n) : n.toFixed(2)); }
+            form.querySelectorAll('.plc__radio').forEach(function (r) {
+              r.addEventListener('change', function () {
+                var price = parseInt(this.dataset.price || '0', 10);
+                var cp = parseInt(this.dataset.comparePrice || '0', 10);
+                if (saleEl) saleEl.textContent = fmt(price);
+                if (cp > price) {
+                  var pct = Math.round((cp - price) * 100 / cp);
+                  if (wasEl) { wasEl.textContent = fmtShort(cp); wasEl.style.display = ''; }
+                  if (badge) { badge.textContent = '-' + pct + '%'; badge.style.display = ''; badge.setAttribute('aria-label', pct + '% off'); }
+                } else {
+                  if (wasEl) wasEl.style.display = 'none';
+                  if (badge) badge.style.display = 'none';
+                }
+                if (btn) btn.disabled = this.disabled;
+              });
+            });
+          })();
+        </script>
+        {%- endif -%}
+      {%- else -%}
+        <div class="plc__buy">
+          <div class="plc__price">
+            <strong class="plc__now">{{ v.price | money }}</strong>
+            {%- if v.compare_at_price > v.price -%}
+              <s class="plc__was">{{ v.compare_at_price | money_without_trailing_zeros }}</s>
+            {%- endif -%}
+          </div>
+          <a href="{{ p.url }}" class="plc__cta plc__cta--link">{{ 'products.product.sold_out' | t }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </article>
+</div>

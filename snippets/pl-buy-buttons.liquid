@@ -1,0 +1,75 @@
+{%- comment -%}
+  Usage: {% render 'pl-buy-buttons', pl_product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign pl_variant = pl_product.selected_or_first_available_variant
+  assign pl_form_id = 'pl-form-' | append: pl_product.id | append: '-' | append: section.id
+-%}
+
+<div class="pl-buy-buttons">
+  {%- form 'product', pl_product,
+    id: pl_form_id,
+    class: 'pl-buy-buttons__form',
+    novalidate: 'novalidate',
+    data-type: 'add-to-cart-form'
+  -%}
+    <input type="hidden" name="id" value="{{ pl_variant.id }}" class="product-variant-id">
+    <input type="hidden" name="quantity" value="1">
+    <input type="hidden" id="fastrrCollectionPage" value="true">
+    <input type="hidden" name="productUrl" value="{{ pl_product.url }}">
+
+    <div class="pl-buy-buttons__row">
+      <button
+        type="submit"
+        name="add"
+        class="pl-buy-buttons__atc"
+        {% unless pl_variant.available %}disabled{% endunless %}
+      >
+        {%- if pl_variant.available -%}Add to Cart{%- else -%}Sold Out{%- endif -%}
+      </button>
+
+      <div class="shiprocket-headless pl-sr-card" data-type="product" aria-label="Buy Now"></div>
+    </div>
+  {%- endform -%}
+</div>
+
+{%- style -%}
+  .pl-buy-buttons { margin-top: 0.8rem; }
+  .pl-buy-buttons__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    align-items: stretch;
+  }
+  .pl-buy-buttons__form {
+    width: 100%;
+  }
+  .pl-buy-buttons__atc {
+    width: 100%;
+    padding: 0.75rem 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1.5px solid rgb(var(--color-button));
+    color: rgb(var(--color-button));
+    background: transparent;
+    transition: opacity 0.15s;
+  }
+  .pl-buy-buttons__atc:disabled { opacity: 0.45; cursor: not-allowed; }
+  .pl-buy-buttons__atc:not(:disabled):hover { background: rgba(var(--color-button), 0.06); }
+  .pl-sr-card button,
+  .pl-sr-card .shiprocket-replaced-checkout {
+    width: 100% !important;
+    border-radius: 6px !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 0.5rem !important;
+  }
+  @media screen and (max-width: 749px) {
+    .pl-buy-buttons__row {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}

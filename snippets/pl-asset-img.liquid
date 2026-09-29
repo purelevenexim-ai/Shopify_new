@@ -1,0 +1,26 @@
+{%- comment -%}
+  pl-asset-img.liquid — a responsive <img> for theme assets that ship as
+  pre-sized WebP variants: name-640.webp, name-900.webp and so on.
+
+  The browser picks the smallest variant that still covers the space the image
+  fills at the visitor's screen density, so a phone no longer downloads the
+  desktop file. Below-the-fold images stay loading="lazy"; the progressive
+  loader (pl-progressive-load.js) fetches them in batches ahead of the scroll.
+
+  Params: name (base name, no extension), widths (csv, ascending), sizes, alt,
+          width, height (the original's), loading (default lazy),
+          fetchpriority (optional)
+{%- endcomment -%}
+{%- assign pl_ws = widths | split: ',' -%}
+{%- capture pl_srcset -%}
+  {%- for w in pl_ws -%}
+    {{ name | append: '-' | append: w | append: '.webp' | asset_url }} {{ w }}w{% unless forloop.last %}, {% endunless %}
+  {%- endfor -%}
+{%- endcapture -%}
+<img src="{{ name | append: '-' | append: pl_ws.first | append: '.webp' | asset_url }}"
+     srcset="{{ pl_srcset | strip }}"
+     sizes="{{ sizes }}"
+     alt="{{ alt | escape }}"
+     width="{{ width }}" height="{{ height }}"
+     loading="{{ loading | default: 'lazy' }}" decoding="async"
+     {%- if fetchpriority %} fetchpriority="{{ fetchpriority }}"{% endif %}>

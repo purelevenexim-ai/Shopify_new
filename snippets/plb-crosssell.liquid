@@ -1,0 +1,117 @@
+{%- comment -%}
+  plb-crosssell.liquid — "Goes well with what's in your cart".
+
+  Candidate order:
+    1. plb-pairs for each product already in the cart (curated, best first)
+    2. a bestseller fallback, so the block never renders empty
+  Then filtered: nothing already in the cart, nothing picked twice, nothing
+  unavailable. Rendered as a row that scrolls to the right, below the
+  checkout button so it adds to the order rather than interrupting it.
+
+  Params: limit (default 4)
+{%- endcomment -%}
+
+{%- liquid
+  assign cap = limit | default: 4
+
+  comment
+    Cart membership is matched on handle, wrapped in pipes so that
+    'kerala-black-pepper' cannot match 'kerala-black-pepper-powder'.
+  endcomment
+  assign in_cart = '|'
+  for item in cart.items
+    assign in_cart = in_cart | append: item.product.handle | append: '|'
+  endfor
+
+  assign candidates = ''
+  for item in cart.items
+    capture pairs
+      render 'plb-pairs', p: item.product
+    endcapture
+    if pairs != blank
+      assign candidates = candidates | append: pairs | append: ','
+    endif
+  endfor
+  assign candidates = candidates | append: 'starter-trial-pack-4-varieties,naadan-pure-honey,kerala-spice-combo-pack,premium-milk-tea-powder,kerala-cardamom'
+  assign candidates = candidates | split: ','
+
+  assign picked = '|'
+  assign shown = 0
+  assign bundle_save = 0
+  assign bundle_total = 0
+-%}
+
+{%- capture cards -%}
+  {%- for handle in candidates -%}
+    {%- if shown >= cap -%}{%- break -%}{%- endif -%}
+    {%- assign hh = handle | strip -%}
+    {%- assign key = hh | prepend: '|' | append: '|' -%}
+    {%- unless in_cart contains key or picked contains key -%}
+      {%- assign cp = all_products[hh] -%}
+      {%- if cp != blank and cp.available -%}
+        {%- liquid
+          assign picked = picked | append: cp.handle | append: '|'
+          assign shown = shown | plus: 1
+          assign cv = cp.selected_or_first_available_variant
+          assign save_p = 0
+          assign save_pct = 0
+          if cv.compare_at_price > cv.price
+            assign save_p = cv.compare_at_price | minus: cv.price
+            assign save_pct = save_p | times: 100 | divided_by: cv.compare_at_price
+          endif
+          assign bundle_save = bundle_save | plus: save_p
+          assign bundle_total = bundle_total | plus: cv.price
+        -%}
+
+        <article class="plb-xs__card" data-plb-xs-card>
+          <a class="plb-xs__shot" href="{{ cp.url }}" tabindex="-1" aria-hidden="true">
+            {%- if cp.featured_image -%}
+              <img src="{{ cp.featured_image | image_url: width: 220 }}"
+                   alt="{{ cp.title | escape }}" width="86" height="86" loading="lazy">
+            {%- endif -%}
+            {%- if save_pct > 0 -%}<span class="plb-xs__flag">-{{ save_pct }}%</span>{%- endif -%}
+          </a>
+
+          <div class="plb-xs__b">
+            <h4 class="plb-xs__t"><a href="{{ cp.url }}">{{ cp.title | escape }}</a></h4>
+            <p class="plb-xs__why">{% render 'plb-why', p: cp %}</p>
+
+            <div class="plb-xs__prices">
+              <b>{% render 'plb-money', p: cv.price %}</b>
+              {%- if save_p > 0 -%}
+                <s>{% render 'plb-money', p: cv.compare_at_price %}</s>
+                <i class="plb-xs__save">Save {% render 'plb-money', p: save_p %}</i>
+              {%- endif -%}
+              {%- unless cp.has_only_default_variant -%}
+                <span class="plb-xs__size">{{ cv.title }}</span>
+              {%- endunless -%}
+            </div>
+          </div>
+
+          <button type="button" class="plb-xs__add"
+                  data-plb-add="{{ cv.id }}"
+                  aria-label="Add {{ cp.title | escape }} to cart">
+            <span>Add</span>
+          </button>
+        </article>
+      {%- endif -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if shown > 0 -%}
+  <section class="plb-xs" aria-label="Recommended with your order">
+    <div class="plb-xs__h">
+      <p class="plb-lbl">Goes well with your order</p>
+      {%- if shown > 1 and bundle_save > 0 -%}
+        <p class="plb-xs__bundle">
+          Add all {{ shown }} for {% render 'plb-money', p: bundle_total %} &mdash;
+          <b>you save {% render 'plb-money', p: bundle_save %}</b> against MRP
+        </p>
+      {%- else -%}
+        <p class="plb-xs__bundle">Picked from what customers add alongside these items.</p>
+      {%- endif -%}
+    </div>
+    <div class="plb-xs__list">{{ cards }}</div>
+  </section>
+{%- endif -%}

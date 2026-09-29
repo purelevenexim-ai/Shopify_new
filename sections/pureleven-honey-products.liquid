@@ -1,0 +1,68 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'tc-product-card.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'tc-product-card.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background-color: #FFFAF2;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+  .hn-products { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .hn-products__head { margin-bottom: 2.4rem; }
+  .hn-products__eyebrow {
+    font-size: 0.76rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #9A5C0A; margin-bottom: 0.6rem;
+  }
+  .hn-products__title {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800; color: #1C1008;
+    letter-spacing: -0.02em; margin: 0;
+  }
+  .hn-products__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    gap: 2rem;
+  }
+  @media (max-width: 749px) {
+    .hn-products__grid { grid-template-columns: 1fr; }
+    #shopify-section-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.7 | round }}px 0 {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div id="honey-products">
+  <div class="hn-products">
+    <div class="hn-products__head">
+      <p class="hn-products__eyebrow">KERALA HONEY</p>
+      <h2 class="hn-products__title">{{ section.settings.heading | default: 'Shop Kerala Honey' }}</h2>
+    </div>
+    <div class="hn-products__grid">
+      {%- assign handles = section.settings.product_handles | split: ',' -%}
+      {%- for handle in handles -%}
+        {%- assign handle_clean = handle | strip -%}
+        {%- assign prod = all_products[handle_clean] -%}
+        {%- if prod != empty -%}
+          {%- render 'pureleven-tc-product-card', product: prod -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Honey Products",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop Kerala Honey" },
+    { "type": "text", "id": "product_handles", "label": "Product handles (comma-separated)", "default": "naadan-pure-honey" },
+    { "type": "range", "id": "columns_desktop", "min": 1, "max": 4, "step": 1, "label": "Columns desktop", "default": 2 },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding top", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding bottom", "default": 56 }
+  ],
+  "presets": [{ "name": "Honey Products" }]
+}
+{% endschema %}

@@ -14,10 +14,29 @@
   }
 {%- endstyle -%}
 
+{%- liquid
+  assign pl_home_kerala_asset = ''
+  if request.page_type == 'index' and section.id contains 'kerala_hero_section'
+    assign pl_home_kerala_asset = 'pl-home-heritage-team.webp'
+  endif
+-%}
+
 <div class="section-{{ section.id }}-padding">
   <div class="page-width">
     <div class="kerala-hero">
-      {% if section.settings.image != blank %}
+      {% if pl_home_kerala_asset != blank %}
+        <picture class="kerala-hero__image">
+          <img
+            src="{{ pl_home_kerala_asset | asset_url }}"
+            alt="PureLeven spice growers in a Kerala cardamom garden"
+            class="kerala-hero__img"
+            loading="lazy"
+            decoding="async"
+            width="1400"
+            height="933"
+          />
+        </picture>
+      {% elsif section.settings.image != blank %}
         <picture class="kerala-hero__image">
           {%- assign image_alt = section.settings.image.alt | default: "Kerala - God's Own Country" -%}
           

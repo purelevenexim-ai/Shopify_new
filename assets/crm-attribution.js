@@ -261,6 +261,29 @@
         try { return localStorage.getItem('customer_phone') || ''; } catch (e) { return ''; }
     }
 
+    function getConsentState() {
+        var state = {};
+        try {
+            var privacy = window.Shopify && window.Shopify.customerPrivacy;
+            if (privacy && typeof privacy.currentVisitorConsent === 'function') {
+                var consent = privacy.currentVisitorConsent() || {};
+                if (typeof consent.marketing !== 'undefined') {
+                    state.marketing_consent = String(consent.marketing);
+                }
+                if (typeof consent.analytics !== 'undefined') {
+                    state.analytics_consent = String(consent.analytics);
+                }
+                if (typeof consent.preferences !== 'undefined') {
+                    state.preferences_consent = String(consent.preferences);
+                }
+                if (Object.keys(state).length) {
+                    state.consent_timestamp = new Date().toISOString();
+                }
+            }
+        } catch (e) {}
+        return state;
+    }
+
     /**
      * Detect current page type
      */
@@ -279,6 +302,7 @@
      */
     function buildAttributionPayload() {
         var utm = getUTMParams();
+        var consent = getConsentState();
         return {
             session_id:    SESSION_ID,
             gclid:         GCLID || '',
@@ -293,7 +317,10 @@
             utm_medium:    utm.utm_medium,
             utm_campaign:  utm.utm_campaign,
             utm_content:   utm.utm_content,
-            utm_term:      utm.utm_term
+            utm_term:      utm.utm_term,
+            marketing_consent: consent.marketing_consent || '',
+            analytics_consent: consent.analytics_consent || '',
+            consent_timestamp: consent.consent_timestamp || ''
         };
     }
 
@@ -377,11 +404,36 @@
     function bindCheckoutPersistenceTriggers() {
         document.addEventListener('click', function(event) {
             var target = event.target && event.target.closest
-                ? event.target.closest('[name="checkout"], [data-basil-cta="proceed-checkout"], .shopify-payment-button__button, .shopify-payment-button button')
+                ? event.target.closest(
+                    '[name="checkout"], [data-basil-cta="proceed-checkout"], ' +
+                    '.shopify-payment-button__button, .shopify-payment-button button, ' +
+                    '.sr-headless-checkout, [name="sr-headless-button"]'
+                  )
                 : null;
             if (!target) return;
             syncCheckoutAttribution();
+            trackCheckoutStart();
         }, true);
+    }
+
+    /**
+     * Fired the moment a shopper clicks any checkout-entry control (cart
+     * drawer's Checkout button, the checkout-prep page CTA, or a Shop Pay /
+     * accelerated payment button). Shopify's checkouts/create webhook does
+     * not reliably fire for this store's checkout flow, so this client-side
+     * beacon is the actual source of InitiateCheckout tracking.
+     */
+    function trackCheckoutStart() {
+        var cartTotal = (document.querySelector('[data-total-price]') || {}).innerText || '';
+        var data = Object.assign({}, buildAttributionPayload(), {
+            email:      getCustomerEmail(),
+            phone:      getCustomerPhone(),
+            event_type: 'checkout_start',
+            cart_value: cartTotal,
+            page_url:   window.location.href,
+            timestamp:  new Date().toISOString()
+        });
+        sendToCRM('/api/crm/events/page_view', data);
     }
 
     /**
@@ -402,6 +454,7 @@
      */
     function callIdentify() {
         var utm = getUTMParams();
+        var consent = getConsentState();
         var payload = {
             session_id:  SESSION_ID,
             gclid:       GCLID || null,
@@ -414,7 +467,10 @@
             ga_session_id: GA_SESSION_ID || null,
             email:       getCustomerEmail() || null,
             phone:       getCustomerPhone() || null,
-            utm_source:  utm.utm_source
+            utm_source:  utm.utm_source,
+            marketing_consent: consent.marketing_consent || null,
+            analytics_consent: consent.analytics_consent || null,
+            consent_timestamp: consent.consent_timestamp || null
         };
         fetch(CRM_BASE + '/api/crm/identify', {
             method: 'POST',
@@ -424,8 +480,8 @@
         }).then(function(r) {
             return r.ok ? r.json() : null;
         }).then(function(data) {
-            if (data && data.identity_id) {
-                try { localStorage.setItem('pl_identity_id', data.identity_id); } catch (e) {}
+            if (data && (data.identity_id || data.customer_id)) {
+                try { localStorage.setItem('pl_identity_id', data.identity_id || data.customer_id); } catch (e) {}
             }
         }).catch(function() {});
     }
@@ -434,9 +490,10 @@
      * Send event to Meta Pixel
      */
     function sendToMetaPixel(eventType, customData) {
-        if (typeof fbq !== 'undefined') {
-            fbq('track', eventType, customData);
-        }
+        // Shopify's Facebook & Instagram app owns browser events. Keeping a
+        // second manual pixel here would duplicate PageView/ViewContent/
+        // AddToCart/InitiateCheckout and corrupt Meta attribution.
+        return false;
     }
     
     // ============================================

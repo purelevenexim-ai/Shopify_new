@@ -9,9 +9,87 @@
 {%- assign secondary_cta_label = 'Read Spice Journal' -%}
 {%- assign note = 'From Kerala soil to your kitchen.' -%}
 
-{%- if product_handle contains 'combo-pack' -%}
+{%- comment -%}
+  Beverages are matched first and returned early. Several of their handles collide
+  with the spice rules below — 'deluxe-combo-pack-tea-coffee-honey' contains
+  'combo-pack', and 'cardamom-tea' contains 'cardamom' — so without this branch
+  they inherit spice copy.
+{%- endcomment -%}
+{%- assign bev_handles = 'premium-milk-tea-powder,premium-black-tea-granules,orange-pekoe-powder,cardamom-tea,naadan-kerala-coffee,naadan-pure-honey,starter-trial-pack-4-varieties,deluxe-combo-pack-tea-coffee-honey' | split: ',' -%}
+{%- assign is_beverage = false -%}
+{%- for h in bev_handles -%}
+  {%- if product_handle == h -%}{%- assign is_beverage = true -%}{%- endif -%}
+{%- endfor -%}
+
+{%- if is_beverage -%}
+  {%- assign primary_cta_url = '/collections/tea-coffee' -%}
+  {%- assign primary_cta_label = 'Explore Tea & Coffee' -%}
+  {%- assign secondary_cta_url = '/collections/all' -%}
+  {%- assign secondary_cta_label = 'Shop All Products' -%}
+  {%- assign note = 'Direct from Idukki and Adimali estates, packed to order.' -%}
+
+  {%- case product_handle -%}
+    {%- when 'premium-milk-tea-powder' -%}
+      {%- assign summary = 'A fine-milled black tea powder from Idukki. The fine grind releases colour and strength quickly, which is what lets it stand up to milk — the everyday chai tea for Kerala households.' -%}
+      {%- assign highlight_1 = 'Fine powder, not granule' -%}
+      {%- assign highlight_2 = 'Built for milk, not for black' -%}
+      {%- assign highlight_3 = 'Idukki high-range estates' -%}
+      {%- assign highlight_4 = 'About ₹3 a cup' -%}
+      {%- assign note = 'Boil milk and water together, add the powder at half boil, then rest 30 seconds.' -%}
+    {%- when 'premium-black-tea-granules' -%}
+      {%- assign summary = 'Broken Orange Pekoe (BOP) grade black tea — smaller broken leaf that infuses quickly and gives a bright, full-bodied cup without turning tannic.' -%}
+      {%- assign highlight_1 = 'BOP export grade' -%}
+      {%- assign highlight_2 = 'Bright, clean, no bitterness' -%}
+      {%- assign highlight_3 = 'Drinks black or with milk' -%}
+      {%- assign highlight_4 = 'Lab-tested for pesticides' -%}
+      {%- assign note = 'A step up from CTC dust if you want clarity in the cup as well as strength.' -%}
+    {%- when 'orange-pekoe-powder' -%}
+      {%- assign summary = 'Orange Pekoe is a leaf-size grade, not a flavour — younger leaf with more essential oil, giving a refined, floral cup best drunk without milk.' -%}
+      {%- assign highlight_1 = 'Whole-leaf grade' -%}
+      {%- assign highlight_2 = 'Floral, low tannin' -%}
+      {%- assign highlight_3 = 'Best served black' -%}
+      {%- assign highlight_4 = 'Lemon or honey, never milk' -%}
+      {%- assign note = 'Milk masks the florals this grade is bought for.' -%}
+    {%- when 'cardamom-tea' -%}
+      {%- assign summary = 'Idukki black tea blended with whole green cardamom pods rather than flavouring — a ready-to-steep spiced chai that needs no separate masala.' -%}
+      {%- assign highlight_1 = 'Whole pods, no synthetic flavour' -%}
+      {%- assign highlight_2 = 'One-step spiced chai' -%}
+      {%- assign highlight_3 = 'Cardamom from our own gardens' -%}
+      {%- assign highlight_4 = 'Traditional digestive pairing' -%}
+      {%- assign note = 'Cardamom-flavoured teas use oils; this one uses the pod.' -%}
+    {%- when 'naadan-kerala-coffee' -%}
+      {%- assign summary = 'Medium-roast Kerala Robusta, ground fine for South Indian filter. Roughly twice the caffeine of Arabica and a heavier body — which is what survives being cut with hot milk.' -%}
+      {%- assign highlight_1 = 'Robusta, filter grind' -%}
+      {%- assign highlight_2 = 'Grown at 1,200–1,600 m' -%}
+      {%- assign highlight_3 = 'No chicory, unblended' -%}
+      {%- assign highlight_4 = 'Roasted in small batches' -%}
+      {%- assign note = 'Most Indian filter blends carry 20–30% chicory. This does not.' -%}
+    {%- when 'naadan-pure-honey' -%}
+      {%- assign summary = 'Raw wildflower forest honey from Adimali, cold-extracted and unfiltered — so it keeps its pollen and enzymes, and crystallises the way real honey should.' -%}
+      {%- assign highlight_1 = 'Never heated above 40°C' -%}
+      {%- assign highlight_2 = 'Unfiltered, pollen intact' -%}
+      {%- assign highlight_3 = 'Crystallises naturally' -%}
+      {%- assign highlight_4 = 'Single yearly harvest' -%}
+      {%- assign note = 'Honey that never sets has usually been pasteurised or cut with syrup.' -%}
+    {%- when 'starter-trial-pack-4-varieties' -%}
+      {%- assign summary = 'Four PureLeven teas and coffees in one box, sized so you can brew each properly for a week before committing to a full pack.' -%}
+      {%- assign highlight_1 = '4 varieties, one box' -%}
+      {%- assign highlight_2 = 'Try before the full pack' -%}
+      {%- assign highlight_3 = 'One delivery charge' -%}
+      {%- assign highlight_4 = 'Gift-friendly' -%}
+      {%- assign note = 'The cheapest way to find which one you actually reach for.' -%}
+    {%- when 'deluxe-combo-pack-tea-coffee-honey' -%}
+      {%- assign summary = 'The full PureLeven beverage shelf — every tea and coffee we make plus a jar of raw forest honey, shipped as one box from Idukki and Adimali.' -%}
+      {%- assign highlight_1 = '5 items, ships as one box' -%}
+      {%- assign highlight_2 = 'Tea, coffee and raw honey' -%}
+      {%- assign highlight_3 = 'Honey pairs with every cup' -%}
+      {%- assign highlight_4 = 'Single delivery charge' -%}
+      {%- assign note = 'Raw honey is the natural sweetener for each brew in this box.' -%}
+  {%- endcase -%}
+
+{%- elsif product_handle contains 'combo-pack' -%}
   {%- assign primary_cta_label = 'Explore Best Sellers' -%}
-  {%- if product_handle contains '50g-black-pepper-100g-clove-100g' or product_handle == 'cardamom-pepper-clove-combo-pack-special-offer-100-off' -%}
+  {%- if product_handle contains '50g-black-pepper-100g-clove-100g' or product_handle == 'kerala-spice-combo-pack' -%}
     {%- assign summary = 'A starter Kerala spice combo that bundles cardamom, black pepper, and clove into one purchase for gifting, first-time buyers, and everyday kitchen setup.' -%}
     {%- assign highlight_1 = '3 core spices in one' -%}
     {%- assign highlight_2 = 'Starter / gifting use case' -%}
@@ -26,24 +104,24 @@
     {%- assign highlight_4 = 'Better refill value' -%}
     {%- assign note = 'Best when these core spices already move quickly in the kitchen and convenience matters.' -%}
   {%- endif -%}
-{%- elsif product_handle contains 'cardamom' -%}
+  {%- elsif product_handle contains 'cardamom' -%}
   {%- assign primary_cta_label = 'Explore Cardamom Range' -%}
   {%- if product_handle contains '50gm' -%}
-    {%- assign summary = 'This compact Kerala cardamom pack is for buyers who want fragrant whole pods, faster kitchen turnover, and a lower-commitment way to keep chai, sweets, and daily cooking aromatic.' -%}
+    {%- assign summary = 'This compact Kerala cardamom (elaichi) pack is for buyers who want fragrant whole pods, faster kitchen turnover, and a lower-commitment way to keep chai, sweets, and daily cooking aromatic.' -%}
     {%- assign highlight_1 = 'Whole cardamom pods' -%}
     {%- assign highlight_2 = 'Low kitchen-stock commitment' -%}
     {%- assign highlight_3 = 'Great for chai and sweets' -%}
     {%- assign highlight_4 = 'Trial-friendly size' -%}
     {%- assign note = 'Smaller pack, stronger turnover, fresher pod experience.' -%}
-  {%- elsif product_handle contains '8mm-fruit-100gm' or product_handle == 'kerala-cardamom-200gm' -%}
-    {%- assign summary = 'A daily-use Kerala cardamom pack with 8mm whole-pod positioning, designed for home kitchens that want bright aroma, cleaner storage cycles, and reliable use in chai, desserts, and savory cooking.' -%}
+  {%- elsif product_handle contains '8mm-fruit-100gm' or product_handle == 'kerala-cardamom' -%}
+    {%- assign summary = 'A daily-use Kerala cardamom (elaichi) pack with 8mm whole-pod positioning, designed for home kitchens that want bright aroma, cleaner storage cycles, and reliable use in chai, desserts, and savory cooking.' -%}
     {%- assign highlight_1 = '8mm whole pods' -%}
     {%- assign highlight_2 = 'Daily-use pack size' -%}
     {%- assign highlight_3 = 'Kerala source story' -%}
-    {%- assign highlight_4 = 'Balanced pack size' -%}
-    {%- assign note = 'Best when you want regular cardamom use without carrying too much stock.' -%}
-  {%- elsif product_handle contains '8mm-200gm' or product_handle == 'kerala-cardamom-online-100gm' -%}
-    {%- assign summary = 'Kerala cardamom in a larger 8mm refill pack for households that want bigger whole pods, stronger aroma release, and enough volume for repeat chai, dessert, and masala use.' -%}
+    {%- assign highlight_4 = 'Cardamom + elaichi relevance' -%}
+    {%- assign note = 'Best when you want regular cardamom / elaichi use without carrying too much stock.' -%}
+  {%- elsif product_handle contains '8mm-200gm' or product_handle == 'kerala-cardamom' -%}
+    {%- assign summary = 'Kerala cardamom (elaichi) in a larger 8mm refill pack for households that want bigger whole pods, stronger aroma release, and enough volume for repeat chai, dessert, and masala use.' -%}
     {%- assign highlight_1 = '8mm whole pods' -%}
     {%- assign highlight_2 = 'Higher-aroma profile' -%}
     {%- assign highlight_3 = 'Built for repeat use' -%}
@@ -73,7 +151,7 @@
     {%- assign highlight_3 = 'Fresh-grind use case' -%}
     {%- assign highlight_4 = 'Kerala provenance' -%}
     {%- assign note = 'This is the everyday pepper pack for cooks who want the grinder doing the real work.' -%}
-  {%- elsif product_handle contains '300gm' or product_handle == 'kerala-black-pepper-350gm' -%}
+  {%- elsif product_handle contains '300gm' or product_handle == 'kerala-black-pepper' -%}
     {%- assign summary = 'A larger Kerala black pepper offer pack for families and repeat cooks who want whole-pepper freshness, better refill value, and a more kitchen-friendly volume.' -%}
     {%- assign highlight_1 = 'Larger value pack' -%}
     {%- assign highlight_2 = 'Whole peppercorn format' -%}

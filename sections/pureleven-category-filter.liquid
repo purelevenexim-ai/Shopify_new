@@ -1,0 +1,169 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding pl-category-filter">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pl-category-filter__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="pl-category-filter__chips-wrapper">
+      <div class="pl-category-filter__chips">
+        {%- for collection in shop.collections -%}
+          {%- if collection.handle != 'all' -%}
+            <a href="{{ collection.url }}" class="pl-category-filter__chip">
+              {{ collection.title }}
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .pl-category-filter {
+    background: #fff;
+  }
+
+  .pl-category-filter__heading {
+    margin: 0 0 1.6rem;
+    font-family: var(--font-fraunces, 'Fraunces', serif) !important;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--pl-near-black, #1a1a1a);
+  }
+
+  .pl-category-filter__chips-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pl-category-filter__chips-wrapper::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .pl-category-filter__chips-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(27, 58, 48, 0.2);
+    border-radius: 2px;
+  }
+
+  .pl-category-filter__chips {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 0.4rem;
+    min-width: 100%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .pl-category-filter__chips-wrapper {
+      overflow: visible;
+    }
+
+    .pl-category-filter__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+  }
+
+  .pl-category-filter__chip {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1.5px solid rgba(27, 58, 48, 0.2);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--pl-near-black, #1a1a1a);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .pl-category-filter__chip {
+      flex-shrink: 1;
+    }
+  }
+
+  .pl-category-filter__chip:hover {
+    background: var(--pl-gold, #f4d976);
+    border-color: var(--pl-gold, #f4d976);
+    color: var(--pl-near-black, #1a1a1a);
+  }
+
+  .pl-category-filter__chip.active {
+    background: var(--pl-green, #1b5e56);
+    border-color: var(--pl-green, #1b5e56);
+    color: #fff;
+  }
+</style>
+
+<script>
+  (function() {
+    const currentPath = window.location.pathname;
+    const chips = document.querySelectorAll('.pl-category-filter__chip');
+    chips.forEach(chip => {
+      if (chip.getAttribute('href') === currentPath || currentPath.includes(chip.getAttribute('href'))) {
+        chip.classList.add('active');
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PureLeven Category Filter",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by category"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 44
+    }
+  ],
+  "presets": [
+    {
+      "name": "PureLeven Category Filter"
+    }
+  ]
+}
+{% endschema %}

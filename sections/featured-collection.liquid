@@ -36,6 +36,66 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Featured Collection Typography & Layout Refinement */
+  .collection__title {
+    margin-bottom: 3.2rem;
+  }
+
+  .collection__title .title {
+    font-family: var(--pl-font-display, "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: 2.4rem !important;
+  }
+
+  .collection__title .title::before {
+    content: 'FRESH ESSENTIALS';
+    display: block;
+    font-family: var(--pl-font-body, "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--pl-teal, #004438);
+    margin-bottom: 1.2rem;
+  }
+
+  .collection__description {
+    font-family: var(--pl-font-body, "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+    font-size: 1.4rem !important;
+    font-weight: 400 !important;
+    line-height: 1.8 !important;
+    color: var(--pl-primary, #2E7D6E) !important;
+    opacity: 0.75 !important;
+    max-width: 55ch;
+    margin-bottom: 2.4rem !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-grid {
+      column-gap: 2.4rem !important;
+      row-gap: 2.4rem !important;
+    }
+  }
+
+  .product-grid .card {
+    border: 1px solid rgba(27, 94, 86, 0.12) !important;
+    box-shadow: 0 8px 24px rgba(27, 94, 86, 0.08) !important;
+    border-radius: 1.8rem !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-grid .card {
+      max-width: 380px;
+    }
+  }
+
+  .product-grid .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(27, 94, 86, 0.12) !important;
+  }
 {%- endstyle -%}
 
 {%- liquid
@@ -122,17 +182,9 @@
                   style="--animation-order: {{ forloop.index }};"
                 {% endif %}
               >
-                {% render 'card-product',
+                {% render 'card-product-clean',
                   card_product: product,
-                  media_aspect_ratio: section.settings.image_ratio,
-                  image_shape: section.settings.image_shape,
-                  lazy_load: lazy_load,
-                  show_secondary_image: section.settings.show_secondary_image,
-                  show_vendor: section.settings.show_vendor,
-                  show_rating: section.settings.show_rating,
-                  skip_styles: skip_card_product_styles,
-                  section_id: section.id,
-                  quick_add: section.settings.quick_add
+                  section_id: section.id
                 %}
               </li>
               {%- assign skip_card_product_styles = true -%}
@@ -533,3 +585,4 @@
   ]
 }
 {% endschema %}
+

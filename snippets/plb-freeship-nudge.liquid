@@ -1,0 +1,105 @@
+{%- comment -%}
+  plb-freeship-nudge.liquid — the answer to "why am I paying ₹60 to ship?"
+
+  Sits directly under the shipping row. Works out how far the cart is from the
+  free-shipping threshold, then offers the single cheapest product that closes
+  the gap, so the courier fee turns into something the shopper actually keeps.
+
+  Suppressed when the closest product overshoots badly — spending ₹705 to save
+  ₹60 is a worse deal than paying the ₹60, and offering it reads as a trick.
+
+  Params: gap_p (paise still needed), ship_p (paise of shipping being charged)
+{%- endcomment -%}
+
+{%- liquid
+  assign pool = 'kerala-black-pepper,premium-cassia-cinnamon,star-anise-chakra-phool-premium-whole-spice,kerala-adimali-clove,kerala-white-pepper,aromatic-true-cinnamon-ceylon,premium-black-tea-granules,premium-milk-tea-powder,cardamom-tea,kerala-cardamom,orange-pekoe-powder,starter-trial-pack-4-varieties,naadan-kerala-coffee,kerala-spice-combo-pack,naadan-pure-honey,deluxe-combo-pack-tea-coffee-honey' | split: ','
+
+  comment
+    Handles wrapped in pipes so 'kerala-black-pepper' cannot match
+    'kerala-black-pepper-powder'.
+  endcomment
+  assign in_cart = '|'
+  for item in cart.items
+    assign in_cart = in_cart | append: item.product.handle | append: '|'
+  endfor
+
+  assign best_price = 99999999
+  assign best_handle = ''
+  for handle in pool
+    assign hh = handle | strip
+    assign key = hh | prepend: '|' | append: '|'
+    unless in_cart contains key
+      assign cp = all_products[hh]
+      if cp != blank and cp.available
+        assign cv = cp.selected_or_first_available_variant
+        if cv.price >= gap_p and cv.price < best_price
+          assign best_price = cv.price
+          assign best_handle = hh
+        endif
+      endif
+    endunless
+  endfor
+
+  comment
+    Only worth showing when the closest fit is close. Either it lands within
+    ₹120 of the gap, or it is cheap enough (under ₹150) that the trade is
+    obviously good whatever the gap.
+  endcomment
+  assign ceiling = gap_p | plus: 12000
+  assign show = false
+  if best_handle != blank
+    if best_price <= ceiling or best_price <= 15000
+      assign show = true
+    endif
+  endif
+-%}
+
+{%- if show -%}
+  {%- assign np = all_products[best_handle] -%}
+  {%- assign nv = np.selected_or_first_available_variant -%}
+  {%- assign extra_p = best_price | minus: ship_p -%}
+
+  <div class="plb-nudge">
+    <p class="plb-nudge__h">
+      Add <b>{% render 'plb-money', p: gap_p %}</b> more and delivery is free
+    </p>
+
+    <article class="plb-nudge__c">
+      {%- if np.featured_image -%}
+        <a class="plb-nudge__shot" href="{{ np.url }}" tabindex="-1" aria-hidden="true">
+          <img src="{{ np.featured_image | image_url: width: 160 }}"
+               alt="{{ np.title | escape }}" width="56" height="56" loading="lazy">
+        </a>
+      {%- endif -%}
+
+      <div class="plb-nudge__b">
+        <h4><a href="{{ np.url }}">{{ np.title | escape }}</a></h4>
+        <p class="plb-nudge__p">
+          <b>{% render 'plb-money', p: best_price %}</b>
+          {%- unless np.has_only_default_variant -%}
+            <span>{{ nv.title }}</span>
+          {%- endunless -%}
+        </p>
+      </div>
+
+      <button type="button" class="plb-nudge__add"
+              data-plb-add="{{ nv.id }}"
+              aria-label="Add {{ np.title | escape }} and get free delivery">
+        <span>Add</span>
+      </button>
+    </article>
+
+    {%- if extra_p > 0 -%}
+      <p class="plb-nudge__math">
+        You pay {% render 'plb-money', p: extra_p %} more, and the
+        {% render 'plb-money', p: ship_p %} courier fee becomes
+        {% render 'plb-money', p: best_price %} of product.
+      </p>
+    {%- else -%}
+      <p class="plb-nudge__math">
+        Costs you nothing &mdash; the {% render 'plb-money', p: ship_p %} you would
+        have paid the courier covers it.
+      </p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

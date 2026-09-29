@@ -1,0 +1,165 @@
+{%- liquid
+  assign pepper_title = product.title | downcase
+  assign is_black_pepper_product = false
+  if product.handle contains 'black-pepper' or pepper_title contains 'black pepper'
+    assign is_black_pepper_product = true
+  endif
+-%}
+
+{%- if is_black_pepper_product -%}
+  <section class="pl-pepper-story" aria-labelledby="pl-pepper-story-title">
+    <div class="pl-pepper-story__inner page-width">
+      <div class="pl-pepper-story__header">
+        <p class="pl-pepper-story__eyebrow">Kerala black pepper</p>
+        <h2 id="pl-pepper-story-title" class="pl-pepper-story__title">
+          Bold whole peppercorns with a warm bite and cleaner aroma.
+        </h2>
+        <p class="pl-pepper-story__lead">
+          Whole pepper keeps more of its natural oils protected until grinding, giving everyday cooking a brighter finish than tired pre-ground pepper.
+        </p>
+      </div>
+
+      <div class="pl-pepper-story__grid">
+        <figure class="pl-pepper-story__hero">
+          <img
+            src="{{ 'pl-prod-black-pepper-hero.webp' | asset_url }}"
+            alt="PureLeven Kerala black pepper whole peppercorns with product pouch"
+            loading="lazy"
+            width="1200"
+            height="1200"
+          >
+          <figcaption>Whole peppercorns packed for strong kitchen aroma.</figcaption>
+        </figure>
+
+        <div class="pl-pepper-story__proof">
+          <article class="pl-pepper-story__proof-card">
+            <img
+              src="{{ 'pl-prod-black-pepper-process.webp' | asset_url }}"
+              alt="Whole black peppercorns drying after harvest"
+              loading="lazy"
+              width="1100"
+              height="1100"
+            >
+            <div>
+              <span>Quality cue</span>
+              <h3>Sun-dried whole berries</h3>
+              <p>Real drying and sorting visuals help shoppers see the ingredient before it becomes a kitchen pack.</p>
+            </div>
+          </article>
+
+          <article class="pl-pepper-story__proof-card">
+            <img
+              src="{{ 'pl-prod-black-pepper-vine.webp' | asset_url }}"
+              alt="Fresh black pepper vine growing in a Kerala spice garden"
+              loading="lazy"
+              width="1200"
+              height="800"
+            >
+            <div>
+              <span>Origin cue</span>
+              <h3>Grown as pepper spikes</h3>
+              <p>Real pepper begins on the vine, not in a supermarket shaker. Better sourcing helps the spice arrive with more character.</p>
+            </div>
+          </article>
+
+          <article class="pl-pepper-story__proof-card pl-pepper-story__proof-card--video">
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="{{ 'pl-prod-black-pepper-hero.webp' | asset_url }}"
+              aria-label="Short product video of Kerala black pepper"
+            >
+              <source src="{{ 'pl-prod-black-pepper-video.mp4' | asset_url }}" type="video/mp4">
+            </video>
+            <div>
+              <span>Product video</span>
+              <h3>Fast 1:1 preview</h3>
+              <p>Compressed square video keeps the product page lively without slowing down the buy path.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="pl-pepper-story__answers" aria-label="Kerala black pepper buying answers">
+        <article>
+          <span>Best for</span>
+          <strong>Rasam, soups, eggs, marinades, stir-fries, pepper chicken, and finishing hot food.</strong>
+        </article>
+        <article>
+          <span>How to use</span>
+          <strong>Crush or grind near the end of cooking for a brighter, warmer pepper finish.</strong>
+        </article>
+        <article>
+          <span>How to store</span>
+          <strong>Keep sealed, dry, and away from sunlight so the natural oils stay protected.</strong>
+        </article>
+      </div>
+
+      <div class="pl-pepper-story__source">
+        <img
+          src="{{ 'pl-prod-black-pepper-closeup.webp' | asset_url }}"
+          alt="Fresh green pepper harvest being sorted in Kerala"
+          loading="lazy"
+          width="1400"
+          height="900"
+        >
+        <div class="pl-pepper-story__source-copy">
+          <p class="pl-pepper-story__eyebrow">Source transparency</p>
+          <h3>From vine to kitchen, with less guesswork.</h3>
+          <p>
+            This page answers the buying questions shoppers, Google, and AI assistants look for: what the spice is, how it is used, why whole pepper matters, and how to keep it fresh.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is PureLeven Kerala Black Pepper best used for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PureLeven Kerala Black Pepper is best used for rasam, soups, eggs, marinades, pepper chicken, stir-fries, and finishing hot food where a warm pepper bite matters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why buy whole black peppercorns instead of pepper powder?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Whole black peppercorns protect natural oils better than pre-ground pepper powder, so they release fresher aroma and flavor when crushed or ground before use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should black pepper be stored?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Store black pepper in an airtight container in a cool, dry place away from sunlight, heat, and moisture to preserve aroma."
+          }
+        }
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Black pepper story",
+  "tag": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Black pepper story"
+    }
+  ]
+}
+{% endschema %}

@@ -26,10 +26,75 @@
 
   assign article_tags_string = article.tags | join: ' '
   assign article_topic_source = article.handle | append: ' ' | append: article.title | append: ' ' | append: article_tags_string | downcase
+  assign article_media_label = blank
+  assign article_media_primary = blank
+  assign article_media_primary_alt = blank
+  assign article_media_primary_caption = blank
+  assign article_media_secondary = blank
+  assign article_media_secondary_alt = blank
+  assign article_media_secondary_caption = blank
 
-  assign primary_product_handle = 'cardamom-100g-black-pepper-200g-clove-100g-3-in-1-spice-combo-pack'
-  assign secondary_product_handle = 'kerala-black-pepper-200gm'
-  assign tertiary_product_handle = 'kerala-cardamom-8mm-fruit-100gm'
+  if article_topic_source contains 'white pepper'
+    assign article_media_label = 'White pepper visuals'
+    assign article_media_primary = 'pl-prod-white-pepper-hero.webp'
+    assign article_media_primary_alt = 'White pepper whole peppercorns in a bowl'
+    assign article_media_primary_caption = 'White pepper gives light dishes pepper heat without dark specks.'
+    assign article_media_secondary = 'pl-prod-white-pepper-closeup.webp'
+    assign article_media_secondary_alt = 'Close view of whole white peppercorns'
+    assign article_media_secondary_caption = 'Grind near the end of cooking for a cleaner pepper finish.'
+  elsif article_topic_source contains 'black pepper' or article_topic_source contains 'pepper'
+    assign article_media_label = 'Kerala pepper visuals'
+    assign article_media_primary = 'pl-prod-black-pepper-closeup.webp'
+    assign article_media_primary_alt = 'Close view of whole black peppercorns'
+    assign article_media_primary_caption = 'Whole peppercorns hold aroma better than pre-ground pepper.'
+    assign article_media_secondary = 'pl-prod-black-pepper-vine.webp'
+    assign article_media_secondary_alt = 'Fresh pepper growing on a vine in Kerala'
+    assign article_media_secondary_caption = 'Kerala pepper starts on the vine before drying and packing.'
+  elsif article_topic_source contains 'cassia'
+    assign article_media_label = 'Cassia cinnamon visuals'
+    assign article_media_primary = 'pl-prod-cassia-hero.webp'
+    assign article_media_primary_alt = 'Premium cassia cinnamon sticks in a bowl'
+    assign article_media_primary_caption = 'Cassia gives chai, masala, and baking a fuller cinnamon warmth.'
+    assign article_media_secondary = 'pl-prod-cassia-process.webp'
+    assign article_media_secondary_alt = 'Cassia cinnamon sticks arranged for packing'
+    assign article_media_secondary_caption = 'Whole sticks keep the aroma protected until use.'
+  elsif article_topic_source contains 'ceylon' or article_topic_source contains 'cinnamon'
+    assign article_media_label = 'Ceylon cinnamon visuals'
+    assign article_media_primary = 'pl-prod-ceylon-hero.webp'
+    assign article_media_primary_alt = 'PureLeven true Ceylon cinnamon product pack'
+    assign article_media_primary_caption = 'Ceylon cinnamon has a lighter, gentler aroma than cassia.'
+    assign article_media_secondary = 'pl-prod-ceylon-process.webp'
+    assign article_media_secondary_alt = 'Ceylon cinnamon bark held in hand'
+    assign article_media_secondary_caption = 'Use Ceylon when you want fragrance without heavy spice heat.'
+  elsif article_topic_source contains 'clove'
+    assign article_media_label = 'Kerala clove visuals'
+    assign article_media_primary = 'pl-prod-clove-hero.webp'
+    assign article_media_primary_alt = 'Kerala whole clove buds with PureLeven product pouch'
+    assign article_media_primary_caption = 'Whole cloves add sweet-spicy depth in very small amounts.'
+    assign article_media_secondary = 'pl-prod-clove-process.webp'
+    assign article_media_secondary_alt = 'Whole cloves arranged for packing'
+    assign article_media_secondary_caption = 'Good cloves should smell warm and concentrated before cooking.'
+  elsif article_topic_source contains 'star anise'
+    assign article_media_label = 'Star anise visuals'
+    assign article_media_primary = 'pl-prod-star-anise-hero.webp'
+    assign article_media_primary_alt = 'Whole star anise pods in a bowl'
+    assign article_media_primary_caption = 'Whole star anise brings a sweet liquorice-style note to chai and biryani.'
+    assign article_media_secondary = 'pl-prod-star-anise-process.webp'
+    assign article_media_secondary_alt = 'Star anise pods prepared for packing'
+    assign article_media_secondary_caption = 'Use one pod while simmering, then remove before serving.'
+  elsif article_topic_source contains 'turmeric' or article_topic_source contains 'immunity' or article_topic_source contains 'wellness'
+    assign article_media_label = 'Turmeric visuals'
+    assign article_media_primary = 'pl-prod-turmeric-hero.webp'
+    assign article_media_primary_alt = 'Fresh turmeric roots arranged for drying'
+    assign article_media_primary_caption = 'Turmeric brings everyday color and earthy warmth to Indian cooking.'
+    assign article_media_secondary = 'pl-prod-turmeric-process.webp'
+    assign article_media_secondary_alt = 'Turmeric roots prepared for processing'
+    assign article_media_secondary_caption = 'Keep turmeric sealed and away from sunlight to protect color.'
+  endif
+
+  assign primary_product_handle = 'kerala-spice-combo-pack'
+  assign secondary_product_handle = 'kerala-black-pepper'
+  assign tertiary_product_handle = 'kerala-cardamom'
   assign primary_collection_handle = ''
   assign hero_kicker = 'Pureleven spice journal'
   assign hero_subtitle = 'Answer-first guidance with a faster path to farm-origin Kerala products you can buy today.'
@@ -44,9 +109,9 @@
   assign trust_point_three = 'Small-batch packs designed for repeat kitchen use'
 
   if article_topic_source contains 'best kerala spice' or article_topic_source contains 'kerala spice brands' or article_topic_source contains 'kerala spices online'
-    assign primary_product_handle = 'cardamom-100g-black-pepper-200g-clove-100g-3-in-1-spice-combo-pack'
-    assign secondary_product_handle = 'kerala-black-pepper-200gm'
-    assign tertiary_product_handle = 'kerala-cardamom-8mm-fruit-100gm'
+    assign primary_product_handle = 'kerala-spice-combo-pack'
+    assign secondary_product_handle = 'kerala-black-pepper'
+    assign tertiary_product_handle = 'kerala-cardamom'
     assign primary_collection_handle = ''
     assign hero_kicker = 'Kerala spice brands guide'
     assign hero_subtitle = 'Compare origin, aroma, freshness, and farm transparency, then move directly into Kerala spices with a premium buying path.'
@@ -60,9 +125,9 @@
     assign trust_point_two = 'Freshness-led handling focused on aroma and clarity'
     assign trust_point_three = 'A guide-to-product journey designed for confident buying'
   elsif article_topic_source contains 'cardamom'
-    assign primary_product_handle = 'kerala-cardamom-8mm-fruit-100gm'
-    assign secondary_product_handle = 'kerala-cardamom-8mm-200gm'
-    assign tertiary_product_handle = 'kerala-cardamom-50gm'
+    assign primary_product_handle = 'kerala-cardamom'
+    assign secondary_product_handle = 'kerala-cardamom'
+    assign tertiary_product_handle = 'kerala-cardamom'
     assign primary_collection_handle = 'export-quality-cardamom'
     assign hero_kicker = 'Kerala cardamom guide'
     assign hero_subtitle = 'Compare pod size, aroma strength, and practical pack sizes before you buy.'
@@ -73,9 +138,9 @@
     assign spotlight_point_two = 'Reliable pick for home and gifting'
     assign spotlight_point_three = 'Available in everyday and larger packs'
   elsif article_topic_source contains 'black pepper' or article_topic_source contains 'pepper'
-    assign primary_product_handle = 'kerala-black-pepper-200gm'
-    assign secondary_product_handle = 'kerala-black-pepper-300gm'
-    assign tertiary_product_handle = 'kerala-white-pepper-100gm'
+    assign primary_product_handle = 'kerala-black-pepper'
+    assign secondary_product_handle = 'kerala-black-pepper'
+    assign tertiary_product_handle = 'kerala-white-pepper'
     assign primary_collection_handle = 'spiciest-black-pepper'
     assign hero_kicker = 'Kerala pepper guide'
     assign hero_subtitle = 'Move from comparison content into bold, kitchen-ready Kerala pepper with a cleaner buying path.'
@@ -86,9 +151,9 @@
     assign spotlight_point_two = 'Whole berries stay fresher for longer'
     assign spotlight_point_three = 'Value packs available for repeat kitchens'
   elsif article_topic_source contains 'clove'
-    assign primary_product_handle = 'kerala-clove-100gm'
-    assign secondary_product_handle = 'kerala-clove-200gm'
-    assign tertiary_product_handle = 'cardamom-50g-black-pepper-100g-clove-100g-3-in-1-spice-combo-pack'
+    assign primary_product_handle = 'kerala-adimali-clove'
+    assign secondary_product_handle = 'kerala-adimali-clove'
+    assign tertiary_product_handle = 'kerala-spice-combo-pack'
     assign primary_collection_handle = 'cloves'
     assign hero_kicker = 'Kerala clove guide'
     assign hero_subtitle = 'Use the article as your buying bridge from clove education to stronger aroma and better pack selection.'
@@ -99,9 +164,9 @@
     assign spotlight_point_two = 'Useful for chai, masala, and desserts'
     assign spotlight_point_three = 'Simple upgrade from generic kitchen stock'
   elsif article_topic_source contains 'cinnamon'
-    assign primary_product_handle = 'aromatic-true-cinnamon-ceylon-100g'
-    assign secondary_product_handle = 'premium-cassia-cinnamon-100g'
-    assign tertiary_product_handle = 'cardamom-50g-black-pepper-100g-clove-100g-3-in-1-spice-combo-pack'
+    assign primary_product_handle = 'aromatic-true-cinnamon-ceylon'
+    assign secondary_product_handle = 'premium-cassia-cinnamon'
+    assign tertiary_product_handle = 'kerala-spice-combo-pack'
     assign primary_collection_handle = 'cinnamon'
     assign hero_kicker = 'Cinnamon buying guide'
     assign hero_subtitle = 'Compare daily-use cinnamon options and move directly into a product shortlist without leaving the article cold.'
@@ -112,9 +177,9 @@
     assign spotlight_point_two = 'Good fit for drinks, baking, and masala'
     assign spotlight_point_three = 'Easy next step after a comparison read'
   elsif article_topic_source contains 'turmeric' or article_topic_source contains 'immunity' or article_topic_source contains 'wellness'
-    assign primary_product_handle = 'cardamom-50g-black-pepper-100g-clove-100g-3-in-1-spice-combo-pack'
-    assign secondary_product_handle = 'aromatic-true-cinnamon-ceylon-100g'
-    assign tertiary_product_handle = 'kerala-black-pepper-200gm'
+    assign primary_product_handle = 'kerala-spice-combo-pack'
+    assign secondary_product_handle = 'aromatic-true-cinnamon-ceylon'
+    assign tertiary_product_handle = 'kerala-black-pepper'
     assign primary_collection_handle = 'combo'
     assign hero_kicker = 'Daily wellness spice guide'
     assign hero_subtitle = 'Turn informational reading into a practical kitchen buy with a shortlist built for daily Kerala-style cooking.'
@@ -125,9 +190,9 @@
     assign spotlight_point_two = 'Useful for routine kitchen refills'
     assign spotlight_point_three = 'Strong option for first-time Pureleven orders'
   elsif article_topic_source contains 'honey'
-    assign primary_product_handle = 'cardamom-100g-black-pepper-200g-clove-100g-3-in-1-spice-combo-pack'
-    assign secondary_product_handle = 'aromatic-true-cinnamon-ceylon-100g'
-    assign tertiary_product_handle = 'kerala-black-pepper-200gm'
+    assign primary_product_handle = 'kerala-spice-combo-pack'
+    assign secondary_product_handle = 'aromatic-true-cinnamon-ceylon'
+    assign tertiary_product_handle = 'kerala-black-pepper'
     assign primary_collection_handle = 'combo'
     assign hero_kicker = 'Everyday kitchen guide'
     assign hero_subtitle = 'This article now carries a direct path into Pureleven kitchen best sellers so reading intent can convert without friction.'
@@ -138,9 +203,9 @@
     assign spotlight_point_two = 'Built around broad kitchen demand'
     assign spotlight_point_three = 'Clear route into the current live catalog'
   elsif article_topic_source contains 'rosemary' or article_topic_source contains 'herb'
-    assign primary_product_handle = 'aromatic-true-cinnamon-ceylon-100g'
-    assign secondary_product_handle = 'kerala-black-pepper-200gm'
-    assign tertiary_product_handle = 'cardamom-50g-black-pepper-100g-clove-100g-3-in-1-spice-combo-pack'
+    assign primary_product_handle = 'aromatic-true-cinnamon-ceylon'
+    assign secondary_product_handle = 'kerala-black-pepper'
+    assign tertiary_product_handle = 'kerala-spice-combo-pack'
     assign hero_kicker = 'Kitchen aroma guide'
     assign hero_subtitle = 'Use this read as the top of the funnel, then move into aromatic staples that fit herb-led cooking and seasoning.'
     assign collection_cta_label = 'Explore all products'
@@ -161,13 +226,13 @@
   assign tertiary_product = all_products[tertiary_product_handle]
 
   if featured_product == blank
-    assign featured_product = all_products['cardamom-100g-black-pepper-200g-clove-100g-3-in-1-spice-combo-pack']
+    assign featured_product = all_products['kerala-spice-combo-pack']
   endif
   if secondary_product == blank
-    assign secondary_product = all_products['kerala-black-pepper-200gm']
+    assign secondary_product = all_products['kerala-black-pepper']
   endif
   if tertiary_product == blank
-    assign tertiary_product = all_products['kerala-cardamom-8mm-fruit-100gm']
+    assign tertiary_product = all_products['kerala-cardamom']
   endif
 
   assign article_featured_product_metafield = article.metafields.custom.featured_product.value
@@ -394,6 +459,66 @@
     gap: 1rem;
     max-width: 72rem;
   }
+
+  .article-template__pepper-media {
+    margin: 3rem 0 0;
+    padding: 1.2rem;
+    border: 0.1rem solid #D0D5D2;
+    border-radius: 2rem;
+    background: #F6F6F6;
+  }
+
+  .article-template__pepper-media-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1rem;
+  }
+
+  .article-template__pepper-media figure {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 1.4rem;
+    background: #fff;
+  }
+
+  .article-template__pepper-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 22rem;
+    object-fit: cover;
+  }
+
+  .article-template__pepper-media figcaption {
+    padding: 1rem 1.2rem;
+    color: #004438;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  @media screen and (max-width: 749px) {
+    .article-template__pepper-media {
+      margin-top: 1.8rem;
+      padding: 0.8rem;
+      border-radius: 1.6rem;
+    }
+
+    .article-template__pepper-media-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    .article-template__pepper-media img {
+      min-height: 11rem;
+      aspect-ratio: 1;
+    }
+
+    .article-template__pepper-media figcaption {
+      padding: 0.7rem;
+      font-size: 1.05rem;
+    }
+  }
 {%- endstyle -%}
 
 <article class="article-template">
@@ -561,7 +686,34 @@
         {{ content_block.shopify_attributes }}
       {% endif %}
     >
-      {{ article.content }}
+      {{ article.content | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}
+
+      {%- if article_media_primary != blank and article_media_secondary != blank -%}
+        <aside class="article-template__pepper-media" aria-label="{{ article_media_label | escape }}">
+          <div class="article-template__pepper-media-grid">
+            <figure>
+              <img
+                src="{{ article_media_primary | asset_url }}"
+                alt="{{ article_media_primary_alt | escape }}"
+                loading="lazy"
+                width="1200"
+                height="900"
+              >
+              <figcaption>{{ article_media_primary_caption }}</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="{{ article_media_secondary | asset_url }}"
+                alt="{{ article_media_secondary_alt | escape }}"
+                loading="lazy"
+                width="1200"
+                height="800"
+              >
+              <figcaption>{{ article_media_secondary_caption }}</figcaption>
+            </figure>
+          </div>
+        </aside>
+      {%- endif -%}
     </div>
 
     <aside class="article-template__sticky-rail" aria-label="Article product discovery">
@@ -735,7 +887,7 @@
         class="page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
       >
         {%- if article.comments_count > 0 -%}
-          {%- assign anchorId = '#Comments-' | append: article.id -%}
+          {%- assign anchor_id = '#Comments-' | append: article.id -%}
 
           <h2 id="Comments-{{ article.id }}" tabindex="-1">
             {{ 'blogs.article.comments' | t: count: article.comments_count }}
@@ -762,7 +914,7 @@
                   </footer>
                 </article>
               {%- endfor -%}
-              {% render 'pagination', paginate: paginate, anchor: anchorId %}
+              {% render 'pagination', paginate: paginate, anchor: anchor_id %}
             </div>
           {% endpaginate %}
         {%- endif -%}

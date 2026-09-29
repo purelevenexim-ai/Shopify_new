@@ -1,0 +1,82 @@
+{%- comment -%}
+  plb-item.liquid — one cart line.
+  Keeps Dawn's quantity-input and cart.js hooks (CartItem-N, Quantity-N,
+  Line-item-error-N, cart-remove-button) so quantity changes and removal update
+  over AJAX. The minus button turns into a bin at quantity 1; data-min="0" lets
+  that last press remove the line instead of raising a minimum-quantity error.
+  A plain "Remove" link sits beside the stepper: a word is easier to find than
+  an icon.
+{%- endcomment -%}
+
+{%- liquid
+  assign line = item.index | plus: 1
+  assign mrp_line = 0
+  if item.variant.compare_at_price > item.final_price
+    assign mrp_line = item.variant.compare_at_price | times: item.quantity
+  endif
+-%}
+
+<li class="plb-item cart-item" id="CartItem-{{ line }}">
+  <a class="plb-item__img" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+    {%- if item.image -%}
+      <img src="{{ item.image | image_url: width: 200 }}" alt="" width="72" height="72" loading="lazy">
+    {%- endif -%}
+  </a>
+
+  <div class="plb-item__b">
+    <div class="plb-item__top">
+      <div class="plb-item__id">
+        <p class="plb-item__nm"><a href="{{ item.url }}">{{ item.product.title | escape }}</a></p>
+        {%- unless item.product.has_only_default_variant -%}
+          <p class="plb-item__meta">{{ item.variant.title }}</p>
+        {%- endunless -%}
+      </div>
+      <span class="plb-item__price">
+        <b>{% render 'plb-money', p: item.final_line_price %}</b>
+        {%- if mrp_line > item.final_line_price -%}
+          <s>{% render 'plb-money', p: mrp_line %}</s>
+        {%- endif -%}
+      </span>
+    </div>
+
+    <div class="plb-item__row">
+      <quantity-input class="plb-qty cart-quantity">
+        <button class="quantity__button plb-qbtn" name="minus" type="button"
+                aria-label="{% if item.quantity == 1 %}Remove {{ item.product.title | escape }} from cart{% else %}{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}{% endif %}">
+          <span class="plb-qbtn__c">
+            {%- if item.quantity == 1 -%}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4.5h6V7"/><path d="M6.5 7l1 13h9l1-13"/></svg>
+            {%- else -%}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg>
+            {%- endif -%}
+          </span>
+        </button>
+        <input class="quantity__input"
+               type="number"
+               name="updates[]"
+               value="{{ item.quantity }}"
+               min="0"
+               data-index="{{ line }}"
+               data-quantity-variant-id="{{ item.variant.id }}"
+               data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
+               data-min="0"
+               {% if item.variant.quantity_rule.max != null %}max="{{ item.variant.quantity_rule.max }}"{% endif %}
+               step="{{ item.variant.quantity_rule.increment }}"
+               id="Quantity-{{ line }}"
+               aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}">
+        <button class="quantity__button plb-qbtn" name="plus" type="button"
+                aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}">
+          <span class="plb-qbtn__c">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg>
+          </span>
+        </button>
+      </quantity-input>
+
+      <cart-remove-button id="Remove-{{ line }}" data-index="{{ line }}" class="plb-item__rm">
+        <a href="{{ item.url_to_remove }}" aria-label="Remove {{ item.product.title | escape }} from cart">Remove</a>
+      </cart-remove-button>
+    </div>
+
+    <p class="plb-item__err" id="Line-item-error-{{ line }}" role="alert"><small class="cart-item__error-text"></small></p>
+  </div>
+</li>

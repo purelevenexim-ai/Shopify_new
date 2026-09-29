@@ -199,7 +199,7 @@ label {
 }
 
 .collection,
-.shopify-section .gradient:not(.cart-notification) {
+.shopify-section .gradient:not(.cart-notification):not(.menu-drawer) {
   background: transparent;
 }
 

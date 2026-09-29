@@ -1,0 +1,164 @@
+<style>
+  .pl-sticky-cart {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 1.2rem;
+    z-index: 100;
+    box-shadow: 0 -4px 12px rgba(27, 58, 48, 0.12);
+  }
+
+  @media screen and (max-width: 749px) {
+    .pl-sticky-cart {
+      display: flex;
+    }
+  }
+
+  .pl-sticky-cart__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .pl-sticky-cart__info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .pl-sticky-cart__icon {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    color: var(--pl-near-black, #1a1a1a);
+  }
+
+  .pl-sticky-cart__badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background: var(--pl-rust, #a13f2b);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .pl-sticky-cart__text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--pl-near-black, #1a1a1a);
+  }
+
+  .pl-sticky-cart__price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--pl-green, #1b5e56);
+  }
+
+  .pl-sticky-cart__button {
+    padding: 12px 20px;
+    background: var(--pl-gold, #f4d976);
+    color: var(--pl-near-black, #1a1a1a);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .pl-sticky-cart__button:active {
+    transform: translateY(1px);
+  }
+
+  .pl-sticky-cart__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(244, 217, 118, 0.4);
+  }
+</style>
+
+<div class="pl-sticky-cart" aria-live="polite">
+  <div class="pl-sticky-cart__inner">
+    <div class="pl-sticky-cart__info">
+      <div class="pl-sticky-cart__icon" aria-hidden="true">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+        <div class="pl-sticky-cart__badge">
+          <span class="pl-sticky-cart__count">0</span>
+        </div>
+      </div>
+      <div>
+        <div class="pl-sticky-cart__text">Your cart</div>
+        <div class="pl-sticky-cart__price">
+          ₹<span class="pl-sticky-cart__total">0</span>
+        </div>
+      </div>
+    </div>
+    <a href="/cart" class="pl-sticky-cart__button">View cart</a>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Fetch and update cart data
+    function updateCart() {
+      fetch('/cart.json')
+        .then(res => res.json())
+        .then(cart => {
+          const count = cart.item_count;
+          const total = (cart.total_price / 100).toLocaleString('en-IN', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+          });
+
+          document.querySelector('.pl-sticky-cart__count').textContent = count;
+          document.querySelector('.pl-sticky-cart__total').textContent = total;
+        })
+        .catch(err => console.error('Cart fetch error:', err));
+    }
+
+    updateCart();
+    // Update cart every 2 seconds (or use a more efficient event-based approach)
+    setInterval(updateCart, 2000);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Sticky Cart Bar",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section displays a sticky cart bar on mobile devices. It automatically shows the current cart item count and total price."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky Cart Bar"
+    }
+  ]
+}
+{% endschema %}

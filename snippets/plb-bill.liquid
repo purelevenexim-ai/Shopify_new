@@ -1,0 +1,65 @@
+{%- comment -%}
+  plb-bill.liquid — panel 03: the bill, the checkout control, one line of trust.
+  The checkout control sits between the rows and the trust line: on desktop it
+  reads as the foot of this panel; on mobile it is pinned to the bottom of the
+  screen and the trust line follows the rows.
+
+  Delivery depends on the state and the weight, so until it is free the cart
+  says where the number will come from (Kerala from Rs 40, elsewhere by weight)
+  and shows the total before delivery.
+
+  Params: mrp_p, cmp_p, disc_p, ship_free, grand_p, rating, reviews
+{%- endcomment -%}
+
+<section class="plb-panel plb-bill" aria-label="Order summary">
+  <header class="plb-ph">
+    <p class="plb-lbl"><i>03</i> / Summary</p>
+    <p class="plb-ph__meta">{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}</p>
+  </header>
+
+  <div class="plb-bill__rows">
+    {%- if cmp_p > 0 -%}
+      <div class="plb-r">
+        <span>MRP</span>
+        <span>{% render 'plb-money', p: mrp_p %}</span>
+      </div>
+      <div class="plb-r plb-r--save">
+        <span>You save</span>
+        <span>&minus;{% render 'plb-money', p: cmp_p %}</span>
+      </div>
+    {%- else -%}
+      <div class="plb-r">
+        <span>Subtotal</span>
+        <span>{% render 'plb-money', p: mrp_p %}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if disc_p > 0 -%}
+      <div class="plb-r plb-r--save">
+        <span>Order discount</span>
+        <span>&minus;{% render 'plb-money', p: disc_p %}</span>
+      </div>
+    {%- endif -%}
+
+    <div class="plb-r{% if ship_free %} plb-r--free{% endif %}">
+      <span>Delivery</span>
+      <span>{% if ship_free %}FREE{% else %}At checkout{% endif %}</span>
+    </div>
+    {%- unless ship_free -%}
+      <p class="plb-r__hint">Kerala from &#8377;40 &middot; other states by weight (India Post)</p>
+    {%- endunless -%}
+
+    <div class="plb-r plb-r--total">
+      <span>{% if ship_free %}Total{% else %}Total before delivery{% endif %}</span>
+      <span>{% render 'plb-money', p: grand_p %}</span>
+    </div>
+  </div>
+
+  {% render 'plb-checkout', grand_p: grand_p, mrp_p: mrp_p, ship_free: ship_free %}
+
+  <div class="plb-trust">
+    <span>{{ rating }} &middot; {{ reviews }} reviews</span>
+    <span>FSSAI licensed</span>
+    <span>7-day returns</span>
+  </div>
+</section>

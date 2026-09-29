@@ -1,0 +1,235 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+{{ 'pl-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign products_to_show = section.settings.products_to_show | plus: 0
+  assign columns_mobile = section.settings.columns_mobile | plus: 0
+  assign columns_desktop = section.settings.columns_desktop | plus: 0
+-%}
+
+<div class="pl-featured color-{{ section.settings.color_scheme }} gradient{% if section.settings.full_width %} full-width{% endif %}">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pl-featured__heading {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if collection == nil or collection.products_count == 0 -%}
+      <p class="pl-featured__empty">{{ 'sections.featured_collection.empty' | t }}</p>
+    {%- else -%}
+      <ul
+        class="pl-featured__grid pl-featured__grid--{{ columns_desktop }}-col-desktop pl-featured__grid--{{ columns_mobile }}-col-mobile list-unstyled"
+        role="list"
+      >
+        {%- for product in collection.products limit: products_to_show -%}
+          <li class="pl-featured__item">
+            {%- render 'card-product', card_product: product, media_aspect_ratio: section.settings.image_ratio, show_secondary_image: section.settings.show_secondary_image, show_vendor: section.settings.show_vendor, lazy_load: forloop.index, skip_styles: forloop.index, quick_add: 'standard', section_id: section.id -%}
+            {%- if section.settings.show_buy_buttons -%}
+              {%- render 'pl-buy-buttons', pl_product: product -%}
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.show_view_all and collection.products_count > products_to_show -%}
+        <div class="pl-featured__view-all">
+          <a href="{{ collection.url }}" class="button">{{ 'sections.featured_collection.view_all' | t }}</a>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+
+{%- style -%}
+  .pl-featured {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .pl-featured__heading {
+    margin-bottom: 2rem;
+  }
+  .pl-featured__grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+  .pl-featured__grid--1-col-mobile { grid-template-columns: repeat(1, 1fr); }
+  .pl-featured__grid--2-col-mobile { grid-template-columns: repeat(2, 1fr); }
+  .pl-featured__grid--3-col-desktop { grid-template-columns: repeat(3, 1fr); }
+  .pl-featured__grid--4-col-desktop { grid-template-columns: repeat(4, 1fr); }
+  @media screen and (max-width: 749px) {
+    .pl-featured__grid--3-col-desktop,
+    .pl-featured__grid--4-col-desktop {
+      grid-template-columns: unset;
+    }
+  }
+  .pl-featured__view-all {
+    text-align: center;
+    margin-top: 2.4rem;
+  }
+  .pl-featured__empty {
+    color: var(--color-foreground-75);
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "PL: Featured Products",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Our top spices",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "default": 8,
+      "label": "Products to show"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns (mobile)",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Portrait" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "Show second image on hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buy_buttons",
+      "default": true,
+      "label": "Show Add to Cart + Buy Now buttons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show View all button"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Full width"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "PL: Featured Products",
+      "settings": {
+        "heading": "Our top spices"
+      }
+    }
+  ]
+}
+{% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'card-product',
+                  card_product: product,
+                  media_aspect_ratio: section.settings.image_ratio,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_vendor: section.settings.show_vendor,
+                  lazy_load: forloop.index > 2,
+                  skip_styles: forloop.index > 1,
+                  quick_add: 'standard',
+                  section_id: section.id
+                -%}
+  to: "{%- render 'card-product', card_product: product, media_aspect_ratio: section.settings.image_ratio,
+    show_secondary_image: section.settings.show_secondary_image, show_vendor: section.settings.show_vendor,
+    lazy_load: forloop.index, skip_styles: forloop.index, quick_add: 'standard', section_id:
+    section.id -%}"
+  position: 1487..1794
+{% endcomment %}

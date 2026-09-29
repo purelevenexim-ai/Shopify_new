@@ -1,0 +1,269 @@
+{%- liquid
+  assign product_title_downcase = product.title | downcase
+  assign story_key = blank
+
+  if product.handle contains 'premium-cassia-cinnamon' or product_title_downcase contains 'cassia'
+    assign story_key = 'cassia'
+  elsif product.handle contains 'aromatic-true-cinnamon-ceylon' or product_title_downcase contains 'ceylon'
+    assign story_key = 'ceylon'
+  elsif product.handle contains 'kerala-adimali-clove' or product_title_downcase contains 'clove'
+    assign story_key = 'clove'
+  elsif product.handle contains 'star-anise' or product_title_downcase contains 'star anise'
+    assign story_key = 'star_anise'
+  elsif product.handle contains 'kerala-white-pepper' or product_title_downcase contains 'white pepper'
+    assign story_key = 'white_pepper'
+  elsif product.handle contains 'turmeric' or product_title_downcase contains 'turmeric'
+    assign story_key = 'turmeric'
+  endif
+
+  assign eyebrow = blank
+  assign heading = blank
+  assign lead = blank
+  assign hero_image = blank
+  assign hero_alt = blank
+  assign process_image = blank
+  assign process_alt = blank
+  assign closeup_image = blank
+  assign closeup_alt = blank
+  assign video_file = blank
+  assign video_poster = blank
+  assign video_alt = blank
+  assign best_for = blank
+  assign use_tip = blank
+  assign store_tip = blank
+  assign quality_title = blank
+  assign quality_copy = blank
+  assign source_title = blank
+  assign source_copy = blank
+
+  case story_key
+    when 'cassia'
+      assign eyebrow = 'Premium cassia cinnamon'
+      assign heading = 'Warm, sweet cinnamon sticks for daily Indian kitchens.'
+      assign lead = 'Cassia brings a fuller, bolder warmth for chai, biryani, masala blends, baking, and slow-cooked gravies.'
+      assign hero_image = 'pl-prod-cassia-hero.webp'
+      assign hero_alt = 'Premium cassia cinnamon sticks in a white bowl'
+      assign process_image = 'pl-prod-cassia-process.webp'
+      assign process_alt = 'Cassia cinnamon sticks arranged for packing'
+      assign closeup_image = 'pl-prod-cassia-closeup.webp'
+      assign closeup_alt = 'Close view of cassia cinnamon bark sticks'
+      assign video_file = 'pl-prod-cassia-video.mp4'
+      assign video_poster = hero_image
+      assign video_alt = 'Short product video of cassia cinnamon sticks'
+      assign best_for = 'Chai, biryani, masala, baking, desserts, and warm milk.'
+      assign use_tip = 'Break a small piece or simmer a whole stick, then remove before serving.'
+      assign store_tip = 'Keep sticks sealed and dry so the warm volatile oils stay protected.'
+      assign quality_title = 'Fuller cinnamon warmth'
+      assign quality_copy = 'Cassia is stronger than delicate Ceylon, making it a practical daily-use spice for bold Indian cooking.'
+      assign source_title = 'Clean sticks, clear use'
+      assign source_copy = 'The page answers what cassia is, where it fits, and how shoppers should use and store it.'
+    when 'ceylon'
+      assign eyebrow = 'True Ceylon cinnamon'
+      assign heading = 'Light, layered cinnamon for gentle aroma and everyday sweetness.'
+      assign lead = 'Ceylon cinnamon is known for its softer character, making it ideal when you want fragrance without heavy spice heat.'
+      assign hero_image = 'pl-prod-ceylon-hero.webp'
+      assign hero_alt = 'PureLeven true Ceylon cinnamon product pack'
+      assign process_image = 'pl-prod-ceylon-process.webp'
+      assign process_alt = 'Ceylon cinnamon bark held in hand'
+      assign closeup_image = 'pl-prod-ceylon-closeup.webp'
+      assign closeup_alt = 'Ceylon cinnamon sticks in a clean bowl'
+      assign video_file = 'pl-prod-ceylon-video.mp4'
+      assign video_poster = closeup_image
+      assign video_alt = 'Short product video of Ceylon cinnamon sticks'
+      assign best_for = 'Tea, coffee, oatmeal, desserts, light curries, and wellness drinks.'
+      assign use_tip = 'Use a small stick while simmering or grate lightly into sweet recipes.'
+      assign store_tip = 'Store in an airtight pouch away from steam, sunlight, and strong kitchen odors.'
+      assign quality_title = 'Gentler cinnamon profile'
+      assign quality_copy = 'Ceylon has a lighter aroma than cassia, which helps buyers choose the right cinnamon for their recipe.'
+      assign source_title = 'A better cinnamon decision'
+      assign source_copy = 'Comparison-friendly answers help customers, Google, and AI assistants understand when Ceylon is the better pick.'
+    when 'clove'
+      assign eyebrow = 'Kerala clove buds'
+      assign heading = 'Small whole buds with a deep, sweet-spicy lift.'
+      assign lead = 'Whole cloves carry concentrated aroma for chai, biryani, garam masala, festive sweets, and spice infusions.'
+      assign hero_image = 'pl-prod-clove-hero.webp'
+      assign hero_alt = 'Kerala clove whole buds with PureLeven product pouch'
+      assign process_image = 'pl-prod-clove-process.webp'
+      assign process_alt = 'Whole cloves arranged for packing'
+      assign closeup_image = 'pl-prod-clove-closeup.webp'
+      assign closeup_alt = 'Close view of dried whole clove buds'
+      assign best_for = 'Chai, biryani, masala blends, desserts, pickles, and warm infusions.'
+      assign use_tip = 'Use sparingly. Two or three buds can perfume a full pot of tea or curry.'
+      assign store_tip = 'Keep whole buds sealed and grind only when needed for strongest aroma.'
+      assign quality_title = 'Whole-bud aroma'
+      assign quality_copy = 'Good cloves should smell sweet, warm, and concentrated before they ever touch the pan.'
+      assign source_title = 'Useful in small amounts'
+      assign source_copy = 'The story block keeps buying answers short, direct, and easy to scan on mobile.'
+    when 'star_anise'
+      assign eyebrow = 'Premium star anise'
+      assign heading = 'Beautiful whole pods with a sweet liquorice-style aroma.'
+      assign lead = 'Star anise adds a distinctive sweet spice note to masala chai, biryani, broths, desserts, and festive recipes.'
+      assign hero_image = 'pl-prod-star-anise-hero.webp'
+      assign hero_alt = 'Whole star anise pods in a bowl'
+      assign process_image = 'pl-prod-star-anise-process.webp'
+      assign process_alt = 'Star anise pods being prepared for packing'
+      assign closeup_image = 'pl-prod-star-anise-hero.webp'
+      assign closeup_alt = 'Close view of star anise whole pods'
+      assign best_for = 'Chai, biryani, broths, slow-cooked gravies, desserts, and spice blends.'
+      assign use_tip = 'Use one pod while simmering, then remove before serving for a clean aroma.'
+      assign store_tip = 'Keep whole pods dry and sealed to protect their sweet, volatile aroma.'
+      assign quality_title = 'Whole-pod presentation'
+      assign quality_copy = 'Whole pods look premium, dose easily, and hold their aroma better than broken pieces.'
+      assign source_title = 'A clear spice role'
+      assign source_copy = 'Short answers help shoppers quickly understand how star anise fits into everyday cooking.'
+    when 'white_pepper'
+      assign eyebrow = 'Kerala white pepper'
+      assign heading = 'Clean pepper heat without the dark peppercorn look.'
+      assign lead = 'White pepper gives soups, sauces, eggs, marinades, and light gravies a sharp pepper lift while keeping the dish visually clean.'
+      assign hero_image = 'pl-prod-white-pepper-hero.webp'
+      assign hero_alt = 'White pepper whole peppercorns in a bowl'
+      assign process_image = 'pl-prod-white-pepper-process.webp'
+      assign process_alt = 'PureLeven white pepper product pack with peppercorns'
+      assign closeup_image = 'pl-prod-white-pepper-closeup.webp'
+      assign closeup_alt = 'Close view of whole white peppercorns'
+      assign video_file = 'pl-prod-white-pepper-video.mp4'
+      assign video_poster = hero_image
+      assign video_alt = 'Short product video of white pepper whole peppercorns'
+      assign best_for = 'Soups, white sauces, eggs, marinades, fried rice, and light gravies.'
+      assign use_tip = 'Crush or grind near the end of cooking for a cleaner pepper finish.'
+      assign store_tip = 'Seal tightly after opening and keep away from moisture to protect aroma.'
+      assign quality_title = 'Pepper heat, cleaner look'
+      assign quality_copy = 'White pepper is useful when you want pepper bite without visible black specks in lighter dishes.'
+      assign source_title = 'Direct answer buying help'
+      assign source_copy = 'This section explains use cases, storage, and difference-making cues in a format search and AI systems can parse.'
+    when 'turmeric'
+      assign eyebrow = 'Turmeric powder'
+      assign heading = 'Golden daily spice for color, warmth, and routine cooking.'
+      assign lead = 'Turmeric belongs in everyday dals, sabzi, marinades, pickles, milk, and Kerala-style spice bases.'
+      assign hero_image = 'pl-prod-turmeric-hero.webp'
+      assign hero_alt = 'Fresh turmeric roots arranged for drying'
+      assign process_image = 'pl-prod-turmeric-process.webp'
+      assign process_alt = 'Turmeric roots prepared for processing'
+      assign closeup_image = 'pl-prod-turmeric-closeup.webp'
+      assign closeup_alt = 'Close view of fresh turmeric roots'
+      assign best_for = 'Dal, sabzi, marinades, pickles, golden milk, and everyday masala bases.'
+      assign use_tip = 'Bloom a small amount in warm oil to build color and earthy aroma.'
+      assign store_tip = 'Keep sealed, dry, and away from sunlight to preserve color and freshness.'
+      assign quality_title = 'Daily kitchen color'
+      assign quality_copy = 'A good turmeric page should explain practical use, freshness cues, and storage without overwhelming mobile shoppers.'
+      assign source_title = 'Root-to-kitchen clarity'
+      assign source_copy = 'Real turmeric visuals make the page feel less generic and more connected to the ingredient.'
+  endcase
+-%}
+
+{%- if story_key != blank -%}
+  <section class="pl-spice-story" aria-labelledby="pl-spice-story-title-{{ section.id }}">
+    <div class="pl-spice-story__inner page-width">
+      <div class="pl-spice-story__header">
+        <p class="pl-spice-story__eyebrow">{{ eyebrow }}</p>
+        <h2 id="pl-spice-story-title-{{ section.id }}" class="pl-spice-story__title">{{ heading }}</h2>
+        <p class="pl-spice-story__lead">{{ lead }}</p>
+      </div>
+
+      <div class="pl-spice-story__showcase">
+        <figure class="pl-spice-story__hero">
+          <img src="{{ hero_image | asset_url }}" alt="{{ hero_alt | escape }}" loading="lazy" width="1200" height="1200">
+          <figcaption>{{ quality_title }}</figcaption>
+        </figure>
+
+        {%- if video_file != blank -%}
+          <div class="pl-spice-story__video-card">
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="{{ video_poster | asset_url }}"
+              aria-label="{{ video_alt | escape }}"
+            >
+              <source src="{{ video_file | asset_url }}" type="video/mp4">
+            </video>
+            <span>1:1 product video · compressed for fast mobile playback</span>
+          </div>
+        {%- else -%}
+          <figure class="pl-spice-story__video-card pl-spice-story__video-card--image">
+            <img src="{{ closeup_image | asset_url }}" alt="{{ closeup_alt | escape }}" loading="lazy" width="1200" height="900">
+            <figcaption>Close-up quality cue</figcaption>
+          </figure>
+        {%- endif -%}
+
+        <article class="pl-spice-story__copy-card">
+          <span>Quality cue</span>
+          <h3>{{ quality_title }}</h3>
+          <p>{{ quality_copy }}</p>
+        </article>
+      </div>
+
+      <div class="pl-spice-story__answers" aria-label="{{ product.title | escape }} quick buying answers">
+        <article>
+          <span>Best for</span>
+          <strong>{{ best_for }}</strong>
+        </article>
+        <article>
+          <span>How to use</span>
+          <strong>{{ use_tip }}</strong>
+        </article>
+        <article>
+          <span>How to store</span>
+          <strong>{{ store_tip }}</strong>
+        </article>
+      </div>
+
+      <div class="pl-spice-story__source">
+        <img src="{{ process_image | asset_url }}" alt="{{ process_alt | escape }}" loading="lazy" width="1200" height="900">
+        <div class="pl-spice-story__source-copy">
+          <p class="pl-spice-story__eyebrow">Search-friendly source notes</p>
+          <h3>{{ source_title }}</h3>
+          <p>{{ source_copy }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": {{ product.title | append: ' best uses' | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ best_for | json }}
+          }
+        },
+        {
+          "@type": "Question",
+          "name": {{ 'How should I use ' | append: product.title | append: '?' | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ use_tip | json }}
+          }
+        },
+        {
+          "@type": "Question",
+          "name": {{ 'How should I store ' | append: product.title | append: '?' | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ store_tip | json }}
+          }
+        }
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product media story",
+  "tag": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product media story"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "checkout": {
+      "type": "pl-checkout",
+      "blocks": {
+        "c1": {
+          "type": "coupon",
+          "settings": {
+            "code": "FIRST100",
+            "value": 100,
+            "min_cart": 999
+          }
+        },
+        "c2": {
+          "type": "coupon",
+          "settings": {
+            "code": "FREEGIFT150",
+            "value": 150,
+            "min_cart": 2000
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "checkout"
+  ]
+}

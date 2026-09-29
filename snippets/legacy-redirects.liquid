@@ -1,0 +1,59 @@
+{% comment %}
+  Legacy URL Redirect Handler — 404 Fix
+  ======================================
+  Maps old WordPress-era URLs to their new Shopify equivalents.
+  Source: Search Console → Pages → Not found (404) — 40 URLs identified on 2026-06-21
+  
+  For permanent 301 redirects, ALSO add these via:
+    Shopify Admin → Online Store → Navigation → URL Redirects
+  This snippet provides client-side redirects as a safety net.
+{% endcomment %}
+
+{% assign current_path = request.path %}
+{% assign redirect_target = false %}
+
+{% comment %}── WordPress product pages → Shopify products ──{% endcomment %}
+{% if current_path == "/spice-of-kings-kerala-black-pepper-varieties/" %}{% assign redirect_target = "/products/kerala-black-pepper" %}{% endif %}
+{% if current_path == "/star-anise-" %}{% assign redirect_target = "/products/star-anise" %}{% endif %}
+{% if current_path == "/product/organic-chilli-online/" %}{% assign redirect_target = "/products/organic-chilli" %}{% endif %}
+{% if current_path == "/product/cardamom-powder-online/" %}{% assign redirect_target = "/products/cardamom-powder" %}{% endif %}
+{% if current_path == "/product/best-kerala-cloves-online/" %}{% assign redirect_target = "/products/kerala-cloves" %}{% endif %}
+{% if current_path == "/cinnamon-types-benefits-and-culinary-uses/" %}{% assign redirect_target = "/products/cinnamon" %}{% endif %}
+{% if current_path == "/natural-honey-online/" %}{% assign redirect_target = "/collections/honey" %}{% endif %}
+{% if current_path == "/honey-wholesale/" %}{% assign redirect_target = "/collections/honey" %}{% endif %}
+{% if current_path == "/difference-between-malabar-and-tellicherry-pepper/" %}{% assign redirect_target = "/blogs/cooking-spices/difference-between-malabar-and-tellicherry-pepper" %}{% endif %}
+
+{% comment %}── WordPress blog posts → Shopify blogs ──{% endcomment %}
+{% if current_path == "/best-spices-shop-in-trivandrum/" %}{% assign redirect_target = "/blogs/news" %}{% endif %}
+{% if current_path == "/how-kerala-cardamom-grading-system-works/" %}{% assign redirect_target = "/blogs/cooking-spices" %}{% endif %}
+{% if current_path == "/history-of-" %}{% assign redirect_target = "/blogs/news" %}{% endif %}
+
+{% comment %}── WordPress URL patterns → collections or homepage ──{% endcomment %}
+{% if current_path == "/product-category/top-6/" %}{% assign redirect_target = "/collections/all" %}{% endif %}
+{% if current_path == "/product-category/spices/" %}{% assign redirect_target = "/collections/spices" %}{% endif %}
+{% if current_path == "/shop/page/2/" %}{% assign redirect_target = "/collections/all" %}{% endif %}
+{% if current_path == "/blogs/" %}{% assign redirect_target = "/blogs/news" %}{% endif %}
+{% if current_path == "/author/karthik/" %}{% assign redirect_target = "/blogs/news" %}{% endif %}
+{% if current_path == "/tag/spice-quality-tests/page/2/" %}{% assign redirect_target = "/blogs/cooking-spices" %}{% endif %}
+{% if current_path == "/tag/spice-quality-tests/page/5/" %}{% assign redirect_target = "/blogs/cooking-spices" %}{% endif %}
+
+{% comment %}── WordPress admin/technical URLs → homepage ──{% endcomment %}
+{% if current_path == "/wp-admin/admin-ajax.php?action=rest-nonce" %}{% assign redirect_target = "/" %}{% endif %}
+{% if current_path == "/cdn" %}{% assign redirect_target = "/" %}{% endif %}
+{% if current_path == "/b" %}{% assign redirect_target = "/" %}{% endif %}
+
+{% comment %}── Old blog URLs (path variants) ──{% endcomment %}
+{% if current_path == "/blogs/cooking-spices/black-pepper-essential-oil" %}{% assign redirect_target = "/blogs/cooking-spices" %}{% endif %}
+{% if current_path == "/blogs/cooking-spices/difference-between-malabar-and-tellicherry-pepper" %}{% assign redirect_target = "/blogs/cooking-spices/difference-between-malabar-and-tellicherry-pepper" %}{% endif %}
+{% if current_path == "/blogs/cooking-spices/traditional-uses-of-black-pepper/" %}{% assign redirect_target = "/blogs/cooking-spices" %}{% endif %}
+
+{% comment %}── Sitemap 404s ──{% endcomment %}
+{% if current_path == "/sitemap_index.xml" %}{% assign redirect_target = "/sitemap.xml" %}{% endif %}
+{% if current_path == "/post-sitemap.xml" %}{% assign redirect_target = "/sitemap.xml" %}{% endif %}
+
+{% comment %}── Execute redirect ──{% endcomment %}
+{% if redirect_target %}
+<script>
+  window.location.replace('{{ redirect_target }}');
+</script>
+{% endif %}

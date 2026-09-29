@@ -1,0 +1,130 @@
+{%- comment -%}
+Shared product card (homepage, Tea & Coffee, honey).
+Props: product (required), delivery_rule ('two_items' optional)
+CSS: tc-design-tokens.css + tc-product-card.css · JS: tc-product-card.js + tc-ajax-cart.js
+{%- endcomment -%}
+
+{%- assign best_for = product.metafields.custom.best_for.value | default: '' -%}
+{%- assign display_name = product.metafields.custom.display_name.value | default: product.title -%}
+{%- assign short_desc = product.metafields.custom.short_description.value -%}
+{%- assign featured_image = product.featured_image -%}
+{%- assign free_threshold = 64900 -%}
+
+{%- assign pill_limit = product.variants.size -%}
+{%- if product.handle == 'premium-milk-tea-powder' or product.handle == 'premium-black-tea-granules' -%}
+  {%- assign pill_limit = 3 -%}
+{%- endif -%}
+
+{%- assign _default_variant = nil -%}
+{%- assign _max_saving = -1 -%}
+{%- assign _pill_i = 0 -%}
+{%- for v in product.variants -%}
+  {%- if _pill_i >= pill_limit -%}{%- break -%}{%- endif -%}
+  {%- assign _pill_i = _pill_i | plus: 1 -%}
+  {%- if v.available -%}
+    {%- assign _saving = 0 -%}
+    {%- if v.compare_at_price > v.price -%}
+      {%- assign _saving = v.compare_at_price | minus: v.price -%}
+    {%- endif -%}
+    {%- if _default_variant == nil or _saving >= _max_saving -%}
+      {%- assign _max_saving = _saving -%}
+      {%- assign _default_variant = v -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign first_variant = _default_variant | default: product.first_available_variant | default: product.variants.first -%}
+{%- assign _on_sale = false -%}
+{%- if first_variant.compare_at_price > first_variant.price -%}
+  {%- assign _on_sale = true -%}
+  {%- assign _save_pct = first_variant.compare_at_price | minus: first_variant.price | times: 100.0 | divided_by: first_variant.compare_at_price | round -%}
+{%- endif -%}
+
+<div class="tc-product-card" data-product-id="{{ product.id }}">
+  <a href="{{ product.url }}" class="tc-product-card__media" tabindex="-1" aria-hidden="true">
+    {%- if featured_image -%}
+      {{- featured_image
+        | image_url: width: 800
+        | image_tag:
+          loading: 'lazy',
+          sizes: '(min-width: 990px) 25vw, 50vw',
+          widths: '300,400,600,800',
+          alt: product.title | escape
+      -}}
+    {%- endif -%}
+    <span class="tc-product-card__tag" data-tc-save{% unless _on_sale %} hidden{% endunless %}>{% if _on_sale %}Save {{ _save_pct }}%{% endif %}</span>
+  </a>
+
+  <div class="tc-product-card__body">
+    {%- if best_for != blank -%}
+      <p class="tc-product-card__kicker">{{ best_for }}</p>
+    {%- endif -%}
+
+    <h3 class="tc-product-card__title">
+      <a href="{{ product.url }}">{{ display_name }}</a>
+    </h3>
+
+    {%- assign desc_src = short_desc | default: product.description -%}
+    {%- if desc_src != blank -%}
+      <p class="tc-product-card__desc">{{ desc_src | strip_html | truncatewords: 16 }}</p>
+    {%- endif -%}
+
+    <div class="tc-product-card__price">
+      <b data-tc-price data-raw="{{ first_variant.price }}">&#8377;{{ first_variant.price | divided_by: 100 }}</b>
+      <s data-tc-compare data-raw="{{ first_variant.compare_at_price }}"{% unless _on_sale %} hidden{% endunless %}>{% if _on_sale %}&#8377;{{ first_variant.compare_at_price | divided_by: 100 }}{% endif %}</s>
+    </div>
+
+    {%- if delivery_rule == 'two_items' -%}
+      {%- assign _note_free = false -%}
+      {%- if cart.item_count >= 2 or cart.total_price >= free_threshold -%}
+        {%- assign _note_free = true -%}{%- assign _note = 'Free delivery unlocked' -%}
+      {%- elsif first_variant.price >= free_threshold -%}
+        {%- assign _note_free = true -%}{%- assign _note = 'Free delivery on this' -%}
+      {%- elsif cart.item_count == 1 -%}
+        {%- assign _note = 'Add 1 more · free delivery' -%}
+      {%- else -%}
+        {%- assign _note = 'Any 2 · free delivery' -%}
+      {%- endif -%}
+      <p class="tc-product-card__note{% if _note_free %} is-free{% endif %}" data-tc-delivery data-tc-rule="two" data-cart-count="{{ cart.item_count }}" data-cart-total="{{ cart.total_price }}">{{ _note }}</p>
+    {%- elsif first_variant.price >= free_threshold -%}
+      <p class="tc-product-card__note is-free" data-tc-delivery>Free delivery on this</p>
+    {%- else -%}
+      <p class="tc-product-card__note" data-tc-delivery>Free delivery ₹649+</p>
+    {%- endif -%}
+
+    <script type="application/json" class="tc-variant-data">
+      [{% for v in product.variants %}{"id":{{ v.id }},"price_raw":{{ v.price }},"compare_raw":{% if v.compare_at_price > v.price %}{{ v.compare_at_price }}{% else %}0{% endif %},"available":{{ v.available }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+    </script>
+
+    {%- assign tc_form_id = 'tc-form-' | append: section.id | append: '-' | append: product.id -%}
+    {%- form 'product', product, id: tc_form_id, class: 'tc-product-form' -%}
+      {%- if product.variants.size > 1 -%}
+        <div class="tc-sizes" role="radiogroup" aria-label="Choose size">
+          {%- for variant in product.variants limit: pill_limit -%}
+            <input
+              type="radio"
+              id="v-{{ section.id }}-{{ variant.id }}"
+              name="id"
+              value="{{ variant.id }}"
+              class="tc-variant-radio"
+              {%- if variant.id == first_variant.id %} checked{%- endif %}
+              {%- unless variant.available %} disabled{%- endunless %}
+            >
+            <label for="v-{{ section.id }}-{{ variant.id }}" class="tc-sizes__opt{% unless variant.available %} is-out{% endunless %}">{{ variant.title | escape | replace: '+', '+<wbr>' }}</label>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <input type="hidden" name="id" value="{{ first_variant.id }}">
+      {%- endif -%}
+
+      <button
+        type="submit"
+        name="add"
+        class="tc-atc-btn"
+        data-tc-atc
+        {%- unless first_variant.available %} disabled{%- endunless %}
+      >
+        {%- if first_variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+      </button>
+    {%- endform -%}
+  </div>
+</div>

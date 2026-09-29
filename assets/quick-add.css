@@ -85,13 +85,13 @@
   margin: 0;
 }
 
-/* PL card: dark-green add button — overrides global yellow quick-add__submit */
+/* PL card: yellow CTA add button */
 .product-card-wrapper .pl-card-add-button.quick-add__submit,
 .product-card-wrapper .pl-card-add-button.quick-add__submit.button,
 .product-card-wrapper .pl-card-add-button.quick-add__submit.button.button--full-width,
 .product-card-wrapper .pl-card-add-button.quick-add__submit.button.button--full-width.button--secondary {
-  background: #0c7a66 !important;
-  color: #fff !important;
+  background: #FCE477 !important;
+  color: #1A1A1A !important;
   border: 0 !important;
   border-radius: 0.6rem !important;
   box-shadow: none !important;
@@ -101,8 +101,8 @@
 .product-card-wrapper .pl-card-add-button.quick-add__submit.button:hover,
 .product-card-wrapper .pl-card-add-button.quick-add__submit.button.button--full-width:hover,
 .product-card-wrapper .pl-card-add-button.quick-add__submit.button.button--full-width.button--secondary:hover {
-  background: #063a34 !important;
-  color: #fff !important;
+  background: #F4D138 !important;
+  color: #1A1A1A !important;
   border-color: transparent !important;
   box-shadow: none !important;
 }

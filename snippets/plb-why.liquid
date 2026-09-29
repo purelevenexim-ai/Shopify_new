@@ -1,0 +1,91 @@
+{%- comment -%}
+  plb-why.liquid — one honest reason to buy, per product.
+
+  Usage: {%- capture why -%}{% render 'plb-why', p: product %}{%- endcapture -%}
+
+  Resolution order:
+    1. custom.why_buy metafield (set it in admin to override without a deploy)
+    2. the handle map below — covers every live product AND the drafts, so
+       launching an upcoming product needs no code change
+    3. the product's own short_description / meta description
+  Wholesale B2B products are deliberately absent; they never cross-sell.
+{%- endcomment -%}
+
+{%- liquid
+  assign h = p.handle
+  assign out = p.metafields.custom.why_buy
+
+  if out == blank
+    case h
+      when 'kerala-black-pepper'
+        assign out = 'Sun-dried Malabar peppercorns. Crack them fresh and one pinch does what a spoon of shop powder cannot.'
+      when 'kerala-white-pepper'
+        assign out = 'Pepper heat with no black flecks — the one for stew, white sauces and appam.'
+      when 'kerala-cardamom'
+        assign out = 'Idukki pods picked green and dried slow, so the seeds inside are still black and oily.'
+      when 'kerala-adimali-clove'
+        assign out = 'Adimali buds with the head intact. Press one and it leaves oil on your fingers.'
+      when 'aromatic-true-cinnamon-ceylon'
+        assign out = 'Real Ceylon quills, thin and paper-soft. Sweet and citrusy where cassia is blunt.'
+      when 'premium-cassia-cinnamon'
+        assign out = 'The bold, hot cinnamon Kerala kitchens actually use for biryani and garam masala.'
+      when 'star-anise-chakra-phool-premium-whole-spice'
+        assign out = 'Whole unbroken stars. One carries a biryani pot; broken pieces have already lost the oil.'
+      when 'kerala-spice-combo-pack'
+        assign out = 'Cardamom, pepper and clove in one box — the three you reach for most, for less than buying them apart.'
+
+      when 'premium-milk-tea-powder'
+        assign out = 'Fine-milled powder that gives colour and strength in one boil. Everyday Kerala chai at about ₹1.80 a cup.'
+      when 'premium-black-tea-granules'
+        assign out = 'Granules for a clean, brisk cup. Brews fast and will not turn bitter if you forget it a minute.'
+      when 'orange-pekoe-powder'
+        assign out = 'Whole-leaf orange pekoe for tea taken without milk — light, floral, worth the slower brew.'
+      when 'cardamom-tea'
+        assign out = 'Real cardamom milled in with the tea, not sprayed on. Add it early and the flavour runs through the whole pot.'
+      when 'naadan-kerala-coffee'
+        assign out = 'Adimali robusta, medium roast, ground for a filter. Thick and dark, made for a decoction.'
+      when 'naadan-pure-honey'
+        assign out = 'Raw forest honey that crystallises in winter — because nothing was heated out of it.'
+      when 'starter-trial-pack-4-varieties'
+        assign out = 'Four varieties in small packs. The cheapest way to find which one becomes your daily cup.'
+      when 'deluxe-combo-pack-tea-coffee-honey'
+        assign out = 'Tea, coffee and honey in one box. The standard gift, and cheaper than the three bought apart.'
+
+      comment
+        Upcoming — copy is already written so a draft going live needs no deploy.
+      endcomment
+      when 'kerala-black-pepper-powder'
+        assign out = 'Milled from our own peppercorns, for when you want pepper in the pan rather than in the mill.'
+      when 'kerala-turmeric-powder'
+        assign out = 'High-curcumin Kerala turmeric — deep orange, not pale yellow.'
+      when 'coriander-powder'
+        assign out = 'Roasted and milled in small batches. The base of nearly every Kerala curry.'
+      when 'premium-chilly-powder'
+        assign out = 'Colour-forward Kerala chilly. Reddens a fish fry without scorching it.'
+      when 'premium-cinnamon-powder'
+        assign out = 'Milled cinnamon for baking and chai masala. Bark only, no filler.'
+      when 'premium-cardamom-powder'
+        assign out = 'Whole pods milled with the husk on — for payasam, chai masala and desserts.'
+      when 'kerala-coffee-beans'
+        assign out = 'Whole Adimali beans, for people who grind at home.'
+      when 'kerala-coffee-powder-naadan'
+        assign out = 'The everyday naadan grind that goes into the morning decoction.'
+      when 'cardamom-coffee-powder'
+        assign out = 'Cardamom milled straight into the coffee — the Kerala café cup, at home.'
+      when 'ginger-coffee-powder'
+        assign out = 'Dry ginger in the grind. The cup for a cold morning or a blocked chest.'
+      when 'starter-trial-pack-4-tea-varieties'
+        assign out = 'Four teas in small packs — the tea-only version of the starter pack.'
+      when 'deluxe-combo-pack-tea-coffee-honey-1'
+        assign out = 'The larger gift box: tea, coffee and honey, more of each.'
+    endcase
+  endif
+
+  if out == blank
+    assign out = p.metafields.custom.short_description
+  endif
+  if out == blank
+    assign out = p.description | strip_html | truncatewords: 20
+  endif
+-%}
+{{- out -}}

@@ -1,0 +1,50 @@
+{% comment %} pl-shipping-bar.liquid — Pure Leven Cart — single-tier free shipping bar + gift note {% endcomment %}
+
+{%- liquid
+  assign ship_threshold_rupees = settings.basil_cart_free_delivery_threshold | default: 649 | plus: 0
+  assign gift_threshold_rupees = settings.basil_cart_gift_threshold          | default: 1449 | plus: 0
+  assign ship_threshold = ship_threshold_rupees | times: 100
+  assign gift_threshold = gift_threshold_rupees | times: 100
+  assign cart_total = cart.total_price
+
+  assign ship_unlocked = false
+  if cart_total >= ship_threshold
+    assign ship_unlocked = true
+  endif
+
+  assign ship_remaining = ship_threshold | minus: cart_total
+  if ship_remaining < 0
+    assign ship_remaining = 0
+  endif
+  assign ship_remaining_r = ship_remaining | divided_by: 100
+
+  assign fill_pct = cart_total | times: 100 | divided_by: ship_threshold
+  if fill_pct > 100
+    assign fill_pct = 100
+  endif
+-%}
+
+{%- if cart != empty -%}
+<div class="pl-ms-card{% if ship_unlocked %} pl-ship-done{% endif %}">
+  <p class="pl-ms-title">
+    {%- if ship_unlocked -%}
+      &#10003; FREE Delivery unlocked
+    {%- else -%}
+      &#128666; Add <span class="pl-ms-amt">&#8377;{{ ship_remaining_r }}</span> more for free shipping
+    {%- endif -%}
+  </p>
+  <div class="pl-ms-track-outer">
+    <div class="pl-ms-track">
+      <div class="pl-ms-fill pl-active{% if ship_unlocked %} pl-done{% endif %}" style="width:{{ fill_pct }}%"></div>
+    </div>
+  </div>
+  <p class="pl-ms-giftnote">
+    &#127873;
+    {%- if cart_total >= gift_threshold -%}
+      Free gift unlocked
+    {%- else -%}
+      Free gift unlocked at &#8377;{{ gift_threshold_rupees }}
+    {%- endif -%}
+  </p>
+</div>
+{%- endif -%}

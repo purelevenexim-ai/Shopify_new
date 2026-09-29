@@ -1,0 +1,474 @@
+{% comment %} Custom Google Reviews — Google-authentic design {% endcomment %}
+
+<style>
+  /* ── Section shell ── */
+  .pl-gr-{{ section.id }} {
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-wrapper {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e8eaed;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.06);
+    padding: 2rem 1.8rem 1.8rem;
+    overflow: hidden;
+  }
+
+  /* ── Header (compact single row) ── */
+  .pl-gr-{{ section.id }} .pl-gr-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1.2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e8eaed;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-stars-group {
+    display: flex;
+    gap: 1px;
+    align-items: center;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-star {
+    color: #FBBC04;
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-big-num {
+    color: #202124;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-dot { color: #9aa0a6; font-size: 0.95rem; }
+  .pl-gr-{{ section.id }} .pl-gr-rev-count {
+    color: #078362;
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-rev-count:hover { text-decoration: underline; color: #004438; }
+  .pl-gr-{{ section.id }} .pl-gr-google-logo {
+    height: 16px;
+    display: block;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-leave-link {
+    color: #004438;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-leave-link:hover { text-decoration: underline; color: #078362; }
+
+  /* ── Carousel track ── */
+  .pl-gr-{{ section.id }} .pl-gr-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    gap: 0;
+    margin: 0 -0.25rem;
+    padding: 0 0.25rem 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-carousel::-webkit-scrollbar { display: none; }
+
+  /* ── Review cards ── */
+  .pl-gr-{{ section.id }} .pl-gr-card {
+    flex: none;
+    width: 220px;
+    margin: 0.25rem 0.6rem 0.25rem 0;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e8eaed;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.04);
+    overflow: hidden;
+    scroll-snap-align: start;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.14);
+    transform: translateY(-2px);
+  }
+  @media screen and (min-width: 990px) {
+    .pl-gr-{{ section.id }} .pl-gr-wrapper { padding: 2.4rem 2.2rem 2rem; }
+    .pl-gr-{{ section.id }} .pl-gr-card { width: 290px; }
+    .pl-gr-{{ section.id }} .pl-gr-big-num { font-size: 1.25rem; }
+    .pl-gr-{{ section.id }} .pl-gr-stars-group { gap: 2px; }
+    .pl-gr-{{ section.id }} .pl-gr-star { font-size: 1.25rem; }
+    .pl-gr-{{ section.id }} .pl-gr-rev-count { font-size: 0.98rem; }
+    .pl-gr-{{ section.id }} .pl-gr-google-logo { height: 18px; }
+    .pl-gr-{{ section.id }} .pl-gr-avatar-area { padding: 1.8rem 1rem 0.9rem; }
+    .pl-gr-{{ section.id }} .pl-gr-avatar,
+    .pl-gr-{{ section.id }} .pl-gr-avatar-init { width: 64px; height: 64px; }
+    .pl-gr-{{ section.id }} .pl-gr-avatar-init { font-size: 1.5rem; }
+    .pl-gr-{{ section.id }} .pl-gr-card-body { padding: 1.1rem 1.3rem 1.5rem; gap: 0.4rem; }
+    .pl-gr-{{ section.id }} .pl-gr-card-stars { gap: 2px; }
+    .pl-gr-{{ section.id }} .pl-gr-card-star { font-size: 1.1rem; }
+    .pl-gr-{{ section.id }} .pl-gr-card-name { font-size: 0.95rem; }
+    .pl-gr-{{ section.id }} .pl-gr-card-date { font-size: 0.8rem; }
+    .pl-gr-{{ section.id }} .pl-gr-card-text { font-size: 0.88rem; line-height: 1.6; }
+    .pl-gr-{{ section.id }} .pl-gr-star-badge { padding: 5px 16px; }
+    .pl-gr-{{ section.id }} .pl-gr-leave-link { font-size: 0.9rem; }
+  }
+
+  /* avatar */
+  .pl-gr-{{ section.id }} .pl-gr-avatar-area {
+    display: flex;
+    justify-content: center;
+    padding: 1.4rem 1rem 0.65rem;
+    background: #f8f9fa;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e8eaed;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  }
+  /* Colorful initial avatars like Google */
+  .pl-gr-{{ section.id }} .pl-gr-avatar-init {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0;
+    border: 2px solid rgba(255,255,255,0.3);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  }
+
+  /* card body */
+  .pl-gr-{{ section.id }} .pl-gr-card-body {
+    padding: 0.9rem 1rem 1.2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-card-stars {
+    display: flex;
+    gap: 1px;
+    justify-content: center;
+    margin-bottom: 0.1rem;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-card-star { color: #FBBC04; font-size: 0.95rem; }
+  .pl-gr-{{ section.id }} .pl-gr-card-name {
+    color: #202124;
+    font-size: 0.83rem;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-card-date {
+    color: #70757a;
+    font-size: 0.72rem;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-divider {
+    width: 28px;
+    height: 1px;
+    background: #e8eaed;
+    margin: 0.25rem auto;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-card-text {
+    color: #3c4043;
+    font-size: 0.84rem;
+    line-height: 1.6;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: center;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-posted-on {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.3rem;
+    opacity: 0.55;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-posted-on span {
+    font-size: 0.65rem;
+    color: #70757a;
+    letter-spacing: 0.01em;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-posted-on svg { height: 10px; }
+
+  /* ── Nav arrows ── */
+  .pl-gr-{{ section.id }} .pl-gr-nav-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #dadce0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    color: #5f6368;
+    padding: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .pl-gr-{{ section.id }} .pl-gr-nav-btn:hover {
+    background: #004438;
+    border-color: #004438;
+    color: #FCE477;
+  }
+  .pl-gr-{{ section.id }} .pl-gr-nav-btn svg {
+    stroke: currentColor;
+    fill: none;
+  }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 749px) {
+    .pl-gr-{{ section.id }} .pl-gr-wrapper {
+      padding: 1.4rem 1rem 1.2rem;
+      border-radius: 12px;
+    }
+    .pl-gr-{{ section.id }} .pl-gr-header {
+      gap: 0.4rem 0.85rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.9rem;
+    }
+    .pl-gr-{{ section.id }} .pl-gr-card { width: 186px; }
+    .pl-gr-{{ section.id }} .pl-gr-big-num { font-size: 1.1rem; }
+    .pl-gr-{{ section.id }} .pl-gr-star { font-size: 1.05rem; }
+    .pl-gr-{{ section.id }} .pl-gr-nav-row { margin-top: 0.8rem; }
+  }
+</style>
+
+{%- assign avatar_colors = '#4285F4,#EA4335,#FBBC04,#34A853,#1a73e8,#e52592,#fa7b17,#137333' | split: ',' -%}
+
+<div class="pl-gr-{{ section.id }} page-width">
+  <div class="pl-gr-wrapper">
+
+    <!-- Header -->
+    <div class="pl-gr-header">
+      <div class="pl-gr-summary">
+        <div class="pl-gr-stars-group" aria-label="{{ section.settings.overall_rating }} out of 5 stars">
+          <span class="pl-gr-star">★</span><span class="pl-gr-star">★</span><span class="pl-gr-star">★</span><span class="pl-gr-star">★</span><span class="pl-gr-star">★</span>
+        </div>
+        <span class="pl-gr-big-num">{{ section.settings.overall_rating }}</span>
+        <span class="pl-gr-dot">·</span>
+        {%- if section.settings.review_url != blank -%}
+          <a href="{{ section.settings.review_url }}" class="pl-gr-rev-count" target="_blank" rel="noopener noreferrer">{{ section.settings.review_count }} reviews</a>
+        {%- else -%}
+          <span class="pl-gr-rev-count" style="cursor:default;">{{ section.settings.review_count }} reviews</span>
+        {%- endif -%}
+        <svg class="pl-gr-google-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272.9 92.3" aria-label="Google" role="img">
+          <path fill="#4285F4" d="M35.3 41.5V32h32.6c.3 1.6.5 3.5.5 5.6 0 6.8-1.9 15.2-7.9 21.2-5.9 6.1-13.4 9.3-23.3 9.3C17.2 68.1 0 51.3 0 31.3 0 11.3 17.2-1.5 37.2-1.5c10.2 0 17.5 4 23 9.1L53.7 14c-3.9-3.7-9.2-6.5-16.5-6.5-13.5 0-24 10.9-24 24.3s10.5 24.3 24 24.3c8.7 0 13.7-3.5 16.9-6.7 2.6-2.6 4.3-6.3 4.9-11.5H35.3z"/>
+          <path fill="#EA4335" d="M115.8 46.6c0 12.8-10 22.1-22.3 22.1S71.2 59.4 71.2 46.6s10-22.1 22.3-22.1 22.3 9.3 22.3 22.1zm-9.8 0c0-8-5.8-13.5-12.5-13.5S81 38.6 81 46.6s5.8 13.5 12.5 13.5 12.5-5.5 12.5-13.5z"/>
+          <path fill="#FBBC05" d="M161.1 46.6c0 12.8-10 22.1-22.3 22.1s-22.3-9.3-22.3-22.1 10-22.1 22.3-22.1 22.3 9.3 22.3 22.1zm-9.8 0c0-8-5.8-13.5-12.5-13.5s-12.5 5.5-12.5 13.5 5.8 13.5 12.5 13.5 12.5-5.5 12.5-13.5z"/>
+          <path fill="#4285F4" d="M204.3 25.8v40c0 16.5-9.7 23.2-21.2 23.2-10.8 0-17.3-7.2-19.7-13.1l8.5-3.5c1.5 3.6 5.2 7.9 11.2 7.9 7.3 0 11.8-4.5 11.8-13v-3.2h-.3c-2.2 2.7-6.4 5-11.7 5-11.1 0-21.3-9.7-21.3-22.1 0-12.5 10.2-22.2 21.3-22.2 5.3 0 9.5 2.3 11.7 4.9h.3V26h9.4zm-8.7 20.9c0-7.8-5.2-13.5-11.8-13.5-6.7 0-12.3 5.7-12.3 13.5s5.6 13.3 12.3 13.3c6.6 0 11.8-5.5 11.8-13.3z"/>
+          <path fill="#34A853" d="M219.6 3.1v64.8h-9.5V3.1z"/>
+          <path fill="#EA4335" d="M257.2 54.9l7.6 5.1c-2.5 3.6-8.4 9.8-18.7 9.8-12.7 0-22.2-9.8-22.2-22.1 0-13.2 9.5-22.1 21.1-22.1 11.6 0 17.3 9.1 19.1 14l1 2.5-29.9 12.4c2.3 4.5 5.8 6.8 10.8 6.8s8.5-2.5 11.2-6.4zm-23.5-8.1l20-8.3c-1.1-2.8-4.4-4.7-8.3-4.7-5 0-12 4.4-11.7 13z"/>
+        </svg>
+      </div>
+      {%- if section.settings.review_url != blank -%}
+        <a href="{{ section.settings.review_url }}" class="pl-gr-leave-link" target="_blank" rel="noopener noreferrer">Write a review &rarr;</a>
+      {%- endif -%}
+    </div>
+
+    <!-- Cards -->
+    <div class="pl-gr-carousel" id="pl-gr-c-{{ section.id }}">
+      {%- for block in section.blocks limit: 5 -%}
+        {%- assign star_count = block.settings.rating | default: 5 -%}
+        {%- assign color_index = forloop.index0 | modulo: 8 -%}
+        {%- assign init_color = avatar_colors[color_index] -%}
+        <div class="pl-gr-card" {{ block.shopify_attributes }}>
+          <div class="pl-gr-avatar-area">
+            {%- if block.settings.avatar_url != blank -%}
+              {%- capture pl_av -%}{% render 'pl-avatar-url', url: block.settings.avatar_url, px: 96 %}{%- endcapture -%}
+              <img src="{{ pl_av | strip }}" alt="{{ block.settings.name | escape }}" class="pl-gr-avatar" loading="lazy" decoding="async" width="48" height="48">
+            {%- else -%}
+              <div class="pl-gr-avatar-init" style="background:{{ init_color }}">{{ block.settings.name | slice: 0 | upcase }}</div>
+            {%- endif -%}
+          </div>
+          <div class="pl-gr-card-body">
+            <div class="pl-gr-card-stars" aria-label="{{ star_count }} stars">
+              {%- if star_count >= 1 -%}<span class="pl-gr-card-star">★</span>{%- endif -%}
+              {%- if star_count >= 2 -%}<span class="pl-gr-card-star">★</span>{%- endif -%}
+              {%- if star_count >= 3 -%}<span class="pl-gr-card-star">★</span>{%- endif -%}
+              {%- if star_count >= 4 -%}<span class="pl-gr-card-star">★</span>{%- endif -%}
+              {%- if star_count >= 5 -%}<span class="pl-gr-card-star">★</span>{%- endif -%}
+            </div>
+            <p class="pl-gr-card-name">{{ block.settings.name }}</p>
+            <p class="pl-gr-card-date">{{ block.settings.date }}</p>
+            <div class="pl-gr-divider"></div>
+            <p class="pl-gr-card-text">{{ block.settings.text }}</p>
+            <div class="pl-gr-posted-on">
+              <span>Posted on</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272.9 92.3" role="img" aria-label="Google">
+                <path fill="#4285F4" d="M35.3 41.5V32h32.6c.3 1.6.5 3.5.5 5.6 0 6.8-1.9 15.2-7.9 21.2-5.9 6.1-13.4 9.3-23.3 9.3C17.2 68.1 0 51.3 0 31.3 0 11.3 17.2-1.5 37.2-1.5c10.2 0 17.5 4 23 9.1L53.7 14c-3.9-3.7-9.2-6.5-16.5-6.5-13.5 0-24 10.9-24 24.3s10.5 24.3 24 24.3c8.7 0 13.7-3.5 16.9-6.7 2.6-2.6 4.3-6.3 4.9-11.5H35.3z"/>
+                <path fill="#EA4335" d="M115.8 46.6c0 12.8-10 22.1-22.3 22.1S71.2 59.4 71.2 46.6s10-22.1 22.3-22.1 22.3 9.3 22.3 22.1zm-9.8 0c0-8-5.8-13.5-12.5-13.5S81 38.6 81 46.6s5.8 13.5 12.5 13.5 12.5-5.5 12.5-13.5z"/>
+                <path fill="#FBBC05" d="M161.1 46.6c0 12.8-10 22.1-22.3 22.1s-22.3-9.3-22.3-22.1 10-22.1 22.3-22.1 22.3 9.3 22.3 22.1zm-9.8 0c0-8-5.8-13.5-12.5-13.5s-12.5 5.5-12.5 13.5 5.8 13.5 12.5 13.5 12.5-5.5 12.5-13.5z"/>
+                <path fill="#4285F4" d="M204.3 25.8v40c0 16.5-9.7 23.2-21.2 23.2-10.8 0-17.3-7.2-19.7-13.1l8.5-3.5c1.5 3.6 5.2 7.9 11.2 7.9 7.3 0 11.8-4.5 11.8-13v-3.2h-.3c-2.2 2.7-6.4 5-11.7 5-11.1 0-21.3-9.7-21.3-22.1 0-12.5 10.2-22.2 21.3-22.2 5.3 0 9.5 2.3 11.7 4.9h.3V26h9.4zm-8.7 20.9c0-7.8-5.2-13.5-11.8-13.5-6.7 0-12.3 5.7-12.3 13.5s5.6 13.3 12.3 13.3c6.6 0 11.8-5.5 11.8-13.3z"/>
+                <path fill="#34A853" d="M219.6 3.1v64.8h-9.5V3.1z"/>
+                <path fill="#EA4335" d="M257.2 54.9l7.6 5.1c-2.5 3.6-8.4 9.8-18.7 9.8-12.7 0-22.2-9.8-22.2-22.1 0-13.2 9.5-22.1 21.1-22.1 11.6 0 17.3 9.1 19.1 14l1 2.5-29.9 12.4c2.3 4.5 5.8 6.8 10.8 6.8s8.5-2.5 11.2-6.4zm-23.5-8.1l20-8.3c-1.1-2.8-4.4-4.7-8.3-4.7-5 0-12 4.4-11.7 13z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <!-- Nav -->
+    <div class="pl-gr-nav-row">
+      <button class="pl-gr-nav-btn" id="pl-gr-prev-{{ section.id }}" aria-label="Previous reviews">
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="pl-gr-nav-btn" id="pl-gr-next-{{ section.id }}" aria-label="Next reviews">
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var c = document.getElementById('pl-gr-c-{{ section.id }}');
+  if (!c) return;
+  var step = (c.querySelector('.pl-gr-card') || {offsetWidth: 240}).offsetWidth + 12;
+  document.getElementById('pl-gr-prev-{{ section.id }}').addEventListener('click', function () {
+    c.scrollBy({ left: -step, behavior: 'smooth' });
+  });
+  document.getElementById('pl-gr-next-{{ section.id }}').addEventListener('click', function () {
+    if (c.scrollLeft + c.clientWidth >= c.scrollWidth - 8) {
+      c.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      c.scrollBy({ left: step, behavior: 'smooth' });
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Google Reviews (Custom)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "business_name",
+      "label": "Business name",
+      "default": "Pure Leven Exim"
+    },
+    {
+      "type": "text",
+      "id": "overall_rating",
+      "label": "Overall rating",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count label",
+      "default": "503"
+    },
+    {
+      "type": "url",
+      "id": "review_url",
+      "label": "Google review / Leave a review URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Reviewer name" },
+        { "type": "text", "id": "date", "label": "Date", "info": "e.g. July 8 2026" },
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Stars", "default": 5 },
+        { "type": "textarea", "id": "text", "label": "Review text" },
+        { "type": "text", "id": "avatar_url", "label": "Profile photo URL", "info": "Leave blank to use initial avatar" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Google Reviews (Custom)",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "name": "Maryam Lakhani",
+            "date": "July 8 2026",
+            "rating": 5,
+            "text": "Pure Leven gives excellent Products.",
+            "avatar_url": "https://lh3.googleusercontent.com/a-/ALV-UjVX7XvAtHpcNLWeiNxBsbf9btdlSIzW4FLRi5yf0Xe7VQTkTbYG4g=s120-c-rp-mo-br100"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Narendranathan KP",
+            "date": "June 12 2026",
+            "rating": 5,
+            "text": "Very prompt delivery. Packing and quality of ingredients are very good. Thank you",
+            "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocIWa-pcSWPYfXPpvBzS_siEIpvwE15Mj2XsGrDd-17C-hb9JQ=s120-c-rp-mo-br100"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Top Reviewer 3",
+            "date": "",
+            "rating": 5,
+            "text": "",
+            "avatar_url": ""
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Top Reviewer 4",
+            "date": "",
+            "rating": 5,
+            "text": "",
+            "avatar_url": ""
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Top Reviewer 5",
+            "date": "",
+            "rating": 5,
+            "text": "",
+            "avatar_url": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

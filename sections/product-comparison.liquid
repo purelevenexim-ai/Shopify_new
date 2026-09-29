@@ -331,16 +331,7 @@
   <div class="color-{{ section.settings.color_scheme }} gradient product-comparison-{{ section.id }}">
     <section class="page-width section-{{ section.id }}-padding" aria-labelledby="ProductComparison-{{ section.id }}">
       <div class="product-comparison__header">
-        {% render 'product-seo-section-header',
-          mode: 'comparison',
-          product_handle: product.handle,
-          custom_eyebrow: comparison_eyebrow,
-          custom_heading: comparison_heading,
-          custom_intro: comparison_intro,
-          class_prefix: 'product-comparison',
-          heading_id: 'ProductComparison-' | append: section.id,
-          heading_size: section.settings.heading_size
-        %}
+        {% render 'product-seo-section-header', mode: 'comparison', product_handle: product.handle, custom_eyebrow: comparison_eyebrow, custom_heading: comparison_heading, custom_intro: comparison_intro, class_prefix: 'product-comparison', heading_id: 'ProductComparison-', append: section.id, heading_size: section.settings.heading_size %}
       </div>
 
       {%- if has_metaobject_comparison -%}
@@ -563,4 +554,27 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'product-seo-section-header',
+              mode: 'comparison',
+              product_handle: product.handle,
+              custom_eyebrow: comparison_eyebrow,
+              custom_heading: comparison_heading,
+              custom_intro: comparison_intro,
+              class_prefix: 'product-comparison',
+              heading_id: 'ProductComparison-' | append: section.id,
+              heading_size: section.settings.heading_size
+            %}
+  to: "{% render 'product-seo-section-header', mode: 'comparison', product_handle:
+    product.handle, custom_eyebrow: comparison_eyebrow, custom_heading: comparison_heading,
+    custom_intro: comparison_intro, class_prefix: 'product-comparison', heading_id:
+    'ProductComparison-', append: section.id, heading_size: section.settings.heading_size
+    %}"
+  position: 14705..15037
+{%- endcomment -%}

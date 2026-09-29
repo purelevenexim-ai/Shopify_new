@@ -52,11 +52,15 @@
     data-option-value-id="{{ value.id }}"
   {%- endcapture -%}
 
-  {%- capture label_unavailable -%}
-    <span class="visually-hidden label-unavailable">
-      {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
-    </span>
-  {%- endcapture -%}
+  {%- if option_disabled -%}
+    {%- capture label_unavailable -%}
+      <span class="visually-hidden label-unavailable">
+        {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
+      </span>
+    {%- endcapture -%}
+  {%- else -%}
+    {%- assign label_unavailable = blank -%}
+  {%- endif -%}
 
   {% assign escaped_value = value | escape %}
 
@@ -85,7 +89,7 @@
       for v in product.variants
         if v.option1 == value or v.option2 == value or v.option3 == value
           if v.compare_at_price > v.price
-            assign _pl_var_save = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price
+            assign _pl_var_save = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round
           else
             assign _pl_var_save = 0
           endif

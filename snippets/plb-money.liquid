@@ -1,0 +1,6 @@
+{%- comment -%}
+  Shop money_format is "Rs. {{amount}}", so the money filter cannot be used.
+  Server-renders a plain rupee figure; pl-cart-b.js upgrades it to Indian
+  digit grouping. Without JS the number is still correct, just ungrouped.
+{%- endcomment -%}
+<span data-plb-inr="{{ p }}">&#8377;{{ p | divided_by: 100 }}</span>

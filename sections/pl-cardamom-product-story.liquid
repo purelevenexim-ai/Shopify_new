@@ -1,0 +1,141 @@
+{%- if product.handle == 'kerala-cardamom' -%}
+  {{ 'pl-product.css' | asset_url | stylesheet_tag }}
+
+  <section class="pl-cardamom-story" aria-labelledby="pl-cardamom-story-title">
+    <div class="pl-cardamom-story__inner page-width">
+      <div class="pl-cardamom-story__header">
+        <p class="pl-cardamom-story__eyebrow">Kerala green cardamom</p>
+        <h2 id="pl-cardamom-story-title" class="pl-cardamom-story__title">
+          Sweet, fragrant pods chosen for chai, biryani, and everyday spice boxes.
+        </h2>
+        <p class="pl-cardamom-story__lead">
+          PureLeven Kerala Cardamom is selected as whole green pods so the natural aroma stays protected until you crush or open the pod in your kitchen.
+        </p>
+      </div>
+
+      <div class="pl-cardamom-story__grid">
+        <figure class="pl-cardamom-story__hero">
+          <img
+            src="{{ 'pl-cardamom-product.webp' | asset_url }}"
+            alt="PureLeven Kerala cardamom whole pods packed with loose green cardamom"
+            loading="lazy"
+            width="1200"
+            height="1200"
+          >
+          <figcaption>Whole pods packed to hold aroma longer.</figcaption>
+        </figure>
+
+        <div class="pl-cardamom-story__proof">
+          <article class="pl-cardamom-story__proof-card">
+            <img
+              src="{{ 'pl-cardamom-pods.webp' | asset_url }}"
+              alt="Close view of whole green cardamom pods"
+              loading="lazy"
+              width="1200"
+              height="800"
+            >
+            <div>
+              <span>Quality cue</span>
+              <h3>Look for full green pods</h3>
+              <p>Good cardamom should smell sweet, warm, and clean. Whole pods help protect the volatile oils that give chai and desserts their lift.</p>
+            </div>
+          </article>
+
+          <article class="pl-cardamom-story__proof-card">
+            <img
+              src="{{ 'pl-cardamom-harvest.webp' | asset_url }}"
+              alt="Cardamom harvesting in a Kerala spice garden"
+              loading="lazy"
+              width="1200"
+              height="900"
+            >
+            <div>
+              <span>Origin cue</span>
+              <h3>Closer to the spice garden</h3>
+              <p>Clearer sourcing and smaller packing cycles help the pods reach your kitchen with more of their original aroma intact.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="pl-cardamom-story__answers" aria-label="Kerala cardamom buying answers">
+        <article>
+          <span>Best for</span>
+          <strong>Masala chai, payasam, biryani, pulao, desserts, and warm spice blends.</strong>
+        </article>
+        <article>
+          <span>How to use</span>
+          <strong>Lightly crush the pod before cooking, or split it and use the seeds for stronger aroma.</strong>
+        </article>
+        <article>
+          <span>How to store</span>
+          <strong>Keep sealed in a cool, dry place away from sunlight, heat, and moisture.</strong>
+        </article>
+      </div>
+
+      <div class="pl-cardamom-story__source">
+        <img
+          src="{{ 'pl-cardamom-growers.webp' | asset_url }}"
+          alt="PureLeven growers with freshly collected Kerala cardamom"
+          loading="lazy"
+          width="1400"
+          height="900"
+        >
+        <div class="pl-cardamom-story__source-copy">
+          <p class="pl-cardamom-story__eyebrow">Source transparency</p>
+          <h3>Real cardamom, real people, cleaner buying decisions.</h3>
+          <p>
+            This page is written to answer the questions shoppers, Google, and AI assistants ask before recommending a spice: what it is, where it fits, how to use it, and how to keep it fresh.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is PureLeven Kerala Cardamom best used for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PureLeven Kerala Cardamom is best used for masala chai, biryani, pulao, payasam, desserts, and warm spice blends where sweet natural aroma matters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why buy whole green cardamom pods instead of powder?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Whole green cardamom pods protect aroma better than powder because the seeds stay enclosed until the pod is crushed or opened before cooking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should Kerala cardamom be stored?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Store Kerala cardamom in an airtight container in a cool, dry place away from heat, sunlight, and moisture to preserve aroma."
+          }
+        }
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PL Cardamom Story",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "PL Cardamom Story"
+    }
+  ]
+}
+{% endschema %}

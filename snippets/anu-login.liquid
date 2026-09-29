@@ -11,6 +11,9 @@
         assign anu_login_should_render = settings.anu_login_show_on_product
       when 'collection'
         assign anu_login_should_render = settings.anu_login_show_on_collection
+        if collection.handle == 'tea-coffee'
+          assign anu_login_should_render = false
+        endif
       when 'cart'
         assign anu_login_should_render = false
       when 'article', 'blog'
@@ -96,9 +99,9 @@
           <div class="anu-login__hero-card anu-login__hero-card--poster">
             <h2 id="AnuLoginTitle" class="visually-hidden">{{ anu_login_heading }}</h2>
             <p id="AnuLoginBody" class="visually-hidden">{{ anu_login_body }}</p>
-            <img class="anu-login__hero-poster" src="{{ 'anu-login-hero-giftpack.jpg' | asset_url }}" alt="" loading="eager" width="950" height="560">
+            <img class="anu-login__hero-poster" src="{{ 'anu-login-hero-giftpack-850.webp' | asset_url }}" alt="" loading="lazy" decoding="async" data-pl-prefetch width="950" height="560">
             <span class="anu-login__hero-mascot" aria-hidden="true">
-              <img src="{{ 'anu-login-mascot.jpg' | asset_url }}" alt="" loading="eager" width="420" height="420">
+              <img src="{{ 'anu-login-mascot-128.webp' | asset_url }}" alt="" loading="lazy" decoding="async" data-pl-prefetch width="420" height="420">
             </span>
             <span class="anu-login__spice-motion" aria-hidden="true">
               <span class="anu-login__cardamom anu-login__cardamom--one"></span>
@@ -167,7 +170,7 @@
     <button class="anu-login__widget" data-anu-login-widget type="button" hidden aria-label="Open {{ anu_login_widget_label }} welcome offer">
       <span class="anu-login__widget-card">
         <span class="anu-login__widget-art" aria-hidden="true">
-          <img src="{{ 'anu-login-mascot.jpg' | asset_url }}" alt="" loading="lazy" width="420" height="420">
+          <img src="{{ 'anu-login-mascot-128.webp' | asset_url }}" alt="" loading="lazy" decoding="async" width="420" height="420">
         </span>
         <span class="anu-login__widget-copy">
           <span class="anu-login__widget-pill">{{ anu_login_widget_label }}</span>

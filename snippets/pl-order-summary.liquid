@@ -47,8 +47,8 @@
   {% endif %}
 
   {% if discount_rupees > 0 %}
-  <div class="pl-os-row">
-    <span class="pl-os-label pl-os-label-disc">Coupon discount</span>
+  <div class="pl-os-row-disc">
+    <span class="pl-os-label pl-os-label-disc">&#127881; Coupon discount</span>
     <span class="pl-os-val-disc">&minus;&#8377;{{ discount_rupees }}</span>
   </div>
   {% endif %}
@@ -115,8 +115,9 @@
 </div>
 {% endif %}
 <!-- Buy Now button — Shiprocket Fastrr checkout -->
+<p class="pl-buynow-eyebrow">&#9889; Buy Now</p>
 <div class="pl-checkout-cta-wrap">
-  <div class="shiprocket-headless pl-sr-wrap" aria-label="Checkout"></div>
+  <div class="shiprocket-headless pl-sr-wrap pl-buynow-glow" aria-label="Checkout"></div>
 </div>
 <p class="pl-buy-returns">&#8617; Free 7-day returns &middot; No questions asked</p>
 <p class="pl-buy-micro">&#128666; Cash on Delivery available &middot; &#9889; Ships in 24&ndash;48h</p>

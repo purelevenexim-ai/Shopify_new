@@ -1988,5 +1988,35 @@
       { "type": "text", "id": "payment_gateway_name", "label": "Payment gateway name", "default": "Razorpay" },
       { "type": "url",  "id": "custom_checkout_url",  "label": "Custom checkout URL (blank = /checkout)" }
     ]
+  },
+  {
+    "name": "PureLeven cart and checkout",
+    "settings": [
+      { "type": "header", "content": "Delivery" },
+      { "type": "number", "id": "pl_free_shipping_threshold", "label": "Free delivery above (₹)", "default": 649 },
+      { "type": "number", "id": "pl_shipping_rate", "label": "Delivery charge below that (₹)", "default": 60 },
+      { "type": "number", "id": "pl_eta_days", "label": "Delivery time (days)", "default": 3, "info": "Orders placed after 2 pm IST add one day." },
+      { "type": "header", "content": "Payment" },
+      { "type": "checkbox", "id": "pl_cod_enabled", "label": "Offer cash on delivery", "default": true },
+      { "type": "number", "id": "pl_cod_fee", "label": "Cash on delivery fee (₹)", "default": 46 },
+      { "type": "number", "id": "pl_prepaid_pct", "label": "Prepaid discount (%)", "default": 2 },
+      { "type": "header", "content": "Checkout" },
+      { "type": "text", "id": "pl_checkout_url", "label": "Checkout page", "default": "/pages/secure-checkout" },
+      { "type": "text", "id": "pl_success_url", "label": "Thank-you page", "default": "/pages/thank-you" },
+      { "type": "text", "id": "pl_razorpay_key_id", "label": "Razorpay key id", "info": "The public key id only, never the secret. A key starting rzp_test_ opens Razorpay's test window with no server and creates no order." },
+      { "type": "text", "id": "pl_order_endpoint", "label": "Create-order endpoint", "info": "Server URL that creates the Shopify order and the Razorpay order. Leave blank until it exists." },
+      { "type": "text", "id": "pl_verify_endpoint", "label": "Verify-payment endpoint", "info": "Optional. Called after Razorpay confirms a payment." }
+    ]
+  },
+  {
+    "name": "PureLeven speed",
+    "settings": [
+      { "type": "header", "content": "Image loading" },
+      { "type": "checkbox", "id": "pl_batch_load", "label": "Load images in batches", "default": true, "info": "Images below the first screen load in groups, nearest to the visitor first, one group at a time." },
+      { "type": "range", "id": "pl_batch_size", "min": 5, "max": 40, "step": 5, "default": 20, "label": "Images per batch" },
+      { "type": "header", "content": "Analytics tags" },
+      { "type": "checkbox", "id": "pl_delay_tags", "label": "Delay Google Tag Manager and Meta Pixel", "default": true, "info": "They start after the page has loaded and the visitor taps or scrolls, or after the wait below. Untick to load them immediately." },
+      { "type": "range", "id": "pl_tag_delay", "min": 1, "max": 10, "step": 1, "unit": "s", "default": 3, "label": "Longest wait after page load" }
+    ]
   }
 ]

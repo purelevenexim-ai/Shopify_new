@@ -1,0 +1,70 @@
+{%- comment -%}
+  plb-pairs.liquid — what goes with what.
+
+  Usage: {%- capture handles -%}{% render 'plb-pairs', p: item.product %}{%- endcapture -%}
+  Outputs a comma-separated handle list, best match first.
+
+  Every list deliberately mixes same-category (upsell: they already like this,
+  here is more of it) with cross-category (cross-sell: chai drinkers buy
+  cardamom and honey; spice buyers cook, and cooks drink chai).
+
+  Override per product with the custom.pairs_with product-reference list
+  metafield — that wins over everything here.
+{%- endcomment -%}
+
+{%- liquid
+  assign out = ''
+
+  if p.metafields.custom.pairs_with != blank
+    for ref in p.metafields.custom.pairs_with.value
+      assign out = out | append: ref.handle | append: ','
+    endfor
+  endif
+
+  if out == blank
+    case p.handle
+      comment
+        Beverages — honey and cardamom are the two things chai and coffee
+        buyers add most, so they lead almost every beverage list.
+      endcomment
+      when 'premium-milk-tea-powder'
+        assign out = 'naadan-pure-honey,kerala-cardamom,cardamom-tea,starter-trial-pack-4-varieties'
+      when 'cardamom-tea'
+        assign out = 'naadan-pure-honey,premium-milk-tea-powder,naadan-kerala-coffee,kerala-cardamom'
+      when 'premium-black-tea-granules'
+        assign out = 'naadan-pure-honey,kerala-cardamom,orange-pekoe-powder,premium-milk-tea-powder'
+      when 'orange-pekoe-powder'
+        assign out = 'naadan-pure-honey,kerala-cardamom,cardamom-tea,premium-black-tea-granules'
+      when 'naadan-kerala-coffee'
+        assign out = 'naadan-pure-honey,premium-milk-tea-powder,kerala-cardamom,deluxe-combo-pack-tea-coffee-honey'
+      when 'naadan-pure-honey'
+        assign out = 'premium-milk-tea-powder,naadan-kerala-coffee,cardamom-tea,kerala-cardamom'
+      when 'starter-trial-pack-4-varieties'
+        assign out = 'naadan-pure-honey,kerala-cardamom,deluxe-combo-pack-tea-coffee-honey,premium-milk-tea-powder'
+      when 'deluxe-combo-pack-tea-coffee-honey'
+        assign out = 'kerala-cardamom,kerala-spice-combo-pack,premium-milk-tea-powder,naadan-pure-honey'
+
+      comment
+        Spices — pair by what shares a pan, then one beverage, because a
+        spice buyer is a cook and cooks are the chai audience.
+      endcomment
+      when 'kerala-black-pepper'
+        assign out = 'kerala-cardamom,kerala-adimali-clove,premium-cassia-cinnamon,kerala-spice-combo-pack'
+      when 'kerala-white-pepper'
+        assign out = 'kerala-black-pepper,kerala-cardamom,premium-cassia-cinnamon,kerala-adimali-clove'
+      when 'kerala-cardamom'
+        assign out = 'premium-milk-tea-powder,kerala-adimali-clove,kerala-black-pepper,cardamom-tea'
+      when 'kerala-adimali-clove'
+        assign out = 'kerala-cardamom,premium-cassia-cinnamon,kerala-black-pepper,kerala-spice-combo-pack'
+      when 'aromatic-true-cinnamon-ceylon'
+        assign out = 'kerala-cardamom,kerala-adimali-clove,star-anise-chakra-phool-premium-whole-spice,naadan-pure-honey'
+      when 'premium-cassia-cinnamon'
+        assign out = 'star-anise-chakra-phool-premium-whole-spice,kerala-adimali-clove,kerala-cardamom,kerala-black-pepper'
+      when 'star-anise-chakra-phool-premium-whole-spice'
+        assign out = 'premium-cassia-cinnamon,kerala-adimali-clove,kerala-black-pepper,kerala-cardamom'
+      when 'kerala-spice-combo-pack'
+        assign out = 'premium-cassia-cinnamon,star-anise-chakra-phool-premium-whole-spice,premium-milk-tea-powder,kerala-white-pepper'
+    endcase
+  endif
+-%}
+{{- out -}}

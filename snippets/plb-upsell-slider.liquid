@@ -1,0 +1,97 @@
+{%- comment -%}
+  plb-upsell-slider.liquid — swipeable low-price picks inside the delivery panel.
+
+  Only rendered while the cart is short of the item rule (see plb-goal). Pool:
+  the shopper's own range (tea-coffee and/or spices), minus anything already in
+  the cart. Each product shows its cheapest in-stock size, cheapest product
+  first. "Add" uses the [data-plb-add] handler in pl-cart-b.js, which re-renders
+  the whole cart, so the row disappears the moment delivery becomes free.
+
+  Params: items_left, limit (default 8)
+{%- endcomment -%}
+
+{%- liquid
+  assign cap = limit | default: 8
+
+  assign in_cart = '|'
+  assign want_tc = false
+  assign want_sp = false
+  for item in cart.items
+    assign in_cart = in_cart | append: item.product.handle | append: '|'
+    assign ch = item.product.collections | map: 'handle'
+    if ch contains 'tea-coffee'
+      assign want_tc = true
+    else
+      assign want_sp = true
+    endif
+  endfor
+
+  assign pools = ''
+  if want_tc
+    assign pools = pools | append: 'tea-coffee,'
+  endif
+  if want_sp
+    assign pools = pools | append: 'all-products,'
+  endif
+  assign pools = pools | split: ','
+
+  assign picked = '|'
+  assign shown = 0
+-%}
+
+{%- capture cards -%}
+  {%- for k in (1..cap) -%}
+    {%- liquid
+      assign best = nil
+      assign best_v = nil
+      assign best_p = 999999999
+      for pool in pools
+        for cp in collections[pool].products
+          assign key = cp.handle | prepend: '|' | append: '|'
+          if in_cart contains key or picked contains key
+            continue
+          endif
+          for v in cp.variants
+            if v.available and v.price > 0 and v.price < best_p
+              assign best = cp
+              assign best_v = v
+              assign best_p = v.price
+            endif
+          endfor
+        endfor
+      endfor
+      if best == nil
+        break
+      endif
+      assign picked = picked | append: best.handle | append: '|'
+      assign shown = shown | plus: 1
+    -%}
+    <li class="plb-up__c">
+      <a class="plb-up__img" href="{{ best.url }}" tabindex="-1" aria-hidden="true">
+        {%- if best.featured_image -%}
+          <img src="{{ best.featured_image | image_url: width: 120 }}"
+               alt="" width="48" height="48" loading="{% if shown <= 2 %}eager{% else %}lazy{% endif %}">
+        {%- endif -%}
+      </a>
+      <div class="plb-up__b">
+        <a class="plb-up__t" href="{{ best.url }}">{{ best.title | escape }}</a>
+        <p class="plb-up__p">
+          <b>{% render 'plb-money', p: best_v.price %}</b>
+          {%- unless best.has_only_default_variant -%}<span>{{ best_v.title }}</span>{%- endunless -%}
+        </p>
+      </div>
+      <button type="button" class="plb-up__add" data-plb-add="{{ best_v.id }}"
+              aria-label="Add {{ best.title | escape }} {{ best_v.title | escape }} to cart">Add</button>
+    </li>
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if shown > 0 -%}
+  <div class="plb-up">
+    <p class="plb-up__h">
+      <span>Pick {% if items_left > 1 %}any {{ items_left }}{% else %}one{% endif %}</span>
+      {%- if shown > 1 -%}<span>Swipe &rarr;</span>{%- endif -%}
+    </p>
+    <ul class="plb-up__list" role="list">{{ cards }}</ul>
+  </div>
+{%- endif -%}

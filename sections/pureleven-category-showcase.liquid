@@ -1,0 +1,256 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'tc-product-card.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'tc-product-card.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign col_a = section.settings.collection_a
+  assign col_b = section.settings.collection_b
+  assign label_a = section.settings.label_a | default: col_a.title
+  assign label_b = section.settings.label_b | default: col_b.title
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} { background-color: var(--sk-bg, #F9F9F6) !important; color: var(--sk-fg, #0B0B0F); }
+  #shopify-section-{{ section.id }} .gradient,
+  #shopify-section-{{ section.id }} .collection { background: transparent !important; }
+
+  #shopify-section-{{ section.id }} .collection__title { margin: 0 0 24px !important; text-align: left; }
+  {%- if section.settings.eyebrow != blank -%}
+  #shopify-section-{{ section.id }} .collection__title::before {
+    content: '{{ section.settings.eyebrow | escape }}';
+    display: block;
+    margin-bottom: 14px;
+    font: 400 11px/1.5 var(--sk-mono) !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sk-muted);
+  }
+  {%- endif -%}
+  #shopify-section-{{ section.id }} .collection__title .title {
+    margin: 0 !important;
+    font-family: var(--sk-sans) !important;
+    font-size: clamp(34px, 4.2vw, 60px) !important;
+    font-weight: 500 !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.055em !important;
+    text-transform: none !important;
+    color: var(--sk-fg) !important;
+  }
+  #shopify-section-{{ section.id }} .collection__description,
+  #shopify-section-{{ section.id }} .collection__description p {
+    max-width: 58ch;
+    margin: 12px 0 0 !important;
+    font-family: var(--sk-sans) !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0 !important;
+    color: var(--sk-muted) !important;
+    opacity: 1;
+  }
+
+  /* category tabs: joined hairline segments with a small thumbnail */
+  .pl-cat__chips {
+    display: flex; gap: 1px; margin: 0 0 32px; padding: 0; list-style: none;
+    background: var(--sk-line2); border: 1px solid var(--sk-line2); border-radius: 2px; overflow: hidden;
+  }
+  .pl-cat__chip {
+    flex: 1 1 0; min-width: 0; display: flex; align-items: center; gap: 10px;
+    min-height: 52px; margin: 0; padding: 8px 12px 8px 8px;
+    background: #fff !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    color: var(--sk-fg) !important; cursor: pointer; text-align: left;
+    font-family: var(--sk-sans) !important; font-size: 14px !important; font-weight: 600 !important;
+    line-height: 1.2 !important; letter-spacing: -0.01em !important; text-transform: none !important;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .pl-cat__chip > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pl-cat__chip:hover { background: var(--sk-bg2) !important; }
+  .pl-cat__chip:focus-visible { outline: 2px solid var(--sk-acc); outline-offset: -3px; }
+  .pl-cat__chip-img { flex: none; width: 34px; height: 34px; overflow: hidden; border: 1px solid var(--sk-line); border-radius: 2px; background: var(--sk-bg2); }
+  .pl-cat__chip-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .pl-cat__chip[aria-selected='true'] {
+    background: var(--sk-acc-soft) !important; color: var(--sk-acc) !important;
+    box-shadow: inset 0 0 0 1px var(--sk-acc) !important;
+  }
+  @media screen and (min-width: 750px) {
+    .pl-cat__chips { display: inline-flex; margin-bottom: 40px; }
+    .pl-cat__chip { flex: 0 1 auto; min-width: 220px; min-height: 60px; padding: 10px 20px 10px 10px; font-size: 15px !important; }
+    .pl-cat__chip-img { width: 40px; height: 40px; }
+  }
+
+  .pl-cat__groups { display: flex; flex-direction: column; gap: 48px; }
+  .pl-cat__groups[data-active='b'] .pl-cat__group[data-group='b'] { order: 1; }
+  .pl-cat__groups[data-active='b'] .pl-cat__group[data-group='a'] { order: 2; }
+
+  .pl-cat__group-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; margin-bottom: 16px; padding-top: 16px; border-top: 1px solid var(--sk-line);
+  }
+  .pl-cat__group-label {
+    margin: 0 !important;
+    font-family: var(--sk-sans) !important; font-size: 22px !important; font-weight: 500 !important;
+    line-height: 1.15 !important; letter-spacing: -0.035em !important; text-transform: none !important;
+    color: var(--sk-fg) !important;
+  }
+  .pl-cat__group-link {
+    flex: none; padding-bottom: 2px; border-bottom: 1px solid currentColor;
+    color: var(--sk-acc) !important; text-decoration: none !important; white-space: nowrap;
+    font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  }
+  .pl-cat__group-link:hover { color: var(--sk-acc-hover) !important; }
+  @media screen and (min-width: 750px) { .pl-cat__group-label { font-size: 28px !important; } }
+
+  .plc-grid {
+    display: grid; gap: 12px; list-style: none; margin: 0; padding: 0;
+    grid-template-columns: repeat({{ section.settings.columns_mobile }}, minmax(0, 1fr));
+  }
+  .plc-grid > * { min-width: 0; }
+  @media screen and (min-width: 750px) {
+    .plc-grid { gap: 20px; grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr)); }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} isolate gradient">
+  <div class="collection section-{{ section.id }}-padding" id="collection-{{ section.id }}">
+    <div class="page-width">
+      {%- if section.settings.title != blank or section.settings.description != blank -%}
+        <div class="collection__title title-wrapper title-wrapper--no-top-margin">
+          {%- if section.settings.title != blank -%}
+            <h2 class="title inline-richtext {{ section.settings.heading_size }}">{{ section.settings.title }}</h2>
+          {%- endif -%}
+          {%- if section.settings.description != blank -%}
+            <div class="collection__description body rte">{{ section.settings.description }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="pl-cat__chips" role="tablist" aria-label="{{ section.settings.title | default: 'Product categories' | escape }}">
+        <button type="button" role="tab" class="pl-cat__chip" aria-selected="true"
+          aria-controls="pl-cat-group-a-{{ section.id }}" data-pl-cat-chip="a">
+          {%- assign img_a = col_a.image | default: col_a.featured_image -%}
+          {%- if img_a != blank -%}<span class="pl-cat__chip-img"><img src="{{ img_a | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy"></span>{%- endif -%}
+          <span>{{ label_a }}</span></button>
+        <button type="button" role="tab" class="pl-cat__chip" aria-selected="false"
+          aria-controls="pl-cat-group-b-{{ section.id }}" data-pl-cat-chip="b">
+          {%- assign img_b = col_b.image | default: col_b.featured_image -%}
+          {%- if img_b != blank -%}<span class="pl-cat__chip-img"><img src="{{ img_b | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy"></span>{%- endif -%}
+          <span>{{ label_b }}</span></button>
+      </div>
+    </div>
+
+    <div class="pl-cat__groups" data-active="a" data-pl-cat-groups>
+      {%- for group in (1..2) -%}
+        {%- liquid
+          if forloop.first
+            assign key = 'a'
+            assign current = col_a
+            assign current_label = label_a
+          else
+            assign key = 'b'
+            assign current = col_b
+            assign current_label = label_b
+          endif
+        -%}
+        <div class="pl-cat__group" data-group="{{ key }}" id="pl-cat-group-{{ key }}-{{ section.id }}">
+          <div class="page-width">
+            <div class="pl-cat__group-head">
+              <h3 class="pl-cat__group-label">{{ current_label }}</h3>
+              {%- if current != blank -%}
+                <a href="{{ current.url }}" class="pl-cat__group-link link">{{ 'sections.featured_collection.view_all' | t }}</a>
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="page-width">
+            {%- if current != blank and current.products.size > 0 -%}
+              <div class="plc-grid" role="list">
+                {%- for product in current.products limit: section.settings.products_to_show -%}
+                  <div role="listitem">
+                    {%- render 'pureleven-tc-product-card', product: product -%}
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <p class="collection__description body rte">No products in this category yet.</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root) return;
+    var groups = root.querySelector('[data-pl-cat-groups]');
+    var chips = root.querySelectorAll('[data-pl-cat-chip]');
+    if (!groups || !chips.length) return;
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        groups.setAttribute('data-active', chip.dataset.plCatChip);
+        chips.forEach(function (c) {
+          c.setAttribute('aria-selected', String(c.dataset.plCatChip === chip.dataset.plCatChip));
+        });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Category Showcase",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "FRESH ESSENTIALS" },
+    { "type": "inline_richtext", "id": "title", "label": "Heading", "default": "Our top spices" },
+    {
+      "type": "select", "id": "heading_size", "label": "Heading size", "default": "h2",
+      "options": [
+        { "value": "h2", "label": "Medium" },
+        { "value": "h1", "label": "Large" },
+        { "value": "h0", "label": "Extra large" }
+      ]
+    },
+    { "type": "richtext", "id": "description", "label": "Description" },
+
+
+
+    { "type": "header", "content": "Category A" },
+    { "type": "collection", "id": "collection_a", "label": "Collection A" },
+    { "type": "text", "id": "label_a", "label": "Label A", "default": "Kerala Spices" },
+
+    { "type": "header", "content": "Category B" },
+    { "type": "collection", "id": "collection_b", "label": "Collection B" },
+    { "type": "text", "id": "label_b", "label": "Label B", "default": "Tea & Coffee" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "products_to_show", "min": 2, "max": 25, "step": 1, "label": "Max products per category", "default": 12 },
+    { "type": "range", "id": "columns_desktop", "min": 2, "max": 5, "step": 1, "label": "Columns on desktop", "default": 3 },
+    {
+      "type": "select", "id": "columns_mobile", "label": "Columns on mobile", "default": "2",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ]
+    },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding top", "default": 52 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding bottom", "default": 56 }
+  ],
+  "presets": [{ "name": "Category Showcase" }]
+}
+{% endschema %}

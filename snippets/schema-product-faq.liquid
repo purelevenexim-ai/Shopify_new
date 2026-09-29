@@ -1,0 +1,105 @@
+{%- liquid
+  comment
+    Generates FAQPage + Speakable JSON-LD for product pages.
+    Base questions apply to all products; product-specific questions added via handle/tag matching.
+  endcomment
+
+  assign faq_q1_name = 'Where do these spices come from?'
+  assign faq_q1_ans  = 'All Pureleven spices are sourced directly from small family farms in Idukki and the hill regions of Kerala. High-altitude cultivation and slower growing cycles concentrate aroma and natural oils — giving each spice noticeably stronger flavour than mass-retail alternatives.'
+
+  assign faq_q2_name = 'Are these spices natural and free from additives?'
+  assign faq_q2_ans  = 'Yes. Every Pureleven product is 100% natural with no artificial colour, preservatives, or additives. The company is FSSAI Licensed and sources from farms that use no chemical treatments.'
+
+  assign faq_q3_name = 'How should I store these spices?'
+  assign faq_q3_ans  = 'Store in an airtight container away from direct sunlight, heat, and moisture. A cool, dry pantry shelf or cupboard is ideal. Whole spices retain aroma significantly longer than pre-ground — grind only what you need each time.'
+
+  assign faq_q4_name = 'How long is the shelf life?'
+  assign faq_q4_ans  = 'Whole spices retain peak aroma for 18–24 months when stored in airtight conditions. Once ground, use within 3–6 months for best flavour. Pureleven products are small-batch packed and shipped fresh, so they arrive at maximum freshness.'
+
+  assign faq_q5_name = 'Is free shipping available?'
+  assign faq_q5_ans  = 'Yes. Free shipping is available across India on orders above ₹649. Orders are dispatched within 24 hours of placement.'
+
+  assign product_specific_faq = ''
+
+  if product.handle contains 'cardamom'
+    assign faq_q6_name = 'What grade is this cardamom?'
+    assign faq_q6_ans  = 'Pureleven cardamom is export-quality grade, grown in the high-altitude Idukki region of Kerala — one of the most prized cardamom-growing areas in the world. The pods are bold, aromatic, and free from artificial bleaching.'
+    assign faq_q7_name = 'How do I use green cardamom?'
+    assign faq_q7_ans  = 'Crush the pod lightly to release aroma before adding to tea, coffee, biryani, curries, or desserts. Use whole pods in slow-cooked dishes and remove before serving, or grind seeds for baking and spice blends.'
+    assign product_specific_faq = 'cardamom'
+  elsif product.handle contains 'pepper' or product.handle contains 'peppercorn'
+    assign faq_q6_name = 'What makes Kerala black pepper different from regular pepper?'
+    assign faq_q6_ans  = 'Kerala black pepper — especially from the Western Ghats hill regions — carries a bold, piney heat with complex earthy notes that pre-ground commercial pepper cannot replicate. The piperine concentration is higher in whole peppercorns that are ground fresh.'
+    assign faq_q7_name = 'Should I buy whole peppercorns or ground pepper?'
+    assign faq_q7_ans  = 'Whole peppercorns are strongly recommended. They retain volatile oils that produce flavour and heat when ground. Pre-ground pepper loses most of its aroma within weeks of grinding. A pepper grinder transforms the cooking experience.'
+    assign product_specific_faq = 'pepper'
+  elsif product.handle contains 'clove'
+    assign faq_q6_name = 'What are Kerala cloves used for?'
+    assign faq_q6_ans  = 'Kerala cloves are used in biryani, masala chai, meat marinades, pickling, and spice blends like garam masala. They have a strong, warm, slightly sweet aroma with natural eugenol — a compound that also has mild analgesic properties used in traditional remedies.'
+    assign faq_q7_name = 'How many cloves should I use in cooking?'
+    assign faq_q7_ans  = 'Use 2–4 whole cloves per serving in curries, rice, or biryani. Remove before eating. For chai, 1–2 cloves per cup adds warmth. Cloves are potent — a small amount delivers significant flavour.'
+    assign product_specific_faq = 'clove'
+  elsif product.handle contains 'honey'
+    assign faq_q6_name = 'Is this honey raw and unprocessed?'
+    assign faq_q6_ans  = 'Yes. Pureleven raw honey is unheated and unfiltered, preserving natural enzymes, pollen, and antioxidants. It may crystallise over time — this is a sign of purity. Gently warm the jar in lukewarm water to re-liquefy without destroying nutrients.'
+    assign faq_q7_name = 'How do I check if honey is pure?'
+    assign faq_q7_ans  = 'Pure honey dissolves slowly in water (forms a solid lump rather than spreading instantly), and has a distinct natural aroma. Raw honey from single-origin farms like Pureleven has a consistent flavour profile tied to the flowers available in that region.'
+    assign product_specific_faq = 'honey'
+  elsif product.handle contains 'combo' or product.tags contains 'combo'
+    assign faq_q6_name = 'Are combo packs better value than individual products?'
+    assign faq_q6_ans  = 'Yes. Combo packs at Pureleven offer a significant saving compared to buying each spice individually — typically 15–25% off. They are also convenient for gifting and for stocking a complete Kerala spice pantry in one order.'
+    assign faq_q7_name = 'Are the spices in the combo pack the same quality as individual products?'
+    assign faq_q7_ans  = 'Identical quality. Combo packs use the same farm-origin, export-grade spices as individual product listings. Packaging is the only difference.'
+    assign product_specific_faq = 'combo'
+  endif
+-%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".product__title", ".product__description p:first-child"]
+  },
+  "mainEntity": [
+    {%- if product_specific_faq != '' -%}
+    {
+      "@type": "Question",
+      "name": {{ faq_q6_name | json }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ faq_q6_ans | json }} }
+    },
+    {
+      "@type": "Question",
+      "name": {{ faq_q7_name | json }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ faq_q7_ans | json }} }
+    },
+    {%- endif -%}
+    {
+      "@type": "Question",
+      "name": {{ faq_q1_name | json }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ faq_q1_ans | json }} }
+    },
+    {
+      "@type": "Question",
+      "name": {{ faq_q2_name | json }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ faq_q2_ans | json }} }
+    },
+    {
+      "@type": "Question",
+      "name": {{ faq_q3_name | json }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ faq_q3_ans | json }} }
+    },
+    {
+      "@type": "Question",
+      "name": {{ faq_q4_name | json }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ faq_q4_ans | json }} }
+    },
+    {
+      "@type": "Question",
+      "name": {{ faq_q5_name | json }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ faq_q5_ans | json }} }
+    }
+  ]
+}
+</script>

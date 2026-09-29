@@ -1,0 +1,54 @@
+{
+  "sections": {
+    "honey-hero": {
+      "type": "pureleven-honey-hero",
+      "settings": {
+        "eyebrow": "IDUKKI · WAYANAD · KERALA",
+        "heading": "Wild Kerala Honey",
+        "subheading": "Naadan forest honey from the high-range forests of Idukki and Wayanad. Collected by traditional beekeepers, unprocessed and pure.",
+        "padding_top": 64,
+        "padding_bottom": 48
+      }
+    },
+    "honey-products": {
+      "type": "pureleven-honey-products",
+      "settings": {
+        "heading": "Shop Kerala Honey",
+        "product_handles": "naadan-pure-honey",
+        "columns_desktop": 2,
+        "padding_top": 48,
+        "padding_bottom": 56
+      }
+    },
+    "honey-story": {
+      "type": "pureleven-honey-story",
+      "settings": {
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "honey-faq": {
+      "type": "pureleven-honey-faq",
+      "settings": {
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "honey-cta": {
+      "type": "pureleven-honey-cta",
+      "settings": {
+        "heading": "Pure Kerala Honey, Delivered Home",
+        "subheading": "Wild forest honey from Idukki and Wayanad. Naadan, unprocessed, and pure. Free delivery on orders above ₹649.",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "honey-hero",
+    "honey-products",
+    "honey-story",
+    "honey-faq",
+    "honey-cta"
+  ]
+}

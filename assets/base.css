@@ -1,29 +1,41 @@
 :root {
-  /* Brand Color Variables — Pureleven */
-  --pl-primary: #1B5E56;
-  --pl-primary-dark: #154039;
-  --pl-secondary: #4D9B93;
-  --pl-sage: #7FA89F;
-  --pl-background: #F8F5EE;
-  --pl-surface: #E8E5DC;
+  /* Brand Color Variables — Clean Hybrid (Simply Organic teal + Sunray CTA) */
   --pl-white: #FFFFFF;
-  --pl-text-primary: #2C2C2C;
-  --pl-text-secondary: #666666;
-  --pl-text-muted: #888888;
-  
+  --pl-teal: #004438;
+  --pl-teal-dark: #003527;
+  --pl-yellow: #FCE477;
+  --pl-yellow-hover: #F4D138;
+  --pl-charcoal: #212121;
+  --pl-mid-gray: #6B6B6B;
+  --pl-line: #D0D5D2;
+  --pl-sage: #E3E8DD;
+  --pl-cream: #F2F3E5;
+  --pl-off-white: #F6F6F6;
+
+  /* Semantic Aliases */
+  --pl-primary: #004438;
+  --pl-primary-dark: #003527;
+  --pl-cta: #FCE477;
+  --pl-cta-hover: #F4D138;
+  --pl-text-primary: #212121;
+  --pl-text-secondary: #6B6B6B;
+  --pl-text-muted: #8A8A8A;
+  --pl-background: #FFFFFF;
+  --pl-surface: #F6F6F6;
+
   /* Category Colors */
-  --pl-category-spices: #B45E3C;
-  --pl-category-honey: #C89A3D;
-  --pl-category-tea: #4D9B93;
+  --pl-category-spices: #004438;
+  --pl-category-honey: #D4A76A;
+  --pl-category-tea: #004438;
   --pl-category-coffee: #5A3E36;
-  --pl-category-grains: #E8E5DC;
-  --pl-category-wellness: #7FA89F;
-  
+  --pl-category-grains: #F2F3E5;
+  --pl-category-wellness: #E3E8DD;
+
   /* Utility Colors */
-  --pl-success: #2E7D32;
-  --pl-warning: #F57C00;
+  --pl-success: #004438;
+  --pl-warning: #D4A76A;
   --pl-error: #C62828;
-  --pl-info: #1976D2;
+  --pl-info: #212121;
   
   /* Alpha/Opacity */
   --alpha-button-background: 1;
@@ -2687,6 +2699,7 @@ input[type='checkbox'] {
 /* Header icons */
 .header__icons {
   display: flex;
+  align-items: center;
   grid-area: icons;
   justify-self: end;
   padding-right: 0.8rem;
@@ -3993,4 +4006,21 @@ h5, .h5 {
   width: 24px;
   height: 24px;
   color: var(--pl-primary);
+}
+
+.pl-card-add-button,
+.pl-card-add-button.button--secondary {
+  background: #FCE477 !important;
+  color: #1A1A1A !important;
+  border-color: #FCE477 !important;
+}
+.pl-card-add-button:hover:not([disabled]),
+.pl-card-add-button.button--secondary:hover:not([disabled]) {
+  background: #F4D138 !important;
+  border-color: #F4D138 !important;
+  color: #1A1A1A !important;
+}
+.pl-card-add-button::after,
+.pl-card-add-button.button--secondary::after {
+  background: #F4D138 !important;
 }

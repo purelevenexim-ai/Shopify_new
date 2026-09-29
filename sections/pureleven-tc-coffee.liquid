@@ -1,0 +1,190 @@
+{%- comment -%}
+Tea & Coffee — Coffee Editorial Feature Section
+- Wide layout: large image + content panel
+- Variant selector + add to cart for the coffee product
+- image_position setting controls left/right layout
+{%- endcomment -%}
+
+<link rel="stylesheet" href="{{ 'tc-design-tokens.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'tc-page.css' | asset_url }}">
+<script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer></script>
+
+{%- assign product = all_products[section.settings.product_handle] -%}
+
+<section class="tc-coffee{% if section.settings.image_position == 'right' %} tc-coffee--image-right{% endif %}" id="{{ section.settings.section_id }}">
+  <div class="tc-coffee__container">
+    <p class="tc-eyebrow"><i>03</i> / The Coffee</p>
+    {%- if section.settings.heading -%}
+      <h2 class="tc-coffee__heading tc-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if product -%}
+      {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
+      {%- assign best_for = product.metafields.custom.best_for.value | default: '' -%}
+      {%- assign short_desc = product.metafields.custom.short_description.value | default: product.description -%}
+
+      <div class="tc-coffee__wrapper">
+        <div class="tc-coffee__visual">
+          {%- if product.featured_image -%}
+            {{
+              product.featured_image
+              | image_url: width: 900
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(min-width: 990px) 45vw, 100vw',
+                widths: '400,600,800,900',
+                alt: product.featured_image.alt | default: product.title | escape
+            }}
+          {%- endif -%}
+        </div>
+
+        <div class="tc-coffee__content">
+          {%- if best_for -%}
+            <div class="tc-coffee__kicker">{{ best_for }}</div>
+          {%- endif -%}
+
+          <h3 class="tc-coffee__product-title">
+            <a href="{{ product.url }}" class="tc-coffee__product-link">{{ product.title }}</a>
+          </h3>
+
+          {%- if short_desc -%}
+            <p class="tc-coffee__description">{{ short_desc | strip_html }}</p>
+          {%- endif -%}
+
+          {%- comment -%} Spec badges {%- endcomment -%}
+          <div class="tc-coffee__specs">
+            {%- if section.settings.spec_1 -%}
+              <span class="tc-coffee__spec-badge">{{ section.settings.spec_1 }}</span>
+            {%- endif -%}
+            {%- if section.settings.spec_2 -%}
+              <span class="tc-coffee__spec-badge">{{ section.settings.spec_2 }}</span>
+            {%- endif -%}
+            {%- if section.settings.spec_3 -%}
+              <span class="tc-coffee__spec-badge">{{ section.settings.spec_3 }}</span>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Pricing {%- endcomment -%}
+          <div class="tc-coffee__pricing">
+            <s class="tc-coffee__price-original"{% unless first_variant.compare_at_price > first_variant.price %} hidden{% endunless %}>&#8377;{{ first_variant.compare_at_price | divided_by: 100 }}</s>
+            <strong class="tc-coffee__price-current">&#8377;{{ first_variant.price | divided_by: 100 }}</strong>
+          </div>
+
+          {%- comment -%} Variant selector + Add to cart {%- endcomment -%}
+          {%- assign tc_coffee_form_id = 'coffee-form-' | append: section.id -%}
+          {%- form 'product', product, id: tc_coffee_form_id, class: 'tc-coffee-form', novalidate: 'novalidate' -%}
+            {%- if product.variants.size > 1 -%}
+              <div class="tc-coffee__variant-selector">
+                {%- for variant in product.variants -%}
+                  {%- if variant.available -%}
+                    <input
+                      type="radio"
+                      id="tc-coffee-variant-{{ variant.id }}"
+                      name="id"
+                      value="{{ variant.id }}"
+                      class="tc-coffee__variant-radio"
+                      data-price="{{ variant.price }}"
+                      data-compare="{{ variant.compare_at_price | default: 0 }}"
+                      {% if variant.id == first_variant.id %}checked{% endif %}
+                    />
+                    <label for="tc-coffee-variant-{{ variant.id }}" class="tc-coffee__variant-pill">{{ variant.title }}</label>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <input type="hidden" name="id" value="{{ first_variant.id }}" />
+            {%- endif -%}
+
+            <button
+              type="submit"
+              class="tc-coffee__add-to-cart"
+              name="add"
+              {%- unless first_variant.available %} disabled {% endunless -%}
+            >
+              {%- if first_variant.available -%}
+                Add to cart
+              {%- else -%}
+                Sold out
+              {%- endif -%}
+            </button>
+          {%- endform -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('{{ section.settings.section_id }}');
+    if (!root) return;
+    var now = root.querySelector('.tc-coffee__price-current');
+    var was = root.querySelector('.tc-coffee__price-original');
+    var inr = function (p) { return '₹' + Math.round(p / 100).toLocaleString('en-IN'); };
+    root.addEventListener('change', function (e) {
+      var r = e.target;
+      if (!r.classList.contains('tc-coffee__variant-radio')) return;
+      var price = +r.dataset.price, compare = +r.dataset.compare;
+      now.textContent = inr(price);
+      was.hidden = !(compare > price);
+      if (compare > price) was.textContent = inr(compare);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "TC Coffee Feature",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID (for anchor links)",
+      "default": "coffee-section"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Coffee"
+    },
+    {
+      "type": "text",
+      "id": "product_handle",
+      "label": "Coffee product handle",
+      "default": "naadan-kerala-coffee"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "spec_1",
+      "label": "Spec badge 1",
+      "default": "Medium Roast Robusta"
+    },
+    {
+      "type": "text",
+      "id": "spec_2",
+      "label": "Spec badge 2",
+      "default": "Filter Grind"
+    },
+    {
+      "type": "text",
+      "id": "spec_3",
+      "label": "Spec badge 3",
+      "default": "No Chicory"
+    }
+  ],
+  "presets": [
+    { "name": "TC Coffee Feature" }
+  ]
+}
+{% endschema %}

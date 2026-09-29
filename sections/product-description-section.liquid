@@ -1,6 +1,35 @@
 {%- if product.description != blank -%}
+{%- liquid
+  assign desc_title = product.title | downcase
+  assign desc_asset_image = blank
+  assign desc_asset_alt = 'Close view of PureLeven spice'
+  if section.settings.image == blank
+    if product.handle contains 'black-pepper' or desc_title contains 'black pepper'
+      assign desc_asset_image = 'pl-prod-black-pepper-closeup.webp'
+      assign desc_asset_alt = 'Close view of whole Kerala black peppercorns'
+    elsif product.handle contains 'kerala-white-pepper' or desc_title contains 'white pepper'
+      assign desc_asset_image = 'pl-prod-white-pepper-closeup.webp'
+      assign desc_asset_alt = 'Close view of whole white peppercorns'
+    elsif product.handle contains 'premium-cassia-cinnamon' or desc_title contains 'cassia'
+      assign desc_asset_image = 'pl-prod-cassia-closeup.webp'
+      assign desc_asset_alt = 'Close view of cassia cinnamon sticks'
+    elsif product.handle contains 'aromatic-true-cinnamon-ceylon' or desc_title contains 'ceylon'
+      assign desc_asset_image = 'pl-prod-ceylon-closeup.webp'
+      assign desc_asset_alt = 'Close view of Ceylon cinnamon sticks'
+    elsif product.handle contains 'kerala-adimali-clove' or desc_title contains 'clove'
+      assign desc_asset_image = 'pl-prod-clove-closeup.webp'
+      assign desc_asset_alt = 'Close view of whole clove buds'
+    elsif product.handle contains 'star-anise' or desc_title contains 'star anise'
+      assign desc_asset_image = 'pl-prod-star-anise-process.webp'
+      assign desc_asset_alt = 'Close view of whole star anise pods'
+    elsif product.handle contains 'turmeric' or desc_title contains 'turmeric'
+      assign desc_asset_image = 'pl-prod-turmeric-closeup.webp'
+      assign desc_asset_alt = 'Close view of turmeric roots'
+    endif
+  endif
+-%}
 <section class="pl-desc-section">
-  <div class="pl-desc-container{% if section.settings.image == blank %} pl-desc-container--no-img{% endif %}">
+  <div class="pl-desc-container{% if section.settings.image == blank and desc_asset_image == blank %} pl-desc-container--no-img{% endif %}">
 
     {%- if section.settings.image != blank -%}
     <div class="pl-desc-image-col">
@@ -9,6 +38,17 @@
           alt="{{ section.settings.image.alt | default: product.title | escape }}"
           width="900"
           height="{{ 900 | divided_by: section.settings.image.aspect_ratio | round }}"
+          loading="lazy"
+          class="pl-desc-img"
+        >
+    </div>
+    {%- elsif desc_asset_image != blank -%}
+    <div class="pl-desc-image-col">
+        <img
+          src="{{ desc_asset_image | asset_url }}"
+          alt="{{ desc_asset_alt | escape }}"
+          width="1200"
+          height="900"
           loading="lazy"
           class="pl-desc-img"
         >
@@ -142,11 +182,11 @@
 
 /* Mobile */
 @media screen and (max-width: 749px) {
-  .pl-desc-section { padding: 56px 0; }
+  .pl-desc-section { padding: 32px 0; }
   .pl-desc-container {
     grid-template-columns: 1fr;
-    gap: 36px;
-    padding: 0 20px;
+    gap: 18px;
+    padding: 0 16px;
   }
   .pl-desc-img {
     aspect-ratio: 3/2;
@@ -155,7 +195,14 @@
     aspect-ratio: 3/2;
   }
   .pl-desc-heading { font-size: 2.6rem; }
-  .pl-desc-body { font-size: 1.5rem; }
+  .pl-desc-body {
+    max-height: 14rem;
+    overflow: hidden;
+    font-size: 1.45rem;
+    line-height: 1.65;
+    -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+  }
 }
 </style>
 

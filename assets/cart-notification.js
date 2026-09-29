@@ -18,8 +18,10 @@ class CartNotification extends HTMLElement {
     this.notification.addEventListener(
       'transitionend',
       () => {
-        this.notification.focus();
+        const scrollY = window.scrollY;
+        this.notification.focus({ preventScroll: true });
         trapFocus(this.notification);
+        window.scrollTo(0, scrollY);
       },
       { once: true }
     );

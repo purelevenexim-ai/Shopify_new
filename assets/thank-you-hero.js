@@ -271,12 +271,19 @@
     }
   }
 
-  // Track thank-you view event
+  // Track purchase event (GA4 standard schema — importable into Google Ads)
   if (typeof gtag === 'function') {
-    gtag('event', 'purchase_complete', {
-      order_id: orderData.orderId,
+    gtag('event', 'purchase', {
+      transaction_id: orderData.orderId,
       value: parseOrderTotalValue(orderData.orderTotal),
-      currency: 'INR'
+      currency: 'INR',
+      send_to: 'G-3FRSK7TEN2'
+    });
+    gtag('event', 'conversion', {
+      send_to: 'AW-10965185406/17nmCO7A_cMcEP7mzewo',
+      value: parseOrderTotalValue(orderData.orderTotal),
+      currency: 'INR',
+      transaction_id: orderData.orderId
     });
   }
 

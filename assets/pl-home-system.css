@@ -1,0 +1,125 @@
+/* ============================================================
+   PureLeven homepage design system
+   Harmonises homepage surfaces with the product-card language.
+
+   Scoped to body.template-index so product/collection/cart pages
+   are untouched. Token prefix is --plh- (not --pl-) because the
+   theme already defines --pl-* globals; reusing that prefix made
+   these values silently resolve to the theme's.
+   ============================================================ */
+
+body.template-index {
+  --plh-teal: #004438;
+  --plh-teal-2: #2E7D6E;
+  --plh-gold: #F4D976;
+  --plh-gold-2: #EFC948;
+
+  --plh-surface: #FFFFFF;
+  --plh-tint: #F6F4EE;
+  --plh-hair: rgba(27, 94, 86, 0.16);
+  --plh-hair-soft: rgba(27, 94, 86, 0.09);
+
+  --plh-r: 1.4rem;
+  --plh-shadow: 0 1px 2px rgba(18, 36, 31, 0.05), 0 6px 18px rgba(18, 36, 31, 0.06);
+  --plh-shadow-lift: 0 2px 4px rgba(18, 36, 31, 0.05), 0 12px 30px rgba(18, 36, 31, 0.1);
+}
+
+/* ---------- Surfaces: one radius, one hairline, one shadow ----------
+   Specificity is body + 2 classes so these beat the per-section
+   <style> blocks, which tie at 0,2,0 but render later in the document. */
+body.template-index .pl-values__card,
+body.template-index .pl-team__card,
+body.template-index .pl-eco__cluster-card,
+body.template-index .pl-eco__support-card,
+body.template-index .pl-eco__guide-card,
+body.template-index .pl-faq__item,
+body.template-index .pl-review-card {
+  border-radius: var(--plh-r);
+  border: 1px solid var(--plh-hair-soft);
+  box-shadow: var(--plh-shadow);
+  background: var(--plh-surface);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* .pl-eco__hero-card is deliberately NOT in the group above. Its section
+   paints a dark green gradient and writes cream text on top of it; forcing
+   the light surface here left the cream text on white at 1.09:1 — invisible.
+   It still gets the shared geometry and the hover lift. */
+body.template-index .pl-eco__hero-card {
+  border-radius: var(--plh-r);
+  box-shadow: var(--plh-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+body.template-index .pl-values__card:hover,
+body.template-index .pl-team__card:hover,
+body.template-index .pl-eco__hero-card:hover,
+body.template-index .pl-eco__cluster-card:hover,
+body.template-index .pl-eco__support-card:hover,
+body.template-index .pl-eco__guide-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--plh-shadow-lift);
+}
+
+/* ---------- Media wells share the card's tint ---------- */
+body.template-index .pl-team__card img,
+body.template-index .pl-eco__cluster-card img {
+  background: var(--plh-tint);
+}
+
+body.template-index .pl-review-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--plh-tint);
+}
+
+/* ---------- Horizontal overflow guard ----------
+   The customer-reviews carousel is a horizontal scroller whose content
+   escaped its section and widened the document to ~951px on a 390px
+   viewport, so mobile browsers zoomed out to fit and left a large blank
+   gutter. Clipping at the section level contains it; `clip` is used
+   rather than `hidden` so no new scroll container is created and any
+   sticky descendants keep working. The carousel still scrolls. */
+body.template-index .shopify-section:has(.pl-reviews-wrap) {
+  overflow-x: clip;
+}
+
+/* Fallback for browsers without :has() — same containment, applied to
+   the carousel's own wrapper. */
+@supports not selector(:has(*)) {
+  body.template-index [class^='custom-spice-stories'] {
+    overflow-x: clip;
+  }
+}
+
+/* Belt and braces: never let the page itself scroll sideways. */
+body.template-index {
+  overflow-x: clip;
+}
+
+/* ---------- Keyboard focus, consistent across the page ---------- */
+body.template-index a:focus-visible,
+body.template-index button:focus-visible,
+body.template-index summary:focus-visible {
+  outline: 2px solid var(--plh-teal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Motion preference ---------- */
+@media (prefers-reduced-motion: reduce) {
+  body.template-index .pl-values__card,
+  body.template-index .pl-team__card,
+  body.template-index .pl-eco__hero-card,
+  body.template-index .pl-eco__cluster-card,
+  body.template-index .pl-eco__support-card,
+  body.template-index .pl-eco__guide-card,
+  body.template-index .plc {
+    transition: none;
+  }
+  body.template-index .pl-values__card:hover,
+  body.template-index .pl-team__card:hover,
+  body.template-index .pl-eco__cluster-card:hover {
+    transform: none;
+  }
+}

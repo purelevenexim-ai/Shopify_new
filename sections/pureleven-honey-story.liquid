@@ -1,0 +1,185 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    background: var(--tc-background, #F6F0E6);
+    padding: 64px 0;
+  }
+  .hn-story { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+  .hn-story__top {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start;
+    margin-bottom: 4rem;
+  }
+  .hn-story__eyebrow {
+    font-size: 0.76rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #9A5C0A; margin-bottom: 0.9rem;
+  }
+  .hn-story__heading {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    font-weight: 800; color: #1C1008;
+    letter-spacing: -0.03em; line-height: 1.15;
+    margin: 0 0 1.1rem;
+  }
+  .hn-story__body {
+    font-size: 0.96rem; line-height: 1.8; color: #5C3D1A;
+    margin: 0 0 1.2rem;
+  }
+  .hn-story__facts {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+    margin-top: 1.6rem;
+  }
+  .hn-story__fact {
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+  }
+  .hn-story__fact-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #9A5C0A; margin-bottom: 0.2rem;
+  }
+  .hn-story__fact-value {
+    font-size: 0.9rem; font-weight: 600; color: #1C1008;
+  }
+
+  /* Right column: visual stats */
+  .hn-story__stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .hn-stat {
+    background: #fff; border-radius: 1rem;
+    padding: 1.6rem 1.2rem;
+    text-align: center;
+  }
+  .hn-stat__num {
+    font-family: 'Manrope', sans-serif;
+    font-size: 2.2rem; font-weight: 800; color: #9A5C0A;
+    line-height: 1; margin-bottom: 0.4rem;
+  }
+  .hn-stat__label {
+    font-size: 0.82rem; font-weight: 600; color: #5C3D1A;
+    line-height: 1.4;
+  }
+  .hn-stat--wide {
+    grid-column: span 2;
+    display: flex; align-items: center; gap: 1.2rem;
+    text-align: left; padding: 1.2rem 1.4rem;
+  }
+  .hn-stat--wide .hn-stat__icon { font-size: 2.4rem; flex-shrink: 0; }
+  .hn-stat--wide .hn-stat__body { }
+  .hn-stat--wide .hn-stat__num { font-size: 1.4rem; }
+
+  /* Types row */
+  .hn-types { }
+  .hn-types__eyebrow {
+    font-size: 0.76rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #9A5C0A;
+    text-align: center; margin-bottom: 0.6rem;
+  }
+  .hn-types__title {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 800; color: #1C1008;
+    text-align: center; letter-spacing: -0.02em; margin: 0 0 2rem;
+  }
+  .hn-types__grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  }
+  .hn-type {
+    background: #fff; border-radius: 1rem; padding: 1.5rem 1.2rem;
+  }
+  .hn-type__icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .hn-type__name { font-size: 0.95rem; font-weight: 700; color: #1C1008; margin-bottom: 0.4rem; }
+  .hn-type__desc { font-size: 0.84rem; line-height: 1.65; color: #6B4C28; }
+
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} { padding: 48px 0; }
+    .hn-story__top { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 2.5rem; }
+    .hn-types__grid { grid-template-columns: 1fr; }
+    .hn-stat--wide { grid-column: span 2; }
+  }
+{%- endstyle -%}
+
+<div class="hn-story">
+  <div class="hn-story__top">
+    <div>
+      <p class="hn-story__eyebrow">From the Forests</p>
+      <h2 class="hn-story__heading">From Idukki's High-Range Forests to Your Home</h2>
+      <p class="hn-story__body">Kerala's forests — especially the high ranges of Idukki and the green hills of Wayanad — produce some of India's finest wild honey. The bees forage across cardamom estates, wild flora, and forest blooms.</p>
+      <p class="hn-story__body">Our Naadan honey is collected by traditional beekeepers who have worked these forests for generations. Filtered, not heated — so the natural enzymes, pollen, and forest aroma stay in every jar.</p>
+      <div class="hn-story__facts">
+        <div class="hn-story__fact">
+          <div class="hn-story__fact-label">Source</div>
+          <div class="hn-story__fact-value">Idukki & Wayanad</div>
+        </div>
+        <div class="hn-story__fact">
+          <div class="hn-story__fact-label">Type</div>
+          <div class="hn-story__fact-value">Wild forest, Naadan</div>
+        </div>
+        <div class="hn-story__fact">
+          <div class="hn-story__fact-label">Processing</div>
+          <div class="hn-story__fact-value">Filtered, not heated</div>
+        </div>
+        <div class="hn-story__fact">
+          <div class="hn-story__fact-label">Additives</div>
+          <div class="hn-story__fact-value">None — pure honey</div>
+        </div>
+      </div>
+    </div>
+    <div class="hn-story__stats">
+      <div class="hn-stat">
+        <div class="hn-stat__num">800m+</div>
+        <div class="hn-stat__label">Altitude in Idukki forests</div>
+      </div>
+      <div class="hn-stat">
+        <div class="hn-stat__num">0</div>
+        <div class="hn-stat__label">Added ingredients or preservatives</div>
+      </div>
+      <div class="hn-stat">
+        <div class="hn-stat__num">100%</div>
+        <div class="hn-stat__label">Natural, raw honey from Kerala</div>
+      </div>
+      <div class="hn-stat">
+        <div class="hn-stat__num">3rd Gen</div>
+        <div class="hn-stat__label">Kerala beekeepers supplying us</div>
+      </div>
+      <div class="hn-stat hn-stat--wide">
+        <span class="hn-stat__icon">🍯</span>
+        <div class="hn-stat__body">
+          <div class="hn-stat__num">Why does it crystallise?</div>
+          <div class="hn-stat__label">Crystallisation is the proof it was never heated. Raw honey naturally solidifies — it's a quality signal, not spoilage.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hn-types">
+    <p class="hn-types__eyebrow">Know Your Honey</p>
+    <h3 class="hn-types__title">Understanding Kerala Honey</h3>
+    <div class="hn-types__grid">
+      <div class="hn-type">
+        <div class="hn-type__icon">🌳</div>
+        <div class="hn-type__name">Wild Forest Honey</div>
+        <div class="hn-type__desc">From wild bee colonies in Idukki and Wayanad forests. Darker, richer, with a complex flavour from diverse forest flora. The most prized variety.</div>
+      </div>
+      <div class="hn-type">
+        <div class="hn-type__icon">🍯</div>
+        <div class="hn-type__name">Naadan Honey</div>
+        <div class="hn-type__desc">Traditional Kerala honey from local beekeepers. Lighter, milder, and great for everyday use in tea, food, or eating directly. The household favourite.</div>
+      </div>
+      <div class="hn-type">
+        <div class="hn-type__icon">⚗️</div>
+        <div class="hn-type__name">Processed vs Raw</div>
+        <div class="hn-type__desc">Processed honey is heated to stop crystallisation — this destroys enzymes and strips the aroma. Ours is filtered only, so everything the bees put in stays in.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Honey Story",
+  "settings": [],
+  "presets": [{ "name": "Honey Story" }]
+}
+{% endschema %}

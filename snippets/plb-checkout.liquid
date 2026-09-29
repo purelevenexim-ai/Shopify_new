@@ -1,0 +1,40 @@
+{%- comment -%}
+  plb-checkout.liquid — the one checkout control on the page.
+
+  A plain link to Shopify's own checkout (Theme settings > pl_checkout_url,
+  /checkout). No third-party button is mounted here, so it is real markup from
+  first paint. On desktop it sits inside the summary panel; on mobile the same
+  element is pinned to the bottom of the screen (see pl-cart-b.css), so there
+  is exactly one of it in the page.
+
+  data-basil-cta lets crm-attribution.js sync attribution before the shopper
+  leaves the page.
+
+  Shopify's checkout charges no cash-on-delivery fee, so none is quoted here.
+
+  Params: grand_p, mrp_p, ship_free
+{%- endcomment -%}
+
+{%- liquid
+  assign co_url = settings.pl_checkout_url | default: '/checkout'
+-%}
+
+<div class="plb-co">
+  <p class="plb-co__meta">
+    <span>Arrives <b data-plb-eta>soon</b></span>
+    {%- if settings.pl_cod_enabled -%}
+      <span>Cash on delivery</span>
+    {%- endif -%}
+  </p>
+  <div class="plb-co__row">
+    <span class="plb-co__amt">
+      {% render 'plb-money', p: grand_p %}
+      {%- if mrp_p > grand_p -%}<s>{% render 'plb-money', p: mrp_p %}</s>{%- endif -%}
+      {%- unless ship_free -%}<small class="plb-co__plus">+ delivery</small>{%- endunless -%}
+    </span>
+    <a class="plb-cta" href="{{ co_url }}" data-basil-cta="proceed-checkout">
+      Checkout
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>
+    </a>
+  </div>
+</div>

@@ -120,6 +120,113 @@
         font-size: 14px !important;
       }
     }
+
+    /* Purchase controls: quantity + cart on one row, Buy Now below */
+    #shopify-section-{{ section.id }} .pl-qty-atc-row {
+      display: grid;
+      grid-template-columns: minmax(10rem, 0.42fr) minmax(0, 1fr);
+      align-items: stretch;
+      gap: 1rem;
+      margin-top: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .product-form__input.product-form__quantity {
+      min-width: 0;
+      margin: 0 !important;
+      width: 100% !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .quantity__label,
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .quantity__rules,
+    #shopify-section-{{ section.id }} .pl-qty-atc-row volume-pricing {
+      display: none !important;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .quantity {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 5.2rem !important;
+      display: flex;
+      align-items: stretch;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .quantity__input {
+      flex: 1 !important;
+      min-width: 0 !important;
+      min-height: 5.2rem !important;
+      line-height: 5.2rem !important;
+      text-align: center !important;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .quantity__button {
+      min-height: 5.2rem !important;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row product-form.product-form {
+      margin: 0 !important;
+      width: 100% !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .product-form__buttons {
+      margin: 0 !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      width: 100% !important;
+      max-width: none !important;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .product-form__submit {
+      width: 100% !important;
+      min-height: 5.2rem !important;
+      min-width: 0;
+      white-space: nowrap;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .product-form__submit.loading > .loading__spinner {
+      display: flex !important;
+      justify-content: center;
+      width: 2.2rem;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .product-form__submit.loading > span {
+      opacity: 0;
+    }
+    #shopify-section-{{ section.id }} .pl-qty-atc-row .shopify-payment-button {
+      display: none !important;
+    }
+    /* Shiprocket Buy Now — full-width below the qty/cart row */
+    #shopify-section-{{ section.id }} .pl-sr-fp {
+      display: block !important;
+      grid-column: 1 / -1;
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0.8rem 0 0 !important;
+    }
+    #shopify-section-{{ section.id }} .pl-sr-fp .shiprocket-headless,
+    #shopify-section-{{ section.id }} .pl-sr-fp .sr-headless-checkout { width: 100% !important; max-width: none !important; }
+    #shopify-section-{{ section.id }} .pl-sr-fp button.sr-headless-checkout,
+    #shopify-section-{{ section.id }} .pl-sr-fp button.sr-headless-checkout:link,
+    #shopify-section-{{ section.id }} .pl-sr-fp button.sr-headless-checkout:visited {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 1rem !important;
+      width: 100% !important;
+      min-height: 5.2rem !important;
+      padding: 10px 18px !important;
+      background: #FCE477 !important;
+      color: #1A1A1A !important;
+      border: none !important;
+      border-radius: 4px !important;
+      font-family: var(--font-body-family), sans-serif !important;
+      font-size: 1.4rem !important;
+      font-weight: 700 !important;
+      white-space: nowrap !important;
+      box-sizing: border-box !important;
+      cursor: pointer !important;
+    }
+    #shopify-section-{{ section.id }} .pl-sr-fp button.sr-headless-checkout:hover {
+      background: #F4D138 !important;
+    }
   {%- endstyle -%}
 
   {%- if section.id == 'featured_product_Jbtqkm' or section.id == 'featured_product_xC3rVR' -%}
@@ -195,12 +302,14 @@
         font-size: 1rem !important;
       }
       /* Hide non-essential blocks for compact card view */
-      #shopify-section-{{ section.id }} .product-form__buttons,
-      #shopify-section-{{ section.id }} .product__quantity,
       #shopify-section-{{ section.id }} .pl-trust-strip,
       #shopify-section-{{ section.id }} #checkout-message,
       #shopify-section-{{ section.id }} .limited-stock-container {
         display: none !important;
+      }
+      /* Keep quantity + ATC visible in card view */
+      #shopify-section-{{ section.id }} .pl-qty-atc-row {
+        display: grid !important;
       }
       #shopify-section-{{ section.id }} .product-form {
         margin-top: 0.75rem;
@@ -218,6 +327,115 @@
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script>
+  (function() {
+    var sectionId = '{{ section.id }}';
+    var formId = 'product-form-' + sectionId;
+
+    function wrapQtyAtc() {
+      var qty = document.getElementById('Quantity-Form-' + sectionId);
+      if (!qty || qty.parentElement.classList.contains('pl-qty-atc-row')) return;
+      var pf = qty.nextElementSibling;
+      if (!pf) return;
+      var row = document.createElement('div');
+      row.className = 'pl-qty-atc-row';
+      qty.parentNode.insertBefore(row, qty);
+      row.appendChild(qty);
+      row.appendChild(pf);
+      var sr = document.querySelector('#shopify-section-' + sectionId + ' .pl-sr-fp');
+      if (sr) { row.appendChild(sr); }
+    }
+
+    function attachShiprocketPreAdd() {
+      var section = document.getElementById('shopify-section-' + sectionId);
+      if (!section) return false;
+
+      var button = section.querySelector('.pl-sr-fp .sr-headless-checkout');
+      var form = document.getElementById(formId);
+      if (!button || !form || button.dataset.plPreAddBound === 'true') return false;
+
+      button.dataset.plPreAddBound = 'true';
+      button.addEventListener('click', function(event) {
+        if (button.dataset.plShiprocketReady === 'true') {
+          delete button.dataset.plShiprocketReady;
+          return;
+        }
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        var formData = new FormData(form);
+        var quantityInput = document.getElementById('Quantity-' + sectionId);
+        if (quantityInput && !formData.has('quantity')) {
+          formData.append('quantity', quantityInput.value || '1');
+        }
+
+        button.setAttribute('aria-disabled', 'true');
+        button.classList.add('loading');
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData,
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+          .then(function(response) {
+            if (!response.ok) throw new Error('Unable to add product before checkout');
+            return response.json();
+          })
+          .then(function() {
+            if (
+              window.shiprocketCheckoutEvents
+              && typeof window.shiprocketCheckoutEvents.buyProduct === 'function'
+            ) {
+              window.shiprocketCheckoutEvents.buyProduct({
+                target: button,
+                currentTarget: button,
+                preventDefault: function() {},
+                stopPropagation: function() {},
+                stopImmediatePropagation: function() {}
+              });
+              return;
+            }
+
+            button.dataset.plShiprocketReady = 'true';
+            button.click();
+          })
+          .catch(function(error) {
+            console.error(error);
+            button.removeAttribute('aria-disabled');
+            button.classList.remove('loading');
+          });
+      }, true);
+
+      return true;
+    }
+
+    function waitForShiprocketButton() {
+      if (attachShiprocketPreAdd()) return;
+
+      var section = document.getElementById('shopify-section-' + sectionId);
+      if (!section || !window.MutationObserver) return;
+
+      var observer = new MutationObserver(function() {
+        if (attachShiprocketPreAdd()) observer.disconnect();
+      });
+      observer.observe(section, { childList: true, subtree: true });
+
+      window.setTimeout(function() {
+        observer.disconnect();
+      }, 15000);
+    }
+
+    function initPurchaseLayout() {
+      wrapQtyAtc();
+      waitForShiprocketButton();
+    }
+
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initPurchaseLayout); }
+    else { initPurchaseLayout(); }
+  })();
+  </script>
 
   {% comment %} TODO: assign `product.selected_or_first_available_variant` to variable and replace usage to reduce verbosity {% endcomment %}
 
@@ -316,13 +534,6 @@
                       {%- endif -%}
                     </div>
                   {%- endif -%}
-                  {%- unless placeholder -%}
-                    <div {{ block.shopify_attributes }}>
-                      {%- form 'product', product -%}
-                        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                      {%- endform -%}
-                    </div>
-                  {%- endunless -%}
                 {%- when 'sku' -%}
                   <p
                     class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -579,6 +790,7 @@
                     product_form_id: product_form_id,
                     section_id: section.id
                   -%}
+                  <div class="shiprocket-headless pl-sr-fp" data-type="product" aria-label="Buy Now"></div>
                 {%- when 'custom_liquid' -%}
                   {{ block.settings.custom_liquid }}
                 {%- when 'rating' -%}
@@ -655,14 +867,6 @@
     </script>
     <script src="{{ 'product-model.js' | asset_url }}" defer></script>
   {%- endif -%}
-
-  {%- liquid
-    if product.selected_or_first_available_variant.featured_media
-      assign seo_media = product.selected_or_first_available_variant.featured_media
-    else
-      assign seo_media = product.featured_media
-    endif
-  -%}
 
   <script type="application/ld+json">
     {{ product | structured_data }}
@@ -915,8 +1119,8 @@
         },
         {
           "type": "header",
-          "content": "t:sections.main-product.blocks.icon_with_text.settings.content.label",
-          "info": "t:sections.main-product.blocks.icon_with_text.settings.content.info"
+          "content": "Content",
+          "info": "Add up to three icon-and-text items."
         },
         {
           "type": "select",

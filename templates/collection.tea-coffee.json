@@ -1,0 +1,280 @@
+{
+  "sections": {
+    "tc-hero": {
+      "type": "pureleven-tc-hero",
+      "settings": {
+        "heading": "Tea Powder & Filter Coffee from Kerala",
+        "subheading": "Kadak chai · BOP black tea · Orange Pekoe · South Indian filter coffee",
+        "trust_line": "Tea powder for milk tea & kadak chai • BOP black tea • South Indian filter coffee • Pan India delivery",
+        "cta_1_text": "Shop Tea",
+        "cta_1_link": "#tea-collection",
+        "cta_2_text": "Shop Coffee",
+        "cta_2_link": "#coffee-section"
+      }
+    },
+    "tc-drink-selector": {
+      "type": "pureleven-tc-drink-selector",
+      "settings": {
+        "heading": "Find Your Perfect Cup"
+      }
+    },
+    "tc-products-tea": {
+      "type": "pureleven-tc-products",
+      "settings": {
+        "section_id": "tea-collection",
+        "heading": "Tea Powder for Every Cup",
+        "description": "Milk tea powder, BOP black tea, Orange Pekoe & cardamom tea — selected for taste and colour",
+        "product_handles": "premium-milk-tea-powder,premium-black-tea-granules,orange-pekoe-powder,cardamom-tea",
+        "grid_columns_desktop": 4,
+        "grid_columns_mobile": "2"
+      }
+    },
+    "tc-comparison": {
+      "type": "pureleven-tc-comparison",
+      "settings": {
+        "heading": "Which tea powder is right for you?",
+        "show_sizes": true
+      }
+    },
+    "tc-trial-pack": {
+      "type": "pureleven-tc-trial-pack",
+      "settings": {
+        "heading": "Still not sure which one you'll like?",
+        "subheading": "Try all four first.",
+        "product_handle": "starter-trial-pack-4-varieties",
+        "button_text": "Try All Four"
+      }
+    },
+    "tc-coffee-feature": {
+      "type": "pureleven-tc-coffee",
+      "settings": {
+        "section_id": "coffee-section",
+        "heading": "South Indian Filter Coffee",
+        "product_handle": "naadan-kerala-coffee",
+        "image_position": "left",
+        "spec_1": "Medium Roast Robusta",
+        "spec_2": "Filter Grind",
+        "spec_3": "No Chicory"
+      }
+    },
+    "tc-other-categories": {
+      "type": "pureleven-tc-other-categories",
+      "settings": {
+        "heading": "Also from PureLeven",
+        "spices_label": "Kerala Spices",
+        "spices_sub": "Pepper, cardamom, turmeric & more",
+        "spices_link": "/",
+        "honey_label": "Naadan Honey",
+        "honey_sub": "Raw, unfiltered Kerala honey",
+        "honey_link": "/products/naadan-pure-honey"
+      }
+    },
+    "tc-brewing-guide": {
+      "type": "pureleven-tc-brewing",
+      "settings": {
+        "heading": "How do you like your cup?"
+      },
+      "blocks": {
+        "tab-milk": {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Milk Tea",
+            "product_handle": "premium-milk-tea-powder",
+            "step_1": "Boil 1 cup water with 1 tsp tea",
+            "step_2": "Add milk, bring to a boil",
+            "step_3": "Simmer 30 seconds, strain"
+          }
+        },
+        "tab-black": {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Black Tea",
+            "product_handle": "premium-black-tea-granules",
+            "step_1": "Boil 1 cup water",
+            "step_2": "Add 1 tsp tea, steep 3-4 minutes",
+            "step_3": "Strain and serve"
+          }
+        },
+        "tab-coffee": {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Filter Coffee",
+            "product_handle": "naadan-kerala-coffee",
+            "step_1": "Add 2 tbsp coffee to the filter",
+            "step_2": "Pour hot water slowly, let it drip",
+            "step_3": "Mix decoction with hot milk to taste"
+          }
+        }
+      },
+      "block_order": ["tab-milk", "tab-black", "tab-coffee"]
+    },
+    "tc-story": {
+      "type": "pureleven-tc-story",
+      "settings": {
+        "heading": "Selected for the cup",
+        "intro": "We don't choose tea from a photograph. It's selected by checking what matters in the cup — taste, colour, aroma and how it performs when brewed.",
+        "step_1_title": "Source",
+        "step_1_copy": "We search for teas that perform beautifully in the cup.",
+        "step_2_title": "Evaluate",
+        "step_2_copy": "Checked for taste, colour, aroma and brew consistency.",
+        "step_3_title": "Pack",
+        "step_3_copy": "Packed fresh in small batches to preserve quality."
+      }
+    },
+    "tc-reviews": {
+      "type": "pureleven-tc-reviews",
+      "settings": {
+        "heading": "Loved by tea drinkers",
+        "show_rating": true,
+        "rating_text": "4.9 Google rating · 56 reviews"
+      },
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "The tea was really good, Cardamom Chai is my favourite.",
+            "author": "Verified Customer"
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Ordered a third time now. Milk tea powder makes the best chai.",
+            "author": "Repeat Customer"
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Packaging was excellent and delivery was fast.",
+            "author": "Verified Customer"
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3"]
+    },
+    "tc-faq": {
+      "type": "pureleven-tc-faq",
+      "settings": {
+        "heading": "Questions about our tea & coffee?"
+      },
+      "blocks": {
+        "faq-1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Which tea should I buy for normal milk tea?",
+            "answer": "<p>Premium Milk Tea Powder is made for everyday milk tea — balanced strength, brews fast.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Which tea is suitable for black tea?",
+            "answer": "<p>Premium Black Tea Granules or Orange Pekoe Powder both work well without milk.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the difference between Milk Tea Powder and Black Tea Granules?",
+            "answer": "<p>Milk Tea Powder is fine-milled for a quick, balanced milk tea. Black Tea Granules are BOP grade for a brighter, cleaner cup.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does Cardamom Tea contain real cardamom?",
+            "answer": "<p>Yes — black tea blended with whole green cardamom.</p>"
+          }
+        },
+        "faq-5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does the coffee contain chicory?",
+            "answer": "<p>No — Naadan Kerala Coffee is pure Robusta with no chicory.</p>"
+          }
+        },
+        "faq-6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How should I store tea and coffee?",
+            "answer": "<p>Keep in an airtight container, away from direct sunlight and moisture.</p>"
+          }
+        },
+        "faq-7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How much tea should I use for one cup?",
+            "answer": "<p>About 1 teaspoon per cup, adjust to taste.</p>"
+          }
+        },
+        "faq-8": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What are the available pack sizes?",
+            "answer": "<p>Most teas are available in 100g, 200g, 400/500g and 800g/1kg sizes.</p>"
+          }
+        },
+        "faq-9": {
+          "type": "faq_item",
+          "settings": {
+            "question": "When do I get free delivery?",
+            "answer": "<p>Add any 2 items and delivery is free — two different teas or coffees, two sizes, or 2 packs of the same one. Orders above ₹649 also ship free.</p>"
+          }
+        },
+        "faq-10": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Which is the best tea powder for kadak chai?",
+            "answer": "<p>Premium Milk Tea Powder is selected specifically for strong, flavourful milk tea — it gives the colour, taste and aroma that makes a proper kadak chai. It works equally well for everyday chai patti.</p>"
+          }
+        },
+        "faq-11": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is BOP tea? How is it different from dust tea?",
+            "answer": "<p>BOP stands for Broken Orange Pekoe — a CTC broken-leaf grade that brews a brighter, cleaner cup than dust grades (like SRD). It gives more body and colour than dust with less bitterness. Our Premium Black Tea Granules are BOP grade, ideal for black tea and lighter milk tea.</p>"
+          }
+        },
+        "faq-12": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is the filter coffee chicory-free?",
+            "answer": "<p>Yes — Naadan Kerala Coffee is pure Robusta with no chicory added. It is ground for South Indian filter preparation. If you prefer a chicory blend (degree coffee / hotel style), that is a separate formulation we may add later.</p>"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5", "faq-6", "faq-7", "faq-8", "faq-9", "faq-10", "faq-11", "faq-12"]
+    },
+    "tc-final-cta": {
+      "type": "pureleven-tc-final-cta",
+      "settings": {
+        "heading": "Your everyday cup, selected better.",
+        "primary_cta_text": "Shop Tea",
+        "primary_cta_link": "#tea-collection",
+        "secondary_cta_text": "Shop Coffee",
+        "secondary_cta_link": "#coffee-section",
+        "tertiary_text": "Not sure?",
+        "tertiary_cta_text": "Try the Starter Pack",
+        "tertiary_cta_link": "#trial-pack"
+      }
+    }
+  },
+  "order": [
+    "tc-hero",
+    "tc-other-categories",
+    "tc-products-tea",
+    "tc-trial-pack",
+    "tc-coffee-feature",
+    "tc-drink-selector",
+    "tc-reviews",
+    "tc-comparison",
+    "tc-brewing-guide",
+    "tc-story",
+    "tc-faq",
+    "tc-final-cta"
+  ]
+}

@@ -1,0 +1,154 @@
+/*
+ * Our Story page — sections moved off the homepage for a leaner, faster home page.
+ */
+{
+  "sections": {
+    "farmer_sketch_mobile_story": {
+      "type": "custom-farmer-sketch",
+      "settings": {
+        "image": "shopify://shop_images/image2.webp"
+      }
+    },
+    "image_with_text_tJJyHK": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_qJDX9m": {
+          "type": "heading",
+          "settings": {
+            "heading": "Open. Crush. Smell the Difference.",
+            "heading_size": "h2"
+          }
+        },
+        "text_farmstory_01": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Fresh whole spices change cooking instantly. Pepper turns brighter. Cardamom opens sweeter. Cloves grow warmer. Even a simple meal tastes fuller when the natural oils are still there.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_qJDX9m",
+        "text_farmstory_01"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/ca3.webp",
+        "height": "medium",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "center",
+        "mobile_content_alignment": "center",
+        "section_color_scheme": "",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rich_text_hGLmUH": {
+      "type": "custom-spice-stories",
+      "blocks": {
+        "review_thomas": {
+          "type": "review",
+          "settings": {
+            "review_text": "Very happy with this combo. Fresh spices and good quantity. Saves me time buying separately.",
+            "author_name": "Thomas Varkey",
+            "author_image_url": "https://cdn.shopify.com/s/files/1/0942/9096/8869/files/papa1.jpg?v=1753650257",
+            "review_time": "15h ago",
+            "star_rating": 5,
+            "show_verified_badge": true,
+            "verified_label": "Verified Buyer",
+            "reaction_summary": "👍❤😮",
+            "reaction_count": "124",
+            "comments_count": "25 Comments"
+          }
+        },
+        "review_mary": {
+          "type": "review",
+          "settings": {
+            "review_text": "ഞാൻ കുരുമുളക് വാങ്ങിയിട്ടുണ്ട്. നല്ല quality product ആണ്. ഒരെണ്ണം പോലും മോശമില്ലായിരുന്നു 🌟",
+            "author_name": "Mary",
+            "author_image_url": "https://cdn.shopify.com/s/files/1/0942/9096/8869/files/ammachi.jpg?v=1753650243",
+            "review_time": "8h ago",
+            "star_rating": 5,
+            "show_verified_badge": true,
+            "verified_label": "Verified Buyer",
+            "reaction_summary": "👍❤😮",
+            "reaction_count": "27",
+            "comments_count": "5 Comments"
+          }
+        },
+        "review_kuriakose": {
+          "type": "review",
+          "settings": {
+            "review_text": "Very fresh cardamom. Nice aroma, just like we need for tea. Happy with the quality. 🔥",
+            "author_name": "Kuriakose K.P",
+            "author_image_url": "https://cdn.shopify.com/s/files/1/0942/9096/8869/files/papa.jpg?v=1753650232",
+            "review_time": "1h ago",
+            "star_rating": 5,
+            "show_verified_badge": true,
+            "verified_label": "Verified Buyer",
+            "reaction_summary": "👍❤😮",
+            "reaction_count": "27",
+            "comments_count": "15 Comments"
+          }
+        },
+        "review_sabuji": {
+          "type": "review",
+          "settings": {
+            "review_text": "ये कॉम्बो बहुत अच्छा है। सभी मसाले ताजे और खुशबूदार हैं। 👍",
+            "author_name": "Sabuji K",
+            "author_image_url": "https://cdn.shopify.com/s/files/1/0942/9096/8869/files/appachan.jpg?v=1753650216",
+            "review_time": "5h ago",
+            "star_rating": 5,
+            "show_verified_badge": true,
+            "verified_label": "Verified Buyer",
+            "reaction_summary": "👍❤😮",
+            "reaction_count": "13",
+            "comments_count": "25 Comments"
+          }
+        }
+      },
+      "block_order": [
+        "review_thomas",
+        "review_mary",
+        "review_kuriakose",
+        "review_sabuji"
+      ],
+      "name": "Customer Reviews",
+      "settings": {
+        "eyebrow": "From real kitchens",
+        "heading": "What Home Cooks Notice First",
+        "subtitle": "Usually the aroma. Then the way everyday cooking feels easier.",
+        "icon": "star",
+        "show_ornament": true,
+        "aggregate_product_name": "Kerala Spices - Pureleven",
+        "aggregate_rating_value": "4.9",
+        "aggregate_review_count": "45",
+        "aggregate_best_rating": "5",
+        "padding_top": 32,
+        "padding_bottom": 52
+      }
+    },
+    "pureleven_team": {
+      "type": "pureleven-team",
+      "name": "PureLeven Team",
+      "settings": {
+        "eyebrow": "Meet the people behind it",
+        "heading": "The PureLeven Team",
+        "description": "From the farm to your kitchen — the hands that make it happen.",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "farmer_sketch_mobile_story",
+    "image_with_text_tJJyHK",
+    "rich_text_hGLmUH",
+    "pureleven_team"
+  ]
+}

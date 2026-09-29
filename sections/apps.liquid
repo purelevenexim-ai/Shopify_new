@@ -4,6 +4,168 @@
   {%- endfor -%}
 </div>
 
+<script>
+(function () {
+  function patchCarthikeBtn() {
+    var container = document.getElementById('carthike-carousel-div');
+    if (!container) { setTimeout(patchCarthikeBtn, 400); return; }
+    var sr = container.shadowRoot;
+    if (!sr) { setTimeout(patchCarthikeBtn, 400); return; }
+    var style = document.createElement('style');
+    style.textContent = `
+      /* ── Wrapper ── */
+      .carousel-wrapper {
+        background: #FAFAF8 !important;
+        border-radius: 24px !important;
+        border: 1px solid rgba(7,131,98,0.12) !important;
+        box-shadow: 0 4px 32px rgba(0,68,56,0.07) !important;
+        padding: 2.8rem 2rem 3rem !important;
+      }
+
+      /* ── Header ── */
+      .carousel-header-container {
+        background: transparent !important;
+        border-radius: 0 !important;
+        padding: 0 0 1.8rem !important;
+        margin-bottom: 1.6rem !important;
+        border-bottom: 1px solid rgba(0,68,56,0.1) !important;
+        gap: 1.2rem !important;
+      }
+      .carousel-header-container h2 {
+        color: #004438 !important;
+        font-weight: 800 !important;
+        font-size: 1.15rem !important;
+        letter-spacing: -0.02em !important;
+        margin-bottom: 0.4rem !important;
+      }
+      .carousel-header-container .text-3xl {
+        color: #004438 !important;
+        font-weight: 900 !important;
+      }
+      .carousel-header-container .text-yellow-400 { color: #D4821A !important; }
+      .carousel-header-container .text-yellow-300 { color: #D4821A !important; opacity: 0.5 !important; }
+      .carousel-header-container .text-sm { color: #5a5a5a !important; }
+
+      /* ── "Leave a Review" button ── */
+      .bg-blue-600 {
+        background-color: #004438 !important;
+        border-color: #004438 !important;
+        border-radius: 999px !important;
+        font-weight: 700 !important;
+        font-size: 0.8rem !important;
+        letter-spacing: 0.03em !important;
+        padding: 0.6rem 1.4rem !important;
+        transition: background 0.2s ease !important;
+      }
+      .bg-blue-600:hover { background-color: #078362 !important; }
+
+      /* ── Review cards ── */
+      .carousel-card {
+        background: #ffffff !important;
+        border-radius: 18px !important;
+        border: 1px solid rgba(7,131,98,0.1) !important;
+        box-shadow: 0 2px 12px rgba(0,68,56,0.07) !important;
+        width: 240px !important;
+        overflow: hidden !important;
+        margin: 0.4rem !important;
+      }
+
+      /* ── Avatar ── */
+      .carousel-card .flex.justify-center {
+        padding: 1.6rem 1rem 0.75rem !important;
+        background: linear-gradient(160deg, rgba(7,131,98,0.06), rgba(0,68,56,0.03)) !important;
+      }
+      .carousel-card img.w-8 {
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: 50% !important;
+        border: 2.5px solid rgba(7,131,98,0.25) !important;
+        box-shadow: 0 2px 8px rgba(0,68,56,0.12) !important;
+        object-fit: cover !important;
+      }
+
+      /* ── Stars badge ── */
+      .star-container {
+        background: rgba(212,130,26,0.1) !important;
+        border: 1px solid rgba(212,130,26,0.2) !important;
+        border-radius: 999px !important;
+        box-shadow: none !important;
+        padding: 4px 14px !important;
+        margin-bottom: 0.5rem !important;
+      }
+      .rating-stars {
+        color: #D4821A !important;
+        font-size: 0.85rem !important;
+        letter-spacing: 1px !important;
+      }
+
+      /* ── Card content ── */
+      .carousel-card .p-4 {
+        padding: 1rem 1.2rem 1.4rem !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.35rem !important;
+      }
+      .carousel-card .font-semibold {
+        color: #004438 !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+        margin-bottom: 0.1rem !important;
+      }
+      .carousel-card .text-xs {
+        color: #888 !important;
+        font-size: 0.72rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+      .review-text {
+        color: #333 !important;
+        font-size: 0.78rem !important;
+        line-height: 1.6 !important;
+        margin-top: 0.25rem !important;
+      }
+
+      /* ── Nav arrows ── */
+      #prevBtn, #nextBtn {
+        background: #ffffff !important;
+        border: 1px solid rgba(0,68,56,0.15) !important;
+        border-radius: 50% !important;
+        box-shadow: 0 2px 8px rgba(0,68,56,0.1) !important;
+        transition: background 0.18s ease, color 0.18s ease !important;
+        margin-top: 1.2rem !important;
+      }
+      #prevBtn:hover, #nextBtn:hover {
+        background: #004438 !important;
+      }
+      #prevBtn:hover svg, #nextBtn:hover svg {
+        stroke: #FCE477 !important;
+      }
+    `;
+    sr.appendChild(style);
+
+    // Sort cards: 5-star first, then 4-star, etc.
+    function sortReviews() {
+      var carousel = sr.getElementById('carousel');
+      if (!carousel) { setTimeout(sortReviews, 300); return; }
+      var cards = Array.from(carousel.querySelectorAll('.carousel-card'));
+      if (cards.length < 2) { setTimeout(sortReviews, 300); return; }
+      cards.sort(function(a, b) {
+        var sa = (a.querySelector('.rating-stars') || {textContent: ''}).textContent.replace(/[^★]/g, '').length;
+        var sb = (b.querySelector('.rating-stars') || {textContent: ''}).textContent.replace(/[^★]/g, '').length;
+        return sb - sa;
+      });
+      cards.forEach(function(c) { carousel.appendChild(c); });
+    }
+    sortReviews();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { setTimeout(patchCarthikeBtn, 800); });
+  } else {
+    setTimeout(patchCarthikeBtn, 800);
+  }
+})();
+</script>
+
 {% schema %}
 {
   "name": "t:sections.apps.name",
