@@ -119,7 +119,35 @@
         "color_scheme": "scheme-1",
         "padding_top": 52,
         "padding_bottom": 56
-      }
+      },
+      "blocks": {
+        "cat_spices": {
+          "type": "category",
+          "settings": {
+            "collection": "spices",
+            "label": "Kerala Spices"
+          }
+        },
+        "cat_tea_coffee": {
+          "type": "category",
+          "settings": {
+            "collection": "tea-coffee",
+            "label": "Tea & Coffee"
+          }
+        },
+        "cat_honey": {
+          "type": "category",
+          "settings": {
+            "collection": "honey",
+            "label": "Kerala Honey"
+          }
+        }
+      },
+      "block_order": [
+        "cat_spices",
+        "cat_tea_coffee",
+        "cat_honey"
+      ]
     },
     "custom_liquid_nrxnGY": {
       "type": "pureleven-delivery-promise",

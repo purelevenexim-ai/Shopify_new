@@ -135,29 +135,27 @@
               {%- endfor -%}
             </ul>
           </nav>
-          {%- liquid
-            assign cat_a = collections['spices']
-            assign cat_b = collections['tea-coffee']
-          -%}
+          {%- assign pl_cat_handles = 'spices,tea-coffee,honey' | split: ',' -%}
+          {%- assign pl_cat_names = 'Kerala Spices,Tea & Coffee,Kerala Honey' | split: ',' -%}
           <div class="pl-drawer-cats">
             <p class="pl-drawer-cats__label">Shop by category</p>
-            <div class="pl-drawer-cats__grid">
-              <a class="pl-drawer-cat" href="{{ cat_a.url | default: '/collections/spices' }}">
-                <span class="pl-drawer-cat__img">
-                  {%- if cat_a.image != blank -%}<img src="{{ cat_a.image | image_url: width: 200 }}" alt="Kerala Spices" width="66" height="66" loading="lazy">
-                  {%- elsif cat_a.featured_image != blank -%}<img src="{{ cat_a.featured_image | image_url: width: 200 }}" alt="Kerala Spices" width="66" height="66" loading="lazy">
-                  {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>{%- endif -%}
-                </span>
-                <span class="pl-drawer-cat__name">Kerala Spices</span>
-              </a>
-              <a class="pl-drawer-cat" href="{{ cat_b.url | default: '/collections/tea-coffee' }}">
-                <span class="pl-drawer-cat__img">
-                  {%- if cat_b.image != blank -%}<img src="{{ cat_b.image | image_url: width: 200 }}" alt="Tea & Coffee" width="66" height="66" loading="lazy">
-                  {%- elsif cat_b.featured_image != blank -%}<img src="{{ cat_b.featured_image | image_url: width: 200 }}" alt="Tea & Coffee" width="66" height="66" loading="lazy">
-                  {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>{%- endif -%}
-                </span>
-                <span class="pl-drawer-cat__name">Tea &amp; Coffee</span>
-              </a>
+            <div class="pl-drawer-cats__rail">
+              {%- for h in pl_cat_handles -%}
+                {%- assign c = collections[h] -%}
+                {%- assign c_img = c.image | default: c.products.first.featured_image -%}
+                {%- assign c_url = '/collections/' | append: h -%}
+                <a class="pl-drawer-cat" href="{{ c_url }}">
+                  <span class="pl-drawer-cat__img">
+                    {%- if c_img != blank -%}
+                      {{ c_img | image_url: width: 480 | image_tag: loading: 'lazy', widths: '240,360,480', sizes: '46vw', alt: '' }}
+                    {%- endif -%}
+                  </span>
+                  <span class="pl-drawer-cat__body">
+                    <span class="pl-drawer-cat__name">{{ pl_cat_names[forloop.index0] }}</span>
+                    {%- if c.products_count > 0 -%}<span class="pl-drawer-cat__meta">{{ c.products_count }} products</span>{%- endif -%}
+                  </span>
+                </a>
+              {%- endfor -%}
             </div>
           </div>
           <div class="menu-drawer__utility-links">

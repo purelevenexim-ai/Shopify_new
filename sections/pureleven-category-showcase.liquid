@@ -4,12 +4,7 @@
 <script src="{{ 'tc-product-card.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer="defer"></script>
 
-{%- liquid
-  assign col_a = section.settings.collection_a
-  assign col_b = section.settings.collection_b
-  assign label_a = section.settings.label_a | default: col_a.title
-  assign label_b = section.settings.label_b | default: col_b.title
--%}
+{%- assign cat_blocks = section.blocks | where: 'type', 'category' -%}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -61,38 +56,41 @@
     opacity: 1;
   }
 
-  /* category tabs: joined hairline segments with a small thumbnail */
-  .pl-cat__chips {
-    display: flex; gap: 1px; margin: 0 0 32px; padding: 0; list-style: none;
-    background: var(--sk-line2); border: 1px solid var(--sk-line2); border-radius: 2px; overflow: hidden;
+  /* category rail: large image cards, swipeable when there are more than fit */
+  .pl-cat__rail {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 46%; gap: 10px;
+    margin: 0 0 32px; padding: 0 0 4px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch; list-style: none;
   }
-  .pl-cat__chip {
-    flex: 1 1 0; min-width: 0; display: flex; align-items: center; gap: 10px;
-    min-height: 52px; margin: 0; padding: 8px 12px 8px 8px;
-    background: #fff !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
-    color: var(--sk-fg) !important; cursor: pointer; text-align: left;
-    font-family: var(--sk-sans) !important; font-size: 14px !important; font-weight: 600 !important;
-    line-height: 1.2 !important; letter-spacing: -0.01em !important; text-transform: none !important;
-    transition: background-color 0.2s, color 0.2s;
+  .pl-cat__rail::-webkit-scrollbar { display: none; }
+  .pl-cat__card {
+    display: flex; flex-direction: column; min-width: 0; margin: 0; padding: 0; overflow: hidden; scroll-snap-align: start;
+    background: var(--sk-card) !important; border: 1px solid var(--sk-line) !important; border-radius: 3px !important;
+    box-shadow: none !important; color: var(--sk-fg) !important; cursor: pointer; text-align: left;
+    font-family: var(--sk-sans) !important; letter-spacing: 0 !important; text-transform: none !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .pl-cat__chip > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .pl-cat__chip:hover { background: var(--sk-bg2) !important; }
-  .pl-cat__chip:focus-visible { outline: 2px solid var(--sk-acc); outline-offset: -3px; }
-  .pl-cat__chip-img { flex: none; width: 34px; height: 34px; overflow: hidden; border: 1px solid var(--sk-line); border-radius: 2px; background: var(--sk-bg2); }
-  .pl-cat__chip-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .pl-cat__chip[aria-selected='true'] {
-    background: var(--sk-acc-soft) !important; color: var(--sk-acc) !important;
-    box-shadow: inset 0 0 0 1px var(--sk-acc) !important;
-  }
+  .pl-cat__card:hover { border-color: #BFC3CC !important; }
+  .pl-cat__card:focus-visible { outline: 2px solid var(--sk-acc); outline-offset: 2px; }
+  .pl-cat__card-img { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--sk-bg2); border-bottom: 1px solid var(--sk-line); }
+  .pl-cat__card-img img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--sk-ease); }
+  .pl-cat__card:hover .pl-cat__card-img img { transform: scale(1.03); }
+  .pl-cat__card-body { display: grid; gap: 2px; padding: 10px 12px 12px; transition: background-color 0.2s; }
+  .pl-cat__card-num { color: var(--sk-acc); font: 700 10.5px/1.4 var(--sk-mono) !important; letter-spacing: 0.08em !important; }
+  .pl-cat__card-name { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--sk-fg); font-size: 15px !important; font-weight: 600 !important; line-height: 1.3 !important; letter-spacing: -0.01em !important; }
+  .pl-cat__card-meta { color: var(--sk-muted); font: 400 10.5px/1.5 var(--sk-mono) !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; }
+  .pl-cat__card[aria-selected='true'] { border-color: var(--sk-acc) !important; box-shadow: inset 0 0 0 1px var(--sk-acc) !important; }
+  .pl-cat__card[aria-selected='true'] .pl-cat__card-body { background: var(--sk-acc-soft); }
+  .pl-cat__card[aria-selected='true'] .pl-cat__card-name { color: var(--sk-acc); }
   @media screen and (min-width: 750px) {
-    .pl-cat__chips { display: inline-flex; margin-bottom: 40px; }
-    .pl-cat__chip { flex: 0 1 auto; min-width: 220px; min-height: 60px; padding: 10px 20px 10px 10px; font-size: 15px !important; }
-    .pl-cat__chip-img { width: 40px; height: 40px; }
+    .pl-cat__rail { grid-auto-columns: calc((100% - 30px) / 4); gap: 10px; margin-bottom: 40px; scrollbar-width: thin; }
+    .pl-cat__card-body { padding: 14px 16px 16px; }
+    .pl-cat__card-name { font-size: 17px !important; }
   }
 
   .pl-cat__groups { display: flex; flex-direction: column; gap: 48px; }
-  .pl-cat__groups[data-active='a'] .pl-cat__group[data-group='b'],
-  .pl-cat__groups[data-active='b'] .pl-cat__group[data-group='a'] { display: none; }
+  .pl-cat__group[hidden] { display: none !important; }
 
   .pl-cat__group-head {
     display: flex; align-items: baseline; justify-content: space-between;
@@ -136,34 +134,74 @@
         </div>
       {%- endif -%}
 
-      <div class="pl-cat__chips" role="tablist" aria-label="{{ section.settings.title | default: 'Product categories' | escape }}">
-        <button type="button" role="tab" class="pl-cat__chip" aria-selected="true"
-          aria-controls="pl-cat-group-a-{{ section.id }}" data-pl-cat-chip="a">
-          {%- assign img_a = col_a.image | default: col_a.featured_image -%}
-          {%- if img_a != blank -%}<span class="pl-cat__chip-img"><img src="{{ img_a | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy"></span>{%- endif -%}
-          <span>{{ label_a }}</span></button>
-        <button type="button" role="tab" class="pl-cat__chip" aria-selected="false"
-          aria-controls="pl-cat-group-b-{{ section.id }}" data-pl-cat-chip="b">
-          {%- assign img_b = col_b.image | default: col_b.featured_image -%}
-          {%- if img_b != blank -%}<span class="pl-cat__chip-img"><img src="{{ img_b | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy"></span>{%- endif -%}
-          <span>{{ label_b }}</span></button>
+{%- capture pl_cat_label -%}{{ section.settings.title | strip_html | default: 'Product categories' }}{%- endcapture -%}
+      <div class="pl-cat__rail" role="tablist" aria-label="{{ pl_cat_label | escape }}">
+        {%- if cat_blocks.size > 0 -%}
+          {%- for block in cat_blocks -%}
+            {%- assign cat = block.settings.collection -%}
+            {%- assign cat_img = block.settings.image | default: cat.image | default: cat.products.first.featured_image -%}
+            <button type="button" role="tab" class="pl-cat__card" id="pl-cat-tab-{{ section.id }}-{{ forloop.index }}"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-controls="pl-cat-group-{{ section.id }}-{{ forloop.index }}" data-pl-cat-chip="{{ forloop.index }}" {{ block.shopify_attributes }}>
+              <span class="pl-cat__card-img">
+                {%- if cat_img != blank -%}
+                  {{ cat_img | image_url: width: 640 | image_tag: loading: 'lazy', widths: '240,360,480,640', sizes: '(min-width: 750px) 25vw, 46vw', alt: '' }}
+                {%- endif -%}
+              </span>
+              <span class="pl-cat__card-body">
+                <span class="pl-cat__card-num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+                <span class="pl-cat__card-name">{{ block.settings.label | default: cat.title }}</span>
+                {%- if cat != blank -%}<span class="pl-cat__card-meta">{{ cat.products_count }} products</span>{%- endif -%}
+              </span>
+            </button>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..2) -%}
+            {%- if forloop.first -%}{%- assign cat = section.settings.collection_a -%}{%- assign cat_label = section.settings.label_a | default: cat.title -%}
+            {%- else -%}{%- assign cat = section.settings.collection_b -%}{%- assign cat_label = section.settings.label_b | default: cat.title -%}{%- endif -%}
+            {%- assign cat_img = cat.image | default: cat.products.first.featured_image -%}
+            <button type="button" role="tab" class="pl-cat__card" id="pl-cat-tab-{{ section.id }}-{{ i }}"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-controls="pl-cat-group-{{ section.id }}-{{ i }}" data-pl-cat-chip="{{ i }}">
+              <span class="pl-cat__card-img">
+                {%- if cat_img != blank -%}
+                  {{ cat_img | image_url: width: 640 | image_tag: loading: 'lazy', widths: '240,360,480,640', sizes: '(min-width: 750px) 25vw, 46vw', alt: '' }}
+                {%- endif -%}
+              </span>
+              <span class="pl-cat__card-body">
+                <span class="pl-cat__card-num">0{{ i }}</span>
+                <span class="pl-cat__card-name">{{ cat_label }}</span>
+                {%- if cat != blank -%}<span class="pl-cat__card-meta">{{ cat.products_count }} products</span>{%- endif -%}
+              </span>
+            </button>
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     </div>
 
-    <div class="pl-cat__groups" data-active="a" data-pl-cat-groups>
-      {%- for group in (1..2) -%}
+    <div class="pl-cat__groups" data-pl-cat-groups>
+      {%- liquid
+        if cat_blocks.size > 0
+          assign group_count = cat_blocks.size
+        else
+          assign group_count = 2
+        endif
+      -%}
+      {%- for n in (1..group_count) -%}
         {%- liquid
-          if forloop.first
-            assign key = 'a'
-            assign current = col_a
-            assign current_label = label_a
+          if cat_blocks.size > 0
+            assign b = cat_blocks[forloop.index0]
+            assign current = b.settings.collection
+            assign current_label = b.settings.label | default: current.title
+          elsif forloop.first
+            assign current = section.settings.collection_a
+            assign current_label = section.settings.label_a | default: current.title
           else
-            assign key = 'b'
-            assign current = col_b
-            assign current_label = label_b
+            assign current = section.settings.collection_b
+            assign current_label = section.settings.label_b | default: current.title
           endif
         -%}
-        <div class="pl-cat__group" data-group="{{ key }}" id="pl-cat-group-{{ key }}-{{ section.id }}">
+        <div class="pl-cat__group" id="pl-cat-group-{{ section.id }}-{{ n }}" role="tabpanel" aria-labelledby="pl-cat-tab-{{ section.id }}-{{ n }}" data-group="{{ n }}"{% unless forloop.first %} hidden{% endunless %}>
           <div class="page-width">
             <div class="pl-cat__group-head">
               <h3 class="pl-cat__group-label">{{ current_label }}</h3>
@@ -195,15 +233,14 @@
   (function () {
     var root = document.getElementById('shopify-section-{{ section.id }}');
     if (!root) return;
-    var groups = root.querySelector('[data-pl-cat-groups]');
     var chips = root.querySelectorAll('[data-pl-cat-chip]');
-    if (!groups || !chips.length) return;
+    var groups = root.querySelectorAll('[data-pl-cat-groups] .pl-cat__group');
     chips.forEach(function (chip) {
       chip.addEventListener('click', function () {
-        groups.setAttribute('data-active', chip.dataset.plCatChip);
-        chips.forEach(function (c) {
-          c.setAttribute('aria-selected', String(c.dataset.plCatChip === chip.dataset.plCatChip));
-        });
+        var key = chip.dataset.plCatChip;
+        chips.forEach(function (c) { c.setAttribute('aria-selected', String(c === chip)); });
+        groups.forEach(function (g) { g.hidden = g.dataset.group !== key; });
+        chip.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
       });
     });
   })();
@@ -215,42 +252,166 @@
   "tag": "section",
   "class": "section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "FRESH ESSENTIALS" },
-    { "type": "inline_richtext", "id": "title", "label": "Heading", "default": "Our top spices" },
     {
-      "type": "select", "id": "heading_size", "label": "Heading size", "default": "h2",
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "FRESH ESSENTIALS"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Heading",
+      "default": "Our top spices"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "default": "h2",
       "options": [
-        { "value": "h2", "label": "Medium" },
-        { "value": "h1", "label": "Large" },
-        { "value": "h0", "label": "Extra large" }
+        {
+          "value": "h2",
+          "label": "Medium"
+        },
+        {
+          "value": "h1",
+          "label": "Large"
+        },
+        {
+          "value": "h0",
+          "label": "Extra large"
+        }
       ]
     },
-    { "type": "richtext", "id": "description", "label": "Description" },
-
-
-
-    { "type": "header", "content": "Category A" },
-    { "type": "collection", "id": "collection_a", "label": "Collection A" },
-    { "type": "text", "id": "label_a", "label": "Label A", "default": "Kerala Spices" },
-
-    { "type": "header", "content": "Category B" },
-    { "type": "collection", "id": "collection_b", "label": "Collection B" },
-    { "type": "text", "id": "label_b", "label": "Label B", "default": "Tea & Coffee" },
-
-    { "type": "header", "content": "Layout" },
-    { "type": "range", "id": "products_to_show", "min": 2, "max": 25, "step": 1, "label": "Max products per category", "default": 12 },
-    { "type": "range", "id": "columns_desktop", "min": 2, "max": 5, "step": 1, "label": "Columns on desktop", "default": 3 },
     {
-      "type": "select", "id": "columns_mobile", "label": "Columns on mobile", "default": "2",
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Fallback (used when no category blocks)"
+    },
+    {
+      "type": "collection",
+      "id": "collection_a",
+      "label": "Collection A"
+    },
+    {
+      "type": "text",
+      "id": "label_a",
+      "label": "Label A",
+      "default": "Kerala Spices"
+    },
+    {
+      "type": "header",
+      "content": "Category B"
+    },
+    {
+      "type": "collection",
+      "id": "collection_b",
+      "label": "Collection B"
+    },
+    {
+      "type": "text",
+      "id": "label_b",
+      "label": "Label B",
+      "default": "Tea & Coffee"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 25,
+      "step": 1,
+      "label": "Max products per category",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "default": "2",
       "options": [
-        { "value": "1", "label": "1 column" },
-        { "value": "2", "label": "2 columns" }
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
       ]
     },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding top", "default": 52 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding bottom", "default": 56 }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 56
+    }
   ],
-  "presets": [{ "name": "Category Showcase" }]
+  "presets": [
+    {
+      "name": "Category Showcase"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label (defaults to collection title)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card image (defaults to collection image)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8
 }
 {% endschema %}
