@@ -1,0 +1,34 @@
+{%- comment -%}
+Category name / two-line intro used by the homepage showcase and grouped collection pages.
+Props: handle, part ('title' | 'text'), collection (fallback for categories added later)
+{%- endcomment -%}
+{%- liquid
+  assign _t = ''
+  case handle
+    when 'spices'
+      if part == 'title'
+        assign _t = 'Kerala Spices'
+      else
+        assign _t = 'Grown in the hills of Idukki and Wayanad, harvested to order and packed in small batches. Cardamom, black pepper, cloves and more — no mixing, no adulteration.'
+      endif
+    when 'tea-coffee'
+      if part == 'title'
+        assign _t = 'Tea & Coffee'
+      else
+        assign _t = 'The everyday cup, selected better. Tea powder chosen for colour, taste and aroma in the cup, and South Indian filter coffee from Adimali with no chicory.'
+      endif
+    when 'honey'
+      if part == 'title'
+        assign _t = 'Kerala Honey'
+      else
+        assign _t = 'Naadan forest honey from the high ranges of Idukki and Wayanad, collected by traditional beekeepers. Unprocessed and pure, the way honey should taste.'
+      endif
+    else
+      if part == 'title'
+        assign _t = collection.title
+      else
+        assign _t = collection.description | strip_html | strip_newlines | truncatewords: 30
+      endif
+  endcase
+-%}
+{{- _t -}}

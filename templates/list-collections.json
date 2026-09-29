@@ -9,7 +9,8 @@
         "columns_desktop": 4,
         "columns_mobile": "2",
         "hidden_handles": "frontpage,products-for-cart-push",
-        "eyebrow": "All categories"
+        "eyebrow": "All categories",
+        "priority_handles": "spices,tea-coffee,honey"
       }
     }
   },

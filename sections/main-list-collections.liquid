@@ -14,6 +14,18 @@
   endif
 
   assign _hidden = section.settings.hidden_handles | remove: ' ' | split: ','
+  assign _prio = section.settings.priority_handles | remove: ' ' | split: ','
+  assign _ordered = collections | where: 'handle', '__none__'
+  for h in _prio
+    assign _one = collections | where: 'handle', h
+    assign _ordered = _ordered | concat: _one
+  endfor
+  for c in collections
+    unless _prio contains c.handle
+      assign _one = collections | where: 'handle', c.handle
+      assign _ordered = _ordered | concat: _one
+    endunless
+  endfor
   assign _n = 0
 -%}
 
@@ -22,9 +34,8 @@
     <p class="tc-eyebrow"><i>01</i> / {{ section.settings.eyebrow | escape }}</p>
     <h1 class="sk-colls__title">{{ section.settings.title }}</h1>
 
-    {%- paginate collections by 28 -%}
-      <ul class="sk-colls__grid" role="list">
-        {%- for c in collections -%}
+    <ul class="sk-colls__grid" role="list">
+        {%- for c in _ordered -%}
           {%- if _hidden contains c.handle or c.products_count == 0 -%}{%- continue -%}{%- endif -%}
           {%- assign _n = _n | plus: 1 -%}
           {%- assign _cf = c.title | slice: 0 | upcase -%}
@@ -57,9 +68,7 @@
             </a>
           </li>
         {%- endfor -%}
-      </ul>
-      {% render 'pagination', paginate: paginate %}
-    {%- endpaginate -%}
+    </ul>
   </div>
 </section>
 {% schema %}
@@ -72,6 +81,12 @@
       "id": "eyebrow",
       "label": "Eyebrow",
       "default": "All categories"
+    },
+    {
+      "type": "text",
+      "id": "priority_handles",
+      "label": "Show these first, in order (handles)",
+      "default": "spices,tea-coffee,honey"
     },
     {
       "type": "text",

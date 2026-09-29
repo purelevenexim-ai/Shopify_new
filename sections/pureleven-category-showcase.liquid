@@ -5,6 +5,13 @@
 <script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer="defer"></script>
 
 {%- assign cat_blocks = section.blocks | where: 'type', 'category' -%}
+{%- liquid
+  if cat_blocks.size > 0
+    assign group_total = cat_blocks.size
+  else
+    assign group_total = 2
+  endif
+-%}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -80,17 +87,64 @@
   .pl-cat__card-num { color: var(--sk-acc); font: 700 10.5px/1.4 var(--sk-mono) !important; letter-spacing: 0.08em !important; }
   .pl-cat__card-name { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--sk-fg); font-size: 15px !important; font-weight: 600 !important; line-height: 1.3 !important; letter-spacing: -0.01em !important; }
   .pl-cat__card-meta { color: var(--sk-muted); font: 400 10.5px/1.5 var(--sk-mono) !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; }
-  .pl-cat__card[aria-selected='true'] { border-color: var(--sk-acc) !important; box-shadow: inset 0 0 0 1px var(--sk-acc) !important; }
-  .pl-cat__card[aria-selected='true'] .pl-cat__card-body { background: var(--sk-acc-soft); }
-  .pl-cat__card[aria-selected='true'] .pl-cat__card-name { color: var(--sk-acc); }
+  .pl-cat__card[aria-pressed='true'] { border-color: var(--sk-acc) !important; box-shadow: inset 0 0 0 1px var(--sk-acc) !important; }
+  .pl-cat__card[aria-pressed='true'] .pl-cat__card-body { background: var(--sk-acc-soft); }
+  .pl-cat__card[aria-pressed='true'] .pl-cat__card-name { color: var(--sk-acc); }
   @media screen and (min-width: 750px) {
     .pl-cat__rail { grid-auto-columns: calc((100% - 30px) / 4); gap: 10px; margin-bottom: 40px; scrollbar-width: thin; }
     .pl-cat__card-body { padding: 14px 16px 16px; }
     .pl-cat__card-name { font-size: 17px !important; }
   }
 
-  .pl-cat__groups { display: flex; flex-direction: column; gap: 48px; }
-  .pl-cat__group[hidden] { display: none !important; }
+  .pl-cat__groups { display: flex; flex-direction: column; counter-reset: plcat; }
+  .pl-cat__group { counter-increment: plcat; }
+  .pl-cat__group:not(:first-child) {
+    margin-top: 48px; padding: 44px 0 52px;
+    background: var(--sk-bg2); border-top: 1px solid var(--sk-line);
+  }
+  .pl-cat__group:nth-child(odd):not(:first-child) { background: var(--sk-bg); }
+  .pl-cat__group:first-child .pl-cat__intro { display: none; }
+  .pl-cat__group:not(:first-child) .pl-cat__group-head { display: none; }
+  {%- if group_total > 1 -%}
+  #shopify-section-{{ section.id }} .section-{{ section.id }}-padding { padding-bottom: 0 !important; }
+  {%- endif -%}
+
+  #shopify-section-{{ section.id }} .pl-cat__intro { margin-bottom: 24px; }
+  #shopify-section-{{ section.id }} .pl-cat__intro-grid { display: grid; gap: 24px; padding: 0 8px; }
+  #shopify-section-{{ section.id }} .pl-cat__intro-eyebrow {
+    margin: 0 0 12px !important; color: var(--sk-muted) !important;
+    font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cat__intro-num { font-style: normal; color: var(--sk-acc); }
+  #shopify-section-{{ section.id }} .pl-cat__intro-num::before { content: counter(plcat, decimal-leading-zero); }
+  #shopify-section-{{ section.id }} .pl-cat__intro-title {
+    margin: 0 !important; color: var(--sk-fg) !important;
+    font-family: var(--sk-sans) !important; font-size: clamp(34px, 4.2vw, 60px) !important; font-weight: 500 !important;
+    line-height: 1.06 !important; letter-spacing: -0.055em !important; text-transform: none !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cat__intro-copy {
+    max-width: 560px; margin: 14px 0 0 !important; color: var(--sk-fg2) !important;
+    font-family: var(--sk-sans) !important; font-size: 15px !important; line-height: 1.65 !important; letter-spacing: -0.005em !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cat__intro-link {
+    display: inline-block; margin-top: 18px; padding-bottom: 2px; border-bottom: 1px solid currentColor;
+    color: var(--sk-acc) !important; text-decoration: none !important;
+    font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  }
+  #shopify-section-{{ section.id }} .pl-cat__intro-link:hover { color: var(--sk-acc-hover) !important; }
+  #shopify-section-{{ section.id }} .pl-cat__intro-link span { display: inline-block; transition: transform 0.2s var(--sk-ease); }
+  #shopify-section-{{ section.id }} .pl-cat__intro-link:hover span { transform: translateX(3px); }
+  #shopify-section-{{ section.id }} .pl-cat__intro-media { display: none; }
+  @media screen and (min-width: 750px) {
+    .pl-cat__group:not(:first-child) { margin-top: 72px; padding: 80px 0 88px; }
+    #shopify-section-{{ section.id }} .pl-cat__intro { margin-bottom: 40px; }
+    #shopify-section-{{ section.id }} .pl-cat__intro-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: end; gap: 56px; padding: 0; }
+    #shopify-section-{{ section.id }} .pl-cat__intro-media {
+      display: block; aspect-ratio: 16 / 10; overflow: hidden;
+      border: 1px solid var(--sk-line); border-radius: 3px; background: var(--sk-bg2);
+    }
+    #shopify-section-{{ section.id }} .pl-cat__intro-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  }
 
   .pl-cat__group-head {
     display: flex; align-items: baseline; justify-content: space-between;
@@ -135,13 +189,13 @@
       {%- endif -%}
 
 {%- capture pl_cat_label -%}{{ section.settings.title | strip_html | default: 'Product categories' }}{%- endcapture -%}
-      <div class="pl-cat__rail" role="tablist" aria-label="{{ pl_cat_label | escape }}">
+      <div class="pl-cat__rail" role="group" aria-label="{{ pl_cat_label | escape }}">
         {%- if cat_blocks.size > 0 -%}
           {%- for block in cat_blocks -%}
             {%- assign cat = block.settings.collection -%}
             {%- assign cat_img = block.settings.image | default: cat.image | default: cat.products.first.featured_image -%}
-            <button type="button" role="tab" class="pl-cat__card" id="pl-cat-tab-{{ section.id }}-{{ forloop.index }}"
-              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            <button type="button" class="pl-cat__card" id="pl-cat-tab-{{ section.id }}-{{ forloop.index }}"
+              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
               aria-controls="pl-cat-group-{{ section.id }}-{{ forloop.index }}" data-pl-cat-chip="{{ forloop.index }}" {{ block.shopify_attributes }}>
               <span class="pl-cat__card-img">
                 {%- if cat_img != blank -%}
@@ -160,8 +214,8 @@
             {%- if forloop.first -%}{%- assign cat = section.settings.collection_a -%}{%- assign cat_label = section.settings.label_a | default: cat.title -%}
             {%- else -%}{%- assign cat = section.settings.collection_b -%}{%- assign cat_label = section.settings.label_b | default: cat.title -%}{%- endif -%}
             {%- assign cat_img = cat.image | default: cat.products.first.featured_image -%}
-            <button type="button" role="tab" class="pl-cat__card" id="pl-cat-tab-{{ section.id }}-{{ i }}"
-              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            <button type="button" class="pl-cat__card" id="pl-cat-tab-{{ section.id }}-{{ i }}"
+              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
               aria-controls="pl-cat-group-{{ section.id }}-{{ i }}" data-pl-cat-chip="{{ i }}">
               <span class="pl-cat__card-img">
                 {%- if cat_img != blank -%}
@@ -201,7 +255,40 @@
             assign current_label = section.settings.label_b | default: current.title
           endif
         -%}
-        <div class="pl-cat__group" id="pl-cat-group-{{ section.id }}-{{ n }}" role="tabpanel" aria-labelledby="pl-cat-tab-{{ section.id }}-{{ n }}" data-group="{{ n }}"{% unless forloop.first %} hidden{% endunless %}>
+        {%- liquid
+          if cat_blocks.size > 0
+            assign current_img = b.settings.image | default: current.image | default: current.products.first.featured_image
+            assign current_intro = b.settings.intro
+          else
+            assign current_img = current.image | default: current.products.first.featured_image
+            assign current_intro = ''
+          endif
+          if current_intro == blank and current != blank
+            capture current_intro
+              render 'sk-category-copy', handle: current.handle, part: 'text', collection: current
+            endcapture
+          endif
+        -%}
+        <div class="pl-cat__group" id="pl-cat-group-{{ section.id }}-{{ n }}" aria-labelledby="pl-cat-title-{{ section.id }}-{{ n }}" data-group="{{ n }}">
+          <div class="pl-cat__intro">
+            <div class="page-width">
+              <div class="pl-cat__intro-grid">
+                <div class="pl-cat__intro-text">
+                  <p class="pl-cat__intro-eyebrow"><i class="pl-cat__intro-num"></i> / {{ section.settings.also_label | escape }}</p>
+                  <h3 class="pl-cat__intro-title" id="pl-cat-title-{{ section.id }}-{{ n }}">{{ current_label }}</h3>
+                  {%- if current_intro != blank -%}<p class="pl-cat__intro-copy">{{ current_intro | strip | escape }}</p>{%- endif -%}
+                  {%- if current != blank -%}
+                    <a href="{{ current.url }}" class="pl-cat__intro-link">Shop all {{ current_label }} <span aria-hidden="true">&rarr;</span></a>
+                  {%- endif -%}
+                </div>
+                {%- if current_img != blank -%}
+                  <div class="pl-cat__intro-media">
+                    {{ current_img | image_url: width: 1100 | image_tag: loading: 'lazy', widths: '550,800,1100', sizes: '(min-width: 750px) 45vw, 100vw', alt: '' }}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
           <div class="page-width">
             <div class="pl-cat__group-head">
               <h3 class="pl-cat__group-label">{{ current_label }}</h3>
@@ -213,7 +300,22 @@
           <div class="page-width">
             {%- if current != blank and current.products.size > 0 -%}
               <div class="plc-grid" role="list">
-                {%- for product in current.products limit: section.settings.products_to_show -%}
+                {%- assign _shown = 0 -%}
+                {%- for product in current.products -%}
+                  {%- if _shown >= section.settings.products_to_show -%}{%- break -%}{%- endif -%}
+                  {%- assign _skip = false -%}
+                  {%- if cat_blocks.size > 1 -%}
+                    {%- assign _phs = product.collections | map: 'handle' -%}
+                    {%- for ob in cat_blocks -%}
+                      {%- assign oc = ob.settings.collection -%}
+                      {%- if oc != blank and oc.handle != current.handle and oc.products_count < current.products_count and _phs contains oc.handle -%}
+                        {%- assign _skip = true -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  {%- if _skip -%}{%- continue -%}{%- endif -%}
+                  {%- assign _shown = _shown | plus: 1 -%}
                   <div role="listitem">
                     {%- render 'pureleven-tc-product-card', product: product -%}
                   </div>
@@ -234,12 +336,16 @@
     var root = document.getElementById('shopify-section-{{ section.id }}');
     if (!root) return;
     var chips = root.querySelectorAll('[data-pl-cat-chip]');
-    var groups = root.querySelectorAll('[data-pl-cat-groups] .pl-cat__group');
+    var wrap = root.querySelector('[data-pl-cat-groups]');
+    if (!wrap) return;
+    var groups = Array.prototype.slice.call(wrap.querySelectorAll(':scope > .pl-cat__group'));
+    // The chosen category moves to the top; the others follow in their usual order, each with its intro.
     chips.forEach(function (chip) {
       chip.addEventListener('click', function () {
         var key = chip.dataset.plCatChip;
-        chips.forEach(function (c) { c.setAttribute('aria-selected', String(c === chip)); });
-        groups.forEach(function (g) { g.hidden = g.dataset.group !== key; });
+        chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+        var picked = groups.filter(function (g) { return g.dataset.group === key; });
+        picked.concat(groups.filter(function (g) { return g.dataset.group !== key; })).forEach(function (g) { wrap.appendChild(g); });
         chip.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
       });
     });
@@ -288,6 +394,12 @@
       "type": "richtext",
       "id": "description",
       "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "also_label",
+      "label": "Label above the other categories",
+      "default": "Also from PureLeven"
     },
     {
       "type": "header",
@@ -408,6 +520,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "Card image (defaults to collection image)"
+        },
+        {
+          "type": "textarea",
+          "id": "intro",
+          "label": "Two-line intro (shown when this category is not the chosen one)"
         }
       ]
     }

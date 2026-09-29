@@ -148,40 +148,117 @@
             class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
           >
             <div class="loading-overlay gradient"></div>
-            <div class="sk-coll__bar">
-              <p><i>02</i> / {{ section.settings.grid_label | escape }}</p>
-              <p>
-                {{ collection.products_count }}
-                {% if collection.products_count == 1 %}item{% else %}items{% endif %}
-              </p>
-            </div>
-            <ul
-              id="product-grid"
-              data-id="{{ section.id }}"
-              class="
-                sk-coll-grid grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
-                grid--{{ section.settings.columns_desktop }}-col-desktop
-                {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
-              "
-            >
-              {% assign skip_card_product_styles = false %}
-              {%- for product in collection.products -%}
-                {% assign lazy_load = false %}
-                {%- if forloop.index > 2 -%}
-                  {%- assign lazy_load = true -%}
-                {%- endif -%}
-                <li
-                  class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-                  {% if settings.animations_reveal_on_scroll %}
-                    data-cascade
-                    style="--animation-order: {{ forloop.index }};"
-                  {% endif %}
-                >
-                  {%- render 'pureleven-tc-product-card', product: product, delivery_rule: 'two_items' -%}
-                </li>
-                {%- assign skip_card_product_styles = true -%}
-              {%- endfor -%}
-            </ul>
+            {%- liquid
+              assign _gh = section.settings.group_handles | remove: ' ' | split: ','
+              assign _keys = ''
+              for p in collection.products
+                assign _phs = p.collections | map: 'handle'
+                assign _best = 'other'
+                assign _best_n = 999999
+                for h in _gh
+                  if _phs contains h
+                    assign _gc = collections[h]
+                    if _gc.products_count < _best_n
+                      assign _best = h
+                      assign _best_n = _gc.products_count
+                    endif
+                  endif
+                endfor
+                assign _keys = _keys | append: _best | append: ','
+              endfor
+              assign _keys_arr = _keys | split: ','
+              assign _order = section.settings.group_handles | remove: ' ' | append: ',other' | split: ','
+              assign _nonempty = 0
+              for g in _order
+                if _keys_arr contains g
+                  assign _nonempty = _nonempty | plus: 1
+                endif
+              endfor
+              assign _grouped = false
+              if section.settings.group_by_category and _nonempty > 1
+                assign _grouped = true
+              endif
+              capture _ul_class
+                echo 'sk-coll-grid grid product-grid grid--' | append: section.settings.columns_mobile | append: '-col-tablet-down grid--' | append: section.settings.columns_desktop | append: '-col-desktop'
+              endcapture
+            -%}
+
+            {%- if _grouped -%}
+              <div id="product-grid" data-id="{{ section.id }}" class="sk-groups">
+                {%- assign _gi = 1 -%}
+                {%- for g in _order -%}
+                  {%- unless _keys_arr contains g -%}{%- continue -%}{%- endunless -%}
+                  {%- liquid
+                    assign _gi = _gi | plus: 1
+                    assign _count = 0
+                    for k in _keys_arr
+                      if k == g
+                        assign _count = _count | plus: 1
+                      endif
+                    endfor
+                    if g == 'other'
+                      assign _g_title = section.settings.other_title
+                      assign _g_text = ''
+                      assign _g_url = ''
+                    else
+                      assign _gcol = collections[g]
+                      capture _g_title
+                        render 'sk-category-copy', handle: g, part: 'title', collection: _gcol
+                      endcapture
+                      capture _g_text
+                        render 'sk-category-copy', handle: g, part: 'text', collection: _gcol
+                      endcapture
+                      assign _g_url = _gcol.url
+                    endif
+                  -%}
+                  <section class="sk-group" id="sk-group-{{ g }}" aria-labelledby="sk-group-title-{{ g }}">
+                    <div class="sk-group__head">
+                      <div class="sk-group__text">
+                        <p class="tc-eyebrow">
+                          <i>{% if _gi < 10 %}0{% endif %}{{ _gi }}</i> / {{ _count }}
+                          {% if _count == 1 %}product{% else %}products{% endif %}
+                        </p>
+                        <h2 class="sk-group__title" id="sk-group-title-{{ g }}">{{ _g_title | escape }}</h2>
+                        {%- if _g_text != blank -%}<p class="sk-group__copy">{{ _g_text | escape }}</p>{%- endif -%}
+                      </div>
+                      {%- if _g_url != blank -%}
+                        <a class="sk-group__link" href="{{ _g_url }}">View all <span aria-hidden="true">&rarr;</span></a>
+                      {%- endif -%}
+                    </div>
+                    <ul class="{{ _ul_class | strip }}">
+                      {%- for product in collection.products -%}
+                        {%- if _keys_arr[forloop.index0] == g -%}
+                          <li class="grid__item">
+                            {%- render 'pureleven-tc-product-card', product: product, delivery_rule: 'two_items' -%}
+                          </li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  </section>
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <div class="sk-coll__bar">
+                <p><i>02</i> / {{ section.settings.grid_label | escape }}</p>
+                <p>
+                  {{ collection.products_count }}
+                  {% if collection.products_count == 1 %}item{% else %}items{% endif %}
+                </p>
+              </div>
+              <ul id="product-grid" data-id="{{ section.id }}" class="{{ _ul_class | strip }}">
+                {%- for product in collection.products -%}
+                  <li
+                    class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    {% if settings.animations_reveal_on_scroll %}
+                      data-cascade
+                      style="--animation-order: {{ forloop.index }};"
+                    {% endif %}
+                  >
+                    {%- render 'pureleven-tc-product-card', product: product, delivery_rule: 'two_items' -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
 
             {%- if paginate.pages > 1 -%}
               {% render 'pagination', paginate: paginate, anchor: '' %}
@@ -258,6 +335,25 @@
       "id": "grid_label",
       "label": "Grid label",
       "default": "All items"
+    },
+    {
+      "type": "checkbox",
+      "id": "group_by_category",
+      "label": "Group products by category",
+      "info": "Only when the collection spans more than one category",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "group_handles",
+      "label": "Category order (collection handles)",
+      "default": "spices,tea-coffee,honey"
+    },
+    {
+      "type": "text",
+      "id": "other_title",
+      "label": "Heading for everything else",
+      "default": "More from PureLeven"
     },
     {
       "type": "checkbox",
