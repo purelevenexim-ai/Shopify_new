@@ -1,0 +1,208 @@
+/* Collection pages (default collection template + /collections) in the skillies language.
+   Needs tc-design-tokens.css. px only — the theme root is 10px. */
+
+html body .sk-coll-hero,
+html body .sk-coll,
+html body .sk-colls {
+  background: var(--sk-bg) !important;
+  color: var(--sk-fg);
+  font-family: var(--sk-sans);
+}
+.sk-coll-hero *, .sk-coll *, .sk-colls * { box-sizing: border-box; }
+
+/* ---------- banner ---------- */
+html body .sk-coll-hero { padding: 28px 0 0; border-bottom: 1px solid var(--sk-line); }
+.sk-coll-hero__inner {
+  display: grid;
+  gap: 20px;
+  max-width: var(--sk-wrap);
+  margin: 0 auto;
+  padding: 0 var(--sk-gutter);
+}
+.sk-coll-hero .tc-eyebrow { margin-bottom: 12px; }
+html body .sk-coll-hero__title {
+  margin: 0;
+  color: var(--sk-fg) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: clamp(40px, 6vw, 84px) !important;
+  font-weight: 500 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.055em !important;
+  text-transform: none !important;
+}
+html body .sk-coll-hero__desc,
+html body .sk-coll-hero__desc p {
+  max-width: 620px;
+  margin: 14px 0 0;
+  color: var(--sk-fg2) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  letter-spacing: -0.005em !important;
+}
+.sk-coll-hero__desc p:first-child { margin-top: 0; }
+.sk-coll-hero__media {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--sk-line);
+  border-radius: 3px;
+  background: var(--sk-bg2);
+}
+.sk-coll-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.sk-coll-nav { margin-top: 24px; border-top: 1px solid var(--sk-line); }
+.sk-coll-nav__list {
+  display: flex;
+  gap: 8px;
+  max-width: var(--sk-wrap);
+  margin: 0 auto;
+  padding: 14px var(--sk-gutter);
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+}
+.sk-coll-nav__list::-webkit-scrollbar { display: none; }
+.sk-coll-nav__list li { flex: 0 0 auto; }
+html body .sk-coll-nav__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 14px;
+  border: 1px solid var(--sk-line);
+  border-radius: 2px;
+  background: var(--sk-card);
+  color: var(--sk-fg2) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.01em !important;
+  white-space: nowrap;
+  text-decoration: none !important;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+}
+.sk-coll-nav__chip span { color: var(--sk-faint); font: 400 10.5px/1 var(--sk-mono) !important; letter-spacing: 0.04em !important; }
+html body .sk-coll-nav__chip:hover { border-color: #BFC3CC; color: var(--sk-fg) !important; }
+html body .sk-coll-nav__chip[aria-current='page'] { border-color: var(--sk-dark); background: var(--sk-dark); color: #fff !important; }
+.sk-coll-nav__chip[aria-current='page'] span { color: rgba(255, 255, 255, 0.6); }
+
+/* ---------- product grid ---------- */
+html body .sk-coll { padding: 24px 0 48px !important; }
+html body .sk-coll .collection.page-width,
+html body .sk-coll .facets-wrapper.page-width {
+  max-width: var(--sk-wrap) !important;
+  margin: 0 auto;
+  padding: 0 var(--sk-gutter) !important;
+  background: transparent !important;
+}
+.sk-coll__bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sk-line);
+}
+html body .sk-coll__bar p {
+  margin: 0;
+  color: var(--sk-muted) !important;
+  font: 400 11px/1.5 var(--sk-mono) !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+.sk-coll__bar p i { font-style: normal; color: var(--sk-acc); }
+
+html body .sk-coll .sk-coll-grid {
+  display: grid !important;
+  grid-template-columns: repeat(var(--sk-cols-m, 2), minmax(0, 1fr));
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none;
+}
+html body .sk-coll ul.sk-coll-grid.product-grid > li.grid__item {
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.sk-coll__foot {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  margin-top: 32px;
+  border: 1px solid var(--sk-line);
+  border-radius: 3px;
+  background: var(--sk-line);
+  overflow: hidden;
+}
+.sk-coll__fact { display: grid; gap: 2px; padding: 14px 16px; background: var(--sk-card); }
+html body .sk-coll__fact strong { color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 14px !important; font-weight: 600 !important; letter-spacing: -0.01em !important; }
+html body .sk-coll__fact span { color: var(--sk-muted) !important; font: 400 10.5px/1.5 var(--sk-mono) !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; }
+
+html body .sk-coll .collection--empty .title {
+  color: var(--sk-fg) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ---------- /collections ---------- */
+html body .sk-colls { padding: 28px 0 56px; }
+.sk-colls__inner { max-width: var(--sk-wrap); margin: 0 auto; padding: 0 var(--sk-gutter); }
+html body .sk-colls__title {
+  margin: 0 0 24px;
+  color: var(--sk-fg) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: clamp(40px, 6vw, 84px) !important;
+  font-weight: 500 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.055em !important;
+}
+.sk-colls__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.sk-colls__grid li { min-width: 0; }
+html body .sk-colls__card {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--sk-line);
+  border-radius: 3px;
+  background: var(--sk-card);
+  color: var(--sk-fg) !important;
+  text-decoration: none !important;
+  transition: border-color 0.2s;
+}
+html body .sk-colls__card:hover { border-color: #BFC3CC; }
+.sk-colls__card:focus-visible { outline: 2px solid var(--sk-acc); outline-offset: 2px; }
+.sk-colls__img { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--sk-bg2); border-bottom: 1px solid var(--sk-line); }
+.sk-colls__img img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--sk-ease); }
+.sk-colls__card:hover .sk-colls__img img { transform: scale(1.03); }
+.sk-colls__body { display: grid; gap: 2px; padding: 10px 12px 12px; }
+html body .sk-colls__num { color: var(--sk-acc) !important; font: 700 10.5px/1.4 var(--sk-mono) !important; letter-spacing: 0.08em !important; }
+html body .sk-colls__name { overflow: hidden; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.3 !important; letter-spacing: -0.01em !important; white-space: nowrap; text-overflow: ellipsis; }
+html body .sk-colls__meta { color: var(--sk-muted) !important; font: 400 10.5px/1.5 var(--sk-mono) !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; }
+
+@media screen and (min-width: 750px) {
+  html body .sk-coll-hero { padding-top: 48px; }
+  .sk-coll-hero--image .sk-coll-hero__inner { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: end; gap: 48px; }
+  .sk-coll-nav { margin-top: 36px; }
+  .sk-coll__foot { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 48px; }
+  .sk-coll__fact { padding: 18px 20px; }
+  .sk-colls__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .sk-colls__body { padding: 14px 16px 16px; }
+  html body .sk-colls__name { font-size: 17px !important; }
+}
+@media screen and (min-width: 990px) {
+  html body .sk-coll { padding: 36px 0 72px !important; }
+  html body .sk-coll .sk-coll-grid { grid-template-columns: repeat(var(--sk-cols-d, 4), minmax(0, 1fr)); gap: 20px !important; }
+  .sk-colls__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  html body .sk-colls { padding: 48px 0 88px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sk-colls__img img, .sk-coll-nav__chip { transition: none; }
+}

@@ -1,49 +1,68 @@
 {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
-{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sk-collection.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  @media screen and (max-width: 749px) {
-    .collection-hero--with-image .collection-hero__inner {
-      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
-    }
-  }
-{%- endstyle -%}
+{%- liquid
+  assign _title = collection.title
+  assign _title_first = _title | slice: 0 | upcase
+  assign _title_rest = _title | slice: 1, 200
+  assign _has_image = false
+  if section.settings.show_collection_image and collection.image
+    assign _has_image = true
+  endif
+  assign _nav = section.settings.nav_handles | split: ','
+-%}
 
-<div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    <div class="collection-hero__text-wrapper">
-      <h1 class="collection-hero__title">
+<section class="sk-coll-hero{% if _has_image %} sk-coll-hero--image{% endif %}">
+  <div class="sk-coll-hero__inner">
+    <div class="sk-coll-hero__text">
+      <p class="tc-eyebrow">
+        <i>01</i> / {{ section.settings.eyebrow | escape }}
+      </p>
+      <h1 class="sk-coll-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
+        {{- _title_first | escape }}{{ _title_rest | escape -}}
       </h1>
-
-      {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
+      {%- if section.settings.show_collection_description and collection.description != blank -%}
+        <div class="sk-coll-hero__desc">{{ collection.description }}</div>
       {%- endif -%}
     </div>
 
-    {%- if section.settings.show_collection_image and collection.image -%}
-      <div class="collection-hero__image-container media gradient">
-        <img
-          srcset="
-            {%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
-            {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}
-            {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}
-            {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}
-            {%- if collection.image.width >= 1070 -%}{{ collection.image | image_url: width: 1070 }} 1070w,{%- endif -%}
-            {%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-            {{ collection.image | image_url }} {{ collection.image.width }}w
-          "
-          src="{{ collection.image | image_url: width: 750 }}"
-          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
-          alt="{{ collection.image.alt | escape }}"
-          width="{{ collection.image.width }}"
-          height="{{ collection.image.height }}"
-        >
+    {%- if _has_image -%}
+      <div class="sk-coll-hero__media">
+        {{ collection.image | image_url: width: 1400 | image_tag:
+          widths: '360, 535, 750, 1070, 1400',
+          sizes: '(min-width: 750px) 45vw, 100vw',
+          alt: collection.image.alt,
+          fetchpriority: 'high'
+        }}
       </div>
     {%- endif -%}
   </div>
-</div>
+
+  {%- if _nav.size > 0 -%}
+    <nav class="sk-coll-nav" aria-label="{{ section.settings.nav_label | escape }}">
+      <ul class="sk-coll-nav__list" role="list">
+        {%- for h in _nav -%}
+          {%- assign _h = h | strip -%}
+          {%- assign _c = collections[_h] -%}
+          {%- if _c == blank or _c.products_count == 0 -%}{%- continue -%}{%- endif -%}
+          {%- assign _cf = _c.title | slice: 0 | upcase -%}
+          {%- assign _cr = _c.title | slice: 1, 200 -%}
+          <li>
+            <a
+              href="{{ _c.url }}"
+              class="sk-coll-nav__chip"
+              {% if _c.handle == collection.handle %}aria-current="page"{% endif %}
+            >
+              {{- _cf | escape }}{{ _cr | escape }} <span>{{ _c.products_count }}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+</section>
 
 {% schema %}
 {
@@ -71,6 +90,24 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "nav_label",
+      "label": "Category links label",
+      "default": "Browse categories"
+    },
+    {
+      "type": "textarea",
+      "id": "nav_handles",
+      "label": "Category links (collection handles, comma separated)",
+      "default": "all-products,spices,export-quality-cardamom,spiciest-black-pepper,cloves,cinnamon,tea-coffee,coffee,combo,honey"
     }
   ]
 }

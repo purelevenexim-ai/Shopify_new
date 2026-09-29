@@ -1,4 +1,9 @@
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'tc-product-card.css' | asset_url | stylesheet_tag }}
+{{ 'sk-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tc-product-card.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer="defer"></script>
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
@@ -36,7 +41,7 @@
   }
 {%- endstyle -%}
 
-<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+<div class="sk-coll section-{{ section.id }}-padding" style="--sk-cols-m: {{ section.settings.columns_mobile }}; --sk-cols-d: {{ section.settings.columns_desktop }};">
   {%- paginate collection.products by section.settings.products_per_page -%}
     {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
     {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
@@ -143,11 +148,18 @@
             class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
           >
             <div class="loading-overlay gradient"></div>
+            <div class="sk-coll__bar">
+              <p><i>02</i> / {{ section.settings.grid_label | escape }}</p>
+              <p>
+                {{ collection.products_count }}
+                {% if collection.products_count == 1 %}item{% else %}items{% endif %}
+              </p>
+            </div>
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
               class="
-                grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
+                sk-coll-grid grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
                 grid--{{ section.settings.columns_desktop }}-col-desktop
                 {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
               "
@@ -165,10 +177,7 @@
                     style="--animation-order: {{ forloop.index }};"
                   {% endif %}
                 >
-                  {% render 'card-product-clean',
-                    card_product: product,
-                    section_id: section.id
-                  %}
+                  {%- render 'pureleven-tc-product-card', product: product, delivery_rule: 'two_items' -%}
                 </li>
                 {%- assign skip_card_product_styles = true -%}
               {%- endfor -%}
@@ -176,6 +185,14 @@
 
             {%- if paginate.pages > 1 -%}
               {% render 'pagination', paginate: paginate, anchor: '' %}
+            {%- endif -%}
+
+            {%- if section.settings.show_facts -%}
+              <div class="sk-coll__foot">
+                <div class="sk-coll__fact"><strong>Free delivery</strong><span>Any 2 items or ₹649+</span></div>
+                <div class="sk-coll__fact"><strong>Dispatched in 24h</strong><span>Mon – Sat</span></div>
+                <div class="sk-coll__fact"><strong>Small batch only</strong><span>Seasonal harvests</span></div>
+              </div>
             {%- endif -%}
           </div>
         {%- endif -%}
@@ -235,6 +252,18 @@
       "label": "t:sections.all.colors.label",
       "info": "t:sections.all.colors.has_cards_info",
       "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "grid_label",
+      "label": "Grid label",
+      "default": "All items"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_facts",
+      "label": "Show delivery facts below the grid",
+      "default": true
     },
     {
       "type": "header",

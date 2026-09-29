@@ -1,57 +1,84 @@
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'section-collection-list.css' | asset_url | stylesheet_tag }}
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sk-collection.css' | asset_url | stylesheet_tag }}
 
-<div class="page-width">
-  <h1 class="title title--primary inline-richtext{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    {{ section.settings.title }}
-  </h1>
-  {%- liquid
-    case section.settings.sort
-      when 'products_high', 'products_low'
-        assign collections = collections | sort: 'all_products_count'
-      when 'date', 'date_reversed'
-        assign collections = collections | sort: 'published_at'
-    endcase
+{%- liquid
+  case section.settings.sort
+    when 'products_high', 'products_low'
+      assign collections = collections | sort: 'all_products_count'
+    when 'date', 'date_reversed'
+      assign collections = collections | sort: 'published_at'
+  endcase
 
-    if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'
-      assign collections = collections | reverse
-    endif
+  if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'
+    assign collections = collections | reverse
+  endif
 
-    assign moduloResult = 28 | modulo: section.settings.columns_desktop
-    assign paginate_by = 30
-    if moduloResult == 0
-      assign paginate_by = 28
-    endif
-  -%}
-  {%- paginate collections by paginate_by -%}
-    <ul
-      class="collection-list grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
-      role="list"
-    >
-      {%- for collection in collections -%}
-        <li
-          class="collection-list__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-            style="--animation-order: {{ forloop.index }};"
-          {% endif %}
-        >
-          {% render 'card-collection',
-            card_collection: collection,
-            media_aspect_ratio: section.settings.image_ratio,
-            columns: 3
-          %}
-        </li>
-      {%- endfor -%}
-    </ul>
-    {% render 'pagination', paginate: paginate %}
-  {%- endpaginate -%}
-</div>
+  assign _hidden = section.settings.hidden_handles | remove: ' ' | split: ','
+  assign _n = 0
+-%}
+
+<section class="sk-colls">
+  <div class="sk-colls__inner">
+    <p class="tc-eyebrow"><i>01</i> / {{ section.settings.eyebrow | escape }}</p>
+    <h1 class="sk-colls__title">{{ section.settings.title }}</h1>
+
+    {%- paginate collections by 28 -%}
+      <ul class="sk-colls__grid" role="list">
+        {%- for c in collections -%}
+          {%- if _hidden contains c.handle or c.products_count == 0 -%}{%- continue -%}{%- endif -%}
+          {%- assign _n = _n | plus: 1 -%}
+          {%- assign _cf = c.title | slice: 0 | upcase -%}
+          {%- assign _cr = c.title | slice: 1, 200 -%}
+          <li>
+            <a href="{{ c.url }}" class="sk-colls__card">
+              <span class="sk-colls__img">
+                {%- if c.featured_image -%}
+                  {%- liquid
+                    assign _load = 'lazy'
+                    if _n <= 4
+                      assign _load = 'eager'
+                    endif
+                  -%}
+                  {{ c.featured_image | image_url: width: 800 | image_tag:
+                    widths: '360, 535, 800',
+                    sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+                    alt: c.title,
+                    loading: _load
+                  }}
+                {%- endif -%}
+              </span>
+              <span class="sk-colls__body">
+                <span class="sk-colls__num">{% if _n < 10 %}0{% endif %}{{ _n }}</span>
+                <span class="sk-colls__name">{{ _cf | escape }}{{ _cr | escape }}</span>
+                <span class="sk-colls__meta">
+                  {{ c.products_count }} {% if c.products_count == 1 %}product{% else %}products{% endif %}
+                </span>
+              </span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {% render 'pagination', paginate: paginate %}
+    {%- endpaginate -%}
+  </div>
+</section>
 {% schema %}
 {
   "name": "t:sections.main-list-collections.name",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "All categories"
+    },
+    {
+      "type": "text",
+      "id": "hidden_handles",
+      "label": "Hide these collections (handles, comma separated)",
+      "default": "frontpage,products-for-cart-push"
+    },
     {
       "type": "inline_richtext",
       "id": "title",

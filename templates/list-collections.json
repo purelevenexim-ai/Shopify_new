@@ -3,11 +3,13 @@
     "main": {
       "type": "main-list-collections",
       "settings": {
-        "title": "Collections",
+        "title": "Shop by category",
         "sort": "alphabetical",
         "image_ratio": "square",
         "columns_desktop": 4,
-        "columns_mobile": "2"
+        "columns_mobile": "2",
+        "hidden_handles": "frontpage,products-for-cart-push",
+        "eyebrow": "All categories"
       }
     }
   },
