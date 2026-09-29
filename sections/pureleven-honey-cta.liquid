@@ -1,41 +1,20 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
 {%- style -%}
-  #shopify-section-{{ section.id }} {
-    background: #1C1008;
-    padding: 72px 0;
-    text-align: center;
+  #shopify-section-{{ section.id }} { padding: 64px 0; background: #0B0B0F !important; color: #fff; font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} .hn-cta { display: grid; gap: 20px; justify-items: start; max-width: var(--sk-wrap); margin: 0 auto; padding: 0 var(--sk-gutter); text-align: left !important; background: none !important; }
+  #shopify-section-{{ section.id }} .hn-cta > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .hn-cta__kicker { color: #9AA0AD !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  #shopify-section-{{ section.id }} .hn-cta__heading { max-width: 16ch; color: #fff !important; text-shadow: none !important; font-family: var(--sk-sans) !important; font-size: clamp(34px, 4.2vw, 60px) !important; font-weight: 500 !important; line-height: 1.08 !important; letter-spacing: -0.055em !important; text-transform: none !important; }
+  #shopify-section-{{ section.id }} .hn-cta__sub { max-width: 52ch; color: #9AA0AD !important; font-family: var(--sk-sans) !important; font-size: 15px !important; line-height: 1.65 !important; letter-spacing: 0 !important; }
+  #shopify-section-{{ section.id }} .hn-cta__btn {
+    display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 14px 24px 14px 26px !important;
+    background: var(--sk-yellow) !important; border: 1px solid var(--sk-yellow) !important; border-radius: 2px !important; box-shadow: none !important;
+    color: var(--sk-on-yellow) !important; text-decoration: none !important; font-family: var(--sk-sans) !important; font-size: 13px !important;
+    font-weight: 600 !important; line-height: 1.2 !important; letter-spacing: -0.01em !important; text-transform: none !important;
+    transition: background-color 0.2s, transform 0.25s var(--sk-ease);
   }
-  .hn-cta { max-width: 580px; margin: 0 auto; padding: 0 1.5rem; }
-  .hn-cta__kicker {
-    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em;
-    text-transform: uppercase; color: #B8690A; margin-bottom: 1rem;
-  }
-  .hn-cta__heading {
-    font-family: 'Manrope', sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    font-weight: 800;
-    color: #FFFAF2;
-    letter-spacing: -0.02em; line-height: 1.2;
-    margin: 0 0 1rem;
-  }
-  .hn-cta__sub {
-    font-size: 0.97rem; color: rgba(255,250,242,0.65);
-    line-height: 1.7; margin: 0 0 2.2rem;
-  }
-  .hn-cta__btn {
-    display: inline-block;
-    padding: 1rem 2.6rem;
-    background: #FCE477;
-    color: #1C1008;
-    font-size: 0.92rem; font-weight: 800;
-    text-transform: uppercase; letter-spacing: 0.06em;
-    border-radius: 0.55rem;
-    text-decoration: none;
-    transition: background 0.15s;
-  }
-  .hn-cta__btn:hover { background: #F4D138; }
-  @media (max-width: 749px) {
-    #shopify-section-{{ section.id }} { padding: 48px 0; }
-  }
+  #shopify-section-{{ section.id }} .hn-cta__btn:hover { background: var(--sk-yellow-hover) !important; border-color: var(--sk-yellow-hover) !important; transform: translateY(-1px); }
+  @media screen and (min-width: 990px) { #shopify-section-{{ section.id }} { padding: 96px 0; } }
 {%- endstyle -%}
 
 <div class="hn-cta">

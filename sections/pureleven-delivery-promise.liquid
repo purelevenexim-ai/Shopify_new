@@ -1,14 +1,76 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
-
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+  }
+
+  /* Delivery promise — skillies language, px only. */
+  #shopify-section-{{ section.id }} { background: var(--sk-bg) !important; border-top: 1px solid var(--sk-line); color: var(--sk-fg); font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} .gradient { background: transparent !important; }
+  #shopify-section-{{ section.id }} * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .pureleven-delivery { max-width: var(--sk-wrap); margin: 0 auto; padding: 0 var(--sk-gutter); }
+  #shopify-section-{{ section.id }} .pureleven-delivery__shell {
+    padding: 0 !important; background: var(--sk-card) !important; border: 1px solid var(--sk-line) !important;
+    border-radius: 3px !important; box-shadow: none !important; overflow: hidden;
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__top {
+    display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: start; gap: 14px; padding: 18px;
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__icon {
+    display: grid; place-items: center; width: 40px; height: 40px; margin: 0;
+    background: var(--sk-acc-soft) !important; border: 1px solid var(--sk-line); border-radius: 2px !important; color: var(--sk-acc) !important; box-shadow: none !important;
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__icon svg { width: 20px; height: 20px; }
+  #shopify-section-{{ section.id }} .pureleven-delivery__copy { display: grid; gap: 6px; min-width: 0; }
+  #shopify-section-{{ section.id }} .pureleven-delivery__copy > * { margin: 0 !important; }
+  #shopify-section-{{ section.id }} .pureleven-delivery__eyebrow {
+    display: block !important; color: var(--sk-muted) !important;
+    font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__title {
+    color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 22px !important; font-weight: 500 !important;
+    line-height: 1.15 !important; letter-spacing: -0.035em !important; text-transform: none !important;
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__text {
+    display: block !important; color: var(--sk-muted) !important; font-family: var(--sk-sans) !important;
+    font-size: 15px !important; line-height: 1.55 !important; letter-spacing: 0 !important;
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__badge {
+    grid-column: 2; justify-self: start; margin: 2px 0 0; padding: 6px 8px;
+    background: var(--sk-acc-soft) !important; border: 1px solid var(--sk-acc-soft); border-radius: 2px !important; box-shadow: none !important;
+    color: var(--sk-acc) !important; font: 700 10.5px/1.2 var(--sk-mono) !important; letter-spacing: 0.08em !important; text-transform: uppercase !important;
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__facts {
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 !important; margin: 0; padding: 0 !important;
+    list-style: none; overflow: visible !important; background: var(--sk-bg); border-top: 1px solid var(--sk-line);
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__fact {
+    display: flex !important; align-items: center; gap: 10px; min-width: 0; margin: 0; padding: 14px 18px !important;
+    background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; list-style: none;
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__fact:nth-child(even) { border-left: 1px solid var(--sk-line) !important; }
+  #shopify-section-{{ section.id }} .pureleven-delivery__fact:nth-child(n+3) { border-top: 1px solid var(--sk-line) !important; }
+  #shopify-section-{{ section.id }} .pureleven-delivery__fact svg { flex: none; width: 16px; height: 16px; color: var(--sk-acc); }
+  #shopify-section-{{ section.id }} .pureleven-delivery__fact-text {
+    color: var(--sk-fg2); font-family: var(--sk-sans) !important; font-size: 13px !important; line-height: 1.35 !important; letter-spacing: 0 !important;
+  }
+  #shopify-section-{{ section.id }} .pureleven-delivery__fact-text strong { color: var(--sk-fg); font-weight: 600; }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .pureleven-delivery__top { grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; gap: 20px; padding: 24px 28px; }
+    #shopify-section-{{ section.id }} .pureleven-delivery__icon { width: 44px; height: 44px; }
+    #shopify-section-{{ section.id }} .pureleven-delivery__badge { grid-column: auto; align-self: center; }
+    #shopify-section-{{ section.id }} .pureleven-delivery__title { font-size: 26px !important; }
+    #shopify-section-{{ section.id }} .pureleven-delivery__facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    #shopify-section-{{ section.id }} .pureleven-delivery__fact { padding: 16px 28px !important; border-left: 1px solid var(--sk-line) !important; border-top: 0 !important; }
+    #shopify-section-{{ section.id }} .pureleven-delivery__fact:first-child { border-left: 0 !important; }
   }
 {%- endstyle -%}
 

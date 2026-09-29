@@ -91,8 +91,8 @@
   }
 
   .pl-cat__groups { display: flex; flex-direction: column; gap: 48px; }
-  .pl-cat__groups[data-active='b'] .pl-cat__group[data-group='b'] { order: 1; }
-  .pl-cat__groups[data-active='b'] .pl-cat__group[data-group='a'] { order: 2; }
+  .pl-cat__groups[data-active='a'] .pl-cat__group[data-group='b'],
+  .pl-cat__groups[data-active='b'] .pl-cat__group[data-group='a'] { display: none; }
 
   .pl-cat__group-head {
     display: flex; align-items: baseline; justify-content: space-between;

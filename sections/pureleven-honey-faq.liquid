@@ -1,53 +1,33 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
 {%- style -%}
-  #shopify-section-{{ section.id }} {
-    background: #fff;
-    padding: 72px 0;
+  #shopify-section-{{ section.id }} { padding: 56px 0; background: var(--sk-bg) !important; border-top: 1px solid var(--sk-line); color: var(--sk-fg); font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .hn-faq { display: grid; max-width: var(--sk-wrap); margin: 0 auto; padding: 0 var(--sk-gutter); }
+  #shopify-section-{{ section.id }} .hn-faq > p, #shopify-section-{{ section.id }} .hn-faq > h2 { margin: 0 !important; text-align: left !important; }
+  #shopify-section-{{ section.id }} .hn-faq__eyebrow { display: block; margin-bottom: 16px !important; color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  #shopify-section-{{ section.id }} .hn-faq__title { margin-bottom: 24px !important; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: clamp(34px, 4.2vw, 60px) !important; font-weight: 500 !important; line-height: 1.08 !important; letter-spacing: -0.055em !important; text-transform: none !important; }
+  #shopify-section-{{ section.id }} .hn-faq__item { margin: 0 !important; padding: 0 !important; background: none !important; border: 0 !important; border-top: 1px solid var(--sk-line) !important; border-radius: 0 !important; box-shadow: none !important; }
+  #shopify-section-{{ section.id }} .hn-faq__item:last-of-type { border-bottom: 1px solid var(--sk-line) !important; }
+  #shopify-section-{{ section.id }} .hn-faq__q {
+    display: flex !important; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 20px 0 !important; margin: 0 !important;
+    cursor: pointer; list-style: none; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 16px !important;
+    font-weight: 600 !important; line-height: 1.45 !important; letter-spacing: -0.01em !important;
   }
-  .hn-faq { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
-  .hn-faq__eyebrow {
-    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em;
-    text-transform: uppercase; color: #9A5C0A;
-    text-align: center; margin-bottom: 0.6rem;
+  #shopify-section-{{ section.id }} .hn-faq__q::-webkit-details-marker { display: none; }
+  #shopify-section-{{ section.id }} .hn-faq__q::marker { content: none; }
+  #shopify-section-{{ section.id }} .hn-faq__icon {
+    display: block !important; flex: none; width: 16px; height: auto; margin-top: -1px; padding: 0 !important;
+    background: none !important; border: 0 !important; border-radius: 0 !important; color: var(--sk-fg) !important;
+    font: 300 22px/1 var(--sk-sans) !important; text-align: center; transition: transform 0.25s var(--sk-ease);
   }
-  .hn-faq__title {
-    font-family: 'Manrope', sans-serif;
-    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-    font-weight: 800; color: #1C1008;
-    text-align: center; letter-spacing: -0.02em;
-    margin: 0 0 2.8rem;
-  }
-  .hn-faq__item {
-    border-bottom: 1px solid #EEDDC5;
-  }
-  .hn-faq__item:first-of-type { border-top: 1px solid #EEDDC5; }
-  .hn-faq__q {
-    width: 100%; text-align: left; list-style: none;
-    padding: 1.15rem 0;
-    display: flex; justify-content: space-between; align-items: center;
-    cursor: pointer;
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.97rem; font-weight: 700;
-    color: #1C1008; gap: 1rem;
-  }
-  .hn-faq__q::-webkit-details-marker { display: none; }
-  .hn-faq__icon {
-    flex-shrink: 0; width: 26px; height: 26px;
-    background: #F5EBD8;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; font-weight: 400; color: #9A5C0A;
-    transition: transform 0.2s;
-    line-height: 1;
-  }
-  details[open] .hn-faq__icon { transform: rotate(45deg); }
-  .hn-faq__a {
-    font-size: 0.93rem; line-height: 1.75;
-    color: #6B4C28;
-    padding-bottom: 1.2rem;
-    margin: 0;
-  }
-  @media (max-width: 749px) {
-    #shopify-section-{{ section.id }} { padding: 48px 0; }
+  #shopify-section-{{ section.id }} .hn-faq__item[open] .hn-faq__icon { transform: rotate(45deg); }
+  #shopify-section-{{ section.id }} .hn-faq__a { max-width: 68ch; margin: 0 !important; padding: 0 30px 20px 0 !important; color: var(--sk-fg2) !important; font-size: 15px !important; line-height: 1.65 !important; letter-spacing: 0 !important; }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} { padding: 88px 0; }
+    #shopify-section-{{ section.id }} .hn-faq { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: 64px; align-items: start; }
+    #shopify-section-{{ section.id }} .hn-faq > p, #shopify-section-{{ section.id }} .hn-faq > h2 { grid-column: 1; }
+    #shopify-section-{{ section.id }} .hn-faq__item { grid-column: 2; }
+    #shopify-section-{{ section.id }} .hn-faq__item:first-of-type { grid-row: 1; }
   }
 {%- endstyle -%}
 

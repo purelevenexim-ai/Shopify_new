@@ -128,9 +128,9 @@
               {%- endif -%}
 
               <div class="plc__price">
-                <strong class="pl-price-sale plc__now">{{ v.price | money }}</strong>
+                <strong class="pl-price-sale plc__now">&#8377;{{ v.price | divided_by: 100 }}</strong>
                 {%- if v.compare_at_price > v.price -%}
-                  <s class="pl-price-compare plc__was">{{ v.compare_at_price | money_without_trailing_zeros }}</s>
+                  <s class="pl-price-compare plc__was">&#8377;{{ v.compare_at_price | divided_by: 100 }}</s>
                 {%- endif -%}
               </div>
 
@@ -168,8 +168,8 @@
             var wasEl = card.querySelector('.plc__was');
             var badge = card.querySelector('.pl-card-sale-badge');
             var btn = form.querySelector('.plc__cta');
-            function fmt(c) { return '₹' + (c / 100).toFixed(2); }
-            function fmtShort(c) { var n = c / 100; return '₹' + (n % 1 === 0 ? Math.round(n) : n.toFixed(2)); }
+            function fmt(c) { return '₹' + Math.round(c / 100).toLocaleString('en-IN'); }
+            var fmtShort = fmt;
             form.querySelectorAll('.plc__radio').forEach(function (r) {
               r.addEventListener('change', function () {
                 var price = parseInt(this.dataset.price || '0', 10);
