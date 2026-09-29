@@ -1,0 +1,62 @@
+{%- comment -%}
+Tea & Coffee page — spice cross-sell.
+Shows a few spice products with the shared card, then a button that sends
+shoppers to the home page, where the full spice range is.
+{%- endcomment -%}
+
+<link rel="stylesheet" href="{{ 'tc-design-tokens.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'tc-page.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'tc-product-card.css' | asset_url }}">
+<script src="{{ 'tc-product-card.js' | asset_url }}" defer></script>
+<script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer></script>
+
+{%- assign spice_col = section.settings.collection | default: collections['spices'] -%}
+
+<section class="tc-spices" id="tc-spices-{{ section.id }}">
+  <div class="tc-spices__container">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="tc-eyebrow"><i>04</i> / {{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="tc-spices__heading tc-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.description != blank -%}
+      <p class="tc-spices__description">{{ section.settings.description }}</p>
+    {%- endif -%}
+
+    {%- if spice_col != blank and spice_col.products.size > 0 -%}
+      <div class="tc-spices__grid">
+        {%- for product in spice_col.products limit: section.settings.products_to_show -%}
+          <div class="tc-spices__item">
+            {%- render 'pureleven-tc-product-card', product: product, delivery_rule: 'two_items' -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="tc-spices__more">
+        <a href="{{ section.settings.button_link | default: '/' }}" class="sk-btn">
+          {{ section.settings.button_label }}
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "TC Spices",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Kerala Spices" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Spices from the same hills" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Pepper, cardamom, cloves and more — grown in Idukki and packed in small batches." },
+    { "type": "collection", "id": "collection", "label": "Collection (defaults to Spices)" },
+    { "type": "range", "id": "products_to_show", "min": 2, "max": 8, "step": 1, "label": "Products to show", "default": 4 },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "See more spices" },
+    { "type": "url", "id": "button_link", "label": "Button link (defaults to home page)" }
+  ],
+  "presets": [{ "name": "TC Spices" }]
+}
+{% endschema %}
