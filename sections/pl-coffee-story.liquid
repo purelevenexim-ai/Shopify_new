@@ -1,0 +1,244 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'pl-coffee.css' | asset_url | stylesheet_tag }}
+
+<section class="cf" id="cf-story-{{ section.id }}" aria-labelledby="cf-story-h-{{ section.id }}">
+  <div class="cf__wrap">
+
+    <div class="cf__head" id="our-coffee">
+      <span class="cf__eyebrow">From our hills in Idukki</span>
+      <h2 class="cf__h2" id="cf-story-h-{{ section.id }}">We grow the Robusta. We pick it by hand.</h2>
+    </div>
+    <div class="cf__two">
+      <div class="cf__portrait">
+        {% render 'coffee-photo', name: 'pl-coffee-our-hills', w: 1200, h: 1500, alt: 'Cupped hands holding freshly picked coffee cherries on our coffee plot in Idukki', caption: 'Hand-picked, December to February' %}
+      </div>
+      <div class="cf__voice">
+        <p>Our coffee doesn't start in a factory. It starts on our own land in Idukki, where the Robusta bushes grow in the shade of taller trees, with pepper vines climbing the same trunks. That's how most Kerala farms do it. Nobody here planted coffee in neat rows for a photo. It just grows alongside everything else.</p>
+        <p>Picking season runs from December to February. We go bush to bush and pick by hand, mostly the red, ripe cherries. It's slow work. Some mornings the leaves are still wet with mist and your fingers go cold. Then the drying yard fills up, the whole place smells of coffee fruit, and you remember why you do it.</p>
+        <p>We are not the only ones waiting for the ripe cherries. If we are late, the squirrels get there first, and the birds go for the reddest ones. At night the palm civet, the <i>marappatti</i>, comes for them too. We don't poison or trap anything. We try to pick on time, and we accept that a share of the crop is theirs. Honestly, if the squirrels like it, we take it as a good sign.</p>
+        <p>The cherries dry in the sun, the beans come out, and we roast in small batches, by eye and by nose: watching the colour, listening for the first crack, waiting for the smell to turn from grassy to toasty. Always medium. That's where Robusta stops being harsh and still keeps its body.</p>
+        {%- if section.settings.show_photo_note -%}
+          <p>Every photo of beans in hands on these pages is ours: our hands, our harvest.</p>
+        {%- endif -%}
+        <span class="cf__sign">The Pure Leven family, Idukki</span>
+      </div>
+    </div>
+    <div class="cf__two">
+      {% render 'coffee-photo', name: 'pl-coffee-drying', w: 1600, h: 1067, alt: 'Spreading freshly picked coffee cherries on a mat to dry in the sun in Idukki', caption: 'Spreading the cherries to dry in the sun' %}
+      <div class="cf__card">
+        <span class="cf__eyebrow">What goes on our coffee</span>
+        <h3 class="cf__h3">Nothing, mostly</h3>
+        <ul class="cf__dont">
+          <li>No chemical pesticides. Robusta is a hardy plant, and on our land we haven't needed to spray.</li>
+          <li>No chemical fertilisers.</li>
+          <li>No polish, colour or flavouring on the beans.</li>
+          <li class="is-yes">Hand-picked, sun-dried, roasted in small batches.</li>
+          <li class="is-yes">Arabica: we don't grow it. It comes from growers in Chikmagalur, and we roast and pack it ourselves.</li>
+        </ul>
+        <p class="cf__muted">We are not certified organic, so you won't see that word on our packs. Certification is a paid audit we haven't done. What we can tell you is how the coffee is grown: naturally, without chemicals.</p>
+      </div>
+    </div>
+
+    <div class="cf__head">
+      <span class="cf__eyebrow">Coffee in numbers</span>
+      <h2 class="cf__h2">Eight facts most coffee drinkers don't know</h2>
+    </div>
+    <div class="cf__stats">
+      <div class="cf__stat"><b>3–4 days</b><span>How long a coffee flower lasts. The white blossom smells sweet, a little like jasmine, then it's gone.</span></div>
+      <div class="cf__stat"><b>~9 months</b><span>From flower to ripe cherry for Robusta. Arabica takes about 7.</span></div>
+      <div class="cf__stat"><b>2 beans</b><span>In a normal coffee cherry. In 5 to 10% of cherries only one grows: the round "peaberry".</span></div>
+      <div class="cf__stat"><b>~2×</b><span>The caffeine in Robusta compared with Arabica: about 2.2–2.7% of the bean against 1.2–1.5%.</span></div>
+      <div class="cf__stat"><b>95%+</b><span>Share of Wayanad's coffee that is Robusta.</span></div>
+      <div class="cf__stat"><b>98%</b><span>Of India's coffee growers are small growers, mostly on plots of 10 acres or less.</span></div>
+      <div class="cf__stat"><b>100%</b><span>Of Indian coffee is grown under shade, usually under two layers of trees.</span></div>
+      <div class="cf__stat"><b>~60,000</b><span>Small coffee growers in Wayanad alone.</span></div>
+    </div>
+
+    <div class="cf__two">
+      <div class="cf__head" id="history">
+        <span class="cf__eyebrow">How coffee reached Kerala</span>
+        <h2 class="cf__h2">From Ethiopian goats to Idukki's hills</h2>
+        <p>The short version: coffee came from Ethiopia, was farmed in Yemen, was smuggled into India by a saint, planted by the British in Wayanad, nearly wiped out by a fungus, and saved by a tougher bean from Africa. The long version is better.</p>
+        <ol class="cf__tl">
+          <li class="is-legend"><time>c. 850 · legend</time><b>Ethiopia: Kaldi's dancing goats</b><p>A goatherd notices his goats leaping about after eating red berries from a shrub. The story was first printed in 1671, about 800 years later, so take it as legend.</p></li>
+          <li><time>1400s</time><b>Yemen: coffee becomes a drink</b><p>Sufi monks brew it to stay awake through night prayers. The port of Mocha becomes the world's coffee market, and fertile beans are not allowed to leave.</p></li>
+          <li><time>1600s</time><b>Chikmagalur: seven smuggled beans</b><p>Returning from Mecca, the saint Baba Budan hides seven coffee seeds in his beard (some versions say strapped to his chest) and plants them on the Chandragiri hills. Indian coffee begins there.</p></li>
+          <li><time>c. 1800</time><b>Anjarakandy, near Thalassery</b><p>The East India Company starts an experimental coffee plantation in north Kerala.</p></li>
+          <li><time>1825</time><b>Up the ghats to Wayanad</b><p>Captain Bevan carries plants from Anjarakandy to Manantoddy, today's Mananthavady. They thrive.</p></li>
+          <li><time>1841–1869</time><b>Wayanad's coffee boom</b><p>Parry &amp; Co. starts large-scale planting. By 1869 Wayanad holds about half of South India's 1,20,000 acres of Arabica.</p></li>
+          <li><time>1869 onwards</time><b>The rust</b><p>Coffee leaf rust, a fungus that had already ruined Ceylon's coffee, spreads through the estates. Arabica collapses. Many estates switch to tea.</p></li>
+          <li><time>Late 1800s</time><b>Robusta arrives</b><p>A rust-tolerant coffee from the forests of Central Africa takes over Wayanad. Today it is over 95% of the district's coffee.</p></li>
+          <li><time>1879</time><b>Idukki's High Range</b><p>Still thick forest until planters arrive to grow coffee, cinchona and cardamom. Tea later takes over Munnar.</p></li>
+          <li class="is-us"><time>1940s–1950s</time><b>Families move into Idukki</b><p>Tens of thousands of farming families from central Travancore settle the hills, about 70,000 by 1951. They plant tapioca, pepper, cardamom and coffee on small plots. That is where most of Idukki's small coffee gardens come from.</p></li>
+          <li><time>1942</time><b>Coffee Board of India</b><p>Set up under the Coffee Act to run the industry.</p></li>
+          <li><time>1958</time><b>Indian Coffee House, Thrissur</b><p>Workers take over the Coffee Board's cafés as a co-operative, and Kerala's first Indian Coffee House opens in Thrissur on 8 March.</p></li>
+          <li><time>2019</time><b>Wayanad Robusta gets a GI tag</b><p>Along with Coorg, Chikmagalur, Araku Valley and Bababudangiris Arabica.</p></li>
+          <li><time>2025</time><b>National recognition</b><p>Wayanad Robusta gets a special mention at the national One District One Product awards, the first for a Kerala product.</p></li>
+        </ol>
+      </div>
+
+      <div class="cf__head" id="charts">
+        <span class="cf__eyebrow">Charts</span>
+        <h2 class="cf__h2">Indian coffee, by the numbers</h2>
+
+        <div class="cf__card cf__chart">
+          <h3 class="cf__h3">Where India's coffee grows</h3>
+          <p class="cf__muted">2024–25 crop, tonnes. Kerala grows about a fifth, almost all Robusta.</p>
+          <div class="cf__bars" role="img" aria-label="Karnataka 2,56,000 tonnes, 70 percent; Kerala 72,950 tonnes, 20 percent; Tamil Nadu 19,275 tonnes, 5 percent; other states about 15,000 tonnes, 4 percent">
+            <div class="cf__brow"><span>Karnataka</span><div class="cf__btrack"><span class="cf__bfill is-muted" style="width:100%"></span><span class="cf__bval">2,56,000 t · 70%</span></div></div>
+            <div class="cf__brow"><span><b>Kerala</b></span><div class="cf__btrack"><span class="cf__bfill" style="width:28.5%"></span><span class="cf__bval is-out" style="left:calc(28.5% + 6px)">72,950 t · 20%</span></div></div>
+            <div class="cf__brow"><span>Tamil Nadu</span><div class="cf__btrack"><span class="cf__bfill is-muted" style="width:7.5%"></span><span class="cf__bval is-out" style="left:calc(7.5% + 6px)">19,275 t · 5%</span></div></div>
+            <div class="cf__brow"><span>Others</span><div class="cf__btrack"><span class="cf__bfill is-muted" style="width:6%"></span><span class="cf__bval is-out" style="left:calc(6% + 6px)">~15,000 t · 4%</span></div></div>
+          </div>
+        </div>
+
+        <div class="cf__card cf__chart">
+          <h3 class="cf__h3">Robusta vs Arabica in India</h3>
+          <p class="cf__muted">2025–26 forecast, about 4,03,000 tonnes in all.</p>
+          <div class="cf__stack" role="img" aria-label="Robusta 2,84,875 tonnes, 71 percent; Arabica 1,18,125 tonnes, 29 percent">
+            <span class="is-rob" style="width:71%">Robusta 71%</span><span class="is-ara" style="width:29%">Arabica 29%</span>
+          </div>
+          <p class="cf__muted">Robusta 2,84,875 t · Arabica 1,18,125 t</p>
+        </div>
+
+        <div class="cf__card cf__chart">
+          <h3 class="cf__h3">What's inside the bean</h3>
+          <p class="cf__muted">Typical share of the green bean, %. This is why Robusta tastes bolder and Arabica sweeter.</p>
+          <div class="cf__legend"><span><i style="background:var(--cf-arabica)"></i>Arabica</span><span><i style="background:var(--cf-robusta)"></i>Robusta</span></div>
+          <div class="cf__bars" role="img" aria-label="Caffeine: Arabica 1.2 to 1.5 percent, Robusta 2.2 to 2.7. Sucrose: Arabica 6 to 9, Robusta 3 to 7. Oil: Arabica 15 to 17, Robusta 10 to 11.5. Chlorogenic acids: Arabica 5.5 to 8, Robusta 7 to 10.">
+            {%- assign chem = 'Caffeine|7.5|1.2–1.5%|13.6|2.2–2.7%;Sugar (sucrose)|41.7|6–9%|27.8|3–7%;Oil|88.9|15–17%|59.7|10–11.5%;Chlorogenic acids|37.5|5.5–8%|47.2|7–10%' | split: ';' -%}
+            {%- for row in chem -%}
+              {%- assign c = row | split: '|' -%}
+              <div class="cf__brow"><span>{{ c[0] }}</span>
+                <div class="cf__pair">
+                  {%- assign w = c[1] | plus: 0 -%}<div class="cf__btrack"><span class="cf__bfill is-ara" style="width:{{ c[1] }}%"></span>{%- if w > 70 -%}<span class="cf__bval" style="color:#1A1A1A">{{ c[2] }}</span>{%- else -%}<span class="cf__bval is-out" style="left:calc({{ c[1] }}% + 6px)">{{ c[2] }}</span>{%- endif -%}</div>
+                  <div class="cf__btrack"><span class="cf__bfill is-rob" style="width:{{ c[3] }}%"></span><span class="cf__bval is-out" style="left:calc({{ c[3] }}% + 6px)">{{ c[4] }}</span></div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cf__head" id="calendar">
+      <span class="cf__eyebrow">A year on a Kerala coffee farm</span>
+      <h2 class="cf__h2">From blossom showers to harvest</h2>
+      <p>Everything hangs on the March–April "blossom showers". A good rain then, and the bushes turn white with flowers within days. No rain, no crop. Then the cherries take most of the year to ripen, right through the monsoon.</p>
+    </div>
+    {% render 'coffee-photo', name: 'pl-coffee-blossom', w: 1600, h: 1067, alt: 'White coffee blossoms among dark green coffee leaves', caption: 'Coffee blossom: it lasts three or four days', sizes: '100vw' %}
+    <div class="cf__table-wrap" style="padding:14px">
+      {%- assign months = 'J,F,M,A,M,J,J,A,S,O,N,D' | split: ',' -%}
+      {%- assign cal = 'Harvest, by hand|h|110000000001;Sun-drying|d|111000000000;Blossom showers and flowers|b|001100000000;Cherries growing|g|000011111110;Southwest monsoon|w|000001111000' | split: ';' -%}
+      <div class="cf__cal" role="img" aria-label="Harvest December to February; sun-drying January to March; blossom showers and flowering March and April; cherries grow May to November; southwest monsoon June to September">
+        <span></span>{%- for m in months -%}<span class="m">{{ m }}</span>{%- endfor -%}
+        {%- for row in cal -%}
+          {%- assign c = row | split: '|' -%}
+          {%- assign flags = c[2] | split: '' -%}
+          <span class="r">{{ c[0] }}</span>
+          {%- for f in flags -%}<span class="c{% if f == '1' %} on {{ c[1] }}{% endif %}"></span>{%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="cf__two" id="places">
+      <div class="cf__card">
+        <span class="cf__eyebrow">Wayanad</span>
+        <h3 class="cf__h3">Kerala's coffee country</h3>
+        <p>If Kerala has a coffee capital, it's Wayanad. The district has over 67,000 hectares of coffee, about 90% of the state's coffee area, farmed mostly by around 60,000 small growers. More than 95% of it is Robusta, grown at 700 to 2,100 m under shade, with pepper, arecanut and banana in between.</p>
+        <dl class="cf__spec">
+          <dt>GI tag</dt><dd>Wayanad Robusta, 2019</dd>
+          <dt>Taste</dt><dd>Full-bodied, aromatic, a hint of chocolate</dd>
+          <dt>Harvest</dt><dd>December to February</dd>
+          <dt>Yield</dt><dd>About 1,400 kg/ha rain-fed, 2,500 kg/ha irrigated</dd>
+        </dl>
+      </div>
+      <div class="cf__card">
+        {% render 'coffee-photo', name: 'pl-coffee-idukki-heap', w: 1600, h: 1067, alt: 'Ripe Robusta coffee cherries from Idukki heaped on coffee leaves' %}
+        <span class="cf__eyebrow">Idukki</span>
+        <h3 class="cf__h3">Spice hills, with coffee in between</h3>
+        <p>Idukki is better known for cardamom, pepper and Munnar's tea. Coffee here is mostly Robusta on small family plots, growing under the same trees that carry the pepper vines. Most of these gardens were planted by farming families who moved into the hills in the 1940s and 50s.</p>
+        <dl class="cf__spec">
+          <dt>Coffee</dt><dd>Mostly Robusta, on small mixed farms</dd>
+          <dt>Grown with</dt><dd>Pepper, cardamom, arecanut, banana</dd>
+          <dt>Harvest</dt><dd>December to February</dd>
+          <dt>Ours</dt><dd>Hand-picked, sun-dried, no chemicals</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="cf__head" id="why-kerala">
+      <span class="cf__eyebrow">Why Kerala coffee</span>
+      <h2 class="cf__h2">Six things that make it different</h2>
+    </div>
+    <div class="cf__grid">
+      <div class="cf__card"><h3 class="cf__h3">Grown in shade</h3><p>All Indian coffee grows under shade trees, usually two layers of them. The cherries ripen slowly and evenly, and the farm stays a forest of sorts.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Pepper on the same trees</h3><p>Kerala farmers train black pepper vines up the shade trees. Coffee below, pepper above, cardamom in the damp corners: one garden, several crops.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Small hands, small plots</h3><p>98% of India's coffee growers are small growers. In Kerala that means family plots, not big estates, and a lot of the work still done by hand.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Robusta country</h3><p>Kerala's warm, wet, mid-height hills suit Robusta. That's why the state grows about a fifth of India's coffee, almost all of it Robusta, the bean behind strong South Indian filter coffee.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Monsoon in the blood</h3><p>Monsooned Malabar, one of India's most famous coffees, comes from the Malabar coast: beans aged in open warehouses through the monsoon winds until they swell and turn pale gold.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Wildlife on the farm</h3><p>Shade-grown coffee farms in the Western Ghats hold a surprising amount of wildlife: civets, squirrels and fruit-eating birds. They take their share of the cherries. That's part of the deal.</p></div>
+    </div>
+
+    <div class="cf__head" id="types">
+      <span class="cf__eyebrow">Types of coffee</span>
+      <h2 class="cf__h2">Species, India's famous coffees, and what "cherry" and "parchment" mean</h2>
+    </div>
+    <div class="cf__table-wrap">
+      <table class="cf__table">
+        <thead><tr><th scope="col">Species</th><th scope="col">Comes from</th><th scope="col">In India</th><th scope="col">In the cup</th></tr></thead>
+        <tbody>
+          <tr><td><b>Arabica</b><br><i>Coffea arabica</i></td><td>Highlands of Ethiopia</td><td>Chikmagalur, Coorg, Araku Valley, Bababudangiri (all GI-tagged)</td><td>Smooth, sweet, aromatic; 1.2–1.5% caffeine</td></tr>
+          <tr><td><b>Robusta</b><br><i>Coffea canephora</i></td><td>Forests of Central and West Africa</td><td>Wayanad (GI-tagged), Idukki, Kodagu, Hassan</td><td>Bold, full body, low acidity; 2.2–2.7% caffeine</td></tr>
+          <tr><td><b>Liberica</b>, incl. Excelsa</td><td>West and Central Africa</td><td>A few pockets in Karnataka; rare</td><td>Large beans, unusual fruity-smoky taste</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cf__grid">
+      <div class="cf__card"><span class="cf__eyebrow">India's special coffees</span><ul class="cf__list"><li><b>Monsooned Malabar:</b> natural beans exposed to the southwest monsoon (June to September) until they swell and lose acidity. GI-tagged.</li><li><b>Mysore Nuggets Extra Bold:</b> India's top grade of large washed Arabica.</li><li><b>Robusta Kaapi Royale:</b> India's top grade of washed Robusta.</li></ul></div>
+      <div class="cf__card"><span class="cf__eyebrow">Trade words decoded</span><ul class="cf__list"><li><b>Cherry:</b> the whole fruit is dried in the sun, then hulled. Heavier, fruitier coffee. Most small farms, ours included, do this.</li><li><b>Parchment / Plantation:</b> the fruit is pulped and the beans washed before drying. Cleaner, brighter cup.</li><li><b>Peaberry (PB):</b> the single round bean from a one-seed cherry.</li><li><b>AA, A, AB:</b> size grades, biggest first.</li></ul></div>
+    </div>
+
+    <div class="cf__head" id="stories">
+      <span class="cf__eyebrow">Stories and legends</span>
+      <h2 class="cf__h2">Seven coffee stories worth telling at the table</h2>
+    </div>
+    <div class="cf__stories">
+      <div class="cf__card"><span class="cf__tag is-legend">Legend</span><h3 class="cf__h3">Kaldi's dancing goats</h3><p>An Ethiopian goatherd sees his goats dancing after eating red berries, tries them himself, and takes them to a monastery. The monks throw them in the fire as the devil's work; the roasting smell is so good they rake them out and brew them. Lovely story. Almost certainly not true.</p></div>
+      <div class="cf__card"><span class="cf__tag is-legend">Legend and history</span><h3 class="cf__h3">Seven beans in a beard</h3><p>Yemen guarded its coffee by exporting only roasted or boiled beans that couldn't sprout. Baba Budan, returning from Mecca, is said to have hidden seven fertile seeds in his beard. Seven, because it was a holy number. Indian Arabica, the story goes, began with those seeds.</p></div>
+      <div class="cf__card"><span class="cf__tag">History</span><h3 class="cf__h3">The coffee the monsoon made</h3><p>In the days of sail, Indian coffee spent months in damp wooden holds on the way to Europe. It arrived swollen, pale and mellow, and Europeans grew to love it. When fast steamships ended that, the Malabar coast recreated the voyage on land: open warehouses, monsoon winds, months of waiting.</p></div>
+      <div class="cf__card"><span class="cf__tag">History</span><h3 class="cf__h3">How a fungus made Britain drink tea</h3><p>In the 1860s Ceylon was one of the world's great coffee islands. Then coffee leaf rust arrived and the estates died one after another. Planters pulled out the coffee and planted tea, and Ceylon tea was born. The same rust reached Wayanad in 1869, and that is why Kerala grows Robusta today.</p></div>
+      <div class="cf__card"><span class="cf__tag">History</span><h3 class="cf__h3">The workers who saved the coffee house</h3><p>In the 1950s the Coffee Board decided to close its India Coffee Houses. The workers, backed by A. K. Gopalan, took them over as co-operatives. Kerala's first Indian Coffee House opened in Thrissur on 8 March 1958. The waiters' fan-shaped turbans are still there.</p></div>
+      <div class="cf__card"><span class="cf__tag">Nature</span><h3 class="cf__h3">The civet's cup</h3><p>Asian palm civets eat ripe coffee cherries at night. Researchers at the Central University of Kerala found that Robusta beans passed by civets have a different fat and ester profile from ordinary beans, which may explain the smoother taste. We let the civets eat. We don't sell what comes out.</p></div>
+      <div class="cf__card"><span class="cf__tag is-legend">Lore</span><h3 class="cf__h3">Why "degree" coffee?</h3><p>Kumbakonam's famous "degree coffee" has no agreed origin. Some say it meant first-grade, "degree" milk, tested with a lactometer. Some say it's about the thickness of the milk. Some say it was just the town's mark of quality. Everyone agrees it's strong.</p></div>
+    </div>
+
+    <div class="cf__card" id="sources">
+      <span class="cf__eyebrow">Sources</span>
+      <ol class="cf__sources">
+        <li>Coffee Board of India, India Coffee e-magazine Oct–Dec 2025 (2024–25 crop by state) and 2025–26 post-blossom estimate.</li>
+        <li>Wayanad district administration, "Wayanad Robusta Coffee" (area, elevation, intercrops, harvest, yields).</li>
+        <li>Wikipedia: Coffee production in India; Wayanaad Robusta Coffee; Indian Coffee House; Kaldi; Monsooned Malabar.</li>
+        <li>Encyclopaedia Britannica, History of coffee.</li>
+        <li>Compound Interest (2023), Arabica vs Robusta chemistry chart.</li>
+        <li>The Kerala Museum, Highland migration to Idukki in the mid-twentieth century.</li>
+        <li>Central University of Kerala study on civet coffee, reported by Mongabay India (2024).</li>
+        <li>McCook, "Global rust belt: Hemileia vastatrix and the ecological integration of world coffee production since 1850", Journal of Global History.</li>
+      </ol>
+      <p class="cf__updated">Researched and written by the Pure Leven family, Idukki. Last updated November 2026.</p>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Coffee story and facts",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    { "type": "checkbox", "id": "show_photo_note", "label": "Show 'all photos are ours' line (only when real photos are up)", "default": false }
+  ],
+  "presets": [{ "name": "Coffee story and facts" }]
+}
+{% endschema %}

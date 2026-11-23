@@ -11,6 +11,27 @@
     assign kind = 'honey'
   elsif ptype contains 'combo'
     assign kind = 'combo'
+  elsif product.handle contains 'orange-pekoe'
+    assign kind = 'pekoe'
+  elsif product.handle contains 'cardamom'
+    assign kind = 'cardamom'
+  elsif product.handle contains 'black-tea'
+    assign kind = 'blacktea'
+  elsif product.handle contains 'milk-tea'
+    assign kind = 'milktea'
+  endif
+
+  assign has_honey = false
+  if product.tags contains 'pure honey'
+    assign has_honey = true
+  endif
+
+  assign show_shot = true
+  if kind == 'blacktea' or kind == 'pekoe' or kind == 'cardamom' or kind == 'tea'
+    assign show_shot = false
+  endif
+  if section.settings.image != blank
+    assign show_shot = true
   endif
 
   assign grams = 0
@@ -49,11 +70,9 @@
   .plb__lede { margin: 0 0 3.2rem; font-size: 1.5rem; line-height: 1.65; color: var(--plc-soft); max-width: 62ch; }
 
   /* --- spec strip --- */
-  .plb__specs {
-    display: grid; gap: 1.2rem; margin-bottom: 3.6rem;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-  }
-  @media screen and (min-width: 750px) { .plb__specs { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+  .plb__specs { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 3.6rem; }
+  .plb__spec { flex: 1 1 calc(50% - 0.6rem); min-width: 0; }
+  @media screen and (min-width: 750px) { .plb__spec { flex-basis: 16rem; } }
   .plb__spec {
     background: var(--plc-card); border: 1px solid var(--plc-line-soft); border-radius: 1.4rem;
     padding: 1.6rem 1.8rem; box-shadow: 0 1px 2px rgba(18,36,31,.05), 0 6px 18px rgba(18,36,31,.06);
@@ -64,7 +83,10 @@
 
   /* --- method --- */
   .plb__method { display: grid; gap: 2.4rem; align-items: start; margin-bottom: 3.6rem; }
-  @media screen and (min-width: 990px) { .plb__method { grid-template-columns: minmax(0,1fr) minmax(0,1.15fr); } }
+  @media screen and (min-width: 990px) { .plb__method:not(.plb__method--solo) { grid-template-columns: minmax(0,1fr) minmax(0,1.15fr); } }
+  @media screen and (min-width: 750px) {
+    .plb__method--solo .plb__steps { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
   .plb__shot { border-radius: 1.4rem; overflow: hidden; background: var(--plc-tint); aspect-ratio: 1; }
   .plb__shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .plb__steps { display: flex; flex-direction: column; gap: 1.4rem; }
@@ -107,11 +129,27 @@
         {%- when 'combo' -%}
           {%- assign eyebrow = 'Ships as one box' -%}
           {%- assign title = 'What to do with it' -%}
-          {%- assign lede = 'Each pack brews differently. Start with the milk tea for everyday chai, keep the orange pekoe for afternoons without milk, and use the honey wherever sugar would have gone.' -%}
-        {%- else -%}
+          {%- if has_honey -%}
+            {%- assign lede = 'Each pack brews differently. Start with the milk tea for everyday chai, keep the black tea granules for a lighter cup, use the cardamom tea when you want elaichi chai, and use the honey wherever sugar would have gone.' -%}
+          {%- else -%}
+            {%- assign lede = 'Each pack brews differently. Start with the milk tea for everyday chai, keep the black tea granules for a lighter cup, and use the cardamom tea when you want elaichi chai.' -%}
+          {%- endif -%}
+        {%- when 'milktea' -%}
           {%- assign eyebrow = 'Nadan Chaya' -%}
-          {%- assign title = 'How to brew perfect Kerala tea' -%}
+          {%- assign title = 'How to make perfect Kerala chaya' -%}
           {%- assign lede = 'Kerala chaya runs about one part milk to two parts water — far lighter than the milk-heavy chai of the north — and it is finished by pulling the tea between two tumblers until it froths.' -%}
+        {%- when 'pekoe' -%}
+          {%- assign eyebrow = 'Whole-leaf black tea' -%}
+          {%- assign title = 'How to brew Orange Pekoe' -%}
+          {%- assign lede = 'Orange Pekoe is a leaf-size grade: younger, smaller leaf with a lighter, floral cup. It is bought to be drunk without milk.' -%}
+        {%- when 'cardamom' -%}
+          {%- assign eyebrow = 'Elaichi chai' -%}
+          {%- assign title = 'How to brew cardamom tea' -%}
+          {%- assign lede = 'Tea from Vagamon blended with cardamom from our own farm, so there is nothing to add. Make it chaya-style with milk, or steep it plain.' -%}
+        {%- else -%}
+          {%- assign eyebrow = 'Black tea' -%}
+          {%- assign title = 'How to brew black tea' -%}
+          {%- assign lede = 'Broken leaf infuses quickly, so a short steep in water just off the boil gives a bright, clean cup. Drink it black, with lemon, or with a splash of milk.' -%}
       {%- endcase -%}
 
       <p class="plb__eyebrow">{{ eyebrow }}</p>
@@ -130,7 +168,7 @@
           {%- endif -%}
         {%- endif -%}
         {%- if mf.grade != blank -%}
-          <div class="plb__spec"><span class="plb__spec-ico">&#10022;</span><span class="plb__spec-k">Grade</span><span class="plb__spec-v">{{ mf.grade }}</span></div>
+          <div class="plb__spec"><span class="plb__spec-ico">&#10022;</span><span class="plb__spec-k">Type</span><span class="plb__spec-v">{{ mf.grade }}</span></div>
         {%- endif -%}
         {%- if mf.origin != blank -%}
           <div class="plb__spec"><span class="plb__spec-ico">&#9968;</span><span class="plb__spec-k">Origin</span><span class="plb__spec-v">{{ mf.origin }}</span></div>
@@ -140,12 +178,15 @@
         {%- endif -%}
       </div>
 
-      <div class="plb__method">
+      <div class="plb__method{% unless show_shot %} plb__method--solo{% endunless %}">
         {%- comment -%}
           All beverages share one template, so a section-level image picker would put
           the same photo on every product. The image is chosen from the product type
-          instead; the picker stays available as a per-page override.
+          instead; the picker stays available as a per-page override. Only the milk tea,
+          coffee, honey and combo have a matching photo; black tea, orange pekoe and
+          cardamom show no image rather than the milk-tea shot.
         {%- endcomment -%}
+        {%- if show_shot -%}
         <div class="plb__shot">
           {%- if section.settings.image != blank -%}
             {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400,600,900', alt: title | escape }}
@@ -162,12 +203,13 @@
               width="900" height="900" loading="lazy">
           {%- endif -%}
         </div>
+        {%- endif -%}
 
         <div class="plb__steps">
           {%- case kind -%}
             {%- when 'coffee' -%}
               <div class="plb__step"><span class="plb__n">1</span><div><h4>Load the filter</h4><p>Roughly <b>1 part coffee to 5 parts water</b>. Press the grounds level — do not pack them tight.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>Let it drip</h4><p>Pour water just off the boil and leave it <b>4&ndash;5 minutes</b>. A rushed decoction tastes thin and sour.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>Let it drip</h4><p>Pour water just off the boil, cover, and leave it to drip for <b>10&ndash;15 minutes</b> in a steel filter. A rushed decoction tastes thin and sour.</p></div></div>
               <div class="plb__step"><span class="plb__n">3</span><div><h4>Cut with hot milk</h4><p>About <b>1 part decoction to 3 parts milk</b>, heated separately. Cold milk kills the body.</p></div></div>
               <div class="plb__step"><span class="plb__n">4</span><div><h4>Pull it</h4><p>Pour between two tumblers to aerate and cool. Sweeten while it is still hot.</p></div></div>
             {%- when 'honey' -%}
@@ -176,15 +218,32 @@
               <div class="plb__step"><span class="plb__n">3</span><div><h4>Baking</h4><p>Swap <b>3/4 cup honey</b> for every 1 cup of sugar, and drop the oven about 15&deg;C.</p></div></div>
               <div class="plb__step"><span class="plb__n">4</span><div><h4>If it crystallises</h4><p>That is proof it was never heated. Stand the jar in warm water &mdash; do not microwave it.</p></div></div>
             {%- when 'combo' -%}
-              <div class="plb__step"><span class="plb__n">1</span><div><h4>Milk tea, every morning</h4><p><b>2 tsp</b> in 1 cup water, brew 2 min, add 1 cup milk, simmer 4&ndash;5 min.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>Orange pekoe, afternoons</h4><p><b>1 tsp</b> per cup at 95&deg;C for 3&ndash;4 min. Drink it black &mdash; milk buries the florals.</p></div></div>
-              <div class="plb__step"><span class="plb__n">3</span><div><h4>Coffee, as decoction</h4><p><b>1 part coffee to 5 parts water</b> in a filter, then cut with hot milk.</p></div></div>
-              <div class="plb__step"><span class="plb__n">4</span><div><h4>Honey, off the heat</h4><p>Stir in once the cup is warm rather than boiling, so the enzymes survive.</p></div></div>
-            {%- else -%}
+              <div class="plb__step"><span class="plb__n">1</span><div><h4>Milk tea, every morning</h4><p>Boil milk and water together, add <b>1 teaspoon per cup</b> at half boil, bring to a full boil, then rest 30 seconds.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>Black tea granules, afternoons</h4><p><b>1 teaspoon</b> per cup at 95&deg;C for 3&ndash;5 min. Drink it black, with lemon, or with a splash of milk.</p></div></div>
+              <div class="plb__step"><span class="plb__n">3</span><div><h4>Cardamom tea, when you want elaichi</h4><p>Add <b>1 teaspoon per cup</b> to milk and water as it comes to the boil, boil for a minute and strain. Or steep it plain for 3&ndash;4 min.</p></div></div>
+              <div class="plb__step"><span class="plb__n">4</span><div><h4>Coffee, as decoction</h4><p><b>1 part coffee to 5 parts water</b> in a filter, then cut with hot milk.</p></div></div>
+              {%- if has_honey -%}
+                <div class="plb__step"><span class="plb__n">5</span><div><h4>Honey, off the heat</h4><p>Stir in once the cup is warm rather than boiling, so the enzymes survive.</p></div></div>
+              {%- endif -%}
+            {%- when 'milktea' -%}
               <div class="plb__step"><span class="plb__n">1</span><div><h4>Boil milk and water together</h4><p>Take your preferred ratio of <b>milk and water</b> in one vessel and bring it to the boil together &mdash; not water first.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>Add the powder at half boil</h4><p>Once it is <b>half boiled</b>, stir in <b>2 teaspoons</b> of tea powder.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>Add the powder at half boil</h4><p>Once it is <b>half boiled</b>, stir in <b>1 teaspoon of tea powder per cup</b> (2 teaspoons for two cups).</p></div></div>
               <div class="plb__step"><span class="plb__n">3</span><div><h4>Boil, then rest</h4><p>Let it come to a full boil, then take it off the heat and <b>rest at least 30 seconds</b> so the colour and body settle.</p></div></div>
               <div class="plb__step"><span class="plb__n">4</span><div><h4>Pull for froth</h4><p>Pour between two tumblers from a height. The greater the drop, the better the froth &mdash; the &ldquo;one-metre chaya&rdquo; of Kerala tea shops.</p></div></div>
+            {%- when 'pekoe' -%}
+              <div class="plb__step"><span class="plb__n">1</span><div><h4>Measure</h4><p><b>1 teaspoon</b> per cup of 180 ml.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>Water just off the boil</h4><p>Around <b>95&deg;C</b>. Boiling water scorches the leaf and flattens the florals.</p></div></div>
+              <div class="plb__step"><span class="plb__n">3</span><div><h4>Steep, then strain</h4><p><b>3&ndash;4 minutes</b>, then strain into the cup.</p></div></div>
+              <div class="plb__step"><span class="plb__n">4</span><div><h4>Serve it without milk</h4><p>Plain, with lemon, or with a little honey. Milk masks the florals this grade is bought for.</p></div></div>
+            {%- when 'cardamom' -%}
+              <div class="plb__step"><span class="plb__n">1</span><div><h4>With milk, chaya style</h4><p>Add <b>1 teaspoon per cup</b> to milk and water as it comes to the boil. Boil for a minute, strain and sweeten.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>Or plain</h4><p><b>1 teaspoon</b> per cup of 180 ml, water just off the boil, steep for <b>3&ndash;4 minutes</b>.</p></div></div>
+              <div class="plb__step"><span class="plb__n">3</span><div><h4>Reseal the pack</h4><p>Cardamom&rsquo;s aroma fades when the pack is left open to the air, so close it tightly after each use.</p></div></div>
+            {%- else -%}
+              <div class="plb__step"><span class="plb__n">1</span><div><h4>Measure</h4><p><b>1 teaspoon</b> (about 3 g) per cup of 180 ml.</p></div></div>
+              <div class="plb__step"><span class="plb__n">2</span><div><h4>Water just off the boil</h4><p>Around <b>95&deg;C</b>. Boiling water scorches tea and pulls out harsh tannin.</p></div></div>
+              <div class="plb__step"><span class="plb__n">3</span><div><h4>Steep, then strain</h4><p><b>3&ndash;5 minutes</b>. Steep for less time if you like it lighter.</p></div></div>
+              <div class="plb__step"><span class="plb__n">4</span><div><h4>Serve</h4><p>Black, with lemon, or with milk to taste.</p></div></div>
           {%- endcase -%}
         </div>
       </div>
@@ -194,18 +253,32 @@
           {%- when 'coffee' -%}
             <div class="plb__card"><h4>Why Robusta</h4><p>Kerala's high-range Robusta carries close to twice the caffeine of Arabica and a much heavier body &mdash; which is exactly what stands up to hot milk in a filter kaapi.</p></div>
             <div class="plb__card"><h4>Grind matters</h4><p>Filter coffee needs a fine grind so water sits with it. A coarse grind gives you weak, watery decoction no matter how long you wait.</p></div>
-            <div class="plb__card"><h4>No chicory here</h4><p>Many Indian filter blends carry 20&ndash;30% chicory for body and cost. This is unblended coffee &mdash; the thickness comes from the bean.</p></div>
+            <div class="plb__card"><h4>Coffee and chicory</h4><p>This is a coffee and chicory blend, usually 53 parts coffee to 47 parts chicory. The chicory gives the decoction body, colour and a slightly bitter edge. Our standard pack is the hotel-style 53:47. If you would rather have less chicory or none, we make 0%, 10%, 20%, 30% and 43% on request, and a Robusta and Arabica mix. Ask us on WhatsApp.</p></div>
           {%- when 'honey' -%}
             <div class="plb__card"><h4>Raw means unheated</h4><p>Commercial honey is usually pasteurised and filtered so it stays clear and pourable on the shelf. That process strips the pollen and enzymes.</p></div>
             <div class="plb__card"><h4>It will set solid</h4><p>Glucose crystallises out over weeks. Runny honey that never sets has almost always been heated or cut with syrup.</p></div>
             <div class="plb__card"><h4>Wildflower, not monofloral</h4><p>Hives sit in forest clearings, so the flavour shifts with whatever is in bloom that season. Two jars will not taste identical.</p></div>
           {%- when 'combo' -%}
             <div class="plb__card"><h4>Made to compare</h4><p>Brew each at the same strength for a week and you will know which one you actually reach for &mdash; cheaper than committing to a full pack first.</p></div>
-            <div class="plb__card"><h4>Store them apart</h4><p>Tea takes on smells fast. Keep each pack sealed and away from the honey and the coffee.</p></div>
+            <div class="plb__card"><h4>Store them apart</h4><p>Tea takes on smells fast. Keep each pack sealed and away from {% if has_honey %}the honey and {% endif %}the coffee.</p></div>
             <div class="plb__card"><h4>Ships as one box</h4><p>One package, one delivery charge, packed the day it leaves us.</p></div>
+          {%- when 'milktea' -%}
+            <div class="plb__card"><h4>CTC vs orthodox</h4><p>CTC &mdash; crush, tear, curl &mdash; is machine-processed into granules that brew fast and strong. Orthodox leaf is rolled whole and gives a lighter, more aromatic cup.</p></div>
+            <div class="plb__card"><h4>Why a fine powder</h4><p>Fine powder gives up its colour and strength quickly, which is what lets it stand up to plenty of milk. It is built for milk, not for drinking black.</p></div>
+            <div class="plb__card"><h4>Why it rests</h4><p>Taking it off the heat for 30 seconds lets the colour and body settle before you strain.</p></div>
+          {%- when 'pekoe' -%}
+            <div class="plb__card"><h4>What Orange Pekoe means</h4><p>It is a leaf-size grade, not a flavour. Younger, smaller leaf gives a lighter, less bitter cup than strong milk-tea blends.</p></div>
+            <div class="plb__card"><h4>Why no milk</h4><p>A light, floral cup is easily buried by milk. For chai, the Premium Milk Tea Powder is the one made for it.</p></div>
+            <div class="plb__card"><h4>Water, not just leaf</h4><p>Boiling water scorches tea and pulls harsh tannin. Take it off the boil to around 95&deg;C and time the steep.</p></div>
+          {%- when 'cardamom' -%}
+            <div class="plb__card"><h4>Real cardamom, no flavouring</h4><p>Cardamom from our own farm in Rajakumari is blended into the tea, 60 g for every 1 kg, so the aroma is real cardamom rather than essence.</p></div>
+            <div class="plb__card"><h4>Milk or no milk</h4><p>With milk it brews as a chaya. Steeped plain in water just off the boil, the cardamom comes through more gently.</p></div>
+          {%- when 'blacktea' -%}
+            <div class="plb__card"><h4>What BOP means</h4><p>BOP is Broken Orange Pekoe: smaller broken leaf that infuses quickly and gives a fuller cup than whole leaf. Whole-leaf grades like OP brew lighter and more floral.</p></div>
+            <div class="plb__card"><h4>Water, not just leaf</h4><p>Boiling water scorches tea and pulls harsh tannin. Take it off the boil to around 95&deg;C and time the steep.</p></div>
+            <div class="plb__card"><h4>Black or with milk</h4><p>Steep for less time for a lighter cup. For a strong, milky chaya, the Premium Milk Tea Powder is built for it.</p></div>
           {%- else -%}
-            <div class="plb__card"><h4>CTC vs orthodox</h4><p>CTC &mdash; crush, tear, curl &mdash; is machine-processed into granules that brew fast and strong. Orthodox leaf is rolled whole and gives a lighter, more aromatic cup. Over 80% of Indian tea is CTC.</p></div>
-            <div class="plb__card"><h4>What the grades mean</h4><p>BOP is Broken Orange Pekoe: smaller broken leaf, quick infusion, full body and colour. Whole-leaf grades like OP brew lighter and more floral.</p></div>
+            <div class="plb__card"><h4>CTC vs orthodox</h4><p>CTC &mdash; crush, tear, curl &mdash; is machine-processed into granules that brew fast and strong. Orthodox leaf is rolled whole and gives a lighter, more aromatic cup.</p></div>
             <div class="plb__card"><h4>Water, not just leaf</h4><p>Boiling water scorches tea and pulls harsh tannin. Take it off the boil to around 95&deg;C and time the steep.</p></div>
         {%- endcase -%}
       </div>

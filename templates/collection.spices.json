@@ -1,0 +1,245 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 36,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": false,
+        "filter_type": "horizontal",
+        "enable_sorting": false,
+        "padding_top": 12,
+        "padding_bottom": 36
+      }
+    },
+    "guide": {
+      "type": "pl-collection-guide",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Where can I buy Kerala spices online?",
+            "answer": "<p>Pure Leven Spices & Tea sells whole Kerala spices online: extra bold cardamom, black pepper, white pepper and Adimali cloves from farming families around Idukki, plus Ceylon and cassia cinnamon and star anise. Orders ship across India, usually in 6 to 9 working days, and shipping is free above ₹649. Questions before ordering? WhatsApp +91 88482 65849.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Are your spices organic?",
+            "answer": "<p>Our cardamom is grown with natural farming practices on our own farm, but neither our cardamom nor our pepper is certified organic. We say so on each product page, so you know exactly what you are buying. Ask us on WhatsApp if you want more detail on a batch.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship outside India?",
+            "answer": "<p>No. We deliver only within India, usually in 6 to 9 working days. If you live abroad, you can order for family in India to carry, and our <a href=\"/blogs/cooking-spices/carry-spices-international-flight-india\">guide to carrying spices on an international flight</a> covers packing and customs.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Which Kerala spice should I buy first?",
+            "answer": "<p>Start with cardamom, black pepper and cloves. These three lose their smell over time, so buying whole from close to the farm helps most. Turmeric is not in the shop yet. Tell us what you cook on WhatsApp at +91 88482 65849 and we will suggest a sensible first few.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you sell spices in bulk or wholesale?",
+            "answer": "<p>Yes, for cardamom and black pepper. See <a href=\"/pages/cardamom-wholesale\">cardamom wholesale</a> and <a href=\"/pages/black-pepper-wholesale\">black pepper wholesale</a> for grades and how to order, or check <a href=\"/pages/cardamom-price-today\">today's cardamom price</a>. For other spices, message us on WhatsApp at +91 88482 65849.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I store whole spices?",
+            "answer": "<p>In an airtight jar, in a cool, dark cupboard away from the stove. Whole spices keep their smell for months this way; ground spices fade within weeks. Our <a href=\"/blogs/cooking-spices/how-to-store-spices\">spice storage guide</a> has the details.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ],
+      "settings": {
+        "eyebrow": "Buying guide",
+        "heading": "Whole spices from Idukki, and what each one is for",
+        "body": "<p>These are the whole spices we pack from farms around Rajakumari and Adimali in Idukki, plus the few we buy in. Pick by the dish.</p><ul><li><strong><a href=\"/products/kerala-cardamom\">Cardamom</a> (elakka):</strong> extra bold 8 to 8.5 mm pods for chai, payasam and biryani.</li><li><strong><a href=\"/products/kerala-black-pepper\">Black pepper</a> (kurumulaku):</strong> bold whole peppercorns for pepper chicken, rasam and everyday grinding.</li><li><strong><a href=\"/products/kerala-white-pepper\">White pepper</a>:</strong> milder, for light-coloured soups and sauces.</li><li><strong><a href=\"/products/kerala-adimali-clove\">Adimali cloves</a> (grampu):</strong> whole buds for biryani, garam masala and tea.</li><li><strong>Cinnamon (karuvappatta):</strong> true <a href=\"/products/aromatic-true-cinnamon-ceylon\">Ceylon cinnamon</a>, imported from Sri Lanka, and <a href=\"/products/premium-cassia-cinnamon\">cassia</a>, for different jobs. Our <a href=\"/blogs/cooking-spices/ceylon-vs-cassia-cinnamon\">Ceylon vs cassia guide</a> explains which to use.</li><li><strong><a href=\"/products/star-anise-chakra-phool-premium-whole-spice\">Star anise</a> (chakra phool):</strong> bought in, for biryani and masala.</li></ul><p>Everything is packed whole with nothing added. Cardamom, pepper and cloves lose their aroma fastest once ground, so they are the best to buy whole from the farm first.</p>",
+        "faq_heading": "Questions about our spices"
+      }
+    },
+    "facts": {
+      "type": "pl-spices-facts",
+      "blocks": {
+        "spice_1": {
+          "type": "spice",
+          "settings": {
+            "product": "kerala-cardamom",
+            "name": "Cardamom",
+            "aka": "elakka · elaichi",
+            "origin": "Our farm in Rajakumari, Idukki, plus nearby growers when we run short",
+            "form": "Extra bold whole pods, 8 to 8.5 mm"
+          }
+        },
+        "spice_2": {
+          "type": "spice",
+          "settings": {
+            "product": "kerala-black-pepper",
+            "name": "Black pepper",
+            "aka": "kurumulaku · kali mirch",
+            "origin": "Our farm in Rajakumari, plus other Idukki growers",
+            "form": "Bold whole peppercorns, Karimunda, 650 g per litre"
+          }
+        },
+        "spice_3": {
+          "type": "spice",
+          "settings": {
+            "product": "kerala-white-pepper",
+            "name": "White pepper",
+            "aka": "safed mirch",
+            "origin": "Idukki",
+            "form": "Whole white peppercorns"
+          }
+        },
+        "spice_4": {
+          "type": "spice",
+          "settings": {
+            "product": "kerala-adimali-clove",
+            "name": "Cloves",
+            "aka": "grampu · laung",
+            "origin": "Adimali, Idukki",
+            "form": "Whole buds, hand-picked, dried in the shade"
+          }
+        },
+        "spice_5": {
+          "type": "spice",
+          "settings": {
+            "product": "aromatic-true-cinnamon-ceylon",
+            "name": "Ceylon cinnamon",
+            "aka": "karuvappatta · dalchini",
+            "origin": "Sri Lanka, imported",
+            "form": "Whole quills, H1 grade"
+          }
+        },
+        "spice_6": {
+          "type": "spice",
+          "settings": {
+            "product": "premium-cassia-cinnamon",
+            "name": "Cassia",
+            "aka": "dalchini, as most shops sell it",
+            "origin": "Bought in",
+            "form": "Whole bark pieces"
+          }
+        },
+        "spice_7": {
+          "type": "spice",
+          "settings": {
+            "product": "star-anise-chakra-phool-premium-whole-spice",
+            "name": "Star anise",
+            "aka": "thakkolam · chakra phool",
+            "origin": "Bought in; it is not grown in Idukki",
+            "form": "Whole stars"
+          }
+        },
+        "spice_8": {
+          "type": "spice",
+          "settings": {
+            "product": "kerala-spice-combo-pack",
+            "name": "Kerala spice combo",
+            "aka": "3 spices in one order",
+            "origin": "Idukki",
+            "form": "Adimali cloves, black pepper and cardamom, whole"
+          }
+        },
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "label": "Cardamom wholesale",
+            "url": "/pages/cardamom-wholesale"
+          }
+        },
+        "link_2": {
+          "type": "link",
+          "settings": {
+            "label": "Black pepper wholesale",
+            "url": "/pages/black-pepper-wholesale"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "label": "Cardamom price today",
+            "url": "/pages/cardamom-price-today"
+          }
+        },
+        "link_4": {
+          "type": "link",
+          "settings": {
+            "label": "All wholesale",
+            "url": "/pages/wholesale"
+          }
+        }
+      },
+      "block_order": [
+        "spice_1",
+        "spice_2",
+        "spice_3",
+        "spice_4",
+        "spice_5",
+        "spice_6",
+        "spice_7",
+        "spice_8",
+        "link_1",
+        "link_2",
+        "link_3",
+        "link_4"
+      ],
+      "settings": {
+        "eyebrow": "At a glance",
+        "heading": "Where each spice comes from, and how we sell it",
+        "lead": "<p>Most of what we sell is grown in Idukki, on our own farm in Rajakumari or by growers near us in Adimali. Cinnamon and star anise don't grow well here, so we buy them in and say so. Everything is sold whole, with nothing added.</p>",
+        "check_heading": "What we check before we pack",
+        "check_body": "<ul><li><strong>Cardamom:</strong> only 8 and 8.5 mm pods, with no bleach, colour or polish.</li><li><strong>Black pepper:</strong> washed, cleaned and sun-dried, and weighed by the litre to stay at 650 g per litre.</li><li><strong>Cloves:</strong> only cloves that still have their oil. Spent, oil-extracted cloves are left out.</li><li><strong>Every pack:</strong> whole spice, nothing added, in a resealable pouch.</li></ul>",
+        "not_heading": "What we don't claim",
+        "not_body": "<ul><li><strong>Not certified organic.</strong> We farm our own cardamom with natural practices, but we have no organic certificate, so we don't use the word.</li><li><strong>Not all grown by us.</strong> Ceylon cinnamon comes from Sri Lanka; cassia and star anise are bought in.</li><li><strong>No overseas shipping.</strong> We deliver within India only, usually in 6 to 9 working days.</li></ul>",
+        "bulk_text": "<p><strong>Buying a kilo or more?</strong> Cardamom and black pepper are available in bulk, with rates that follow the auction.</p>"
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "facts",
+    "guide"
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "sections": {
+    "guide": {
+      "type": "pl-black-coffee-guide",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "How much coffee do I need for one cup of black coffee?",
+            "answer": "<p>About 1 g of coffee for every 15 ml of water: 15 to 17 g, about 2 heaped tablespoons, for a 225 to 250 ml mug. The calculator above works it out for other sizes.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Arabica or Robusta for black coffee?",
+            "answer": "<p>Arabica is smoother and sweeter with less bitterness, a good first black coffee. Robusta is bolder and more bitter, with about twice the caffeine. Our Pure Arabica comes from Chikmagalur and our Pure Robusta from Idukki and Wayanad.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use filter coffee powder with chicory for black coffee?",
+            "answer": "<p>You can, but chicory makes black coffee taste flat and bitter. 100% coffee with no chicory gives a cleaner cup.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "What water temperature is best for black coffee?",
+            "answer": "<p>90 to 96 °C, which is about 30 seconds after the kettle boils. Boiling water pulls out bitterness; water that is too cool tastes sour and thin.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I make black coffee without a machine?",
+            "answer": "<p>Use a steel filter and top the decoction up with hot water, or steep the coffee in just-boiled water for 4 to 5 minutes and strain it through a fine cloth. A French press or a pour-over cone costs little and gives a cleaner cup.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "What is kattan kaapi?",
+            "answer": "<p>Kattan kaapi is Kerala's everyday black coffee: light and amber rather than thick, usually sweetened with jaggery, often with a pinch of cumin.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "What is chukku kaapi?",
+            "answer": "<p>Chukku (or sukku) kaapi is a Kerala and Tamil Nadu coffee boiled with jaggery, dry ginger, black pepper and cumin, sometimes with tulsi. It is a traditional monsoon drink, best as an occasional cup.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "How many calories are in black coffee?",
+            "answer": "<p>About 2 calories a cup without sugar or milk. Sugar, jaggery and milk add the calories.</p>"
+          }
+        },
+        "faq_9": {
+          "type": "faq",
+          "settings": {
+            "question": "What grind do I need for a French press or Turkish coffee?",
+            "answer": "<p>French press and cold brew need a coarse grind; Turkish coffee needs a powder-fine grind. Buy whole beans and grind them at home for these.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "guide"
+  ]
+}

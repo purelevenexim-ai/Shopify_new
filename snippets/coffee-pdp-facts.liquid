@@ -1,0 +1,35 @@
+{%- liquid
+  assign cf = product.metafields.coffee
+  assign kind = cf.kind.value
+  case cf.bean.value
+    when 'robusta'
+      assign bean_label = 'Robusta'
+    when 'arabica'
+      assign bean_label = 'Arabica'
+    when 'blend'
+      assign bean_label = 'Arabica + Robusta'
+  endcase
+  case kind
+    when 'filter', 'special'
+      assign use_label = 'For milk coffee'
+    when 'pure'
+      assign use_label = 'For black coffee'
+    else
+      assign use_label = 'Whole bean'
+  endcase
+-%}
+{%- if kind != blank -%}
+{{ 'pl-coffee.css' | asset_url | stylesheet_tag }}
+<div class="cf-pdp">
+  <ul class="cf-pdp__chips">
+    {%- if bean_label != blank -%}<li>{{ bean_label }}</li>{%- endif -%}
+    {%- if cf.roast.value != blank -%}<li>{{ cf.roast.value }} roast</li>{%- endif -%}
+    <li>{{ use_label }}</li>
+  </ul>
+  {%- if cf.chicory_pct.value == 0 -%}
+    <p class="cf-pdp__label"><b>100% coffee</b><span>No chicory</span></p>
+  {%- endif -%}
+  {%- if cf.origin.value != blank -%}<p class="cf-pdp__origin">{{ cf.origin.value }}</p>{%- endif -%}
+  {%- if cf.chicory_pct.value > 0 -%}<p class="cf-pdp__blend">Blend {{ cf.coffee_pct.value }}:{{ cf.chicory_pct.value }}</p>{%- endif -%}
+</div>
+{%- endif -%}

@@ -42,8 +42,8 @@
   border: 1px solid var(--sk-line);
   border-radius: 2px;
   color: var(--sk-acc);
-  font: 700 10px/1 var(--sk-mono) !important;
-  letter-spacing: 0.08em !important;
+  font: 700 10.5px/1 var(--sk-mono) !important;
+  letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
 }
 .tc-product-card .tc-product-card__tag[hidden] { display: none; }
@@ -64,8 +64,8 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   color: var(--sk-muted);
-  font: 400 10px/1.5 var(--sk-mono) !important;
-  letter-spacing: 0.1em !important;
+  font: 400 10.5px/1.5 var(--sk-mono) !important;
+  letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
 }
 

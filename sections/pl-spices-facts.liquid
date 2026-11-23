@@ -1,0 +1,162 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} { background: var(--sk-bg) !important; border-top: 1px solid var(--sk-line); }
+  #shopify-section-{{ section.id }} * { box-sizing: border-box; }
+  #shopify-section-{{ section.id }} .plsf { display: grid; gap: 28px; max-width: var(--sk-wrap); margin: 0 auto; padding: 40px var(--sk-gutter) 48px; font-family: var(--sk-sans); }
+  #shopify-section-{{ section.id }} .plsf > * { margin: 0 !important; min-width: 0; }
+  #shopify-section-{{ section.id }} .plsf__eyebrow { color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; margin: 0 0 10px !important; }
+  html body #shopify-section-{{ section.id }} .plsf__title {
+    max-width: 24ch; margin: 0 !important; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: clamp(26px, 3.4vw, 40px) !important;
+    font-weight: 500 !important; line-height: 1.1 !important; letter-spacing: -0.045em !important; text-transform: none !important;
+  }
+  html body #shopify-section-{{ section.id }} .plsf__lead { max-width: 640px; margin: 12px 0 0 !important; color: var(--sk-fg2) !important; font-size: 15px !important; line-height: 1.65 !important; }
+
+  #shopify-section-{{ section.id }} .plsf__rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--sk-line2, var(--sk-line)); }
+  #shopify-section-{{ section.id }} .plsf__head { display: none; }
+  #shopify-section-{{ section.id }} .plsf__row { display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; padding: 14px 0; border-bottom: 1px solid var(--sk-line); }
+  html body #shopify-section-{{ section.id }} .plsf__name { grid-column: 1; color: var(--sk-fg) !important; font-size: 16px !important; font-weight: 600 !important; line-height: 1.35 !important; text-decoration: none !important; }
+  html body #shopify-section-{{ section.id }} a.plsf__name:hover { color: var(--sk-acc-hover) !important; text-decoration: underline !important; text-underline-offset: 3px; }
+  #shopify-section-{{ section.id }} .plsf__aka { grid-column: 1; color: var(--sk-muted); font: 400 11px/1.5 var(--sk-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+  #shopify-section-{{ section.id }} .plsf__price { grid-column: 2; grid-row: 1 / span 2; align-self: start; color: var(--sk-fg); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+  #shopify-section-{{ section.id }} .plsf__price small { display: block; color: var(--sk-muted); font: 400 11px/1.5 var(--sk-mono); letter-spacing: 0.04em; text-transform: none; }
+  #shopify-section-{{ section.id }} .plsf__cell { grid-column: 1 / -1; color: var(--sk-fg2); font-size: 14px; line-height: 1.55; }
+  #shopify-section-{{ section.id }} .plsf__cell b { color: var(--sk-muted); font: 400 11px/1.5 var(--sk-mono); letter-spacing: 0.06em; text-transform: uppercase; margin-right: 6px; }
+
+  #shopify-section-{{ section.id }} .plsf__two { display: grid; gap: 16px; }
+  #shopify-section-{{ section.id }} .plsf__box { padding: 20px; background: var(--sk-card, #fff); border: 1px solid var(--sk-line); border-radius: 3px; }
+  html body #shopify-section-{{ section.id }} .plsf__box h3 { margin: 0 0 10px !important; color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 18px !important; font-weight: 600 !important; line-height: 1.3 !important; letter-spacing: -0.02em !important; text-transform: none !important; }
+  html body #shopify-section-{{ section.id }} .plsf__box ul { margin: 0 !important; padding-left: 18px !important; }
+  html body #shopify-section-{{ section.id }} .plsf__box li { margin: 0 0 8px !important; color: var(--sk-fg2) !important; font-size: 14px !important; line-height: 1.6 !important; }
+  html body #shopify-section-{{ section.id }} .plsf__box li:last-child { margin-bottom: 0 !important; }
+
+  #shopify-section-{{ section.id }} .plsf__bulk { display: grid; gap: 12px; padding: 20px; background: var(--sk-bg2, rgba(0,0,0,0.03)); border-radius: 3px; }
+  html body #shopify-section-{{ section.id }} .plsf__bulk p { margin: 0 !important; color: var(--sk-fg2) !important; font-size: 15px !important; line-height: 1.6 !important; }
+  #shopify-section-{{ section.id }} .plsf__links { display: flex; flex-wrap: wrap; gap: 8px; }
+  html body #shopify-section-{{ section.id }} .plsf__links a {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px !important; border: 1px solid var(--sk-line2, var(--sk-line)) !important; border-radius: 3px !important;
+    color: var(--sk-fg) !important; font: 600 14px/1.2 var(--sk-sans) !important; letter-spacing: -0.01em !important; text-transform: none !important; text-decoration: none !important; background: var(--sk-bg) !important;
+  }
+  html body #shopify-section-{{ section.id }} .plsf__links a:hover { border-color: var(--sk-fg) !important; }
+
+  @media (min-width: 800px) {
+    #shopify-section-{{ section.id }} .plsf__head,
+    #shopify-section-{{ section.id }} .plsf__row { grid-template-columns: 1.1fr 1.5fr 1.5fr 0.6fr; gap: 0 20px; align-items: baseline; }
+    #shopify-section-{{ section.id }} .plsf__head { display: grid; padding: 10px 0; border-bottom: 1px solid var(--sk-line); color: var(--sk-muted); font: 400 11px/1.5 var(--sk-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+    #shopify-section-{{ section.id }} .plsf__head span:last-child { text-align: right; }
+    #shopify-section-{{ section.id }} .plsf__id { grid-column: 1; }
+    #shopify-section-{{ section.id }} .plsf__name, #shopify-section-{{ section.id }} .plsf__aka { display: block; }
+    #shopify-section-{{ section.id }} .plsf__cell { grid-column: auto; }
+    #shopify-section-{{ section.id }} .plsf__cell b { display: none; }
+    #shopify-section-{{ section.id }} .plsf__price { grid-column: 4; grid-row: auto; }
+    #shopify-section-{{ section.id }} .plsf__two { grid-template-columns: 1fr 1fr; }
+    #shopify-section-{{ section.id }} .plsf__bulk { grid-template-columns: 1fr auto; align-items: center; }
+  }
+  @media (max-width: 799px) {
+    #shopify-section-{{ section.id }} .plsf__id { display: contents; }
+  }
+{%- endstyle -%}
+
+<div class="plsf">
+  <div>
+    {%- if section.settings.eyebrow != blank -%}<p class="plsf__eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+    {%- if section.settings.heading != blank -%}<h2 class="plsf__title">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+    {%- if section.settings.lead != blank -%}<div class="plsf__lead">{{ section.settings.lead }}</div>{%- endif -%}
+  </div>
+
+  {%- assign spice_blocks = section.blocks | where: 'type', 'spice' -%}
+  {%- if spice_blocks.size > 0 -%}
+    <div role="table" aria-label="{{ section.settings.heading | escape }}">
+      <div class="plsf__head" role="row">
+        <span role="columnheader">Spice</span><span role="columnheader">Where it's from</span><span role="columnheader">How we sell it</span><span role="columnheader">From</span>
+      </div>
+      <ul class="plsf__rows" role="rowgroup">
+        {%- for block in spice_blocks -%}
+          {%- assign p = block.settings.product -%}
+          <li class="plsf__row" role="row" {{ block.shopify_attributes }}>
+            <div class="plsf__id" role="cell">
+              {%- if p != blank -%}
+                <a class="plsf__name" href="{{ p.url }}">{{ block.settings.name | default: p.title | escape }}</a>
+              {%- else -%}
+                <span class="plsf__name">{{ block.settings.name | escape }}</span>
+              {%- endif -%}
+              {%- if block.settings.aka != blank -%}<span class="plsf__aka">{{ block.settings.aka | escape }}</span>{%- endif -%}
+            </div>
+            <div class="plsf__cell" role="cell"><b>From</b>{{ block.settings.origin | escape }}</div>
+            <div class="plsf__cell" role="cell"><b>Sold as</b>{{ block.settings.form | escape }}</div>
+            <div class="plsf__price" role="cell">
+              {%- if p != blank and p.available -%}
+                {{ p.price_min | money_without_currency | remove: '.00' | prepend: '₹' }}<small>{% if p.variants.size > 1 and block.settings.name contains 'combo' %}starter pack{% else %}{{ p.variants.first.title | downcase | replace: 'g', ' g' | escape }}{% endif %}</small>
+              {%- elsif p != blank -%}
+                <small>Sold out</small>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.check_body != blank or section.settings.not_body != blank -%}
+    <div class="plsf__two">
+      {%- if section.settings.check_body != blank -%}
+        <div class="plsf__box"><h3>{{ section.settings.check_heading | escape }}</h3>{{ section.settings.check_body }}</div>
+      {%- endif -%}
+      {%- if section.settings.not_body != blank -%}
+        <div class="plsf__box"><h3>{{ section.settings.not_heading | escape }}</h3>{{ section.settings.not_body }}</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- assign link_blocks = section.blocks | where: 'type', 'link' -%}
+  {%- if section.settings.bulk_text != blank or link_blocks.size > 0 -%}
+    <div class="plsf__bulk">
+      {%- if section.settings.bulk_text != blank -%}<div>{{ section.settings.bulk_text }}</div>{%- endif -%}
+      <div class="plsf__links">
+        {%- for block in link_blocks -%}
+          {%- if block.settings.url != blank -%}<a href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</a>{%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Spice facts table",
+  "tag": "section",
+  "class": "pl-spices-facts",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "richtext", "id": "lead", "label": "Intro" },
+    { "type": "text", "id": "check_heading", "label": "Checks heading", "default": "What we check before we pack" },
+    { "type": "richtext", "id": "check_body", "label": "Checks list" },
+    { "type": "text", "id": "not_heading", "label": "Honesty heading", "default": "What we don't claim" },
+    { "type": "richtext", "id": "not_body", "label": "Honesty list" },
+    { "type": "richtext", "id": "bulk_text", "label": "Bulk buying text" }
+  ],
+  "blocks": [
+    {
+      "type": "spice",
+      "name": "Spice row",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "text", "id": "aka", "label": "Also called" },
+        { "type": "text", "id": "origin", "label": "Where it's from" },
+        { "type": "text", "id": "form", "label": "How we sell it" }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Bulk link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Spice facts table" }]
+}
+{% endschema %}

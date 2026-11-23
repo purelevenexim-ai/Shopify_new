@@ -355,6 +355,10 @@
   background: var(--sk-acc-soft) !important; color: var(--sk-acc) !important; font-weight: 700 !important;
   box-shadow: inset 0 0 0 1px var(--sk-acc) !important;
 }
+@media (max-width: 749px) {
+  .tc-brewing__tabs { flex-wrap: wrap; }
+  .tc-brewing__tab-button { flex: 1 1 30%; }
+}
 .tc-brewing__panels { max-width: 760px; margin-top: 24px; }
 .tc-brewing__panel { display: none; }
 .tc-brewing__panel.is-active { display: block; }

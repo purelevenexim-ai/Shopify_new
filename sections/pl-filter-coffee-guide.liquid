@@ -1,0 +1,274 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'pl-coffee.css' | asset_url | stylesheet_tag }}
+
+<article class="cf cf--white" id="cf-guide-{{ section.id }}">
+  <div class="cf__wrap">
+    <header class="cf__head">
+      <span class="cf__eyebrow">Milk coffee guide</span>
+      <h1 class="cf__h1">How to make filter coffee and milk coffee at home</h1>
+      <p class="cf__lede">Put 2 to 3 level tablespoons of filter coffee powder in the top of a steel filter, press lightly and pour water just off the boil to three-quarters full. Let it drip for 10 to 20 minutes. Mix 1 part of this decoction with 3 to 4 parts hot full-fat milk, add sugar to taste, and pour between tumbler and davara for the froth.</p>
+      {% render 'coffee-photo', name: 'pl-coffee-milk-guide', w: 1600, h: 900, alt: 'South Indian filter coffee in steel tumblers and davaras', eager: true, sizes: '100vw' %}
+      <ul class="cf__toc">
+        <li><a href="#calc">Calculator</a></li>
+        <li><a href="#south">South Indian</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#styles">North Indian, Vietnamese, Italian</a></li>
+        <li><a href="#powder">Which powder</a></li>
+        <li><a href="#tips">Tips</a></li>
+        <li><a href="#fix">Fix it</a></li>
+        <li><a href="#faq">Questions</a></li>
+      </ul>
+    </header>
+
+    <form class="cf__calc" id="calc" aria-labelledby="cf-calc-title-{{ section.id }}" onsubmit="return false">
+      <div class="cf__head">
+        <span class="cf__eyebrow">Decoction calculator</span>
+        <h2 class="cf__h3" id="cf-calc-title-{{ section.id }}">How much powder, water and milk?</h2>
+      </div>
+      <fieldset>
+        <legend>Cups</legend>
+        <div class="cf__seg">
+          {%- for n in (1..6) -%}
+            <label><input type="radio" name="cups" id="cf-cups-{{ n }}-{{ section.id }}" value="{{ n }}"{% if n == 2 %} checked{% endif %}><span>{{ n }}</span></label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Strength</legend>
+        <div class="cf__seg">
+          <label><input type="radio" name="strength" id="cf-s-light-{{ section.id }}" value="30"><span>Light</span></label>
+          <label><input type="radio" name="strength" id="cf-s-regular-{{ section.id }}" value="40" checked><span>Regular</span></label>
+          <label><input type="radio" name="strength" id="cf-s-strong-{{ section.id }}" value="50"><span>Strong</span></label>
+        </div>
+      </fieldset>
+      <div class="cf__out" aria-live="polite">
+        <div><small>Powder</small><b data-out="g">13 g</b><em data-out="tbsp">about 2 level tbsp</em></div>
+        <div><small>Water</small><b data-out="water">105 ml</b><em>just off the boil</em></div>
+        <div><small>Decoction per cup</small><b data-out="dec">40 ml</b><em data-out="dectbsp">about 2½ tbsp</em></div>
+        <div><small>Hot milk per cup</small><b data-out="milk">110 ml</b><em>for a 150 ml tumbler</em></div>
+      </div>
+      <p class="cf__warn" data-out="warn" hidden>If the top chamber of your filter cannot hold this much water, brew in two rounds.</p>
+      <p class="cf__muted">A starting point from common filter-coffee ratios. Adjust to your taste and your filter.</p>
+    </form>
+
+    <div class="cf__head" id="south">
+      <span class="cf__eyebrow">South India</span>
+      <h2 class="cf__h2">Filter kaapi with a steel filter</h2>
+      <p>The everyday coffee of Kerala, Tamil Nadu and Karnataka: a thick decoction dripped slowly through a two-chamber steel filter, mixed with plenty of hot milk and frothed in a tumbler and davara.</p>
+    </div>
+    <div class="cf__two">
+      <div class="cf__card">
+        <span class="cf__eyebrow">What you need</span>
+        <ul class="cf__list">
+          <li><b>A steel coffee filter:</b> a top chamber with a perforated base, a press disc (the "umbrella"), a lid, and a bottom chamber that collects the decoction.</li>
+          <li><b>Filter coffee powder</b>, ground for the filter.</li>
+          <li><b>Water, full-fat milk</b> and sugar if you take it.</li>
+          <li><b>A tumbler and davara</b> for mixing and frothing, or any cup and a second vessel.</li>
+        </ul>
+      </div>
+      <div class="cf__card">
+        <span class="cf__eyebrow">Method</span>
+        <h3 class="cf__h3">Seven steps</h3>
+        {% render 'coffee-brew-steps', mode: 'milk' %}
+      </div>
+    </div>
+
+    <div class="cf__voice">
+      <span class="cf__eyebrow">Our view</span>
+      <p>Filter coffee should be strong enough that you taste the coffee through the milk. If yours tastes like sweet milk, add more decoction, not more sugar. And use the first decoction. The second pour is for people who are in a hurry.</p>
+      <span class="cf__sign">The Pure Leven family, Idukki</span>
+    </div>
+
+    <div class="cf__head" id="history">
+      <span class="cf__eyebrow">A short history</span>
+      <h2 class="cf__h2">How filter coffee became South India's drink</h2>
+    </div>
+    <div class="cf__stories">
+      <div class="cf__card"><span class="cf__tag">History</span><h3 class="cf__h3">Why there is chicory in it</h3><p>In 1806 Napoleon's blockade cut France off from coffee, and people stretched it with roasted chicory root. The habit spread. In South India it found its real job: slowing the drip so the decoction comes out thick enough to stand up to milk.</p></div>
+      <div class="cf__card"><span class="cf__tag">Tradition</span><h3 class="cf__h3">The tumbler and davara</h3><p>The set was once brass; now it's mostly steel. The wide davara cools the coffee and the pouring mixes and froths it. Pour from arm's height in a coffee house and it becomes "meter kaapi", part drink, part show.</p></div>
+      <div class="cf__card"><span class="cf__tag">History</span><h3 class="cf__h3">The coffee houses</h3><p>The Coffee Board opened its first India Coffee House in Bombay in 1936. When it tried to shut them in the 1950s, the workers took over as a co-operative. Kerala's first Indian Coffee House opened in Thrissur on 8 March 1958.</p></div>
+      <div class="cf__card"><span class="cf__tag is-legend">Lore</span><h3 class="cf__h3">"Degree" coffee</h3><p>Kumbakonam in Tamil Nadu made filter coffee famous as "degree coffee". Nobody agrees why: first-grade milk checked with a lactometer, the thickness of the milk, or just a mark of quality. Everyone agrees it's strong.</p></div>
+    </div>
+
+    <div class="cf__head" id="styles">
+      <span class="cf__eyebrow">Other styles</span>
+      <h2 class="cf__h2">Milk coffee from North India and abroad</h2>
+    </div>
+    <div class="cf__grid">
+      <div class="cf__card">
+        <span class="cf__eyebrow">North India</span>
+        <h3 class="cf__h3">Pan-brewed milk coffee</h3>
+        <p>Many North Indian homes make coffee in a pan, the way they make chai. Here is the method with filter powder.</p>
+        {% render 'coffee-brew-steps', mode: 'north' %}
+        <p class="cf__muted">The whipped "beaten coffee" of North Indian homes needs instant coffee; ground filter coffee will not foam when beaten.</p>
+      </div>
+      <div class="cf__card">
+        <span class="cf__eyebrow">Vietnam</span>
+        <h3 class="cf__h3">Cà phê sữa: coffee with condensed milk</h3>
+        <p>Vietnam drips strong Robusta through a small metal phin, much like our steel filter, onto sweet condensed milk.</p>
+        {% render 'coffee-brew-steps', mode: 'vietnam' %}
+      </div>
+      <div class="cf__card">
+        <span class="cf__eyebrow">Italy</span>
+        <h3 class="cf__h3">Moka pot latte</h3>
+        <p>The stovetop moka pot pushes steam-pressured water up through the coffee for a strong, espresso-like shot.</p>
+        {% render 'coffee-brew-steps', mode: 'moka' %}
+      </div>
+      <div class="cf__card">
+        <span class="cf__eyebrow">No filter</span>
+        <h3 class="cf__h3">Pan and strainer decoction</h3>
+        {% render 'coffee-brew-steps', mode: 'nofilter' %}
+      </div>
+    </div>
+
+    <div class="cf__head" id="powder">
+      <span class="cf__eyebrow">Which powder</span>
+      <h2 class="cf__h2">Match the coffee to the style</h2>
+    </div>
+    <div class="cf__table-wrap">
+      <table class="cf__table">
+        <thead><tr><th scope="col">Style</th><th scope="col">Our coffee</th><th scope="col">Why</th></tr></thead>
+        <tbody>
+          <tr><td>South Indian filter kaapi</td><td>{% render 'coffee-plink', handle: 'robusta-filter-coffee-powder', label: 'Robusta Filter Coffee Powder' %}, {% render 'coffee-plink', handle: 'arabica-filter-coffee-powder', label: 'Arabica Filter Coffee Powder' %} or the {% render 'coffee-plink', handle: 'special-coffee-blend-kerala', label: 'Special Coffee Blend' %}</td><td>Ground and blended for the steel filter; thick decoction</td></tr>
+          <tr><td>North Indian pan-brewed</td><td>Any of our three filter powders</td><td>Strained after simmering, so the fine grind is no problem</td></tr>
+          <tr><td>Vietnamese cà phê sữa</td><td>{% render 'coffee-plink', handle: 'pure-robusta-coffee-powder', label: 'Pure Robusta Coffee Powder' %} or Robusta Filter Coffee Powder</td><td>Robusta is the traditional bean; its strength cuts through condensed milk</td></tr>
+          <tr><td>Moka pot latte</td><td>{% render 'coffee-plink', handle: 'pure-arabica-coffee-powder', label: 'Pure Arabica' %} or {% render 'coffee-plink', handle: 'pure-robusta-coffee-powder', label: 'Pure Robusta Coffee Powder' %}</td><td>100% coffee gives a cleaner shot</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cf__card" id="tips">
+      <span class="cf__eyebrow">Tips and tricks</span>
+      <h2 class="cf__h3">Small things that make a better cup</h2>
+      <ul class="cf__tips">
+        <li><b>Warm the tumbler.</b> Rinse the tumbler and davara with hot water first so the coffee stays hot through the frothing.</li>
+        <li><b>Sugar first.</b> Put sugar in the tumbler before the decoction and milk; it dissolves faster.</li>
+        <li><b>Full-fat milk.</b> Heat it until it just rises. Toned or skimmed milk makes a thinner cup.</li>
+        <li><b>Never boil the decoction.</b> Warm it by pouring hot milk over it.</li>
+        <li><b>Do not overfill the filter.</b> Three-quarters full drips evenly; packed or overfilled filters drip slowly.</li>
+        <li><b>Keep the holes clear.</b> Wash and dry the filter after every use; old grounds block the holes.</li>
+        <li><b>Jaggery instead of sugar?</b> Add it to the cup after the milk is off the heat; boiling milk with jaggery can curdle it.</li>
+        <li><b>Night-before decoction.</b> Many families brew the decoction in the evening for a strong cup at dawn. Keep it covered in the fridge.</li>
+        <li><b>Cold filter coffee.</b> Chilled decoction, cold milk and ice. Sugar syrup mixes in better than sugar.</li>
+      </ul>
+    </div>
+
+    <div class="cf__head" id="fix">
+      <span class="cf__eyebrow">Fix it</span>
+      <h2 class="cf__h2">When the cup is not right</h2>
+    </div>
+    <div class="cf__grid">
+      <div class="cf__card"><h3 class="cf__h3">Drips too slowly</h3><p>The powder is packed too hard or ground too fine. Press the disc lightly and do not tap the filter.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Weak and watery</h3><p>Too little powder, or you mixed in the second decoction. Add half a tablespoon more powder, or use only the first drip.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Too bitter</h3><p>Too much decoction for the milk. Use more milk, or try our Special Coffee Blend, which has more coffee in it.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Sour or thin</h3><p>The water was not hot enough. Bring it to the boil and rest it only about 30 seconds before pouring.</p></div>
+    </div>
+
+    <div class="cf__head">
+      <span class="cf__eyebrow">Our milk coffees</span>
+      <h2 class="cf__h2">Pick your powder</h2>
+    </div>
+    {% render 'coffee-compare', group: 'milk' %}
+    <p>Drinking it black? Read the <a href="/pages/black-coffee-guide">black coffee guide</a>.</p>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cf__head" id="faq">
+        <span class="cf__eyebrow">Questions</span>
+        <h2 class="cf__h2">Milk coffee questions</h2>
+      </div>
+      <div class="cf__faq">
+        {%- for block in section.blocks -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question | escape }}</summary>
+            <div class="cf__a">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+<script>
+(function () {
+  var f = document.getElementById('calc');
+  if (!f) return;
+  function q(n) { return f.querySelector('[data-out="' + n + '"]'); }
+  function half(x) { var r = Math.round(x * 2) / 2; return (Math.floor(r) || '') + (r % 1 ? '½' : '') || '½'; }
+  function run() {
+    var c = +f.querySelector('input[name="cups"]:checked').value;
+    var s = +f.querySelector('input[name="strength"]:checked').value;
+    var g = Math.max(5, Math.round(c * s / 6));
+    var w = Math.round(g * 8 / 5) * 5;
+    q('g').textContent = g + ' g';
+    q('tbsp').textContent = 'about ' + half(g / 6.5) + ' level tbsp';
+    q('water').textContent = w + ' ml';
+    q('dec').textContent = s + ' ml';
+    q('dectbsp').textContent = 'about ' + half(s / 15) + ' tbsp';
+    q('milk').textContent = (150 - s) + ' ml';
+    q('warn').hidden = w <= 150;
+  }
+  f.addEventListener('change', run);
+  run();
+})();
+</script>
+
+{%- if section.blocks.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+    { "@type": "Question", "name": {{ block.settings.question | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} } }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to make South Indian filter coffee at home",
+  "totalTime": "PT25M",
+  "supply": [
+    { "@type": "HowToSupply", "name": "Filter coffee powder with chicory" },
+    { "@type": "HowToSupply", "name": "Water" },
+    { "@type": "HowToSupply", "name": "Full-fat milk" },
+    { "@type": "HowToSupply", "name": "Sugar (optional)" }
+  ],
+  "tool": [
+    { "@type": "HowToTool", "name": "South Indian steel coffee filter" },
+    { "@type": "HowToTool", "name": "Tumbler and davara" }
+  ],
+  "step": [
+    { "@type": "HowToStep", "text": "Put 2 to 3 level tablespoons (about 15 to 20 g) of filter coffee powder in the top chamber of the filter and level it." },
+    { "@type": "HowToStep", "text": "Set the press disc on top and press lightly." },
+    { "@type": "HowToStep", "text": "Boil water, rest it about 30 seconds (90 to 95 °C), pour slowly until the top chamber is three-quarters full, and close the lid." },
+    { "@type": "HowToStep", "text": "Let it drip for 10 to 20 minutes without stirring." },
+    { "@type": "HowToStep", "text": "Boil full-fat milk until it rises." },
+    { "@type": "HowToStep", "text": "In the tumbler, add sugar if you like, then 1 part decoction to 3 or 4 parts hot milk." },
+    { "@type": "HowToStep", "text": "Pour between the tumbler and the davara 3 or 4 times from a height for the froth." }
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Milk coffee guide",
+  "tag": "div",
+  "class": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Milk coffee guide" }]
+}
+{% endschema %}

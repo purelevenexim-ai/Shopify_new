@@ -1,0 +1,73 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'pl-coffee.css' | asset_url | stylesheet_tag }}
+
+<section class="cf" id="cf-info-{{ section.id }}">
+  <div class="cf__wrap">
+    <div class="cf__head">
+      <span class="cf__eyebrow">Compare</span>
+      <h2 class="cf__h2">Which coffee is which</h2>
+    </div>
+    {% render 'coffee-compare' %}
+
+    <div class="cf__card">
+      <span class="cf__eyebrow">How to make filter coffee</span>
+      <h3 class="cf__h3">Seven steps with a steel filter</h3>
+      {% render 'coffee-brew-steps', mode: 'milk' %}
+      <p><a href="/pages/filter-coffee-guide">Milk coffee guide</a> · <a href="/pages/black-coffee-guide">Black coffee guide</a></p>
+    </div>
+
+    <div class="cf__note">
+      <p>Want your own ratio or bean mix? We make custom blends to order.</p>
+      <a class="cf__btn" href="https://wa.me/918848265849?text=Hi%2C%20I%20would%20like%20a%20custom%20coffee%20blend." target="_blank" rel="noopener">Ask on WhatsApp</a>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cf__head">
+        <span class="cf__eyebrow">Questions</span>
+        <h2 class="cf__h2">Coffee questions, answered</h2>
+      </div>
+      <div class="cf__faq">
+        {%- for block in section.blocks -%}
+          <details {{ block.shopify_attributes }}{% if forloop.first %} open{% endif %}>
+            <summary>{{ block.settings.question | escape }}</summary>
+            <div class="cf__a">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if section.blocks.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+    { "@type": "Question", "name": {{ block.settings.question | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} } }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Coffee hub details",
+  "tag": "div",
+  "class": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Coffee hub details" }]
+}
+{% endschema %}

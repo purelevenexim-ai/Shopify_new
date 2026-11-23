@@ -1,0 +1,169 @@
+{%- liquid
+  assign cf = product.metafields.coffee
+  assign kind = cf.kind.value
+  assign bean = cf.bean.value
+  assign size_opt = product.options_by_name['Size']
+  assign faq = cf.faq.value
+  case bean
+    when 'robusta'
+      assign tq1 = 'Is your Robusta organic?'
+      assign ta1 = 'It is not certified organic, so we do not call it organic. We grow it without chemical pesticides or chemical fertilisers, pick it by hand and dry it in the sun.'
+      assign tq2 = 'Do you spray pesticides on your coffee?'
+      assign ta2 = 'No. Robusta is a hardy plant, and on our land in Idukki we have not needed to spray. We pick on time and keep the shade trees.'
+    when 'arabica'
+      assign tq1 = 'Do you grow the Arabica yourselves?'
+      assign ta1 = 'No. We grow Robusta. Our Arabica comes from growers in Chikmagalur, Karnataka, and we roast it ourselves in small batches and pack it in Kerala.'
+      assign tq2 = 'Is it organic?'
+      assign ta2 = 'We do not claim it is organic; it is not certified. It is 100% coffee with nothing added.'
+    else
+      assign tq1 = 'Who grows the beans in the Special Blend?'
+      assign ta1 = 'The Robusta comes from our own plot in Idukki and from Wayanad. The Arabica comes from growers in Chikmagalur. We roast and blend it ourselves.'
+      assign tq2 = 'Is it organic?'
+      assign ta2 = 'It is not certified organic, so we do not call it that. Our own Robusta is grown without chemical pesticides or fertilisers.'
+  endcase
+  assign wa = 'https://wa.me/918848265849?text=Hi%2C%20I%20would%20like%20a%20custom%20coffee%20blend.'
+  if kind == 'filter' or kind == 'special'
+    assign group = 'milk'
+  else
+    assign group = 'black'
+  endif
+-%}
+{%- if kind != blank -%}
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'pl-coffee.css' | asset_url | stylesheet_tag }}
+
+<section class="cf" id="cf-detail-{{ section.id }}" aria-label="How to brew and product details">
+  <div class="cf__wrap">
+    <div class="cf__head">
+      <span class="cf__eyebrow">How to brew</span>
+      {%- case kind -%}
+        {%- when 'filter', 'special' -%}
+          <h2 class="cf__h2">Three ways to make milk coffee</h2>
+        {%- when 'pure' -%}
+          <h2 class="cf__h2">Three ways to make black coffee</h2>
+        {%- else -%}
+          <h2 class="cf__h2">Grind fresh, then brew</h2>
+      {%- endcase -%}
+    </div>
+
+    {%- liquid
+      assign combo = kind | append: '-' | append: bean
+      case combo
+        when 'filter-robusta'
+          assign modes = 'milk|South India|Steel filter kaapi,vietnam|Vietnam|With condensed milk,nofilter|No filter|Pan and strainer'
+        when 'filter-arabica'
+          assign modes = 'milk|South India|Steel filter kaapi,moka|Italy|Moka pot latte,north|North India|Pan-brewed milk coffee'
+        when 'special-blend'
+          assign modes = 'milk|South India|Steel filter kaapi,north|North India|Pan-brewed milk coffee,nofilter|No filter|Pan and strainer'
+        when 'pure-robusta'
+          assign modes = 'kattan|Kerala|Kattan kaapi,chukku|Kerala and Tamil Nadu|Chukku kaapi,moka|Italy|Moka pot'
+        when 'pure-arabica'
+          assign modes = 'black|Steel filter|Black filter coffee,pourover|Drip|Pour-over,kattan|Kerala|Kattan kaapi'
+        when 'beans-robusta'
+          assign modes = 'grind|First|Grind to suit the brew,moka|Italy|Moka pot,frenchpress|France|French press'
+        else
+          assign modes = 'grind|First|Grind to suit the brew,frenchpress|France|French press,turkish|Turkey|Turkish coffee'
+      endcase
+      assign mode_list = modes | split: ','
+    -%}
+    <div class="cf__grid">
+      {%- for m in mode_list -%}
+        {%- assign mm = m | split: '|' -%}
+        <div class="cf__card"><span class="cf__eyebrow">{{ mm[1] }}</span><h3 class="cf__h3">{{ mm[2] }}</h3>{% render 'coffee-brew-steps', mode: mm[0] %}</div>
+      {%- endfor -%}
+    </div>
+    <p>
+      {%- if group == 'milk' -%}
+        <a href="/pages/filter-coffee-guide">Milk coffee guide: decoction calculator, Vietnamese and moka pot styles, tips</a>
+      {%- else -%}
+        <a href="/pages/black-coffee-guide">Black coffee guide: ratio calculator, cold brew, chukku kaapi, tips</a>
+      {%- endif -%}
+    </p>
+
+    {% render 'coffee-bean-story', bean: bean, kind: kind %}
+
+    <div class="cf__two">
+      {% render 'coffee-bean-profile', bean: bean %}
+      <div class="cf__head">
+        <span class="cf__eyebrow">Spec sheet</span>
+        <dl class="cf__spec">
+          {%- if cf.blend.value != blank -%}<dt>Blend</dt><dd>{{ cf.blend.value }}</dd>{%- endif -%}
+          {%- if cf.origin.value != blank -%}<dt>Origin</dt><dd>{{ cf.origin.value }}</dd>{%- endif -%}
+          {%- if cf.roast.value != blank -%}<dt>Roast</dt><dd>{{ cf.roast.value }}</dd>{%- endif -%}
+          {%- if cf.form.value != blank -%}<dt>Form</dt><dd>{{ cf.form.value }}</dd>{%- endif -%}
+          {%- if cf.best_for.value != blank -%}<dt>Best for</dt><dd>{{ cf.best_for.value }}</dd>{%- endif -%}
+          {%- if size_opt -%}<dt>Pack sizes</dt><dd>{{ size_opt.values | join: ', ' }}</dd>{%- endif -%}
+          {%- if cf.shelf_life.value != blank -%}<dt>Shelf life</dt><dd>{{ cf.shelf_life.value }}</dd>{%- endif -%}
+          {%- if cf.pack.value != blank -%}<dt>Packing</dt><dd>{{ cf.pack.value }}</dd>{%- endif -%}
+        </dl>
+      </div>
+    </div>
+
+    <div class="cf__head">
+      <span class="cf__eyebrow">{% if group == 'milk' %}Our milk coffees{% else %}Our black coffees and beans{% endif %}</span>
+      {% render 'coffee-compare', current: product.handle, group: group %}
+    </div>
+
+    <div class="cf__note">
+      <p>Want your own ratio or bean mix? We make custom blends to order.</p>
+      <a class="cf__btn" href="{{ wa }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+    </div>
+
+    {%- if true -%}
+      <div class="cf__head">
+        <span class="cf__eyebrow">Questions</span>
+        <h2 class="cf__h2">{{ product.title | split: ',' | first | strip }}: your questions</h2>
+      </div>
+      <div class="cf__faq">
+        {%- for item in faq -%}
+          <details{% if forloop.first %} open{% endif %}>
+            <summary>{{ item.q | escape }}</summary>
+            <div class="cf__a"><p>{{ item.a | escape }}</p></div>
+          </details>
+        {%- endfor -%}
+        <details><summary>{{ tq1 | escape }}</summary><div class="cf__a"><p>{{ ta1 | escape }}</p></div></details>
+        <details><summary>{{ tq2 | escape }}</summary><div class="cf__a"><p>{{ ta2 | escape }}</p></div></details>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for item in faq -%}
+    { "@type": "Question", "name": {{ item.q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ item.a | json }} } },
+    {%- endfor -%}
+    { "@type": "Question", "name": {{ tq1 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ ta1 | json }} } },
+    { "@type": "Question", "name": {{ tq2 | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ ta2 | json }} } }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProductGroup",
+  "@id": {{ product.url | append: '#product' | json }},
+  "countryOfOrigin": { "@type": "Country", "name": "India" },
+  "additionalProperty": [
+    {%- if cf.blend.value != blank -%}{ "@type": "PropertyValue", "name": "Blend", "value": {{ cf.blend.value | json }} },{%- endif -%}
+    {%- if cf.origin.value != blank -%}{ "@type": "PropertyValue", "name": "Origin", "value": {{ cf.origin.value | json }} },{%- endif -%}
+    {%- if cf.form.value != blank -%}{ "@type": "PropertyValue", "name": "Form", "value": {{ cf.form.value | json }} },{%- endif -%}
+    {%- if cf.shelf_life.value != blank -%}{ "@type": "PropertyValue", "name": "Shelf life", "value": {{ cf.shelf_life.value | json }} },{%- endif -%}
+    { "@type": "PropertyValue", "name": "Roast", "value": {{ cf.roast.value | default: 'Medium' | json }} }
+  ]
+}
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Coffee details",
+  "tag": "div",
+  "class": "section",
+  "settings": [],
+  "presets": [{ "name": "Coffee details" }]
+}
+{% endschema %}

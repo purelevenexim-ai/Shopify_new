@@ -3,7 +3,7 @@
 {%- liquid
   assign desc_title = product.title | downcase
   assign desc_asset_image = blank
-  assign desc_asset_alt = 'Close view of PureLeven spice'
+  assign desc_asset_alt = 'Close view of a spice from Pure Leven Spices & Tea'
   if section.settings.image == blank
     if product.handle contains 'black-pepper' or desc_title contains 'black pepper'
       assign desc_asset_image = 'pl-prod-black-pepper-closeup.webp'

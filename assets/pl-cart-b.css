@@ -9,7 +9,7 @@
 
 .plb {
   --bg: #F9F9F6; --bg2: #F1F1ED; --card: #FFFFFF;
-  --fg: #0B0B0F; --fg2: #3D4250; --muted: #5F6470; --faint: #8A8F9C;
+  --fg: #0B0B0F; --fg2: #3D4250; --muted: #5F6470; --faint: #666B77;
   --line: #DEDEDB; --line2: #D9DBE1;
   --dark: #17191A; --acc: #1F6B5C; --acc-soft: #EAF2EE; --hover: #004438;
   --err: #C8102E; --err-soft: #FDEAED;

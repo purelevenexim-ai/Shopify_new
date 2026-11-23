@@ -1,0 +1,675 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'pl-cardamom-market.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'pl-cardamom-market.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign mk = page.metafields.pl_market.cardamom.value
+  assign prod = section.settings.product
+  assign adv = section.settings.advance_product
+  assign wa = section.settings.whatsapp | default: '918848265849' | remove: '+' | remove: ' '
+  assign online_max = section.settings.online_max_kg | default: 5
+  assign cod_max = section.settings.cod_max_kg | default: 10
+  assign post_max = section.settings.post_max_kg | default: 19
+  assign gst = section.settings.gst_pct | default: 5
+  assign gst_div = gst | plus: 100
+  assign adv_price = 50000
+  if adv != blank
+    assign adv_price = adv.price
+  endif
+  assign adv_label = adv_price | money_without_currency | remove: '.00' | prepend: '₹'
+
+  comment
+    Per-kg rate before GST = (smallest pack price / pack kg) * 100 / (100 + GST). Packs are named "2 kg", "5 kg", "10 kg".
+  endcomment
+  assign grade_opt = nil
+  if prod != blank
+    assign grade_opt = prod.options_with_values | where: 'name', 'Grade' | first
+  endif
+  assign lo_ex = 999999999
+  assign hi_ex = 0
+  assign ref_ex = 0
+  assign ref_name = section.settings.reference_grade | default: '8 mm'
+  assign min_pack_kg = 2
+  if grade_opt != nil
+    for g in grade_opt.values
+      assign gname = g.name | default: g
+      assign gv = prod.variants | where: 'option1', gname | first
+      assign gkg = gv.option2 | remove: ' kg' | times: 1
+      assign gper = gv.price | divided_by: gkg
+      assign gex = gper | times: 100 | divided_by: gst_div
+      if gex < lo_ex
+        assign lo_ex = gex
+      endif
+      if gex > hi_ex
+        assign hi_ex = gex
+      endif
+      if gname == ref_name
+        assign ref_ex = gex
+        assign ref_per = gper
+      endif
+      if gkg < min_pack_kg
+        assign min_pack_kg = gkg
+      endif
+    endfor
+  endif
+
+  assign o10_lo = mk.o.d10[0]
+  assign o10_hi = mk.o.d10[1]
+  assign o20_lo = mk.o.d20[0]
+  assign o20_hi = mk.o.d20[1]
+  assign ov10 = page.metafields.pl_market.outlook_10d.value | default: '' | remove: '₹' | remove: ' ' | split: '-'
+  assign ov20 = page.metafields.pl_market.outlook_20d.value | default: '' | remove: '₹' | remove: ' ' | split: '-'
+  if ov10.size == 2
+    assign o10_lo = ov10[0]
+    assign o10_hi = ov10[1]
+  endif
+  if ov20.size == 2
+    assign o20_lo = ov20[0]
+    assign o20_hi = ov20[1]
+  endif
+  assign outlook_note = page.metafields.pl_market.outlook_note.value
+
+  case mk.o.trend
+    when 'rising'
+      assign trend_icon = '↗'
+      assign trend_word = 'Likely to rise'
+    when 'easing'
+      assign trend_icon = '↘'
+      assign trend_word = 'Likely to ease'
+    else
+      assign trend_icon = '→'
+      assign trend_word = 'Likely to stay steady'
+  endcase
+
+  assign wa_base = 'https://wa.me/' | append: wa | append: '?text='
+  assign wa_hello = "Hi Pure Leven, I'd like today's wholesale cardamom rate." | url_encode
+  assign wa_p1 = wa | slice: 2, 5
+  assign wa_p2 = wa | slice: 7, 5
+  assign wa_phone_label = '+91 ' | append: wa_p1 | append: ' ' | append: wa_p2
+-%}
+
+<div class="plcm" id="plcm-{{ section.id }}"
+  data-online-max="{{ online_max }}" data-cod-max="{{ cod_max }}" data-post-max="{{ post_max }}"
+  data-gst="{{ gst }}" data-wa="{{ wa }}" data-adv-id="{% if adv != blank %}{{ adv.selected_or_first_available_variant.id }}{% endif %}"
+  data-adv-price="{{ adv_price }}" data-rate-date="{{ mk.t.mid | default: 'today' }}">
+  <div class="plcm__wrap">
+
+    <nav class="plcm-crumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a><span aria-hidden="true">/</span>
+      <a href="/pages/wholesale">Wholesale</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Cardamom price</span>
+    </nav>
+
+    {%- comment -%} ---------- TOP: latest auction days ---------- {%- endcomment -%}
+    <header class="plcm-top">
+      <div class="plcm-top__intro">
+        <p class="plcm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        <h1 class="plcm-h1">{{ page.title | escape }}</h1>
+        {%- if mk != blank -%}
+          <p class="plcm-top__upd">
+            Updated <time datetime="{{ mk.t.date }}">{{ mk.t.long }}</time>
+            <span>Checked {{ mk.checked_label }}</span>
+          </p>
+          <p class="plcm-top__lead">Small cardamom averaged <strong>₹{{ mk.t.avg }} per kg</strong> at the Spices Board e-auctions on {{ mk.t.mid }}{% case mk.chg.dir %}{% when 'up' %}, <span class="plcm-up">up ₹{{ mk.chg.abs }}</span> from {{ mk.p.short }}{% when 'down' %}, down ₹{{ mk.chg.abs }} from {{ mk.p.short }}{% endcase %}. The best lot sold for ₹{{ mk.t.max }}.</p>
+        {%- endif -%}
+      </div>
+
+      {%- if mk != blank and mk.recent.size > 0 -%}
+      <div class="plcm-days">
+        <div class="plcm-table-wrap">
+          <table class="plcm-table plcm-table--num plcm-table--days">
+            <caption>Last 4 auction days, ₹ per kg</caption>
+            <thead><tr><th scope="col">Date</th><th scope="col">Average</th><th scope="col">Highest</th><th scope="col">Sold kg</th></tr></thead>
+            <tbody>
+              {%- for r in mk.recent limit: 4 -%}
+                <tr class="plcm-days__row{% if r.dir == 'up' %} is-up{% endif %}{% if forloop.first %} is-latest{% endif %}">
+                  <th scope="row"><time datetime="{{ r.date }}">{{ r.day }} {{ r.short }}</time></th>
+                  <td>₹{{ r.avg }}{% if r.dir == 'up' %} <span class="plcm-days__chg" aria-label="up {{ r.chg }} rupees">▲ {{ r.chg }}</span>{% endif %}</td>
+                  <td>₹{{ r.max }}</td>
+                  <td>{{ r.sold }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+        <p class="plcm-days__key"><span class="plcm-up">Green ▲</span> = average higher than the auction day before. Source: <a href="{{ mk.src }}" target="_blank" rel="nofollow noopener">Spices Board of India</a>.</p>
+      </div>
+      {%- endif -%}
+
+      <div class="plcm-buybar">
+        <p class="plcm-buybar__text">
+          <strong>We sell graded Idukki cardamom wholesale</strong> in 2, 5 and 10 kg packs.
+          {%- if ref_ex > 0 %} {{ ref_name }} today: <b>₹{{ ref_ex | money_without_currency | remove: '.00' }}/kg + GST</b>.{% endif %}
+        </p>
+        <div class="plcm-buybar__cta">
+          <a class="sk-btn sk-btn--yellow plcm-btn" href="#grades">Buy wholesale <span aria-hidden="true">↓</span></a>
+          <a class="sk-btn sk-btn--line plcm-btn" href="{{ wa_base }}{{ wa_hello }}" target="_blank" rel="noopener">WhatsApp us</a>
+        </div>
+      </div>
+    </header>
+
+    {%- comment -%} ---------- 01 GRAPHS ---------- {%- endcomment -%}
+    {%- if mk != blank -%}
+    <section class="plcm-sec" id="trend" aria-labelledby="plcm-trend-h-{{ section.id }}">
+      <div class="plcm-sec__head">
+        <p class="plcm-eyebrow"><i>01</i> / Price graph</p>
+        <h2 class="plcm-h2" id="plcm-trend-h-{{ section.id }}">Cardamom price graph</h2>
+        <p class="plcm-sub">Spices Board e-auction average, ₹ per kg. Over the last 30 days it went {{ mk.d30.dir }} {{ mk.d30.pct }}%, from ₹{{ mk.d30.avg }} on {{ mk.d30.short }} to ₹{{ mk.t.avg }}.</p>
+      </div>
+      <div class="plcm-graphs">
+        <figure class="plcm-graph">
+          <figcaption class="plcm-graph__title">Last 6 auction days</figcaption>
+          <div class="plcm-graph__plot" data-plcm-daily role="img"
+            aria-label="Daily cardamom auction average for the last 6 auction days, newest first: {% for r in mk.recent limit: 6 %}{{ r.short }} ₹{{ r.avg }}{% unless forloop.last %}, {% endunless %}{% endfor %}."></div>
+          <p class="plcm-graph__key"><span class="plcm-dot plcm-dot--up"></span>Up from the day before <span class="plcm-dot"></span>Down or same</p>
+        </figure>
+        <figure class="plcm-graph">
+          <figcaption class="plcm-graph__title">Last 6 months, monthly average</figcaption>
+          {%- assign m6 = mk.m | slice: -6, 6 -%}
+          <div class="plcm-graph__plot" data-plcm-monthly role="img"
+            aria-label="Monthly cardamom auction average: {% for r in m6 %}{{ r[1] }} ₹{{ r[2] }}{% unless forloop.last %}, {% endunless %}{% endfor %}."></div>
+          <p class="plcm-graph__key">{{ m6.last[1] }} is to {{ mk.t.short }}.</p>
+        </figure>
+      </div>
+      <script type="application/json" data-plcm-data>{"recent":{{ mk.recent | json }},"m":{{ m6 | json }}}</script>
+
+      <div class="plcm-outlook" aria-labelledby="plcm-outlook-h-{{ section.id }}">
+        <p class="plcm-eyebrow" id="plcm-outlook-h-{{ section.id }}">Price outlook</p>
+        <div class="plcm-outlook__row"><span>Next 5–10 days</span><strong>₹{{ o10_lo }} – ₹{{ o10_hi }}</strong></div>
+        <div class="plcm-outlook__row"><span>Next 15–20 days</span><strong>₹{{ o20_lo }} – ₹{{ o20_hi }}</strong></div>
+        <p class="plcm-outlook__trend"><span aria-hidden="true">{{ trend_icon }}</span> {{ trend_word }}</p>
+        {%- if outlook_note != blank -%}<p class="plcm-outlook__note">{{ outlook_note | escape | newline_to_br }}</p>{%- endif -%}
+        <details class="plcm-outlook__how">
+          <summary>How we work this out</summary>
+          <p>We take the last 20 auction days' direction (halved, so one week can't swing it), then add the usual day-to-day movement of the last 30 days. Most days the auction average should land inside these ranges. It is a guide for planning a purchase, not a promise: weather, crop news and festival buying can move the price faster.</p>
+        </details>
+      </div>
+
+      <details class="plcm-monthly">
+        <summary>Monthly figures</summary>
+        <div class="plcm-table-wrap">
+          <table class="plcm-table">
+            <caption>Cardamom auction average by month (₹ per kg)</caption>
+            <thead><tr><th scope="col">Month</th><th scope="col">Average</th><th scope="col">Highest day</th><th scope="col">Lowest day</th></tr></thead>
+            <tbody>
+              {%- for r in mk.m reversed -%}
+                <tr><th scope="row">{{ r[1] }}{% if forloop.first %} <small>(to {{ mk.t.short }})</small>{% endif %}</th><td>₹{{ r[2] }}</td><td>₹{{ r[3] }} <small>{{ r[4] }}</small></td><td>₹{{ r[5] }} <small>{{ r[6] }}</small></td></tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+    {%- endif -%}
+
+    {%- comment -%} ---------- 02 GRADES ---------- {%- endcomment -%}
+    <section class="plcm-sec" id="grades" aria-labelledby="plcm-grades-h-{{ section.id }}">
+      <div class="plcm-sec__head">
+        <p class="plcm-eyebrow"><i>02</i> / Buy wholesale</p>
+        <h2 class="plcm-h2" id="plcm-grades-h-{{ section.id }}">Cardamom wholesale price by grade</h2>
+        <p class="plcm-sub">Per kg, set from the day's auction{% if mk != blank %} ({{ mk.t.mid }}){% endif %}. {{ gst }}% GST is added on top. Packs of 2, 5 and 10 kg: add more packs for more (4 kg = 2 + 2, 30 kg = 10 + 10 + 10).</p>
+      </div>
+
+      <div class="plcm-quality">
+        <svg class="plcm-quality__icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 2l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 15.6 6.6 18.5l1.2-6L3.3 8.3l6.1-.7L12 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <div>
+          <p class="plcm-quality__title">{{ section.settings.quality_title | escape }}</p>
+          <div class="plcm-quality__text">{{ section.settings.quality_text }}</div>
+        </div>
+      </div>
+
+      {%- if section.settings.sample_notice -%}
+        <p class="plcm-notice" role="note">Preview: these grade prices are samples. Set today's rates on this page's admin screen (Cardamom rate fields) before it goes live.</p>
+      {%- endif -%}
+
+      <figure class="plcm-sizes">
+        <div class="plcm-sizes__row" aria-hidden="true">
+          {%- assign sizes = '6,7,7.5,8,8.5,9' | split: ',' -%}
+          {%- for s in sizes -%}
+            {%- assign smm = s | times: 1.0 -%}
+            <div class="plcm-sizes__pod" style="--mm: {{ s }}">{% render 'pl-cardamom-pod', mm: smm, k: 6 %}<span>{{ s }} mm</span></div>
+          {%- endfor -%}
+        </div>
+        <figcaption>Pods drawn to scale with each other. The size is the sieve a pod doesn't fall through: an 8 mm pod is at least 8 mm across. Bigger, greener pods cost more; the flavour is much the same.</figcaption>
+      </figure>
+
+      {%- if grade_opt != nil -%}
+      <div class="plcm-gstin">
+        <label for="plcm-gstin-{{ section.id }}">Need a GST invoice? Add your GSTIN <span>(optional)</span></label>
+        <input id="plcm-gstin-{{ section.id }}" class="plcm-input" data-plcm-gstin type="text" maxlength="15" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. 32ABCDE1234F1Z5">
+      </div>
+      <div class="plcm-grades">
+        {%- for g in grade_opt.values -%}
+          {%- liquid
+            assign gname = g.name | default: g
+            assign gvars = prod.variants | where: 'option1', gname
+            assign gv = gvars.first
+            assign gkg = gv.option2 | remove: ' kg' | times: 1
+            assign gper = gv.price | divided_by: gkg
+            assign gex = gper | times: 100 | divided_by: gst_div
+            assign gb = nil
+            for b in section.blocks
+              if b.type == 'grade' and b.settings.grade == gname
+                assign gb = b
+                break
+              endif
+            endfor
+            assign mmv = gname | remove: ' mm' | split: '-' | last | times: 1.0
+            assign gid = gname | handleize
+          -%}
+          <article class="plcm-grade" data-grade="{{ gname | escape }}" data-ex="{{ gex }}" {% if gb %}{{ gb.shopify_attributes }}{% endif %}>
+            <div class="plcm-grade__media">
+              {%- if gb and gb.settings.image != blank -%}
+                {%- assign galt = gb.settings.image.alt | default: gname | prepend: 'Cardamom ' -%}
+                {{ gb.settings.image | image_url: width: 640 | image_tag: loading: 'lazy', widths: '320, 480, 640', sizes: '(min-width: 1100px) 300px, (min-width: 750px) 45vw, 90vw', alt: galt }}
+              {%- else -%}
+                <div class="plcm-grade__draw">
+                  {%- if gname contains 'eed' -%}
+                    {% render 'pl-cardamom-pod', seeds: true, k: 7 %}
+                  {%- elsif gname contains '-' -%}
+                    {%- assign mlo = gname | remove: ' mm' | split: '-' | first | times: 1.0 -%}
+                    {% render 'pl-cardamom-pod', mm: mlo, k: 6 %}{% render 'pl-cardamom-pod', mm: mmv, k: 6 %}
+                  {%- else -%}
+                    {% render 'pl-cardamom-pod', mm: mmv, k: 7 %}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="plcm-grade__head">
+              <h3 class="plcm-grade__name">{{ gname }}{% if gb and gb.settings.tag != blank %} <span class="plcm-tag">{{ gb.settings.tag | escape }}</span>{% endif %}</h3>
+              {%- if gb and gb.settings.note != blank -%}<p class="plcm-grade__note">{{ gb.settings.note | escape }}</p>{%- endif -%}
+              <p class="plcm-grade__price"><strong>₹{{ gex | money_without_currency | remove: '.00' }}</strong><span>/kg + {{ gst }}% GST</span></p>
+            </div>
+            <div class="plcm-grade__buy">
+              <fieldset class="plcm-pack">
+                <legend class="plcm-sr">Pack size for {{ gname }}</legend>
+                {%- for v in gvars -%}
+                  {%- assign vkg = v.option2 | remove: ' kg' | times: 1 -%}
+                  <label class="plcm-pack__opt">
+                    <input type="radio" name="plcm-pack-{{ section.id }}-{{ gid }}" value="{{ v.id }}" data-kg="{{ vkg }}" data-price="{{ v.price }}"{% if forloop.first %} checked{% endif %}>
+                    <span><b>{{ v.option2 }}</b><small>₹{{ v.price | money_without_currency | remove: '.00' }}</small></span>
+                  </label>
+                {%- endfor -%}
+              </fieldset>
+              <div class="plcm-qty">
+                <label class="plcm-qty__label" for="plcm-q-{{ section.id }}-{{ gid }}">Number of packs of {{ gname }}</label>
+                <div class="plcm-qty__ctl">
+                  <button type="button" class="plcm-qty__btn" data-step="-1" aria-label="One pack less">−</button>
+                  <input class="plcm-qty__input" id="plcm-q-{{ section.id }}-{{ gid }}" type="number" inputmode="numeric" min="1" max="99" step="1" value="1">
+                  <span class="plcm-qty__unit">pack</span>
+                  <button type="button" class="plcm-qty__btn" data-step="1" aria-label="One pack more">+</button>
+                </div>
+                <button type="button" class="sk-btn sk-btn--yellow plcm-btn plcm-grade__cta">Add to cart</button>
+              </div>
+              <p class="plcm-grade__total" aria-live="polite"></p>
+              <p class="plcm-grade__mode"></p>
+              <div class="plcm-grade__alt">
+                <button type="button" class="plcm-alt plcm-alt--book plcm-grade__book" hidden>Book with {{ adv_label }}</button>
+                <a class="plcm-alt plcm-alt--wa" href="{{ wa_base }}{{ wa_hello }}" target="_blank" rel="noopener" data-plcm-wa><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.3-.5-.4Z"/></svg>WhatsApp</a>
+                <a class="plcm-alt" href="tel:+{{ wa }}"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>Call</a>
+              </div>
+              <p class="plcm-grade__fine" data-plcm-fine data-phone="{{ wa_phone_label }}">Call or WhatsApp {{ wa_phone_label }} to order or ask.</p>
+              <p class="plcm-grade__msg" role="status"></p>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+      {%- else -%}
+        <p class="plcm-sub">Grade prices are on their way. <a href="{{ wa_base }}{{ wa_hello }}" target="_blank" rel="noopener">Ask for today's rate on WhatsApp</a>.</p>
+      {%- endif -%}
+    </section>
+
+    {%- comment -%} ---------- 03 HOW TO ORDER ---------- {%- endcomment -%}
+    <section class="plcm-sec" id="how" aria-labelledby="plcm-how-h-{{ section.id }}">
+      <div class="plcm-sec__head">
+        <p class="plcm-eyebrow"><i>03</i> / How to order</p>
+        <h2 class="plcm-h2" id="plcm-how-h-{{ section.id }}">How buying wholesale works</h2>
+      </div>
+      <div class="plcm-steps">
+        <div class="plcm-step">
+          <p class="plcm-step__kg">2, 5 or 10 kg packs</p>
+          <h3 class="plcm-step__title">Choose grade and packs</h3>
+          <ul>
+            <li>Minimum order is one 2 kg pack.</li>
+            <li>For more, add packs: 4 kg = 2 + 2, 10 kg = 5 + 5 or one 10 kg pack, 30 kg = 10 + 10 + 10.</li>
+            <li>Mix grades in one order if you like.</li>
+          </ul>
+        </div>
+        <div class="plcm-step">
+          <p class="plcm-step__kg">Up to {{ post_max }} kg</p>
+          <h3 class="plcm-step__title">Pay online</h3>
+          <ul>
+            <li>Pay at checkout by UPI, card or net banking.</li>
+            <li>We dispatch by the second working day, by India Post.</li>
+            <li>Delivery is charged by weight. See the table below.</li>
+          </ul>
+        </div>
+        <div class="plcm-step">
+          <p class="plcm-step__kg">6 kg and more</p>
+          <h3 class="plcm-step__title">Or book with {{ adv_label }}</h3>
+          <ul>
+            <li>Pay {{ adv_label }} to book. We call or WhatsApp you to confirm the rate and delivery.</li>
+            <li>Pay the rest by UPI or bank before dispatch, or cash on delivery up to {{ cod_max }} kg.</li>
+            <li>Above {{ post_max }} kg we send by Alleppey Parcel Service or a transporter you choose.</li>
+            <li>Changed your mind? Cancel within 1 day of booking and we refund the {{ adv_label }} in full.</li>
+          </ul>
+          <a class="plcm-link" href="{{ wa_base }}{{ wa_hello }}" target="_blank" rel="noopener">WhatsApp {{ wa_phone_label }} →</a>
+        </div>
+      </div>
+
+      {%- if ref_ex > 0 -%}
+        {%- liquid
+          assign ex_total = ref_per | times: 10
+          assign ex_bal = ex_total | minus: adv_price
+        -%}
+        <div class="plcm-example">
+          <p class="plcm-example__label">Example</p>
+          <p class="plcm-example__sum">10 kg of {{ ref_name }} (two 5 kg packs) at ₹{{ ref_ex | money_without_currency | remove: '.00' }} + {{ gst }}% GST = <strong>₹{{ ex_total | money_without_currency | remove: '.00' }}</strong></p>
+          <div class="plcm-example__split">
+            <span><b>Pay online</b>₹{{ ex_total | money_without_currency | remove: '.00' }} at checkout, plus delivery</span>
+            <span><b>Or book</b>{{ adv_label }} now, ₹{{ ex_bal | money_without_currency | remove: '.00' }} after our call (cash on delivery allowed)</span>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="plcm-delivery">
+        <h3 class="plcm-h3">Delivery charges</h3>
+        <div class="plcm-table-wrap">
+          <table class="plcm-table plcm-table--num">
+            <caption>India Post (Speed Post parcel), charged at checkout by weight</caption>
+            <thead><tr><th scope="col">Order</th><th scope="col">Kerala</th><th scope="col">South India</th><th scope="col">Rest of India</th></tr></thead>
+            <tbody>
+              {%- assign drows = section.settings.delivery_rows | newline_to_br | split: '<br />' -%}
+              {%- for line in drows -%}
+                {%- assign c = line | strip | split: '|' -%}
+                {%- if c.size == 4 -%}
+                  <tr><th scope="row">{{ c[0] | strip }}</th><td>₹{{ c[1] | strip }}</td><td>₹{{ c[2] | strip }}</td><td>₹{{ c[3] | strip }}</td></tr>
+                {%- endif -%}
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+        <div class="plcm-delivery__more">{{ section.settings.delivery_more }}</div>
+      </div>
+    </section>
+
+    {%- comment -%} ---------- 04 AUCTION REPORT ---------- {%- endcomment -%}
+    <section class="plcm-sec" id="report" aria-labelledby="plcm-report-h-{{ section.id }}">
+      <div class="plcm-sec__head">
+        <p class="plcm-eyebrow"><i>04</i> / Auction report</p>
+        <h2 class="plcm-h2" id="plcm-report-h-{{ section.id }}">Cardamom auction price today</h2>
+      </div>
+      {%- if mk != blank and mk.last.size > 0 -%}
+      <div class="plcm-table-wrap">
+        <table class="plcm-table plcm-table--num plcm-table--auct">
+          <caption>Small cardamom e-auctions on {{ mk.t.long }} (₹ per kg)</caption>
+          <thead><tr><th scope="col">Auctioneer</th><th scope="col">Lots</th><th scope="col">Sold (kg)</th><th scope="col">Highest</th><th scope="col">Lowest</th><th scope="col">Average</th></tr></thead>
+          <tbody>
+            {%- for r in mk.last -%}
+              <tr><th scope="row">{{ r[0] | escape }}</th><td>{{ r[1] }}</td><td>{{ r[2] }}</td><td>₹{{ r[3] }}</td><td>₹{{ r[4] }}</td><td>₹{{ r[5] }}</td></tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+      {%- endif -%}
+      {%- if page.content != blank -%}
+        <div class="plcm-report rte">{{ page.content }}</div>
+      {%- endif -%}
+    </section>
+
+    {%- comment -%} ---------- 05 FAQ ---------- {%- endcomment -%}
+    {%- capture grade_list -%}
+      {%- if grade_opt != nil -%}
+        {%- for g in grade_opt.values -%}
+          {%- assign gname = g.name | default: g -%}
+          {%- assign gv = prod.variants | where: 'option1', gname | first -%}
+          {%- assign gkg = gv.option2 | remove: ' kg' | times: 1 -%}
+          {%- assign gex = gv.price | divided_by: gkg | times: 100 | divided_by: gst_div -%}
+          {{ gname }} ₹{{ gex | money_without_currency | remove: '.00' }}{% unless forloop.last %}, {% endunless %}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- capture faq_dyn_1_q -%}What is the cardamom wholesale price today?{%- endcapture -%}
+    {%- capture faq_dyn_1_a -%}
+      {%- if prod != blank -%}Our wholesale rates{% if mk != blank %} on {{ mk.t.mid }}{% endif %} run from ₹{{ lo_ex | money_without_currency | remove: '.00' }} to ₹{{ hi_ex | money_without_currency | remove: '.00' }} per kg plus {{ gst }}% GST, depending on the size. {% endif -%}
+      {%- if mk != blank -%}The Spices Board e-auctions averaged ₹{{ mk.t.avg }} per kg that day, with the best lot at ₹{{ mk.t.max }}.{%- endif -%}
+    {%- endcapture -%}
+    {%- capture faq_dyn_2_q -%}What is the green cardamom price per kg by size (6 mm, 7 mm, 8 mm)?{%- endcapture -%}
+    {%- capture faq_dyn_2_a -%}Today's rates per kg, before {{ gst }}% GST: {{ grade_list | strip }}. Bigger pods cost more because only a small part of each harvest reaches the bold sizes.{%- endcapture -%}
+    {%- capture faq_dyn_3_q -%}Will the cardamom price go up or down in the next few weeks?{%- endcapture -%}
+    {%- capture faq_dyn_3_a -%}{%- if mk != blank -%}Our outlook from the auction trend: ₹{{ o10_lo }} to ₹{{ o10_hi }} per kg over the next 5 to 10 days, and ₹{{ o20_lo }} to ₹{{ o20_hi }} over 15 to 20 days ({{ trend_word | downcase }}). It is a planning guide, not a promise: weather, crop reports and festival buying can move the price quickly.{%- endif -%}{%- endcapture -%}
+
+    <section class="plcm-sec" id="faq" aria-labelledby="plcm-faq-h-{{ section.id }}">
+      <div class="plcm-sec__head">
+        <p class="plcm-eyebrow"><i>05</i> / Questions</p>
+        <h2 class="plcm-h2" id="plcm-faq-h-{{ section.id }}">Cardamom price and wholesale questions</h2>
+      </div>
+      <div class="plcm-faq">
+        {%- if prod != blank -%}
+          <details class="plcm-faq__item"><summary>{{ faq_dyn_1_q }}</summary><div class="plcm-faq__a"><p>{{ faq_dyn_1_a | strip }}</p></div></details>
+          <details class="plcm-faq__item"><summary>{{ faq_dyn_2_q }}</summary><div class="plcm-faq__a"><p>{{ faq_dyn_2_a | strip }}</p></div></details>
+        {%- endif -%}
+        {%- if mk != blank -%}
+          <details class="plcm-faq__item"><summary>{{ faq_dyn_3_q }}</summary><div class="plcm-faq__a"><p>{{ faq_dyn_3_a | strip }}</p></div></details>
+        {%- endif -%}
+        {%- for b in section.blocks -%}
+          {%- if b.type == 'faq' and b.settings.question != blank -%}
+            <details class="plcm-faq__item" {{ b.shopify_attributes }}><summary>{{ b.settings.question | escape }}</summary><div class="plcm-faq__a">{{ b.settings.answer }}</div></details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </section>
+
+    {%- comment -%} ---------- 06 OTHER WHOLESALE ---------- {%- endcomment -%}
+    {%- assign others = section.blocks | where: 'type', 'other' -%}
+    {%- if others.size > 0 -%}
+    <section class="plcm-sec" id="more" aria-labelledby="plcm-more-h-{{ section.id }}">
+      <div class="plcm-sec__head">
+        <p class="plcm-eyebrow"><i>06</i> / Also wholesale</p>
+        <h2 class="plcm-h2" id="plcm-more-h-{{ section.id }}">Other spices we sell wholesale</h2>
+      </div>
+      <ul class="plcm-more">
+        {%- for b in others -%}
+          {%- assign op = b.settings.product -%}
+          {%- assign olink = b.settings.url | default: op.url -%}
+          {%- if olink == blank -%}
+            {%- assign otext = "Hi Pure Leven, I'd like a wholesale quote for " | append: b.settings.title | url_encode -%}
+            {%- assign olink = wa_base | append: otext -%}
+          {%- endif -%}
+          <li class="plcm-more__card" {{ b.shopify_attributes }}>
+            <a href="{{ olink }}"{% if olink contains 'wa.me' %} target="_blank" rel="noopener"{% endif %}>
+              <span class="plcm-more__media">
+                {%- if b.settings.image != blank -%}
+                  {{ b.settings.image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '240, 360, 480', sizes: '(min-width: 1100px) 260px, (min-width: 750px) 30vw, 45vw', alt: '' }}
+                {%- elsif op.featured_image != blank -%}
+                  {{ op.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '240, 360, 480', sizes: '(min-width: 1100px) 260px, (min-width: 750px) 30vw, 45vw', alt: '' }}
+                {%- endif -%}
+              </span>
+              <span class="plcm-more__title">{{ b.settings.title | escape }}</span>
+              {%- if b.settings.text != blank -%}<span class="plcm-more__text">{{ b.settings.text | escape }}</span>{%- endif -%}
+              <span class="plcm-more__go">{{ b.settings.link_label | default: 'See wholesale' | escape }} <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </section>
+    {%- endif -%}
+
+    <div class="plcm-band">
+      <div>
+        <p class="plcm-band__title">{{ section.settings.band_title | escape }}</p>
+        <p class="plcm-band__text">{{ section.settings.band_text | escape }}</p>
+      </div>
+      <a class="sk-btn sk-btn--yellow plcm-btn" href="{{ wa_base }}{{ wa_hello }}" target="_blank" rel="noopener">WhatsApp {{ wa_phone_label }}</a>
+    </div>
+  </div>
+
+  {%- comment -%} Booking dialog: ₹500 advance, balance after a call {%- endcomment -%}
+  <dialog class="plcm-dialog" data-plcm-dialog aria-labelledby="plcm-book-h-{{ section.id }}">
+    <form class="plcm-book" novalidate>
+      <div class="plcm-book__head">
+        <h2 class="plcm-book__title" id="plcm-book-h-{{ section.id }}">Book your cardamom order</h2>
+        <button type="button" class="plcm-book__x" data-plcm-close aria-label="Close">×</button>
+      </div>
+      <p class="plcm-book__sum" data-plcm-sum></p>
+      <ol class="plcm-book__steps">
+        <li><b>Now</b> Pay {{ adv_label }} to book</li>
+        <li><b>Next</b> We call or WhatsApp you to confirm rate and delivery</li>
+        <li><b>Then</b> Pay the balance, or cash on delivery up to {{ cod_max }} kg</li>
+      </ol>
+      <label class="plcm-field"><span>Your name</span><input class="plcm-input" name="name" required autocomplete="name" maxlength="60"></label>
+      <label class="plcm-field"><span>Mobile number (WhatsApp)</span><input class="plcm-input" name="phone" required inputmode="tel" autocomplete="tel-national" maxlength="14" placeholder="10-digit mobile"></label>
+      <label class="plcm-field"><span>Delivery pincode</span><input class="plcm-input" name="pin" required inputmode="numeric" autocomplete="postal-code" maxlength="6" placeholder="6 digits"></label>
+      <fieldset class="plcm-field plcm-pay">
+        <legend>How will you pay the balance?</legend>
+        <label><input type="radio" name="pay" value="UPI / bank transfer before dispatch" checked> UPI or bank transfer before dispatch</label>
+        <label data-plcm-cod><input type="radio" name="pay" value="Cash on delivery"> Cash on delivery <span>(up to {{ cod_max }} kg)</span></label>
+      </fieldset>
+      <p class="plcm-book__err" role="alert" data-plcm-err></p>
+      <div class="plcm-book__actions">
+        <button type="button" class="sk-btn sk-btn--line plcm-btn" data-plcm-close>Cancel</button>
+        <button type="submit" class="sk-btn sk-btn--yellow plcm-btn" data-plcm-submit>Pay {{ adv_label }} to book</button>
+      </div>
+      <p class="plcm-book__fine">The {{ adv_label }} is taken off your final bill. Cancel within 1 day of booking and we refund it in full. We also refund it if we can't supply your order. Questions? Call or WhatsApp <a href="tel:+{{ wa }}">{{ wa_phone_label }}</a>.</p>
+    </form>
+  </dialog>
+</div>
+
+{%- comment -%} ---------- Structured data ---------- {%- endcomment -%}
+{%- liquid
+  assign retail = all_products['kerala-cardamom']
+  assign ld_img = retail.featured_image | image_url: width: 1200
+  if prod.featured_image != blank
+    assign ld_img = prod.featured_image | image_url: width: 1200
+  endif
+  assign page_url = request.origin | append: page.url
+  assign tomorrow = 'now' | date: '%s' | plus: 172800 | date: '%Y-%m-%d'
+-%}
+{%- capture faq_ld -%}
+  {%- if prod != blank -%}
+    { "@type": "Question", "name": {{ faq_dyn_1_q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_dyn_1_a | strip | json }} } }§
+    { "@type": "Question", "name": {{ faq_dyn_2_q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_dyn_2_a | strip | json }} } }§
+  {%- endif -%}
+  {%- if mk != blank -%}
+    { "@type": "Question", "name": {{ faq_dyn_3_q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_dyn_3_a | strip | json }} } }§
+  {%- endif -%}
+  {%- assign faqs = section.blocks | where: 'type', 'faq' -%}
+  {%- for b in faqs -%}
+    {%- if b.settings.question != blank -%}
+    { "@type": "Question", "name": {{ b.settings.question | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ b.settings.answer | strip_html | strip | json }} } }§
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ request.origin | append: '/' | json }} },
+        { "@type": "ListItem", "position": 2, "name": "Wholesale", "item": {{ request.origin | append: '/pages/wholesale' | json }} },
+        { "@type": "ListItem", "position": 3, "name": {{ page.title | json }}, "item": {{ page_url | json }} }
+      ]
+    }
+    {%- if mk != blank -%},
+    {
+      "@type": "Dataset",
+      "name": "Daily small cardamom auction prices, Kerala and Tamil Nadu",
+      "description": {{ 'Daily average, highest and lowest price per kg and kilograms sold at the Spices Board of India small cardamom (elaichi) e-auctions at Puttady, Kerala and Bodinayakanur, Tamil Nadu, from ' | append: mk.d[0][0] | append: ' to ' | append: mk.t.date | append: '. The daily average is weighted by the kilograms each auction sold. Updated every auction day.' | json }},
+      "url": {{ page_url | append: '#trend' | json }},
+      "keywords": ["cardamom price today", "elaichi price", "cardamom auction price", "small cardamom price", "cardamom price per kg"],
+      "temporalCoverage": {{ mk.d[0][0] | append: '/' | append: mk.t.date | json }},
+      "spatialCoverage": "Idukki, Kerala and Theni, Tamil Nadu, India",
+      "dateModified": {{ mk.checked | json }},
+      "isBasedOn": {{ mk.src | json }},
+      "variableMeasured": ["Average price (INR per kg)", "Highest lot price (INR per kg)", "Lowest lot price (INR per kg)", "Quantity sold (kg)"],
+      "creator": { "@type": "Organization", "name": "Pure Leven Spices & Tea", "url": {{ request.origin | json }} }
+    }
+    {%- endif -%}
+    {%- if prod != blank -%},
+    {
+      "@type": "Product",
+      "name": "Kerala green cardamom (small cardamom), wholesale packs",
+      "description": "Graded Idukki green cardamom sold wholesale in 2, 5 and 10 kg packs. Sizes 9 mm to 6 mm, mixed 7-8 mm and 6-7 mm, and seeds. Prices include 5% GST.",
+      "image": {{ 'https:' | append: ld_img | json }},
+      "brand": { "@type": "Brand", "name": "Pure Leven Spices & Tea" },
+      "category": "Spices > Cardamom",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "INR",
+        "lowPrice": {{ prod.price_min | divided_by: 100.0 | json }},
+        "highPrice": {{ prod.price_max | divided_by: 100.0 | json }},
+        "offerCount": {{ prod.variants.size }},
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": {{ tomorrow | json }},
+        "url": {{ page_url | append: '#grades' | json }},
+        "seller": { "@type": "Organization", "name": "Pure Leven Spices & Tea" }
+      }
+    }
+    {%- endif -%},
+    {
+      "@type": "FAQPage",
+      "mainEntity": [{{ faq_ld | split: '§' | join: ',' }}]
+    }
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Cardamom price page",
+  "tag": "div",
+  "class": "plcm-section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Wholesale product", "info": "One variant per grade. Variant price = price per kg including GST." },
+    { "type": "product", "id": "advance_product", "label": "Booking advance product" },
+    { "type": "text", "id": "reference_grade", "label": "Grade quoted in the price box", "default": "8 mm" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number", "info": "With country code, no +", "default": "918848265849" },
+    { "type": "number", "id": "online_max_kg", "label": "Offer booking above (kg)", "default": 5 },
+    { "type": "number", "id": "cod_max_kg", "label": "Cash on delivery up to (kg)", "default": 10 },
+    { "type": "number", "id": "post_max_kg", "label": "Online checkout up to (kg)", "info": "India Post rates in Shopify stop at 19.5 kg", "default": 19 },
+    { "type": "number", "id": "gst_pct", "label": "GST %", "default": 5 },
+    { "type": "checkbox", "id": "sample_notice", "label": "Show 'sample prices' notice", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Updated daily · Spices Board e-auctions" },
+        { "type": "text", "id": "quality_title", "label": "Quality note title", "default": "Only the best of each size" },
+    { "type": "richtext", "id": "quality_text", "label": "Quality note" },
+    { "type": "textarea", "id": "delivery_rows", "label": "Delivery rows", "info": "One line each: weight|Kerala|South|Rest", "default": "2 kg|115|225|295\n3 kg|140|278|360\n4 kg|165|325|413\n5 kg|215|467|567" },
+    { "type": "richtext", "id": "delivery_more", "label": "Delivery note" },
+    { "type": "text", "id": "band_title", "label": "Closing band title", "default": "Buying for a shop, hotel or export packer?" },
+    { "type": "text", "id": "band_text", "label": "Closing band text", "default": "Tell us the grade and quantity. We reply with the day's rate." }
+  ],
+  "blocks": [
+    {
+      "type": "grade",
+      "name": "Grade details",
+      "settings": [
+        { "type": "text", "id": "grade", "label": "Variant name", "info": "Exactly as in the product, e.g. 8 mm" },
+        { "type": "text", "id": "tag", "label": "Tag" },
+        { "type": "text", "id": "note", "label": "One line about this grade" },
+        { "type": "image_picker", "id": "image", "label": "Photo" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    },
+    {
+      "type": "other",
+      "name": "Other wholesale item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "text", "label": "Short line" },
+        { "type": "product", "id": "product", "label": "Product (for the photo)" },
+        { "type": "image_picker", "id": "image", "label": "Photo (overrides product)" },
+        { "type": "url", "id": "url", "label": "Link", "info": "Blank = WhatsApp quote" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "See wholesale" }
+      ]
+    }
+  ]
+}
+{% endschema %}

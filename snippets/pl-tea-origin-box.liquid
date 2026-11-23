@@ -1,0 +1,21 @@
+{%- liquid
+  assign tea_posts = 'kerala-chayakada-chai-recipe,elaichi-chai-recipe-idukki,homemade-chai-masala-recipe,sulaimani-tea-recipe,ctc-vs-orthodox-tea,orange-pekoe-meaning,how-much-tea-powder-per-cup,munnar-tea-vs-assam-tea,cardamom-tea-powder-vs-pods,green-tea-leaves-vs-tea-bags,cassia-in-masala-chai,honey-in-hot-tea,tea-powder-adulteration-test,cardamom-pods-per-cup-of-tea,cardamom-and-tea,6-7mm-cardamom-tea-masala' | split: ','
+  assign tea_handle = handle | split: '/' | last
+-%}
+{%- if tea_posts contains tea_handle -%}
+<section class="pl-teabox page-width">
+  <div class="pl-teabox__box">
+    <p class="pl-teabox__kicker">Our tea</p>
+    <p class="pl-teabox__text">Most of our tea comes from tea factories in Kolukkumalai, with more from Suryanelli and Vagamon. We pick it every week and add nothing: no extra colour, fillers or low-quality Assam.</p>
+    <p class="pl-teabox__links"><a href="/pages/our-tea">Where our tea comes from</a> <span aria-hidden="true">&middot;</span> <a href="/collections/tea-coffee">Shop tea</a></p>
+  </div>
+</section>
+<style>
+  .pl-teabox { margin-block: 32px 0; }
+  .pl-teabox__box { background: #fff; border: 1px solid #DEDEDB; border-radius: 14px; padding: 22px; max-width: 720px; }
+  .pl-teabox .pl-teabox__kicker { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: #5F6470 !important; margin: 0 0 10px; }
+  .pl-teabox .pl-teabox__text { font-size: 15px; line-height: 1.6; color: #3D4250 !important; margin: 0 0 12px; }
+  .pl-teabox .pl-teabox__links { margin: 0; font-size: 14px; color: #5F6470 !important; }
+  .pl-teabox .pl-teabox__links a { font-weight: 700; color: #004438 !important; text-decoration: underline; text-underline-offset: 3px; }
+</style>
+{%- endif -%}

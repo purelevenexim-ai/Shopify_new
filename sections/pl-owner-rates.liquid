@@ -1,0 +1,105 @@
+{%- liquid
+  assign r = page.metafields.pl_rates
+  assign mk = page.metafields.pl_market.cardamom.value
+  assign rows = '9 mm|r_9,8.5 mm|r_8_5,8 mm|r_8,7.5 mm|r_7_5,7-8 mm|r_7_8,7 mm|r_7,Seeds|r_seeds,6-7 mm|r_6_7,6 mm|r_6' | split: ','
+-%}
+<section class="plor" id="plor-{{ section.id }}" aria-label="Owner rate update">
+  <button type="button" class="plor__open" aria-expanded="false" aria-controls="plor-box-{{ section.id }}">Owner · update rates</button>
+  <div class="plor__box" id="plor-box-{{ section.id }}" hidden>
+    <form class="plor__lock" autocomplete="off">
+      <label for="plor-pass-{{ section.id }}">Owner code</label>
+      <div class="plor__row">
+        <input id="plor-pass-{{ section.id }}" type="password" inputmode="text" autocapitalize="off" spellcheck="false" required>
+        <button type="submit">Enter</button>
+      </div>
+      <p class="plor__err" role="alert" hidden>That code is not right.</p>
+    </form>
+    <template class="plor__tpl">
+      <div class="plor__panel">
+        {%- if mk -%}<p class="plor__mk">Auction average {{ mk.t.mid }}: <b>₹{{ mk.t.avg }}/kg</b></p>{%- endif -%}
+        <table class="plor__table">
+          <thead><tr><th scope="col">Grade</th><th scope="col">Your rate, ₹/kg before GST</th></tr></thead>
+          <tbody>
+            {%- for row in rows -%}
+              {%- assign c = row | split: '|' -%}
+              <tr><td>{{ c[0] }}</td><td>{{ r[c[1]].value | round | default: '–' }}</td></tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+        <a class="plor__go" href="{{ section.settings.updater_url }}" target="_blank" rel="noopener">Open rate updater</a>
+        <p class="plor__note">Type the new rates in the updater and save. It uses your own Shopify login, so the page and all 27 pack prices change within a minute.</p>
+      </div>
+    </template>
+  </div>
+</section>
+
+<style>
+  .plor { max-width: 720px; margin: 48px auto 24px; padding: 0 var(--sk-gutter, 20px); text-align: center; font-family: var(--sk-sans); }
+  .plor .plor__open { background: none !important; border: 0 !important; padding: 8px 4px !important; min-height: 0 !important; font: 400 11px/1.4 var(--sk-mono) !important; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sk-muted) !important; cursor: pointer; box-shadow: none !important; }
+  .plor .plor__open:hover, .plor .plor__open:focus-visible { color: var(--sk-acc) !important; text-decoration: underline; }
+  .plor__box { margin-top: 12px; padding: 18px; background: var(--sk-card); border: 1px solid var(--sk-line); border-radius: 3px; text-align: left; }
+  .plor__lock label { display: block; font: 400 11px/1.4 var(--sk-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--sk-muted); margin-bottom: 8px; }
+  .plor__row { display: flex; gap: 8px; }
+  .plor__row input { flex: 1; min-width: 0; height: 44px; padding: 0 12px; font: 400 16px/1 var(--sk-sans); border: 1px solid var(--sk-line2); border-radius: 3px; background: var(--sk-bg); color: var(--sk-fg); }
+  .plor .plor__row button, .plor .plor__go { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 18px !important; font: 600 14px/1 var(--sk-sans) !important; color: #fff !important; background: var(--sk-dark) !important; border: 1px solid var(--sk-dark) !important; border-radius: 3px !important; text-decoration: none !important; cursor: pointer; }
+  .plor .plor__go { width: 100%; margin-top: 14px; }
+  .plor__err { margin: 8px 0 0; font-size: 14px; color: #A03A2C; }
+  .plor__mk { margin: 0 0 10px; font-size: 15px; color: var(--sk-fg2); }
+  .plor__table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .plor__table th, .plor__table td { padding: 8px 4px; border-bottom: 1px solid var(--sk-line); text-align: left; }
+  .plor__table th { font: 400 11px/1.4 var(--sk-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--sk-muted); }
+  .plor__table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .plor__note { margin: 10px 0 0; font-size: 13px; line-height: 1.5; color: var(--sk-muted); }
+</style>
+
+<script>
+(function () {
+  var root = document.getElementById('plor-{{ section.id }}');
+  if (!root) return;
+  var HASH = {{ section.settings.code_hash | json }};
+  var KEY = 'plor-ok';
+  var btn = root.querySelector('.plor__open'), box = root.querySelector('.plor__box');
+  var form = root.querySelector('.plor__lock'), err = root.querySelector('.plor__err');
+  function unlock() {
+    var tpl = root.querySelector('.plor__tpl');
+    if (tpl) { form.replaceWith(tpl.content.cloneNode(true)); tpl.remove(); }
+  }
+  function sha(t) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)).then(function (b) {
+      return Array.from(new Uint8Array(b)).map(function (x) { return x.toString(16).padStart(2, '0'); }).join('');
+    });
+  }
+  btn.addEventListener('click', function () {
+    var open = box.hidden;
+    box.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    if (open) {
+      var ok = false;
+      try { ok = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
+      if (ok) unlock(); else { var i = form.querySelector('input'); if (i) i.focus(); }
+    }
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = form.querySelector('input').value.trim().toLowerCase();
+    sha(v).then(function (h) {
+      if (h === HASH) {
+        try { sessionStorage.setItem(KEY, '1'); } catch (e2) {}
+        unlock();
+      } else { err.hidden = false; }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Owner rate update",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "updater_url", "label": "Rate updater link", "default": "https://claude.ai/artifact/5SSGSoYPaz5da8huEDgMV9" },
+    { "type": "text", "id": "code_hash", "label": "Owner code (SHA-256)", "default": "579651b0d574971040b531b66efbc5e607b677aa0d2633ec9eca376020ad8b3d" }
+  ],
+  "presets": [{ "name": "Owner rate update" }]
+}
+{% endschema %}

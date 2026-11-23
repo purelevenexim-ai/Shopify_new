@@ -1,0 +1,24 @@
+{%- comment -%} Cardamom pod drawing. mm = sieve size, k = px per mm, seeds = true draws loose seeds. {%- endcomment -%}
+{%- liquid
+  assign k = k | default: 5
+  assign w = mm | times: k
+  assign h = w | times: 1.667
+-%}
+{%- if seeds -%}
+<svg class="plcm-pod plcm-pod--seeds" viewBox="0 0 100 70" width="{{ k | times: 13 }}" height="{{ k | times: 9.1 }}" aria-hidden="true" focusable="false">
+  <g fill="#5B4632" stroke="#3E2F21" stroke-width="1.5">
+    <ellipse cx="22" cy="40" rx="9" ry="7" transform="rotate(-20 22 40)"/>
+    <ellipse cx="42" cy="28" rx="9" ry="7" transform="rotate(15 42 28)"/>
+    <ellipse cx="62" cy="44" rx="9" ry="7" transform="rotate(-35 62 44)"/>
+    <ellipse cx="80" cy="26" rx="9" ry="7" transform="rotate(25 80 26)"/>
+    <ellipse cx="40" cy="54" rx="9" ry="7" transform="rotate(40 40 54)"/>
+    <ellipse cx="74" cy="56" rx="8" ry="6" transform="rotate(-10 74 56)"/>
+  </g>
+</svg>
+{%- else -%}
+<svg class="plcm-pod" viewBox="0 0 60 100" width="{{ w }}" height="{{ h }}" aria-hidden="true" focusable="false">
+  <path d="M30 6C70 16 70 84 30 96C-10 84-10 16 30 6Z" fill="#9DBB7E" stroke="#5C7F45" stroke-width="2.4" vector-effect="non-scaling-stroke"/>
+  <path d="M30 10C45 32 45 70 30 92M30 10C15 32 15 70 30 92" fill="none" stroke="#6F9455" stroke-width="1.2" vector-effect="non-scaling-stroke" opacity=".8"/>
+  <path d="M30 6V0" stroke="#5C7F45" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+</svg>
+{%- endif -%}

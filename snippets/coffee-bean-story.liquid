@@ -1,0 +1,59 @@
+{%- comment -%} bean: robusta | arabica | blend. Journey of the bean plus our own part in it. {%- endcomment -%}
+<div class="cf__two">
+  <div class="cf__head">
+    <span class="cf__eyebrow">Where this bean came from</span>
+    {%- case bean -%}
+      {%- when 'robusta' -%}
+        <h2 class="cf__h2">How Robusta reached our hills</h2>
+        <ol class="cf__tl">
+          <li><time>Central Africa</time><b>A wild forest coffee</b><p>Robusta grows wild in the forests of the Congo basin. Botanists named it only in 1897.</p></li>
+          <li><time>1869 onwards</time><b>The rust that ended Arabica</b><p>Leaf rust wiped out the Arabica estates of Ceylon and Wayanad. Robusta, which tolerates the fungus, was the answer.</p></li>
+          <li><time>Late 1800s</time><b>Wayanad turns to Robusta</b><p>Today over 95% of Wayanad's coffee is Robusta, with a GI tag since 2019.</p></li>
+          <li class="is-us"><time>Today</time><b>Our plot in Idukki</b><p>Robusta under the shade trees, pepper on the trunks, picked by hand from December to February.</p></li>
+        </ol>
+      {%- when 'arabica' -%}
+        <h2 class="cf__h2">How Arabica reached India</h2>
+        <ol class="cf__tl">
+          <li class="is-legend"><time>Ethiopia</time><b>Where coffee began</b><p>Arabica's wild home is the Ethiopian highlands, the land of the Kaldi legend.</p></li>
+          <li><time>1400s</time><b>Yemen</b><p>Farmed and brewed in Yemen, shipped from Mocha, and guarded: fertile beans were not allowed out.</p></li>
+          <li><time>1600s</time><b>Seven beans to Chikmagalur</b><p>Baba Budan is said to have smuggled seven seeds from Mocha in his beard and planted them on the Chandragiri hills.</p></li>
+          <li class="is-us"><time>Today</time><b>Chikmagalur Arabica, roasted by us</b><p>GI-tagged since 2019. We buy it from growers there and roast it ourselves in small batches.</p></li>
+        </ol>
+      {%- else -%}
+        <h2 class="cf__h2">Two journeys in one pack</h2>
+        <ol class="cf__tl">
+          <li><time>1600s · Arabica</time><b>Seven beans to Chikmagalur</b><p>Indian coffee began when Baba Budan planted seven smuggled seeds on the Chandragiri hills.</p></li>
+          <li><time>Late 1800s · Robusta</time><b>Africa to Wayanad</b><p>After leaf rust ruined the Arabica estates, rust-tolerant Robusta from Central Africa took over Kerala's hills.</p></li>
+          <li class="is-us"><time>Today</time><b>Blended by us in Kerala</b><p>Our Idukki and Wayanad Robusta with Chikmagalur Arabica, roasted medium and blended for the steel filter.</p></li>
+        </ol>
+    {%- endcase -%}
+  </div>
+  <div class="cf__voice">
+    <span class="cf__eyebrow">From our side</span>
+    {%- assign combo = kind | append: '-' | append: bean -%}
+    {%- case combo -%}
+      {%- when 'filter-robusta' -%}
+        <p>This is the coffee of old Kerala tea shops: dark, strong, still tasting of coffee after a lot of hot milk. The Robusta in it is picked by hand on our plot in Idukki, and some comes from Wayanad.</p>
+        <p>The squirrels and birds get to some of the ripe cherries before we do. We let them. We don't spray chemical pesticides or use chemical fertilisers, and we're not certified organic, so we won't call it that.</p>
+      {%- when 'pure-robusta' -%}
+        <p>Black Robusta is how a lot of Kerala drinks its coffee: as kattan kaapi, light, with a piece of jaggery, or boiled with dry ginger and pepper as chukku kaapi when the rain doesn't stop.</p>
+        <p>Ours is hand-picked in Idukki and Wayanad, sun-dried whole and roasted medium in small batches. Nothing added, no chemicals on our plants.</p>
+      {%- when 'beans-robusta' -%}
+        <p>These are the beans as they come out of our roaster, before grinding. Picked by hand from December to February, dried whole in the sun, roasted by colour and smell, and stopped at medium.</p>
+        <p>Open the pack and you'll smell why we like selling whole beans: the aroma is all still there.</p>
+      {%- when 'filter-arabica' -%}
+        <p>We'll be straight with you: we don't grow Arabica. Our plot is Robusta. This Arabica comes from growers in Chikmagalur, the hills where Indian coffee began.</p>
+        <p>We roast it ourselves, medium, and grind it for the steel filter. It makes a gentler filter coffee than our Robusta, the one to pick if Robusta is too strong for you.</p>
+      {%- when 'pure-arabica' -%}
+        <p>If someone tells us black coffee is too bitter, this is what we give them. Chikmagalur Arabica, roasted medium so the sweetness stays.</p>
+        <p>We don't grow Arabica ourselves; we buy it from growers in Chikmagalur and roast and pack it here in Kerala.</p>
+      {%- when 'beans-arabica' -%}
+        <p>Whole Chikmagalur Arabica, roasted by us in small batches. We don't grow Arabica, so we buy from growers there and do the roasting ourselves.</p>
+        <p>Grind it just before brewing. The smell when you open the grinder is half the reason to buy beans.</p>
+      {%- else -%}
+        <p>The Robusta in this blend is from our own plot in Idukki and from Wayanad, picked by hand. The Arabica comes from growers in Chikmagalur.</p>
+        <p>We made it for people who find our single-bean filter coffees too dark but still want the thick decoction. More coffee in every cup.</p>
+    {%- endcase -%}
+    <span class="cf__sign">The Pure Leven family, Idukki</span>
+  </div>
+</div>

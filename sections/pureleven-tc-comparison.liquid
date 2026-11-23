@@ -26,6 +26,9 @@ Tea & Coffee Comparison Table Section
             <th class="tc-comparison__header-cell">Strength</th>
             <th class="tc-comparison__header-cell">Cup Type</th>
             <th class="tc-comparison__header-cell">Preparation</th>
+            {%- if section.settings.show_sizes -%}
+              <th class="tc-comparison__header-cell">Sizes</th>
+            {%- endif -%}
           </tr>
         </thead>
         <tbody>
@@ -47,6 +50,9 @@ Tea & Coffee Comparison Table Section
                 <td class="tc-comparison__body-cell" data-label="Strength">{{ strength | default: '—' }}</td>
                 <td class="tc-comparison__body-cell" data-label="Cup">{{ cup_type | default: '—' }}</td>
                 <td class="tc-comparison__body-cell" data-label="Preparation">{{ brew_method | default: '—' }}</td>
+                {%- if section.settings.show_sizes -%}
+                  <td class="tc-comparison__body-cell" data-label="Sizes">{% for v in product.variants %}{{ v.title }}{% unless forloop.last %}, {% endunless %}{% endfor %}</td>
+                {%- endif -%}
               </tr>
             {%- endif -%}
           {%- endfor -%}
@@ -54,11 +60,6 @@ Tea & Coffee Comparison Table Section
       </table>
     </div>
 
-    {%- if section.settings.show_sizes -%}
-      <div class="tc-comparison__sizes-note">
-        <p>All teas available in: 100g, 200g, 500g, 1kg, 2kg sizes</p>
-      </div>
-    {%- endif -%}
   </div>
 </section>
 

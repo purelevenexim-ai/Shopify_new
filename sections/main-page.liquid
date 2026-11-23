@@ -1,3 +1,5 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sk-pages.css' | asset_url | stylesheet_tag }}
 {{ 'section-main-page.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
@@ -21,7 +23,8 @@
   endif
 -%}
 
-<div class="{{ page_width_class }} section-{{ section.id }}-padding">
+<div class="sk-page {{ page_width_class }} section-{{ section.id }}-padding">
+  {%- if section.settings.eyebrow != blank -%}<p class="sk-page__eyebrow"><i>01</i> / {{ section.settings.eyebrow | escape }}</p>{%- endif -%}
   {% if page.handle == 'coffee-page' or page.handle == 'kerala-coffee-from-idukki' or page.title == 'Coffee Page' %}
     <h2 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {{ page.title | escape }}
@@ -42,6 +45,12 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "PureLeven · Idukki, Kerala"
+    },
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"

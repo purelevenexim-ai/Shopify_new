@@ -4,7 +4,19 @@
   assign h = product.handle
 
   # Per-product recipe data: name|icon triples separated by ~
-  if h contains 'black-pepper' or h contains 'pepper-masala' or h contains 'white-pepper'
+  if h contains 'milk-tea'
+    assign recipes = "Kerala Chaya|cup~Kadak Chai|cup~Ginger Masala Chai|cup"
+  elsif h contains 'black-tea'
+    assign recipes = "Black Tea with Lemon|cup~Sulaimani (Kerala Spiced Lemon Tea)|cup~Iced Tea|cup"
+  elsif h contains 'orange-pekoe'
+    assign recipes = "Plain Black Tea|cup~Lemon Tea|cup~Honey Tea|cup"
+  elsif h == 'cardamom-tea'
+    assign recipes = "Elaichi Chai|cup~Plain Cardamom Tea|cup~Cardamom Iced Tea|cup"
+  elsif h == 'starter-trial-pack-4-varieties'
+    assign recipes = "Morning Chaya|cup~Afternoon Black Tea|cup~South Indian Filter Coffee|cup"
+  elsif h contains 'tea-coffee-honey'
+    assign recipes = "Honey Lemon Black Tea|cup~Chaya Sweetened with Honey|cup~South Indian Filter Coffee|cup"
+  elsif h contains 'black-pepper' or h contains 'pepper-masala' or h contains 'white-pepper'
     if h contains 'white-pepper'
       assign recipes = "Cream of Tomato Soup|bowl~White Pepper Chicken|pan~Kerala Pepper Noodles|pan"
     else

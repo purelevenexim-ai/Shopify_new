@@ -6,8 +6,8 @@
   "@type": "WebSite",
   "@id": "{{ shop.url }}/#website",
   "url": "{{ shop.url }}/",
-  "name": "{{ shop.name }}",
-  "alternateName": ["Organic Pure Leven", "PureLeven", "Pureleven Spices"],
+  "name": {{ shop.name | replace: '&amp;', '&' | json }},
+  "alternateName": ["Pure Leven", "PureLeven", "Pureleven Spices"],
   "description": "Fresh Kerala spices, raw honey, and natural foods sourced from small family farms in the hill regions of Idukki, Kerala.",
   "inLanguage": "en-IN",
   "potentialAction": {
@@ -24,66 +24,13 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "speakable": {
-    "@type": "SpeakableSpecification",
-    "cssSelector": [".plf__tagline", "h1", "h2"]
-  },
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Where do Pureleven spices come from?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Pureleven sources all spices directly from small family farms in Idukki and the surrounding hill regions of Kerala. High-altitude cultivation and slower growing cycles concentrate aroma and natural oils, giving the spices a noticeably stronger flavour than mass-retail alternatives."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Are Pureleven spices organic and natural?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. All Pureleven products are 100% natural with no artificial additives, preservatives, or colour. The company is FSSAI Licensed and sources from farms that practice natural cultivation. Products carry no chemical treatments."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How are Pureleven spices packed and shipped?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Spices are small-batch packed in Rajakumari, Idukki, Kerala and shipped fresh across India. Small-batch packing ensures maximum freshness and aroma retention. Orders are dispatched within 24 hours and free shipping is available on orders above ₹649."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What spices does Pureleven sell?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Pureleven sells Kerala green cardamom, whole black pepper, cloves, star anise, raw honey, and signature spice combo packs. All products are farm-origin, sourced directly from Idukki hill farms and packed without intermediaries."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How does Pureleven compare to retail store spices?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Retail spices pass through multiple middlemen, which increases storage time and reduces aroma. Pureleven ships directly farm-to-home with no middlemen, meaning spices retain their volatile oils and natural fragrance. The difference is most obvious when spices hit heat during cooking."
-      }
-    }
-  ]
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
   "@graph": [
     {
       "@type": ["Organization", "LocalBusiness"],
       "@id": "{{ shop.url }}/#localbusiness",
-      "name": "Pureleven",
+      "name": "Pure Leven Spices & Tea",
       "legalName": "Pure Leven Exim",
-      "alternateName": ["Organic Pure Leven", "PureLeven", "Pureleven Spices"],
+      "alternateName": ["Pure Leven", "PureLeven", "Pureleven Spices"],
       "description": "Fresh Kerala spices, raw honey, tea, coffee, and natural foods sourced directly from small family farms in Kerala hill regions and packed for authentic aroma and flavor.",
       "url": "{{ shop.url }}",
       {% if settings.logo %}"logo": { "@type": "ImageObject", "url": "{{ settings.logo | image_url: width: 400 | prepend: 'https:' }}" },{% endif %}
@@ -106,18 +53,8 @@
       "openingHours": "Mo-Su 09:00-18:00",
       "currenciesAccepted": "INR",
       "paymentAccepted": "UPI, Credit Card, Debit Card, Net Banking",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "45",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "sameAs": [
-        "{{ settings.social_instagram_link }}",
-        "{{ settings.social_facebook_link }}",
-        "{{ settings.social_youtube_link }}"
-      ]
+      {% render 'schema-same-as' %}
+      "areaServed": "IN"
     },
     {
       "@type": "ItemList",
@@ -128,25 +65,25 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Kerala Green Cardamom",
-          "url": "{{ shop.url }}/products/kerala-cardamom-200gm"
+          "url": "{{ shop.url }}/products/kerala-cardamom"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Idukki Black Pepper",
-          "url": "{{ shop.url }}/products/kerala-black-pepper-200gm"
+          "url": "{{ shop.url }}/products/kerala-black-pepper"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Kerala Cloves",
-          "url": "{{ shop.url }}/products/kerala-clove-100gm"
+          "url": "{{ shop.url }}/products/kerala-adimali-clove"
         },
         {
           "@type": "ListItem",
           "position": 4,
           "name": "Cardamom, Pepper and Clove Combo Pack",
-          "url": "{{ shop.url }}/products/cardamom-pepper-clove-combo-pack-special-offer-100-off"
+          "url": "{{ shop.url }}/products/kerala-spice-combo-pack"
         }
       ]
     }

@@ -1,0 +1,219 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'pl-coffee.css' | asset_url | stylesheet_tag }}
+
+<article class="cf cf--white" id="cf-black-{{ section.id }}">
+  <div class="cf__wrap">
+    <header class="cf__head">
+      <span class="cf__eyebrow">Black coffee guide</span>
+      <h1 class="cf__h1">How to make black coffee at home</h1>
+      <p class="cf__lede">Use about 1 g of coffee for every 15 to 16 ml of water, with water just off the boil (90 to 96 °C). Brew 3 to 4 minutes for pour-over, 4 minutes in a French press, or make a steel-filter decoction and top it up with hot water. Use 100% coffee with no chicory: Arabica for a smooth cup, Robusta for a bold one.</p>
+      {% render 'coffee-photo', name: 'pl-coffee-black-guide', w: 1600, h: 900, alt: 'A small cup of black coffee on a weathered wooden plank, seen from above', eager: true, sizes: '100vw' %}
+      <ul class="cf__toc">
+        <li><a href="#bcalc">Calculator</a></li>
+        <li><a href="#india">Indian ways</a></li>
+        <li><a href="#world">Around the world</a></li>
+        <li><a href="#grind">Which coffee and grind</a></li>
+        <li><a href="#btips">Tips</a></li>
+        <li><a href="#bfix">Fix it</a></li>
+        <li><a href="#bfaq">Questions</a></li>
+      </ul>
+    </header>
+
+    <form class="cf__calc" id="bcalc" aria-labelledby="cf-bcalc-title-{{ section.id }}" onsubmit="return false">
+      <div class="cf__head">
+        <span class="cf__eyebrow">Black coffee calculator</span>
+        <h2 class="cf__h3" id="cf-bcalc-title-{{ section.id }}">How much coffee for your mug?</h2>
+      </div>
+      <fieldset>
+        <legend>Mug size</legend>
+        <div class="cf__seg">
+          {%- assign mugs = '150,200,250,300' | split: ',' -%}
+          {%- for m in mugs -%}
+            <label><input type="radio" name="mug" id="cf-mug-{{ m }}-{{ section.id }}" value="{{ m }}"{% if m == '250' %} checked{% endif %}><span>{{ m }} ml</span></label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Strength</legend>
+        <div class="cf__seg">
+          <label><input type="radio" name="bstrength" id="cf-b-light-{{ section.id }}" value="17"><span>Light</span></label>
+          <label><input type="radio" name="bstrength" id="cf-b-regular-{{ section.id }}" value="15" checked><span>Regular</span></label>
+          <label><input type="radio" name="bstrength" id="cf-b-strong-{{ section.id }}" value="13"><span>Strong</span></label>
+        </div>
+      </fieldset>
+      <div class="cf__out" aria-live="polite">
+        <div><small>Coffee</small><b data-out="g">17 g</b><em data-out="tbsp">about 2 heaped tbsp</em></div>
+        <div><small>Water</small><b data-out="water">250 ml</b><em>90 to 96 °C</em></div>
+        <div><small>Ratio</small><b data-out="ratio">1 : 15</b><em>coffee : water</em></div>
+        <div><small>Brew time</small><b>3–4 min</b><em>pour-over or drip</em></div>
+      </div>
+      <p class="cf__muted">For pour-over, drip and French press. Steel-filter and moka pot coffee is brewed stronger, then topped up with hot water.</p>
+    </form>
+
+    <div class="cf__head" id="india">
+      <span class="cf__eyebrow">Indian ways</span>
+      <h2 class="cf__h2">Black coffee the Kerala way</h2>
+      <p>In Kerala, black coffee is everyday kattan kaapi: light, sweetened with jaggery, often with a pinch of spice. Chukku kaapi, with dry ginger, is the monsoon version.</p>
+    </div>
+    <div class="cf__grid">
+      <div class="cf__card"><span class="cf__eyebrow">Steel filter</span><h3 class="cf__h3">Black filter coffee</h3>{% render 'coffee-brew-steps', mode: 'black' %}</div>
+      <div class="cf__card"><span class="cf__eyebrow">Kerala</span><h3 class="cf__h3">Kattan kaapi</h3>{% render 'coffee-brew-steps', mode: 'kattan' %}</div>
+      <div class="cf__card"><span class="cf__eyebrow">Kerala and Tamil Nadu</span><h3 class="cf__h3">Chukku kaapi (dry ginger coffee)</h3>{% render 'coffee-brew-steps', mode: 'chukku' %}</div>
+    </div>
+
+    <div class="cf__voice">
+      <span class="cf__eyebrow">Our view</span>
+      <p>If you are new to black coffee, start with Arabica. Robusta black is for people who already like it strong. And try kattan kaapi with a small piece of jaggery at least once. It's the Kerala way, and it turns a bitter cup into something you'll want again.</p>
+      <span class="cf__sign">The Pure Leven family, Idukki</span>
+    </div>
+
+    <div class="cf__head" id="world">
+      <span class="cf__eyebrow">Around the world</span>
+      <h2 class="cf__h2">Five famous ways to brew black coffee</h2>
+    </div>
+    <div class="cf__grid">
+      <div class="cf__card"><span class="cf__eyebrow">Germany, 1908</span><h3 class="cf__h3">Pour-over</h3><p>Melitta Bentz, a housewife in Dresden, invented the paper coffee filter in 1908 using blotting paper from her son's school book. Hot water poured by hand through paper: clean and bright, and it shows off Arabica.</p>{% render 'coffee-brew-steps', mode: 'pourover' %}</div>
+      <div class="cf__card"><span class="cf__eyebrow">France and Italy</span><h3 class="cf__h3">French press</h3><p>French in name, but the press we know was patented in Italy in 1929. Coffee steeped in water, then pressed: full-bodied, with the coffee's oils left in.</p>{% render 'coffee-brew-steps', mode: 'frenchpress' %}</div>
+      <div class="cf__card"><span class="cf__eyebrow">Italy, 1933</span><h3 class="cf__h3">Moka pot</h3><p>Alfonso Bialetti's eight-sided aluminium pot from 1933 is still in most Italian kitchens. Strong, espresso-like coffee on the stove. Drink it short or top it up with hot water.</p>{% render 'coffee-brew-steps', mode: 'moka' %}</div>
+      <div class="cf__card"><span class="cf__eyebrow">Türkiye</span><h3 class="cf__h3">Turkish coffee</h3><p>Powder-fine coffee heated slowly in a cezve and served unfiltered with its foam.</p>{% render 'coffee-brew-steps', mode: 'turkish' %}</div>
+      <div class="cf__card"><span class="cf__eyebrow">Cold</span><h3 class="cf__h3">Cold brew</h3><p>Steeped cold overnight instead of brewed hot. Smooth and good over ice.</p>{% render 'coffee-brew-steps', mode: 'coldbrew' %}</div>
+    </div>
+
+    <div class="cf__head" id="grind">
+      <span class="cf__eyebrow">Which coffee and grind</span>
+      <h2 class="cf__h2">Match the coffee to the method</h2>
+    </div>
+    <div class="cf__table-wrap">
+      <table class="cf__table">
+        <thead><tr><th scope="col">Method</th><th scope="col">Grind</th><th scope="col">Our coffee</th></tr></thead>
+        <tbody>
+          <tr><td>Steel filter, kattan kaapi, chukku kaapi</td><td>Fine</td><td>{% render 'coffee-plink', handle: 'pure-arabica-coffee-powder', label: 'Pure Arabica' %} or {% render 'coffee-plink', handle: 'pure-robusta-coffee-powder', label: 'Pure Robusta Coffee Powder' %}</td></tr>
+          <tr><td>Moka pot</td><td>Fine to medium</td><td>Pure Arabica or Pure Robusta Coffee Powder</td></tr>
+          <tr><td>Pour-over and drip</td><td>Medium</td><td>{% render 'coffee-plink', handle: 'arabica-coffee-beans', label: 'Arabica Coffee Beans' %} ground medium, or our pure powders</td></tr>
+          <tr><td>French press and cold brew</td><td>Coarse</td><td>{% render 'coffee-plink', handle: 'arabica-coffee-beans', label: 'Arabica' %} or {% render 'coffee-plink', handle: 'robusta-coffee-beans', label: 'Robusta Coffee Beans' %}, ground coarse at home</td></tr>
+          <tr><td>Turkish coffee</td><td>Powder-fine</td><td>Arabica Coffee Beans, ground very fine</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cf__muted">Our filter coffee powders contain chicory and are made for milk coffee; for black coffee, use 100% coffee.</p>
+
+    <div class="cf__card" id="btips">
+      <span class="cf__eyebrow">Tips and tricks</span>
+      <h2 class="cf__h3">Small things that make a better cup</h2>
+      <ul class="cf__tips">
+        <li><b>Grind just before brewing.</b> Whole beans hold their aroma far longer than ground coffee.</li>
+        <li><b>Water just off the boil.</b> About 90 to 96 °C. Boiling water pulls out bitterness; water that is too cool tastes sour.</li>
+        <li><b>Weigh once.</b> Weigh a heaped tablespoon of your coffee one time, then you can measure by spoon for good.</li>
+        <li><b>Use clean, filtered water.</b> Coffee is about 98% water, so water with strong tastes or smells comes through in the cup.</li>
+        <li><b>Do not keep it on the heat.</b> Coffee kept hot or reheated turns bitter. Brew what you will drink.</li>
+        <li><b>Store it right.</b> Airtight, in a cool, dark cupboard. Not in the fridge, where coffee picks up moisture and smells.</li>
+        <li><b>A pod of cardamom.</b> Crush one <a href="/products/kerala-cardamom">Kerala cardamom</a> pod into the grounds before brewing, as Gulf households do with their coffee.</li>
+        <li><b>Jaggery or palm jaggery.</b> Karupatti (palm jaggery) gives black coffee a caramel sweetness. Stir it in after brewing.</li>
+        <li><b>Iced black coffee.</b> Brew at double strength straight onto ice, so it is not watery when the ice melts.</li>
+      </ul>
+    </div>
+
+    <div class="cf__head" id="bfix">
+      <span class="cf__eyebrow">Fix it</span>
+      <h2 class="cf__h2">When the cup is not right</h2>
+    </div>
+    <div class="cf__grid">
+      <div class="cf__card"><h3 class="cf__h3">Bitter and harsh</h3><p>Over-brewed: grind too fine, water too hot or brewed too long. Grind a little coarser or shorten the brew.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Sour and thin</h3><p>Under-brewed: grind too coarse, water too cool or brew too short. Grind finer or use hotter water.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Weak</h3><p>Too little coffee for the water. Move up one strength on the calculator.</p></div>
+      <div class="cf__card"><h3 class="cf__h3">Muddy or gritty</h3><p>French press ground too fine, or Turkish coffee not left to settle. Grind coarser, or wait a minute before sipping.</p></div>
+    </div>
+
+    <div class="cf__head">
+      <span class="cf__eyebrow">Our black coffees and beans</span>
+      <h2 class="cf__h2">Pick your coffee</h2>
+    </div>
+    {% render 'coffee-compare', group: 'black' %}
+    <p>Drinking it with milk? Read the <a href="/pages/filter-coffee-guide">milk coffee guide</a>.</p>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cf__head" id="bfaq">
+        <span class="cf__eyebrow">Questions</span>
+        <h2 class="cf__h2">Black coffee questions</h2>
+      </div>
+      <div class="cf__faq">
+        {%- for block in section.blocks -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question | escape }}</summary>
+            <div class="cf__a">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+<script>
+(function () {
+  var f = document.getElementById('bcalc');
+  if (!f) return;
+  function q(n) { return f.querySelector('[data-out="' + n + '"]'); }
+  function half(x) { var r = Math.round(x * 2) / 2; return (Math.floor(r) || '') + (r % 1 ? '½' : '') || '½'; }
+  function run() {
+    var m = +f.querySelector('input[name="mug"]:checked').value;
+    var r = +f.querySelector('input[name="bstrength"]:checked').value;
+    var g = Math.round(m / r);
+    q('g').textContent = g + ' g';
+    q('tbsp').textContent = 'about ' + half(g / 8) + ' heaped tbsp';
+    q('water').textContent = m + ' ml';
+    q('ratio').textContent = '1 : ' + r;
+  }
+  f.addEventListener('change', run);
+  run();
+})();
+</script>
+
+{%- if section.blocks.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+    { "@type": "Question", "name": {{ block.settings.question | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} } }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to make pour-over black coffee at home",
+  "totalTime": "PT5M",
+  "supply": [ { "@type": "HowToSupply", "name": "15 g medium-ground coffee" }, { "@type": "HowToSupply", "name": "240 ml water" } ],
+  "tool": [ { "@type": "HowToTool", "name": "Pour-over dripper and paper filter" } ],
+  "step": [
+    { "@type": "HowToStep", "text": "Use 15 g of medium-ground coffee for 240 ml of water. Rinse the paper filter with hot water and discard that water." },
+    { "@type": "HowToStep", "text": "Heat the water to 90 to 96 °C, about 30 seconds off the boil." },
+    { "@type": "HowToStep", "text": "Pour about 30 ml to wet the coffee and wait 30 to 45 seconds." },
+    { "@type": "HowToStep", "text": "Pour the rest slowly in small circles, finishing in 3 to 4 minutes." }
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Black coffee guide",
+  "tag": "div",
+  "class": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Black coffee guide" }]
+}
+{% endschema %}

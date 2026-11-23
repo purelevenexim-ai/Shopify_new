@@ -56,9 +56,9 @@
         "announcement_text": "Farm-to-Home Spices from Kerala · Free Shipping on orders above ₹649",
         "video": "shopify://files/videos/cardamom_vide_compressed.mov",
         "cover_image": "shopify://shop_images/pl-home-process-poster.webp",
-        "eyebrow": "Kerala · Harvested to order",
-        "heading": "Fresh Spices, Chosen at Origin",
-        "subtext": "We cultivate and produce Cardamom, Black Pepper, Cloves and more from the hills of Idukki and Wayanad. We also bring you Honey, Tea & Coffee — all organic, top quality, with no impurities, mixing or adulteration.",
+        "eyebrow": "Rajakumari, Idukki · Kerala",
+        "heading": "Fresh Kerala Spices and Tea, Chosen at Origin",
+        "subtext": "Pure Leven Spices & Tea sells Kerala spices packed whole by farming families around Rajakumari and Adimali in Idukki: extra bold cardamom, black pepper, white pepper and Adimali cloves, plus Ceylon cinnamon, coffee and honey, and tea from factories in Kolukkumalai, Suryanelli and Vagamon. Orders ship across India in 6 to 9 working days, with free shipping above ₹649.",
         "cta1_label": "Shop Spices",
         "cta1_url": "/collections/all",
         "cta2_label": "Read our guides",
@@ -125,14 +125,16 @@
           "type": "category",
           "settings": {
             "collection": "spices",
-            "label": "Kerala Spices"
+            "label": "Kerala Spices",
+            "image": "shopify://shop_images/20250727_225646_1_040681b8-13c7-472d-b050-160781c0992a.png"
           }
         },
         "cat_tea_coffee": {
           "type": "category",
           "settings": {
             "collection": "tea-coffee",
-            "label": "Tea & Coffee"
+            "label": "Tea & Coffee",
+            "image": "shopify://shop_images/Premium_Tea.webp"
           }
         },
         "cat_honey": {
@@ -393,7 +395,7 @@
       "settings": {
         "eyebrow": "From the Hills of Kerala",
         "title": "Build a better spice shelf.",
-        "description": "<p>Start with the ingredients you use most: fresh pepper, real cardamom, warming cloves, raw honey, and everyday kitchen staples from Kerala.</p><p>Many grow in misty hill regions where slower cycles help hold aroma and natural oils. The difference shows up as soon as the spice hits heat.</p>",
+        "description": "<p>Start with the ingredients you use most: fresh pepper, real cardamom, warming cloves, raw honey, and everyday kitchen staples from Kerala.</p><p>Many grow in misty hill regions where slower cycles help hold aroma and natural oils. The difference shows up as soon as the spice hits heat.</p><p>Cardamom and black pepper are the big two Kerala spices. Idukki grows most of Kerala's cardamom, and pepper vines climb the same shade trees on many hill farms. Cloves from Adimali round out the three spices that lose their aroma fastest once ground, which is why they are the best to buy whole from the farm first. New to Kerala spices? Our <a href=\"/blogs/cooking-spices/kerala-spices-list\">list of Kerala spices</a> explains what each one is for, and our <a href=\"/blogs/cooking-spices/spice-names-malayalam-english\">spice names in Malayalam and English</a> helps if a recipe uses local words. Not sure what to pick? Message us on WhatsApp at +91 88482 65849 and tell us what you cook.</p>",
         "button_label": "Shop Fresh Kerala Spices",
         "button_link": "/collections/all",
         "padding_top": 64,

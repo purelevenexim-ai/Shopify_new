@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "tc-hero": {
@@ -55,13 +64,13 @@
         "image_position": "left",
         "spec_1": "Medium Roast Robusta",
         "spec_2": "Filter Grind",
-        "spec_3": "No Chicory"
+        "spec_3": "Coffee-Chicory Blend"
       }
     },
     "tc-other-categories": {
       "type": "pureleven-tc-other-categories",
       "settings": {
-        "heading": "Also from PureLeven",
+        "heading": "Also from Pure Leven Spices & Tea",
         "spices_label": "Kerala Spices",
         "spices_sub": "Pepper, cardamom, turmeric & more",
         "spices_link": "/",
@@ -81,9 +90,9 @@
           "settings": {
             "tab_name": "Milk Tea",
             "product_handle": "premium-milk-tea-powder",
-            "step_1": "Boil 1 cup water with 1 tsp tea",
-            "step_2": "Add milk, bring to a boil",
-            "step_3": "Simmer 30 seconds, strain"
+            "step_1": "Boil milk and water together",
+            "step_2": "At half boil, add 1 tsp tea per cup",
+            "step_3": "Boil, rest 30 seconds, then strain"
           }
         },
         "tab-black": {
@@ -91,9 +100,29 @@
           "settings": {
             "tab_name": "Black Tea",
             "product_handle": "premium-black-tea-granules",
-            "step_1": "Boil 1 cup water",
+            "step_1": "Take 1 cup of water just off the boil",
+            "step_2": "Add 1 tsp tea, steep 3-5 minutes",
+            "step_3": "Strain and serve black, with lemon or with milk"
+          }
+        },
+        "tab-pekoe": {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Orange Pekoe",
+            "product_handle": "orange-pekoe-powder",
+            "step_1": "Take 1 cup of water just off the boil",
             "step_2": "Add 1 tsp tea, steep 3-4 minutes",
-            "step_3": "Strain and serve"
+            "step_3": "Strain and serve plain, with lemon or honey, no milk"
+          }
+        },
+        "tab-cardamom": {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Cardamom Tea",
+            "product_handle": "cardamom-tea",
+            "step_1": "Add 1 tsp tea per cup to milk and water as it comes to the boil",
+            "step_2": "Boil for a minute",
+            "step_3": "Strain and sweeten"
           }
         },
         "tab-coffee": {
@@ -101,29 +130,31 @@
           "settings": {
             "tab_name": "Filter Coffee",
             "product_handle": "naadan-kerala-coffee",
-            "step_1": "Add 2 tbsp coffee to the filter",
-            "step_2": "Pour hot water slowly, let it drip",
-            "step_3": "Mix decoction with hot milk to taste"
+            "step_1": "Add 2-3 heaped spoons of coffee to the steel filter",
+            "step_2": "Pour hot water just off the boil, cover, let it drip 10-15 minutes",
+            "step_3": "Mix the decoction with hot frothy milk and sugar"
           }
         }
       },
       "block_order": [
         "tab-milk",
         "tab-black",
+        "tab-pekoe",
+        "tab-cardamom",
         "tab-coffee"
       ]
     },
     "tc-story": {
       "type": "pureleven-tc-story",
       "settings": {
-        "heading": "Selected for the cup",
-        "intro": "We don't choose tea from a photograph. It's selected by checking what matters in the cup — taste, colour, aroma and how it performs when brewed.",
-        "step_1_title": "Source",
-        "step_1_copy": "We search for teas that perform beautifully in the cup.",
-        "step_2_title": "Evaluate",
-        "step_2_copy": "Checked for taste, colour, aroma and brew consistency.",
-        "step_3_title": "Pack",
-        "step_3_copy": "Packed fresh in small batches to preserve quality."
+        "heading": "How we choose our tea",
+        "intro": "Most of our tea comes from tea factories in Kolukkumalai, with more from Suryanelli and Vagamon. We pick it ourselves, every week.",
+        "step_1_title": "Visit the factories",
+        "step_1_copy": "Every week we visit tea factories in Kolukkumalai, Suryanelli and Vagamon and taste what each one has made.",
+        "step_2_title": "Pick the best from each",
+        "step_2_copy": "We choose the best tea from each factory for taste, aroma, flavour and colour.",
+        "step_3_title": "Blend for balance",
+        "step_3_copy": "Tea blenders around Munnar blend our picks, so every pack gives the same balanced cup."
       }
     },
     "tc-reviews": {
@@ -182,28 +213,28 @@
           "type": "faq_item",
           "settings": {
             "question": "Which tea is suitable for black tea?",
-            "answer": "<p>Premium Black Tea Granules or Orange Pekoe Powder both work well without milk.</p>"
+            "answer": "<p>Premium Black Tea Granules or Orange Pekoe both work well without milk.</p>"
           }
         },
         "faq-3": {
           "type": "faq_item",
           "settings": {
             "question": "What is the difference between Milk Tea Powder and Black Tea Granules?",
-            "answer": "<p>Milk Tea Powder is fine-milled for a quick, balanced milk tea. Black Tea Granules are BOP grade for a brighter, cleaner cup.</p>"
+            "answer": "<p>Milk Tea Powder is a fine CTC dust, SRD grade, that brews fast and strong for milk tea. Black Tea Granules are CTC BOP (Broken Orange Pekoe), a granule grade and not a powder, for a brighter, cleaner cup.</p>"
           }
         },
         "faq-4": {
           "type": "faq_item",
           "settings": {
             "question": "Does Cardamom Tea contain real cardamom?",
-            "answer": "<p>Yes — black tea blended with whole green cardamom.</p>"
+            "answer": "<p>Yes. We blend it ourselves: 60 g of cardamom from our own farm in Rajakumari for every 1 kg of tea from Vagamon. We choose a tea with medium flavour and strength so the cardamom comes through on top.</p>"
           }
         },
         "faq-5": {
           "type": "faq_item",
           "settings": {
             "question": "Does the coffee contain chicory?",
-            "answer": "<p>No — Naadan Kerala Coffee is pure Robusta with no chicory.</p>"
+            "answer": "<p>Our standard Naadan Kerala Coffee is a coffee and chicory blend, usually 53 parts coffee to 47 parts chicory. Chicory is a roasted root with no caffeine. It gives the decoction body and a darker colour. If you prefer a different mix, we also make 0% (no chicory), 10%, 20%, 30% and 43% chicory on request. Message us on WhatsApp at +91 88482 65849 and tell us the ratio you want.</p>"
           }
         },
         "faq-6": {
@@ -217,14 +248,14 @@
           "type": "faq_item",
           "settings": {
             "question": "How much tea should I use for one cup?",
-            "answer": "<p>About 1 teaspoon per cup, adjust to taste.</p>"
+            "answer": "<p>We use 2 to 2.5 g of tea, about one level teaspoon, for a 180 ml cup of water and milk. Add a little more if you like it stronger.</p>"
           }
         },
         "faq-8": {
           "type": "faq_item",
           "settings": {
             "question": "What are the available pack sizes?",
-            "answer": "<p>Most teas are available in 100g, 200g, 400/500g and 800g/1kg sizes.</p>"
+            "answer": "<p>Milk Tea Powder: 250g, 500g, 1kg. Black Tea Granules: 200g, 400g, 800g. Cardamom Tea: 250g, 400g, 800g. Orange Pekoe: 50g, 100g, 200g. Filter Coffee: 250g, 400g.</p>"
           }
         },
         "faq-9": {
@@ -252,11 +283,19 @@
           "type": "faq_item",
           "settings": {
             "question": "Is the filter coffee chicory-free?",
-            "answer": "<p>Yes — Naadan Kerala Coffee is pure Robusta with no chicory added. It is ground for South Indian filter preparation. If you prefer a chicory blend (degree coffee / hotel style), that is a separate formulation we may add later.</p>"
+            "answer": "<p>Our standard pack is not chicory-free: it is a coffee and chicory blend, usually 53 parts coffee to 47 parts chicory, the hotel-style mix many South Indian homes grew up with. But we do make chicory-free filter coffee (0% chicory), plus 10%, 20%, 30% and 43% chicory, and a Robusta and Arabica mix, on request. Message us on WhatsApp at +91 88482 65849. All of it is ground for South Indian filter preparation.</p>"
+          }
+        },
+        "faq_tea_origin": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where does your tea come from?",
+            "answer": "<p>Mostly from tea factories in Kolukkumalai, with more from Suryanelli and Vagamon. We visit them every week, pick the best tea from each, and have it blended by tea blenders around Munnar. <a href=\"/pages/our-tea\">Read where our tea comes from</a>.</p>"
           }
         }
       },
       "block_order": [
+        "faq_tea_origin",
         "faq-1",
         "faq-2",
         "faq-3",

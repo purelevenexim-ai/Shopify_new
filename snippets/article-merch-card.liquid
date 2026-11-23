@@ -15,7 +15,7 @@
     assign merch_action_label = action_label | default: 'View product'
     assign compare_price = blank
     if card_product.compare_at_price > card_product.price
-      assign compare_price = card_product.compare_at_price | money
+      assign compare_price = card_product.compare_at_price | money_without_currency | remove: '.00' | prepend: '₹'
     endif
   -%}
   <a class="article-merch-card article-merch-card--{{ merch_layout }}" href="{{ card_product.url }}">
@@ -53,7 +53,7 @@
         {%- if compare_price != blank -%}
           <span class="article-merch-card__price article-merch-card__price--compare">{{ compare_price }}</span>
         {%- endif -%}
-        <span class="article-merch-card__price">{{ card_product.price | money }}</span>
+        <span class="article-merch-card__price">{{ card_product.price | money_without_currency | remove: '.00' | prepend: '₹' }}</span>
       </span>
 
       <span class="article-merch-card__footer">

@@ -1,0 +1,242 @@
+{
+  "sections": {
+    "main": {
+      "type": "pl-cardamom-market",
+      "blocks": {
+        "grade_1": {
+          "type": "grade",
+          "settings": {
+            "grade": "9 mm",
+            "tag": "Extra bold",
+            "note": "The largest pods we sort. For gifting, premium packs and export-style retail."
+          }
+        },
+        "grade_2": {
+          "type": "grade",
+          "settings": {
+            "grade": "8.5 mm",
+            "tag": "Bold",
+            "note": "Big, even green pods for retail packs and sweet shops."
+          }
+        },
+        "grade_3": {
+          "type": "grade",
+          "settings": {
+            "grade": "8 mm",
+            "tag": "Bold",
+            "note": "The size most shops sell as bold cardamom."
+          }
+        },
+        "grade_4": {
+          "type": "grade",
+          "settings": {
+            "grade": "7.5 mm",
+            "tag": "",
+            "note": "Medium-bold. Nearly the look of 8 mm at a lower rate."
+          }
+        },
+        "grade_5": {
+          "type": "grade",
+          "settings": {
+            "grade": "7 mm",
+            "tag": "",
+            "note": "Medium. For hotels, caterers and tea shops."
+          }
+        },
+        "grade_6": {
+          "type": "grade",
+          "settings": {
+            "grade": "6 mm",
+            "tag": "Small",
+            "note": "Small pods, same aroma. For grinding, masala and chai."
+          }
+        },
+        "grade_7": {
+          "type": "grade",
+          "settings": {
+            "grade": "7-8 mm",
+            "tag": "Mixed",
+            "note": "7 and 8 mm together, not separated. Good value for kitchens."
+          }
+        },
+        "grade_8": {
+          "type": "grade",
+          "settings": {
+            "grade": "6-7 mm",
+            "tag": "Mixed",
+            "note": "6 and 7 mm together. For tea masala and bulk cooking."
+          }
+        },
+        "grade_9": {
+          "type": "grade",
+          "settings": {
+            "grade": "Seeds",
+            "tag": "No husk",
+            "note": "Seeds only, husk removed. For grinding and sweets. Seeds lose aroma faster than whole pods."
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "How do you set your wholesale cardamom price?",
+            "answer": "<p>From the day's Spices Board e-auctions at Puttady (Kerala) and Bodinayakanur (Tamil Nadu), where most Idukki cardamom is sold. The auction price is for ungraded cardamom as it comes from farms. We then sort it by size, take out the pods that don't make the grade, clean it and pack it, so graded cardamom costs more than the auction average. We keep only the best of each size, which puts our rate about ₹20 to ₹30 per kg above other sellers.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "When are the cardamom auctions held?",
+            "answer": "<p>On most working days there are two e-auctions, run by licensed auctioneers at the Spices Board centres in Puttady (Idukki, Kerala) and Bodinayakanur (Theni, Tamil Nadu). Results come out the same day, and we update this page twice a day.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the minimum order?",
+            "answer": "<p>One 2 kg pack. We pack in 2 kg, 5 kg and 10 kg, and you add packs for more: 4 kg is two 2 kg packs, 10 kg is two 5 kg packs or one 10 kg pack, and 30 kg is three 10 kg packs. You can mix grades in one order.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I pay cash on delivery?",
+            "answer": "<p>Yes, up to 10 kg. Book the order with a ₹500 advance, and pay the rest in cash when it arrives. Above 10 kg, pay the balance by UPI or bank transfer before we dispatch. You can also pay the full amount online at checkout. Booked and changed your mind? Cancel within 1 day of booking and we refund the ₹500 in full.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "How much does delivery cost?",
+            "answer": "<p>India Post charges by weight and distance; the table above lists 2, 5 and 10 kg for Kerala, the rest of South India and the rest of India. Several packs are charged on their total weight. Orders above 19 kg go by Alleppey Parcel Service or a transporter you choose, at the actual charge.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Online orders leave by the second working day, and most India Post parcels arrive 6 to 9 working days after you order. Booked orders leave within 3 to 5 working days of our call.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you give a GST invoice?",
+            "answer": "<p>Yes. Our GSTIN is 32BCJPT7873A1ZG and cardamom is billed at 5% GST. Add your GSTIN above the grade list when you order, or send it on WhatsApp, and we put it on the invoice.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "What do 6 mm, 7 mm and 8 mm mean?",
+            "answer": "<p>The size is the sieve a pod doesn't pass through, so an 8 mm pod is at least 8 mm across. Bigger pods are rarer and cost more. Size changes the look and the price more than the flavour: 6 and 7 mm work just as well for chai, masala and grinding. 6-7 mm and 7-8 mm are mixed sizes that haven't been separated.</p>"
+          }
+        },
+        "faq_9": {
+          "type": "faq",
+          "settings": {
+            "question": "Are you cardamom growers, suppliers or traders?",
+            "answer": "<p>We grow cardamom on our farm in Rajakumari, Idukki, and buy from other Idukki growers when our own crop runs short. We grade it and send it from Adimali, Idukki, to buyers anywhere in India. We don't export.</p>"
+          }
+        },
+        "faq_10": {
+          "type": "faq",
+          "settings": {
+            "question": "Is hari elaichi the same as green cardamom?",
+            "answer": "<p>Yes. Hari elaichi, chhoti elaichi, small cardamom and green cardamom are the same spice, and it is what this page prices. Badi or kali elaichi (large black cardamom) is a different plant, grown mostly in Sikkim, and usually sells for much less.</p>"
+          }
+        },
+        "other_1": {
+          "type": "other",
+          "settings": {
+            "title": "Black pepper",
+            "text": "Whole Kerala black pepper by the kg. Kochi rate updated daily.",
+            "product": "kerala-black-pepper",
+            "url": "/pages/black-pepper-wholesale",
+            "link_label": "Pepper wholesale"
+          }
+        },
+        "other_2": {
+          "type": "other",
+          "settings": {
+            "title": "White pepper",
+            "text": "Kerala white pepper for sauces, soups and spice blends.",
+            "product": "kerala-white-pepper",
+            "url": "",
+            "link_label": "Ask for a quote"
+          }
+        },
+        "other_3": {
+          "type": "other",
+          "settings": {
+            "title": "Cloves",
+            "text": "Whole cloves from Adimali, not oil-extracted.",
+            "product": "kerala-adimali-clove",
+            "url": "",
+            "link_label": "Ask for a quote"
+          }
+        },
+        "other_4": {
+          "type": "other",
+          "settings": {
+            "title": "Ceylon cinnamon",
+            "text": "True cinnamon quills, H1 grade.",
+            "product": "aromatic-true-cinnamon-ceylon",
+            "url": "",
+            "link_label": "Ask for a quote"
+          }
+        }
+      },
+      "block_order": [
+        "grade_1",
+        "grade_2",
+        "grade_3",
+        "grade_7",
+        "grade_4",
+        "grade_5",
+        "grade_8",
+        "grade_6",
+        "grade_9",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9",
+        "faq_10",
+        "other_1",
+        "other_2",
+        "other_3",
+        "other_4"
+      ],
+      "settings": {
+        "product": "cardamom-wholesale-per-kg",
+        "advance_product": "cardamom-wholesale-booking-advance",
+        "reference_grade": "8 mm",
+        "whatsapp": "918848265849",
+        "online_max_kg": 5,
+        "cod_max_kg": 10,
+        "gst_pct": 5,
+        "sample_notice": false,
+        "eyebrow": "Updated daily · Spices Board e-auctions",
+        "quality_title": "Only the best of each size",
+        "quality_text": "<p>We grade every lot ourselves and sell only the top of each size: no husk, no oil-extracted pods, nothing added. So our rate is usually ₹20 to ₹30 per kg above other sellers for the same size.</p>",
+        "delivery_rows": "2 kg|115|225|295\n5 kg|215|467|567\n10 kg|320|750|874",
+        "delivery_more": "<p>Two or more packs are charged on their total weight (for example 15 kg to Kerala is ₹470). Orders above 19 kg go by Alleppey Parcel Service or a transporter you choose; we confirm the charge when we call.</p>",
+        "band_title": "Buying for a shop, hotel or packer?",
+        "band_text": "Tell us the grade and quantity. We reply with the day's rate.",
+        "post_max_kg": 19
+      }
+    },
+    "owner_rates": {
+      "type": "pl-owner-rates",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "owner_rates"
+  ]
+}

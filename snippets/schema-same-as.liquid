@@ -1,0 +1,14 @@
+{%- liquid
+  assign links = settings.social_instagram_link | append: '|' | append: settings.social_facebook_link | append: '|' | append: settings.social_youtube_link | append: '|' | append: settings.social_twitter_link | append: '|' | append: settings.social_pinterest_link | append: '|' | append: settings.social_tiktok_link | append: '|' | append: settings.social_tumblr_link | append: '|' | append: settings.social_snapchat_link | append: '|' | append: settings.social_vimeo_link | split: '|'
+  assign same_as = ''
+  for l in links
+    if l != blank
+      assign q = l | strip | json
+      if same_as != ''
+        assign same_as = same_as | append: ','
+      endif
+      assign same_as = same_as | append: q
+    endif
+  endfor
+-%}
+{%- if same_as != '' -%}"sameAs": [{{ same_as }}],{%- endif -%}

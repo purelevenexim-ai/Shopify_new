@@ -35,7 +35,7 @@
 			"settings": {
 				"collection": "all",
 				"products_to_show": 4,
-				"title": "Explore Pureleven Kerala spices",
+				"title": "Explore Pure Leven Spices & Tea Kerala spices",
 				"heading_size": "h2",
 				"description": "<p>Keep article traffic moving into product discovery with square product cards, quick-add shortcuts, and a clear path into the full catalog.</p>",
 				"show_description": true,
@@ -66,7 +66,7 @@
 					"settings": {
 						"image": "",
 						"title": "30 years farming experience",
-						"text": "<p>Kerala-rooted farming knowledge shapes the sourcing, grading, and packing decisions behind every Pureleven product.</p>",
+						"text": "<p>Kerala-rooted farming knowledge shapes the sourcing, grading, and packing decisions behind every Pure Leven Spices & Tea product.</p>",
 						"link_label": "",
 						"link": ""
 					}
@@ -104,7 +104,7 @@
 			},
 			"block_order": ["trust_1", "trust_2", "trust_3", "trust_4"],
 			"settings": {
-				"title": "Why Pureleven",
+				"title": "Why Pure Leven Spices & Tea",
 				"heading_size": "h2",
 				"image_width": "third",
 				"image_ratio": "square",
@@ -126,7 +126,7 @@
 				"heading": {
 					"type": "heading",
 					"settings": {
-						"heading": "Join the Pureleven Spice Journal",
+						"heading": "Join the Pure Leven Spices & Tea Journal",
 						"heading_size": "h2"
 					}
 				},
@@ -170,7 +170,7 @@
 				"text": {
 					"type": "text",
 					"settings": {
-						"text": "<p>Use the guide as a decision surface, then move directly into collections, bundles, and the wider Pureleven catalog without losing shopping momentum.</p>"
+						"text": "<p>Use the guide as a decision surface, then move directly into collections, bundles, and the wider Pure Leven Spices & Tea catalog without losing shopping momentum.</p>"
 					}
 				},
 				"button": {
@@ -198,9 +198,9 @@
 	},
 	"order": [
 		"main",
+		"article_newsletter",
 		"featured_collection_article",
 		"article_trust_multicolumn",
-		"article_newsletter",
 		"article_closing_cta"
 	]
 }

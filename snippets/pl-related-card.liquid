@@ -1,0 +1,40 @@
+{%- comment -%}
+  Article card fed from plain text (used by the topical related posts, which cannot fetch articles by handle).
+  Mirrors the text-card markup of snippets/article-card.liquid, including the second card__content outside card__inner (the card CSS hides card__inner on text cards).
+  Accepts: url, title, iso, date_text, excerpt (all strings). Always a text card, same as the cards it replaces.
+{%- endcomment -%}
+{%- capture pl_card_info -%}
+  <div class="card__information">
+    <h3 class="card__heading h2">
+      <a href="{{ url }}" class="full-unstyled-link">
+        {{ title | escape }}
+      </a>
+    </h3>
+    <div class="article-card__info caption-with-letter-spacing h5">
+      <span class="circle-divider"><time datetime="{{ iso }}">{{ date_text }}</time></span>
+    </div>
+    {%- if excerpt != blank -%}
+      <p class="article-card__excerpt rte-width">{{ excerpt | escape }}</p>
+    {%- endif -%}
+    <div class="article-card__footer"></div>
+  </div>
+{%- endcapture -%}
+<div class="article-card-wrapper card-wrapper underline-links-hover">
+  <div
+    class="
+      card article-card
+      card--{{ settings.blog_card_style }}
+      article-card__image--small
+      card--text
+      {% if settings.blog_card_style == 'card' %} color-{{ settings.blog_card_color_scheme }} gradient{% endif %}
+    "
+    style="--ratio-percent: 100%;"
+  >
+    <div
+      class="card__inner {% if settings.blog_card_style == 'standard' %} color-{{ settings.blog_card_color_scheme }} gradient ratio{% endif %}"
+      style="--ratio-percent: 100%;"
+    >
+    </div>
+    <div class="card__content">{{ pl_card_info }}</div>
+  </div>
+</div>

@@ -505,45 +505,21 @@
   customElements.define('sticky-header', StickyHeader);
 {% endjavascript %}
 
+{%- unless request.page_type == 'index' -%}
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
     "@type": "Organization",
-    "name": {{ shop.name | json }},
+    "@id": {{ shop.url | append: '/#localbusiness' | json }},
+    "name": {{ shop.name | replace: '&amp;', '&' | json }},
     {% if settings.logo %}
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
-    "sameAs": [
-      {{ settings.social_twitter_link | json }},
-      {{ settings.social_facebook_link | json }},
-      {{ settings.social_pinterest_link | json }},
-      {{ settings.social_instagram_link | json }},
-      {{ settings.social_tiktok_link | json }},
-      {{ settings.social_tumblr_link | json }},
-      {{ settings.social_snapchat_link | json }},
-      {{ settings.social_youtube_link | json }},
-      {{ settings.social_vimeo_link | json }}
-    ],
-    "url": {{ request.origin | append: page.url | json }}
+    {% render 'schema-same-as' %}
+    "url": {{ shop.url | json }}
   }
 </script>
-
-{%- if request.page_type == 'index' -%}
-  {% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
-  <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "WebSite",
-      "name": {{ shop.name | json }},
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {{ potential_action_target | json }},
-        "query-input": "required name=search_term_string"
-      },
-      "url": {{ request.origin | append: page.url | json }}
-    }
-  </script>
-{%- endif -%}
+{%- endunless -%}
 
 {%- style -%}
   /* Skillies header — one row, hairline base, px only. Placed last so it wins over the older header rules. */
@@ -595,6 +571,8 @@
     margin: 0 !important; color: #FFFFFF !important; text-align: center;
     font: 400 11px/1.5 ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace !important; letter-spacing: 0.12em !important; text-transform: uppercase !important;
   }
+  /* WhatsApp app button: its bright green fails contrast with white text */
+  a.whatsapp-connect-button-link { background-color: #0F7B5B !important; }
   @media screen and (max-width: 749px) {
     .announcement-bar-minimal { padding: 8px 12px !important; }
     .announcement-bar-minimal__message { padding: 0 !important; font-size: 10px !important; letter-spacing: 0.02em !important; }

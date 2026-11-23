@@ -30,6 +30,10 @@
   assign anu_login_coupon_code = settings.anu_login_coupon_code | default: 'PL10OFF'
   assign anu_login_widget_label = settings.anu_login_widget_label | default: '10% OFF'
   assign anu_login_shopify_forms_id = settings.anu_login_shopify_forms_id | default: '987882'
+  assign anu_login_scroll_percent = settings.anu_login_scroll_percent
+  if request.page_type == 'article'
+    assign anu_login_scroll_percent = 65
+  endif
   assign anu_login_initial_stage = 'locked'
   assign anu_login_force_open = false
 %}
@@ -57,7 +61,7 @@
       <button class="anu-login__secondary-link" data-anu-login-form-cancel type="button">{{ anu_login_cancel_label }}</button>
     </div>
 
-    <p class="anu-login__consent-copy">Your number is saved securely in Shopify Forms for this offer and PureLeven updates. No password or payment details needed.</p>
+    <p class="anu-login__consent-copy">Your number is saved securely in Shopify Forms for this offer and Pure Leven Spices & Tea updates. No password or payment details needed.</p>
   </form>
 {% endcapture %}
 
@@ -69,7 +73,7 @@
     data-show-widget="{{ settings.anu_login_show_widget }}"
     data-trigger-mode="{{ settings.anu_login_trigger_mode }}"
     data-delay-seconds="{{ settings.anu_login_delay_seconds }}"
-    data-scroll-percent="{{ settings.anu_login_scroll_percent }}"
+    data-scroll-percent="{{ anu_login_scroll_percent }}"
     data-cooldown-hours="{{ settings.anu_login_cooldown_hours }}"
     data-coupon-code="{{ anu_login_coupon_code | escape }}"
     data-initial-stage="{{ anu_login_initial_stage }}"
@@ -121,7 +125,7 @@
             </div>
             <div class="anu-login__trust-item">
               <strong>Trusted Farms</strong>
-              <span>Organic farmer network</span>
+              <span>Our farm and Idukki growers</span>
             </div>
           </div>
 

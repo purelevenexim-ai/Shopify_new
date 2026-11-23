@@ -1,3 +1,5 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sk-pages.css' | asset_url | stylesheet_tag }}
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -61,7 +63,7 @@
   elsif article_topic_source contains 'ceylon' or article_topic_source contains 'cinnamon'
     assign article_media_label = 'Ceylon cinnamon visuals'
     assign article_media_primary = 'pl-prod-ceylon-hero.webp'
-    assign article_media_primary_alt = 'PureLeven true Ceylon cinnamon product pack'
+    assign article_media_primary_alt = 'Pure Leven Spices & Tea true Ceylon cinnamon product pack'
     assign article_media_primary_caption = 'Ceylon cinnamon has a lighter, gentler aroma than cassia.'
     assign article_media_secondary = 'pl-prod-ceylon-process.webp'
     assign article_media_secondary_alt = 'Ceylon cinnamon bark held in hand'
@@ -69,7 +71,7 @@
   elsif article_topic_source contains 'clove'
     assign article_media_label = 'Kerala clove visuals'
     assign article_media_primary = 'pl-prod-clove-hero.webp'
-    assign article_media_primary_alt = 'Kerala whole clove buds with PureLeven product pouch'
+    assign article_media_primary_alt = 'Kerala whole clove buds with Pure Leven Spices & Tea product pouch'
     assign article_media_primary_caption = 'Whole cloves add sweet-spicy depth in very small amounts.'
     assign article_media_secondary = 'pl-prod-clove-process.webp'
     assign article_media_secondary_alt = 'Whole cloves arranged for packing'
@@ -96,19 +98,155 @@
   assign secondary_product_handle = 'kerala-black-pepper'
   assign tertiary_product_handle = 'kerala-cardamom'
   assign primary_collection_handle = ''
-  assign hero_kicker = 'Pureleven spice journal'
-  assign hero_subtitle = 'Answer-first guidance with a faster path to farm-origin Kerala products you can buy today.'
+  assign hero_kicker = 'Pure Leven Spices & Tea journal'
+  assign hero_subtitle = ''
   assign collection_cta_label = 'Explore Kerala spices'
   assign product_cta_label = 'Shop this guide'
-  assign spotlight_text = 'Start with a best-selling Pureleven product picked to match the buying intent behind this article.'
-  assign spotlight_point_one = 'Farm-direct Kerala sourcing'
-  assign spotlight_point_two = 'Small-batch packing for stronger aroma'
-  assign spotlight_point_three = 'A fast path from reading to shopping'
+  assign spotlight_text = ''
+  assign spotlight_point_one = ''
+  assign spotlight_point_two = ''
+  assign spotlight_point_three = ''
   assign trust_point_one = '30 years of farming experience in Kerala'
   assign trust_point_two = 'Farm-origin sourcing with stronger aroma retention'
   assign trust_point_three = 'Small-batch packs designed for repeat kitchen use'
 
-  if article_topic_source contains 'best kerala spice' or article_topic_source contains 'kerala spice brands' or article_topic_source contains 'kerala spices online'
+  assign sk_words = article.title | append: ' ' | append: article.handle | downcase | replace: '-', ' ' | replace: ',', ' ' | replace: ':', ' ' | replace: '?', ' ' | replace: '(', ' ' | replace: ')', ' ' | replace: '.', ' ' | replace: "'", ' ' | replace: '’', ' ' | replace: '/', ' ' | prepend: ' ' | append: ' '
+  if blog.handle == 'wholesale-spices-guide'
+    assign sk_words = ' '
+  endif
+  assign sk_cassia = false
+  if sk_words contains ' cassia '
+    assign sk_cassia = true
+  endif
+  if sk_words contains ' ceylon '
+    assign sk_cassia = false
+  endif
+  assign sk_tea = false
+  if sk_words contains ' tea ' or sk_words contains ' chai ' or sk_words contains ' tea powder '
+    assign sk_tea = true
+  endif
+  if sk_words contains ' masala '
+    assign sk_tea = false
+  endif
+
+  if sk_words contains ' hamper ' or sk_words contains ' hampers '
+    assign primary_product_handle = 'deluxe-combo-pack-tea-coffee-honey'
+    assign secondary_product_handle = 'kerala-spice-combo-pack'
+    assign tertiary_product_handle = 'starter-trial-pack-4-varieties'
+    assign primary_collection_handle = 'combo'
+    assign hero_kicker = 'Gifting guide'
+    assign hero_subtitle = 'Ready-made Kerala hampers with tea, coffee, honey and spices.'
+    assign collection_cta_label = 'Shop gift packs'
+    assign product_cta_label = 'Shop this hamper'
+    assign spotlight_text = 'A ready-to-gift mix of Kerala tea, coffee and honey, packed in small batches.'
+    assign spotlight_point_one = 'Kerala tea, coffee and honey together'
+    assign spotlight_point_two = 'Small-batch packing for stronger aroma'
+    assign spotlight_point_three = 'A simple way to send a Kerala gift'
+  elsif sk_words contains ' honey '
+    assign primary_product_handle = 'naadan-pure-honey'
+    assign secondary_product_handle = 'deluxe-combo-pack-tea-coffee-honey'
+    assign tertiary_product_handle = 'aromatic-true-cinnamon-ceylon'
+    assign primary_collection_handle = 'honey'
+    assign hero_kicker = 'Kerala honey guide'
+    assign hero_subtitle = 'Read the facts, then try unprocessed Naadan honey from Idukki and Wayanad.'
+    assign collection_cta_label = 'Shop Kerala honey'
+    assign product_cta_label = 'Shop this honey'
+    assign spotlight_text = 'Naadan forest honey collected by traditional beekeepers, unprocessed and pure.'
+    assign spotlight_point_one = 'Raw, unprocessed forest honey'
+    assign spotlight_point_two = 'From the forests of Idukki and Wayanad'
+    assign spotlight_point_three = 'Collected by traditional beekeepers'
+  elsif sk_words contains ' gift ' or sk_words contains ' gifts ' or sk_words contains ' gifting '
+    assign primary_product_handle = 'kerala-spice-combo-pack'
+    assign secondary_product_handle = 'deluxe-combo-pack-tea-coffee-honey'
+    assign tertiary_product_handle = 'starter-trial-pack-4-varieties'
+    assign primary_collection_handle = 'combo'
+    assign hero_kicker = 'Gifting guide'
+    assign hero_subtitle = 'Ready-made Kerala gift packs with spices, tea, coffee and honey.'
+    assign collection_cta_label = 'Shop gift packs'
+    assign product_cta_label = 'Shop this gift pack'
+    assign spotlight_text = 'Kerala cardamom, black pepper and clove in one pack, a gift that also cooks well.'
+    assign spotlight_point_one = 'Cardamom, pepper and clove together'
+    assign spotlight_point_two = 'Small-batch packing for stronger aroma'
+    assign spotlight_point_three = 'A simple way to send Kerala spices'
+  elsif sk_words contains ' coffee ' or sk_words contains ' kappi ' or sk_words contains ' chicory ' or sk_words contains ' decoction ' or sk_words contains ' qahwa ' or sk_words contains ' gahwa ' or sk_words contains ' robusta ' or sk_words contains ' arabica '
+    assign primary_product_handle = 'naadan-kerala-coffee'
+    assign secondary_product_handle = 'premium-milk-tea-powder'
+    assign tertiary_product_handle = 'kerala-cardamom'
+    assign primary_collection_handle = 'tea-coffee'
+    assign hero_kicker = 'Kerala coffee guide'
+    assign hero_subtitle = 'From the cup to the bag: South Indian filter coffee from Adimali, Idukki.'
+    assign collection_cta_label = 'Shop tea & coffee'
+    assign product_cta_label = 'Shop this coffee'
+    assign spotlight_text = 'Robusta filter coffee, ground for South Indian filter preparation. The standard blend is coffee and chicory; other ratios on request.'
+    assign spotlight_point_one = 'Standard blend usually 53:47 coffee to chicory'
+    assign spotlight_point_two = 'Ground for South Indian filter'
+    assign spotlight_point_three = 'Medium roast from Adimali, Idukki'
+  elsif sk_words contains ' cardamom tea '
+    assign primary_product_handle = 'cardamom-tea'
+    assign secondary_product_handle = 'premium-milk-tea-powder'
+    assign tertiary_product_handle = 'kerala-cardamom'
+    assign primary_collection_handle = 'tea-coffee'
+    assign hero_kicker = 'Cardamom tea guide'
+    assign hero_subtitle = 'Tea blended with cardamom from our own farm, ready for the pot.'
+    assign collection_cta_label = 'Shop tea & coffee'
+    assign product_cta_label = 'Shop cardamom tea'
+    assign spotlight_text = 'Black tea blended with real green cardamom for an everyday elaichi chai.'
+    assign spotlight_point_one = 'Real green cardamom in every pack'
+    assign spotlight_point_two = 'Packs from 250g to 800g'
+    assign spotlight_point_three = 'Selected for taste and colour in the cup'
+  elsif sk_words contains ' pekoe '
+    assign primary_product_handle = 'orange-pekoe-powder'
+    assign secondary_product_handle = 'premium-black-tea-granules'
+    assign tertiary_product_handle = 'premium-milk-tea-powder'
+    assign primary_collection_handle = 'tea-coffee'
+    assign hero_kicker = 'Tea guide'
+    assign hero_subtitle = 'Choose your cup, then brew it properly.'
+    assign collection_cta_label = 'Shop tea & coffee'
+    assign product_cta_label = 'Shop this tea'
+    assign spotlight_text = 'Orange Pekoe tea for a clean cup without milk.'
+    assign spotlight_point_one = 'Works well as a milk-free cup'
+    assign spotlight_point_two = 'Selected for taste and colour'
+    assign spotlight_point_three = 'Packed fresh in small batches'
+  elsif sk_words contains ' black tea ' or sk_words contains ' sulaimani ' or sk_words contains ' ctc ' or sk_words contains ' orthodox ' or sk_words contains ' assam ' or sk_words contains ' munnar tea ' or sk_words contains ' loose tea ' or sk_words contains ' tea bags ' or sk_words contains ' tea leaves '
+    assign primary_product_handle = 'premium-black-tea-granules'
+    assign secondary_product_handle = 'premium-milk-tea-powder'
+    assign tertiary_product_handle = 'orange-pekoe-powder'
+    assign primary_collection_handle = 'tea-coffee'
+    assign hero_kicker = 'Black tea guide'
+    assign hero_subtitle = 'Pick the right grade, then brew it properly.'
+    assign collection_cta_label = 'Shop tea & coffee'
+    assign product_cta_label = 'Shop this tea'
+    assign spotlight_text = 'BOP-grade black tea granules for a brighter, cleaner cup, with or without milk.'
+    assign spotlight_point_one = 'BOP grade for a brighter, cleaner cup'
+    assign spotlight_point_two = 'Packs from 200g to 800g'
+    assign spotlight_point_three = 'Selected for taste and colour in the cup'
+  elsif sk_words contains ' star anise '
+    assign primary_product_handle = 'star-anise-chakra-phool-premium-whole-spice'
+    assign secondary_product_handle = 'kerala-spice-combo-pack'
+    assign tertiary_product_handle = 'aromatic-true-cinnamon-ceylon'
+    assign primary_collection_handle = 'spices'
+    assign hero_kicker = 'Star anise guide'
+    assign hero_subtitle = 'Whole pods for chai, biryani and slow-cooked curries.'
+    assign collection_cta_label = 'Shop Kerala spices'
+    assign product_cta_label = 'Shop star anise'
+    assign spotlight_text = 'Whole star anise pods with a sweet liquorice-style aroma.'
+    assign spotlight_point_one = 'Whole pods, not powder'
+    assign spotlight_point_two = 'Sweet liquorice-style aroma'
+    assign spotlight_point_three = 'One pod goes a long way in chai and biryani'
+  elsif sk_words contains ' white pepper '
+    assign primary_product_handle = 'kerala-white-pepper'
+    assign secondary_product_handle = 'kerala-black-pepper'
+    assign tertiary_product_handle = 'kerala-spice-combo-pack'
+    assign primary_collection_handle = 'spices'
+    assign hero_kicker = 'White pepper guide'
+    assign hero_subtitle = 'Pepper heat without dark specks, for soups, sauces and light dishes.'
+    assign collection_cta_label = 'Shop Kerala spices'
+    assign product_cta_label = 'Shop white pepper'
+    assign spotlight_text = 'Whole Kerala white peppercorns for light-coloured dishes.'
+    assign spotlight_point_one = 'Whole peppercorns, grind fresh'
+    assign spotlight_point_two = 'A clean finish in soups and sauces'
+    assign spotlight_point_three = 'Grown in Kerala'
+  elsif article_topic_source contains 'best kerala spice' or article_topic_source contains 'kerala spice brands' or article_topic_source contains 'kerala spices online' or sk_words contains ' spice brand ' or sk_words contains ' spice brands '
     assign primary_product_handle = 'kerala-spice-combo-pack'
     assign secondary_product_handle = 'kerala-black-pepper'
     assign tertiary_product_handle = 'kerala-cardamom'
@@ -117,7 +255,7 @@
     assign hero_subtitle = 'Compare origin, aroma, freshness, and farm transparency, then move directly into Kerala spices with a premium buying path.'
     assign collection_cta_label = 'Explore Kerala spices'
     assign product_cta_label = 'Shop the featured pick'
-    assign spotlight_text = 'A premium Pureleven entry point for readers comparing Kerala spice brands, with farm-connected sourcing and a curated pantry-starting mix.'
+    assign spotlight_text = 'A premium Pure Leven Spices & Tea entry point for readers comparing Kerala spice brands, with farm-connected sourcing and a curated pantry-starting mix.'
     assign spotlight_point_one = 'Farm-connected Kerala sourcing'
     assign spotlight_point_two = 'Small-batch packing for stronger aroma'
     assign spotlight_point_three = 'Built for premium everyday kitchens and gifting'
@@ -126,8 +264,8 @@
     assign trust_point_three = 'A guide-to-product journey designed for confident buying'
   elsif article_topic_source contains 'cardamom'
     assign primary_product_handle = 'kerala-cardamom'
-    assign secondary_product_handle = 'kerala-cardamom'
-    assign tertiary_product_handle = 'kerala-cardamom'
+    assign secondary_product_handle = 'kerala-spice-combo-pack'
+    assign tertiary_product_handle = 'cardamom-tea'
     assign primary_collection_handle = 'export-quality-cardamom'
     assign hero_kicker = 'Kerala cardamom guide'
     assign hero_subtitle = 'Compare pod size, aroma strength, and practical pack sizes before you buy.'
@@ -139,8 +277,8 @@
     assign spotlight_point_three = 'Available in everyday and larger packs'
   elsif article_topic_source contains 'black pepper' or article_topic_source contains 'pepper'
     assign primary_product_handle = 'kerala-black-pepper'
-    assign secondary_product_handle = 'kerala-black-pepper'
-    assign tertiary_product_handle = 'kerala-white-pepper'
+    assign secondary_product_handle = 'kerala-white-pepper'
+    assign tertiary_product_handle = 'kerala-spice-combo-pack'
     assign primary_collection_handle = 'spiciest-black-pepper'
     assign hero_kicker = 'Kerala pepper guide'
     assign hero_subtitle = 'Move from comparison content into bold, kitchen-ready Kerala pepper with a cleaner buying path.'
@@ -152,8 +290,8 @@
     assign spotlight_point_three = 'Value packs available for repeat kitchens'
   elsif article_topic_source contains 'clove'
     assign primary_product_handle = 'kerala-adimali-clove'
-    assign secondary_product_handle = 'kerala-adimali-clove'
-    assign tertiary_product_handle = 'kerala-spice-combo-pack'
+    assign secondary_product_handle = 'kerala-spice-combo-pack'
+    assign tertiary_product_handle = 'premium-cassia-cinnamon'
     assign primary_collection_handle = 'cloves'
     assign hero_kicker = 'Kerala clove guide'
     assign hero_subtitle = 'Use the article as your buying bridge from clove education to stronger aroma and better pack selection.'
@@ -163,6 +301,19 @@
     assign spotlight_point_one = 'High-aroma whole cloves'
     assign spotlight_point_two = 'Useful for chai, masala, and desserts'
     assign spotlight_point_three = 'Simple upgrade from generic kitchen stock'
+  elsif sk_cassia
+    assign primary_product_handle = 'premium-cassia-cinnamon'
+    assign secondary_product_handle = 'aromatic-true-cinnamon-ceylon'
+    assign tertiary_product_handle = 'kerala-spice-combo-pack'
+    assign primary_collection_handle = 'cinnamon'
+    assign hero_kicker = 'Cassia cinnamon guide'
+    assign hero_subtitle = 'The fuller, warmer cinnamon used in chai, masala and meat curries.'
+    assign collection_cta_label = 'Shop cinnamon'
+    assign product_cta_label = 'Shop cassia'
+    assign spotlight_text = 'Whole cassia sticks with a fuller cinnamon warmth for chai, masala and baking.'
+    assign spotlight_point_one = 'Whole sticks keep the aroma protected'
+    assign spotlight_point_two = 'Fuller warmth than Ceylon'
+    assign spotlight_point_three = 'Good for chai, masala and baking'
   elsif article_topic_source contains 'cinnamon'
     assign primary_product_handle = 'aromatic-true-cinnamon-ceylon'
     assign secondary_product_handle = 'premium-cassia-cinnamon'
@@ -188,17 +339,17 @@
     assign spotlight_text = 'A practical entry point for readers who want multiple Kerala staples in one order instead of one-off trial buying.'
     assign spotlight_point_one = 'Covers multiple everyday spice needs'
     assign spotlight_point_two = 'Useful for routine kitchen refills'
-    assign spotlight_point_three = 'Strong option for first-time Pureleven orders'
+    assign spotlight_point_three = 'Strong option for first-time Pure Leven Spices & Tea orders'
   elsif article_topic_source contains 'honey'
     assign primary_product_handle = 'kerala-spice-combo-pack'
     assign secondary_product_handle = 'aromatic-true-cinnamon-ceylon'
     assign tertiary_product_handle = 'kerala-black-pepper'
     assign primary_collection_handle = 'combo'
     assign hero_kicker = 'Everyday kitchen guide'
-    assign hero_subtitle = 'This article now carries a direct path into Pureleven kitchen best sellers so reading intent can convert without friction.'
+    assign hero_subtitle = 'This article now carries a direct path into Pure Leven Spices & Tea kitchen best sellers so reading intent can convert without friction.'
     assign collection_cta_label = 'Shop best-selling spices'
     assign product_cta_label = 'Shop this bestseller'
-    assign spotlight_text = 'Pair this guide with Pureleven best sellers for everyday kitchen buying, gifting, and repeat kitchen use.'
+    assign spotlight_text = 'Pair this guide with Pure Leven Spices & Tea best sellers for everyday kitchen buying, gifting, and repeat kitchen use.'
     assign spotlight_point_one = 'Best-seller fallback for non-spice topics'
     assign spotlight_point_two = 'Built around broad kitchen demand'
     assign spotlight_point_three = 'Clear route into the current live catalog'
@@ -214,6 +365,19 @@
     assign spotlight_point_one = 'Works across sweet and savory cooking'
     assign spotlight_point_two = 'Pairs naturally with herb-heavy recipes'
     assign spotlight_point_three = 'Useful entry point into the catalog'
+  elsif sk_tea
+    assign primary_product_handle = 'premium-milk-tea-powder'
+    assign secondary_product_handle = 'premium-black-tea-granules'
+    assign tertiary_product_handle = 'cardamom-tea'
+    assign primary_collection_handle = 'tea-coffee'
+    assign hero_kicker = 'Tea guide'
+    assign hero_subtitle = 'Everyday chai, picked well: tea powder chosen for colour, taste and aroma.'
+    assign collection_cta_label = 'Shop tea & coffee'
+    assign product_cta_label = 'Shop this tea'
+    assign spotlight_text = 'Milk tea powder selected for strong, flavourful chai with good colour and aroma.'
+    assign spotlight_point_one = 'Made for strong milk tea and kadak chai'
+    assign spotlight_point_two = 'Packs from 250g to 1kg'
+    assign spotlight_point_three = 'Selected for taste and colour in the cup'
   endif
 
   assign collection_cta_url = routes.all_products_collection_url
@@ -309,6 +473,26 @@
 
   if article_trust_point_three_metafield != blank
     assign trust_point_three = article_trust_point_three_metafield
+  endif
+
+  assign sk_fillers = 'kerala-spice-combo-pack,kerala-black-pepper,kerala-cardamom,aromatic-true-cinnamon-ceylon,premium-cassia-cinnamon' | split: ','
+  if secondary_product.handle == featured_product.handle
+    for sk_f in sk_fillers
+      assign sk_cand = all_products[sk_f]
+      if sk_cand != blank and sk_cand.handle != featured_product.handle and sk_cand.handle != tertiary_product.handle
+        assign secondary_product = sk_cand
+        break
+      endif
+    endfor
+  endif
+  if tertiary_product.handle == featured_product.handle or tertiary_product.handle == secondary_product.handle
+    for sk_f in sk_fillers
+      assign sk_cand = all_products[sk_f]
+      if sk_cand != blank and sk_cand.handle != featured_product.handle and sk_cand.handle != secondary_product.handle
+        assign tertiary_product = sk_cand
+        break
+      endif
+    endfor
   endif
 
   assign show_date = true
@@ -519,6 +703,24 @@
       font-size: 1.05rem;
     }
   }
+
+  .article-template__content .article-template__inline-product { margin: 3rem 0; }
+  .article-template__content .article-template__inline-product .article-merch-card { height: auto; text-decoration: none; }
+  .article-template__content .article-template__inline-product .article-merch-card__media img {
+    margin: 0; border: 0; border-radius: 0; box-shadow: none;
+  }
+  @media screen and (min-width: 990px) {
+    .article-template__content .article-template__inline-product { display: none; }
+  }
+  .article-template__reads-grid .article-card-wrapper .card .card__heading,
+  .article-template__reads-grid .article-card-wrapper .card .card__heading a {
+    color: rgb(var(--color-foreground)) !important;
+  }
+  .article-template__reads-grid .article-card-wrapper .card .article-card__info,
+  .article-template__reads-grid .article-card-wrapper .card .article-card__info time,
+  .article-template__reads-grid .article-card-wrapper .card .article-card__excerpt {
+    color: rgba(var(--color-foreground), 0.82) !important;
+  }
 {%- endstyle -%}
 
 <article class="article-template">
@@ -553,7 +755,7 @@
             >
           {%- else -%}
             <div class="article-template__hero-media-fallback">
-              <p class="article-template__kicker">Pureleven journal</p>
+              <p class="article-template__kicker">Pure Leven Spices & Tea journal</p>
               <h2>{{ blog.title | escape }}</h2>
               <p>From Kerala soil to your kitchen.</p>
             </div>
@@ -613,12 +815,16 @@
                 <h2 class="article-template__spotlight-title">
                   <a href="{{ featured_product.url }}">{{ featured_product.title | escape }}</a>
                 </h2>
-                <p class="article-template__spotlight-text">{{ spotlight_text }}</p>
-                <ul class="article-template__spotlight-points" role="list">
-                  <li>{{ spotlight_point_one }}</li>
-                  <li>{{ spotlight_point_two }}</li>
-                  <li>{{ spotlight_point_three }}</li>
-                </ul>
+                {%- if spotlight_text != blank -%}
+                  <p class="article-template__spotlight-text">{{ spotlight_text }}</p>
+                {%- endif -%}
+                {%- if spotlight_point_one != blank or spotlight_point_two != blank or spotlight_point_three != blank -%}
+                  <ul class="article-template__spotlight-points" role="list">
+                    {%- if spotlight_point_one != blank -%}<li>{{ spotlight_point_one }}</li>{%- endif -%}
+                    {%- if spotlight_point_two != blank -%}<li>{{ spotlight_point_two }}</li>{%- endif -%}
+                    {%- if spotlight_point_three != blank -%}<li>{{ spotlight_point_three }}</li>{%- endif -%}
+                  </ul>
+                {%- endif -%}
                 <div class="article-template__spotlight-price">{% render 'price', product: featured_product, show_compare_at_price: true %}</div>
                 <div class="article-template__spotlight-actions">
                   <a href="{{ featured_product.url }}" class="button">{{ product_cta_label }}</a>
@@ -629,7 +835,9 @@
           </aside>
         {%- endif -%}
 
-        <p class="article-template__subtitle">{{ hero_subtitle }}</p>
+        {%- if hero_subtitle != blank -%}
+          <p class="article-template__subtitle">{{ hero_subtitle }}</p>
+        {%- endif -%}
 
         {%- if article_summary != blank -%}
           <div class="article-template__summary">
@@ -641,10 +849,7 @@
         <div class="article-template__guide-overview" data-article-guide hidden>
           <div class="article-template__guide-header">
             <div class="article-template__guide-copy">
-              <p class="article-template__summary-title">Jump through the guide</p>
-              <p class="article-template__guide-description">
-                Go straight to the sections that answer the buying, comparison, or sourcing question you came for.
-              </p>
+              <p class="article-template__summary-title">On this page</p>
             </div>
             <span class="article-template__guide-meta">{{ article_read_time }} min read</span>
           </div>
@@ -662,7 +867,7 @@
         {%- endif -%}
       </div>
 
-      <div class="article-template__trust-strip" aria-label="Pureleven trust points">
+      <div class="article-template__trust-strip" aria-label="Pure Leven Spices & Tea trust points">
         <div class="article-template__trust-item">
           <span class="article-template__trust-icon">1</span>
           <span>{{ trust_point_one }}</span>
@@ -714,6 +919,12 @@
           </div>
         </aside>
       {%- endif -%}
+
+      {%- if featured_product != blank and blog.handle != 'wholesale-spices-guide' -%}
+        <div class="article-template__inline-product" data-article-inline-product data-article-handle="{{ article.handle }}" data-product-handle="{{ featured_product.handle }}" hidden>
+          {% render 'article-merch-card', card_product: featured_product, eyebrow: 'Shop this guide', action_label: product_cta_label, layout: 'horizontal' %}
+        </div>
+      {%- endif -%}
     </div>
 
     <aside class="article-template__sticky-rail" aria-label="Article product discovery">
@@ -722,9 +933,6 @@
           <p class="article-template__summary-title">In this guide</p>
           <span class="article-template__guide-meta">{{ article_read_time }} min read</span>
         </div>
-        <p>
-          Jump straight to the sections that cover comparisons, kitchen use, follow-up reading, and buying shortcuts.
-        </p>
         <div class="article-template__guide-links" data-article-guide-target="rail"></div>
       </div>
 
@@ -746,7 +954,7 @@
               {%- endif -%}
               <span class="article-template__mini-product-copy">
                 <span class="article-template__mini-product-title">{{ featured_product.title | escape }}</span>
-                <span class="article-template__mini-product-price">{{ featured_product.price | money }}</span>
+                <span class="article-template__mini-product-price">{{ featured_product.price | money_without_currency | remove: '.00' | prepend: '₹' }}</span>
               </span>
             </a>
           {%- endif -%}
@@ -766,7 +974,7 @@
               {%- endif -%}
               <span class="article-template__mini-product-copy">
                 <span class="article-template__mini-product-title">{{ secondary_product.title | escape }}</span>
-                <span class="article-template__mini-product-price">{{ secondary_product.price | money }}</span>
+                <span class="article-template__mini-product-price">{{ secondary_product.price | money_without_currency | remove: '.00' | prepend: '₹' }}</span>
               </span>
             </a>
           {%- endif -%}
@@ -780,9 +988,6 @@
     <div class="article-template__section-intro">
       <p class="article-template__kicker">Ready to buy?</p>
       <h2>Related products for this article</h2>
-      <p class="article-template__subtitle">
-        Move from reading intent to shopping intent with product cards tied to this topic and a direct route into the wider catalog.
-      </p>
     </div>
 
     <div class="article-template__merch-grid">
@@ -805,37 +1010,64 @@
 
   {%- capture related_reads_markup -%}
     {%- assign related_reads_rendered = 0 -%}
-    {%- for related_article in blog.articles -%}
-      {%- if related_article.id == article.id -%}
-        {%- continue -%}
-      {%- endif -%}
-      <div class="article-template__read-card">
-        {%- render 'article-card',
-          blog: blog,
-          article: related_article,
-          media_height: 'small',
-          media_aspect_ratio: related_article.image.aspect_ratio,
-          show_image: true,
-          show_date: true,
-          show_author: false,
-          show_excerpt: true
-        -%}
-      </div>
-      {%- assign related_reads_rendered = related_reads_rendered | plus: 1 -%}
-      {%- if related_reads_rendered == 3 -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
+    {%- assign related_map_key = article.handle -%}
+    {%- assign related_current_path = '/blogs/' | append: related_map_key -%}
+    {%- capture related_list_raw -%}{%- render 'pl-related-posts-map-a', key: related_map_key -%}{%- render 'pl-related-posts-map-b', key: related_map_key -%}{%- endcapture -%}
+    {%- assign related_list_raw = related_list_raw | strip -%}
+    {%- if related_list_raw != blank -%}
+      {%- assign related_records = related_list_raw | split: '§' -%}
+      {%- for related_record in related_records -%}
+        {%- assign rf = related_record | split: '¦' -%}
+        {%- if rf.size < 3 or rf[0] == related_current_path -%}
+          {%- continue -%}
+        {%- endif -%}
+        <div class="article-template__read-card">
+          {%- render 'pl-related-card', url: rf[0], title: rf[1], iso: rf[2], date_text: rf[3], excerpt: rf[4], image: rf[5] -%}
+        </div>
+        {%- assign related_reads_rendered = related_reads_rendered | plus: 1 -%}
+        {%- if related_reads_rendered == 3 -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    {%- if related_reads_rendered < 3 -%}
+      {%- for related_article in blog.articles -%}
+        {%- if related_article.id == article.id -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign related_article_key = '/blogs/' | append: related_article.handle -%}
+        {%- if related_list_raw contains related_article_key -%}
+          {%- continue -%}
+        {%- endif -%}
+        <div class="article-template__read-card">
+          {%- render 'article-card',
+            blog: blog,
+            article: related_article,
+            media_height: 'small',
+            media_aspect_ratio: related_article.image.aspect_ratio,
+            show_image: true,
+            show_date: true,
+            show_author: false,
+            show_excerpt: true
+          -%}
+        </div>
+        {%- assign related_reads_rendered = related_reads_rendered | plus: 1 -%}
+        {%- if related_reads_rendered == 3 -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
   {%- endcapture -%}
+
+  {%- render 'pl-tea-origin-box', handle: article.handle -%}
+
+  {%- render 'pl-author-box' -%}
 
   {%- if related_reads_markup != blank -%}
     <section class="article-template__related-reads page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <div class="article-template__section-intro">
         <p class="article-template__kicker">Suggested reads</p>
         <h2>Keep exploring this topic</h2>
-        <p class="article-template__subtitle">
-          Move from this guide into adjacent reads from the same journal, then jump back into the catalog when you are ready to buy.
-        </p>
       </div>
 
       <div class="article-template__reads-grid">
@@ -1191,7 +1423,7 @@
     },
     "publisher": {
       "@type": "Organization",
-      "name": {{ shop.name | json }}{% if settings.logo != blank %},
+      "name": {{ shop.name | replace: '&amp;', '&' | json }}{% if settings.logo != blank %},
       "logo": {
         "@type": "ImageObject",
         "url": {{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }}
@@ -1226,6 +1458,34 @@
       }
     ]
   }
+</script>
+
+<script>
+  (() => {
+    const root = document.querySelector('.article-template');
+    const card = root && root.querySelector('[data-article-inline-product]');
+    const content = root && root.querySelector('.article-template__content');
+    if (!card || !content) return;
+
+    const headings = content.querySelectorAll('h2');
+    if (headings.length < 2) return;
+
+    let anchor = headings[1];
+    while (anchor.parentElement && anchor.parentElement !== content) anchor = anchor.parentElement;
+    if (anchor.parentElement !== content) return;
+
+    anchor.before(card);
+    card.hidden = false;
+
+    card.addEventListener('click', (event) => {
+      if (event.target.closest('a') && typeof window.gtag === 'function') {
+        window.gtag('event', 'blog_inline_product_click', {
+          article_handle: card.dataset.articleHandle,
+          product_handle: card.dataset.productHandle,
+        });
+      }
+    });
+  })();
 </script>
 
 {% schema %}

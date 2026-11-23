@@ -81,8 +81,12 @@
           when 'kerala-white-pepper'
             assign resolved_page_description = 'Shop aromatic Kerala white pepper with smooth heat and earthy flavor, packed fresh for soups, sauces, marinades, and everyday seasoning.'
           when 'star-anise-chakra-phool-premium-whole-spice'
-            assign resolved_page_title = 'Premium Whole Star Anise (Chakra Phool)'
-            assign resolved_page_description = 'Shop premium whole star anise with a naturally sweet, warm aroma for biryani, masala, chai, desserts, broths, and slow-cooked dishes.'
+            if product.metafields.global.title_tag == blank
+              assign resolved_page_title = 'Premium Whole Star Anise (Chakra Phool)'
+            endif
+            if product.metafields.global.description_tag == blank
+              assign resolved_page_description = 'Shop premium whole star anise with a naturally sweet, warm aroma for biryani, masala, chai, desserts, broths, and slow-cooked dishes.'
+            endif
         endcase
       elsif request.page_type == 'article'
         if article.metafields.global.title_tag != blank
@@ -117,13 +121,13 @@
         if resolved_page_description == blank
           case blog.handle
             when 'cooking-spices'
-              assign resolved_page_description = 'Guides on Kerala spices, flavor, storage, sourcing, buying decisions, and practical kitchen use from Organic Pure Leven.'
+              assign resolved_page_description = 'Guides on Kerala spices, flavor, storage, sourcing, buying decisions, and practical kitchen use from Pure Leven Spices & Tea.'
             when 'honey'
-              assign resolved_page_description = 'Guides on honey purity, sourcing, flavor, comparisons, and everyday use from Organic Pure Leven.'
+              assign resolved_page_description = 'Guides on honey purity, sourcing, flavor, comparisons, and everyday use from Pure Leven Spices & Tea.'
             when 'herbs'
-              assign resolved_page_description = 'Practical herb guides covering flavor, benefits, storage, and kitchen use from Organic Pure Leven.'
+              assign resolved_page_description = 'Practical herb guides covering flavor, benefits, storage, and kitchen use from Pure Leven Spices & Tea.'
             else
-              assign resolved_page_description = 'Articles, ingredient guides, and buying help from Organic Pure Leven.'
+              assign resolved_page_description = 'Articles, ingredient guides, and buying help from Pure Leven Spices & Tea.'
           endcase
         endif
 
@@ -147,23 +151,27 @@
 
         case page.handle
           when 'contact'
-            assign resolved_page_description = 'Contact Pure Leven in Idukki, Kerala for product questions, order support, sourcing information, wholesale enquiries, and customer care.'
+            assign resolved_page_description = 'Contact Pure Leven Spices & Tea in Idukki, Kerala for product questions, order support, sourcing information, wholesale enquiries, and customer care.'
           when 'coffee-page', 'kerala-coffee-from-idukki'
-            assign resolved_page_description = 'Explore Pure Leven coffee from Idukki, Kerala, including naadan coffee powder, ginger coffee, cardamom coffee, and whole coffee beans.'
+            assign resolved_page_description = 'Explore Pure Leven Spices & Tea coffee from Idukki, Kerala, including naadan coffee powder, ginger coffee, cardamom coffee, and whole coffee beans.'
           when 'shipping-delivery-returns'
-            assign resolved_page_description = 'Read Pure Leven shipping, delivery, tracking, cancellation, return, replacement, and refund information for orders across India.'
+            assign resolved_page_description = 'Read Pure Leven Spices & Tea shipping, delivery, tracking, cancellation, return, replacement, and refund information for orders across India.'
           when 'about-pure-leven'
-            assign resolved_page_description = 'Learn how Pure Leven connects farming families in Idukki, Kerala with customers seeking fresh, carefully sourced spices and natural foods.'
+            assign resolved_page_description = 'Learn how Pure Leven Spices & Tea connects farming families in Idukki, Kerala with customers seeking fresh, carefully sourced spices and natural foods.'
           when 'privacy-policy'
-            assign resolved_page_description = 'Read how Pure Leven collects, uses, protects, retains, and responds to requests concerning customer and order information.'
+            assign resolved_page_description = 'Read how Pure Leven Spices & Tea collects, uses, protects, retains, and responds to requests concerning customer and order information.'
           when 'terms-of-service'
-            assign resolved_page_description = 'Review Pure Leven terms covering products, orders, pricing, shipping, returns, consumer rights, payments, and customer support.'
+            assign resolved_page_description = 'Review Pure Leven Spices & Tea terms covering products, orders, pricing, shipping, returns, consumer rights, payments, and customer support.'
         endcase
 
         if page.title == 'Coffee Page' or page.title == 'Kerala Coffee from Idukki'
-          assign resolved_page_description = 'Explore Pure Leven coffee from Idukki, Kerala, including naadan coffee powder, ginger coffee, cardamom coffee, and whole coffee beans.'
+          assign resolved_page_description = 'Explore Pure Leven Spices & Tea coffee from Idukki, Kerala, including naadan coffee powder, ginger coffee, cardamom coffee, and whole coffee beans.'
         endif
       elsif request.page_type == '404'
+        assign should_noindex = true
+      endif
+
+      if current_tags
         assign should_noindex = true
       endif
 

@@ -1,0 +1,13 @@
+{%- comment -%} Links to a coffee product only once it is published; until then shows the name (or a coming-soon card when desc is given). {%- endcomment -%}
+{%- assign p = all_products[handle] -%}
+{%- if desc != blank -%}
+  {%- if p.id != blank -%}
+    <a class="cf__route" href="{{ p.url }}"><span class="cf__route-t">{{ label }}</span><span class="cf__route-d">{{ desc }}</span></a>
+  {%- else -%}
+    <div class="cf__route is-soon"><span class="cf__route-t">{{ label }}</span><span class="cf__route-d">{{ desc }}</span><span class="cf__soon">Coming soon</span></div>
+  {%- endif -%}
+{%- elsif p.id != blank -%}
+  <a href="{{ p.url }}">{{ label }}</a>
+{%- else -%}
+  {{- label -}}
+{%- endif -%}

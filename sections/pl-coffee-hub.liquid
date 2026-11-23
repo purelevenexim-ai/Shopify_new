@@ -1,0 +1,59 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'pl-coffee.css' | asset_url | stylesheet_tag }}
+
+<section class="cf cf--white" id="cf-hub-{{ section.id }}">
+  <div class="cf__wrap">
+    <div class="cf__hero">
+      <div class="cf__head">
+        <span class="cf__eyebrow">{{ section.settings.eyebrow }}</span>
+        <h1 class="cf__h1">{{ section.settings.heading }}</h1>
+        <div class="cf__lede">{{ section.settings.lede }}</div>
+      </div>
+      {% render 'coffee-photo', name: 'pl-coffee-hub-hands', w: 1600, h: 1067, alt: 'A hand full of ripe red Robusta coffee cherries, freshly picked on our plot in Idukki', caption: 'Picked this season on our plot in Idukki', eager: true %}
+    </div>
+
+    <div class="cf__head">
+      <span class="cf__eyebrow">How do you drink your coffee?</span>
+      <div class="cf__lanes">
+        <div class="cf__lane">
+          <span class="cf__route-k">With milk</span>
+          {% render 'coffee-plink', handle: 'robusta-filter-coffee-powder', label: 'Robusta Filter Coffee Powder', desc: 'Strong, dark Kerala kaapi. Hand-picked Robusta from Idukki and Wayanad.' %}
+          {% render 'coffee-plink', handle: 'arabica-filter-coffee-powder', label: 'Arabica Filter Coffee Powder', desc: 'Smoother and more aromatic. Arabica from Chikmagalur.' %}
+          {% render 'coffee-plink', handle: 'special-coffee-blend-kerala', label: 'Special Coffee Blend from Kerala', desc: 'Our house blend of Arabica and Robusta. More coffee flavour.' %}
+        </div>
+        <div class="cf__lane">
+          <span class="cf__route-k">Black</span>
+          {% render 'coffee-plink', handle: 'pure-robusta-coffee-powder', label: 'Pure Robusta Coffee Powder', desc: '100% Robusta, no chicory. Bold, about twice the caffeine.' %}
+          {% render 'coffee-plink', handle: 'pure-arabica-coffee-powder', label: 'Pure Arabica Coffee Powder', desc: '100% Arabica, no chicory. Smooth, less bitter.' %}
+        </div>
+        <div class="cf__lane">
+          <span class="cf__route-k">Grind your own</span>
+          {% render 'coffee-plink', handle: 'robusta-coffee-beans', label: 'Robusta Coffee Beans', desc: 'Whole medium roast from Idukki and Wayanad.' %}
+          {% render 'coffee-plink', handle: 'arabica-coffee-beans', label: 'Arabica Coffee Beans', desc: 'Whole medium roast from Chikmagalur.' %}
+        </div>
+      </div>
+    </div>
+    {%- if collection.products_count == 0 -%}
+      {%- assign naadan = all_products['naadan-kerala-coffee'] -%}
+      <div class="cf__note">
+        <p>Our coffee packs go on sale soon. Want some before then? Message us and we'll pack it for you{% if naadan.id != blank %}, or try our <a href="{{ naadan.url }}">{{ naadan.title | escape }}</a>{% endif %}.</p>
+        <a class="cf__btn" href="https://wa.me/918848265849?text=Hi%2C%20I%20would%20like%20to%20order%20coffee." target="_blank" rel="noopener">Order on WhatsApp</a>
+      </div>
+      <style>[id$="__product-grid"]{display:none}</style>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Coffee hub intro",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Pure Leven coffee · medium roast" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Kerala filter coffee & coffee beans" },
+    { "type": "richtext", "id": "lede", "label": "Intro", "default": "<p>Pure Leven sells South Indian filter coffee powder, pure coffee powder and whole coffee beans, all medium roast. Our Robusta comes from Idukki and Wayanad in Kerala and our Arabica from Chikmagalur in Karnataka. Every coffee comes in 100 g and 250 g packs with a shelf life of 3 months from packing.</p>" }
+  ],
+  "presets": [{ "name": "Coffee hub intro" }]
+}
+{% endschema %}

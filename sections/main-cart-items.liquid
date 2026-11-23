@@ -10,7 +10,7 @@
     Totals are worked out once here and passed down, so the delivery panel, the
     summary and the checkout control can never disagree with each other.
     cmp_p is the compare-at saving; disc_p is any order-level discount.
-    Delivery values come from Theme settings > PureLeven cart and checkout, the
+    Delivery values come from Theme settings > Pure Leven Spices & Tea cart and checkout, the
     same place the checkout page reads them, so the two pages quote one number.
 
     Free delivery also comes from an item count (free_shipping_min_items). That
@@ -103,7 +103,7 @@
 
         <div class="plb-main">
           <header class="plb-head">
-            <p class="plb-lbl">PureLeven / Cart</p>
+            <p class="plb-lbl">Pure Leven Spices & Tea / Cart</p>
             <h1>Your cart.</h1>
             <div class="plb-head__row">
               <p class="plb-sub">{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %} &middot; packed by hand in Idukki</p>
@@ -158,7 +158,7 @@
 
     <div class="page-width">
       <div class="plb-empty">
-        <p class="plb-lbl">PureLeven / Cart</p>
+        <p class="plb-lbl">Pure Leven Spices & Tea / Cart</p>
         <h1>{{ 'sections.cart.empty' | t }}</h1>
         <p>Fresh from Idukki. Start with the pepper or the cardamom.</p>
         <a href="{{ routes.all_products_collection_url }}" class="plb-cta plb-cta--solo">{{ 'general.continue_shopping' | t }}</a>

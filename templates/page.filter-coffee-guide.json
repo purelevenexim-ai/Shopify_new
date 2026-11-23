@@ -1,0 +1,95 @@
+{
+  "sections": {
+    "guide": {
+      "type": "pl-filter-coffee-guide",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "What is filter coffee decoction?",
+            "answer": "<p>Decoction is the strong coffee concentrate that drips through a South Indian coffee filter. You mix it with hot milk, usually 1 part decoction to 3 or 4 parts milk, to make filter coffee.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the right ratio of decoction to milk?",
+            "answer": "<p>Start with 1 part decoction to 3 parts hot milk for a strong cup and 1 to 4 for a milder one. That is about 2 to 4 tablespoons of decoction in a 150 ml tumbler.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "How much coffee powder do I need for 4 cups?",
+            "answer": "<p>For 4 regular cups, use about 4 level tablespoons (around 27 g) of powder with about 215 ml of water. The calculator above works it out for 1 to 6 cups.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does filter coffee take to drip?",
+            "answer": "<p>About 10 to 20 minutes in a standard steel filter. If it takes much longer, the powder is packed too hard or ground too fine; press the disc more lightly next time.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Should the water be boiling?",
+            "answer": "<p>Bring it to the boil, then let it rest about 30 seconds so it is around 90 to 95 °C. Some cooks pour straight off the boil; the short rest gives a smoother decoction.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I make filter coffee without a filter?",
+            "answer": "<p>Yes. Take boiled water off the heat, stir in 1 level tablespoon of powder for every 60 ml, cover for 5 minutes, then strain twice through a fine cloth or tea strainer. Or simmer the powder in a pan with water and milk, North Indian style, and strain.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I make beaten coffee with filter coffee powder?",
+            "answer": "<p>No. Whipped beaten coffee needs instant coffee, which dissolves and foams. Ground filter coffee does not dissolve, so brew it first and froth the milk instead.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I make Vietnamese coffee with Indian coffee?",
+            "answer": "<p>Put 1 to 2 tablespoons of sweetened condensed milk in a glass. Drip 10 to 14 g of Robusta through a phin or the top of a South Indian filter onto it for 4 to 5 minutes, stir, and drink hot or over ice.</p>"
+          }
+        },
+        "faq_9": {
+          "type": "faq",
+          "settings": {
+            "question": "Why is chicory added to filter coffee?",
+            "answer": "<p>Chicory is a roasted root with no caffeine. It slows the drip and gives a thicker, darker decoction with a slightly bitter edge that holds up to milk. In India a coffee and chicory blend must contain at least 51% coffee, with both percentages printed on the pack.</p>"
+          }
+        },
+        "faq_10": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does decoction keep?",
+            "answer": "<p>It tastes best fresh. If you keep some, cover it, refrigerate it and use it within a day. Warm it with the milk rather than boiling it again.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9",
+        "faq_10"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "guide"
+  ]
+}

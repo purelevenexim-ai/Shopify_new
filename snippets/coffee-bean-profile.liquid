@@ -1,0 +1,40 @@
+{%- comment -%} bean: robusta | arabica | blend {%- endcomment -%}
+{%- capture robusta -%}
+  <dt>Species</dt><dd>Coffea canephora</dd>
+  <dt>Ours grows in</dt><dd>Idukki and Wayanad, Kerala</dd>
+  <dt>Where it grows</dt><dd>Wayanad grows coffee at about 700 to 2,100 m, mostly under shade beside pepper and cardamom. Robusta is over 95% of the district's coffee.</dd>
+  <dt>Harvest</dt><dd>About December to February</dd>
+  <dt>Caffeine</dt><dd>About 2.2 to 2.7% of the bean, roughly twice Arabica</dd>
+  <dt>Taste</dt><dd>Full body and low acidity, with bitter-chocolate, malty and nutty notes</dd>
+  <dt>Why it tastes bolder</dt><dd>Less sugar (about 3 to 7%) and oil (about 10 to 11.5%) than Arabica, and more chlorogenic acids (about 7 to 10%), which add bitterness</dd>
+  <dt>Best for</dt><dd>Strong milk coffee, strong black coffee, moka pot, Vietnamese-style coffee and espresso blends</dd>
+{%- endcapture -%}
+{%- capture arabica -%}
+  <dt>Species</dt><dd>Coffea arabica</dd>
+  <dt>Ours grows in</dt><dd>Chikmagalur, Karnataka</dd>
+  <dt>Where it grows</dt><dd>Arabica needs higher, cooler hills than Robusta, typically about 600 to 2,200 m. Indian coffee began in the Chikmagalur hills, where Baba Budan is said to have planted seven coffee seeds in the 17th century.</dd>
+  <dt>Caffeine</dt><dd>About 1.2 to 1.5% of the bean, roughly half of Robusta</dd>
+  <dt>Taste</dt><dd>Smoother and sweeter, more aroma and a little acidity; often described with chocolate, caramel and nutty notes</dd>
+  <dt>Why it tastes smoother</dt><dd>Slow ripening in the hills builds more sugar (about 6 to 9%) and oil (about 15 to 17%), with fewer bitter chlorogenic acids (about 5.5 to 8%)</dd>
+  <dt>Best for</dt><dd>Black coffee, pour-over, French press, Turkish coffee and a softer milk coffee</dd>
+{%- endcapture -%}
+
+<div class="cf__card">
+  <span class="cf__eyebrow">About the bean</span>
+  {%- case bean -%}
+    {%- when 'robusta' -%}
+      <h3 class="cf__h3">Robusta from Kerala</h3>
+      <dl class="cf__spec">{{ robusta }}</dl>
+    {%- when 'arabica' -%}
+      <h3 class="cf__h3">Arabica from Chikmagalur</h3>
+      <dl class="cf__spec">{{ arabica }}</dl>
+    {%- else -%}
+      <h3 class="cf__h3">Two beans, one blend</h3>
+      <p><b>Arabica</b> from Chikmagalur brings aroma and sweetness. <b>Robusta</b> from Idukki and Wayanad brings body, strength and about twice the caffeine. Together they make up 60% of the pack.</p>
+      <dl class="cf__spec">
+        <dt>Arabica</dt><dd>Chikmagalur, Karnataka · about 1.2 to 1.5% caffeine · smoother, sweeter</dd>
+        <dt>Robusta</dt><dd>Idukki and Wayanad, Kerala · about 2.2 to 2.7% caffeine · full body, bitter-chocolate</dd>
+      </dl>
+  {%- endcase -%}
+  <p class="cf__muted">Bean figures are typical published ranges for each species, not lab tests of our lots.</p>
+</div>

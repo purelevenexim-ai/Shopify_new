@@ -86,7 +86,7 @@
       },
       "block_order": ["trust_1", "trust_2", "trust_3", "trust_4"],
       "settings": {
-        "title": "Why readers buy from Pureleven",
+        "title": "Why readers buy from Pure Leven Spices & Tea",
         "heading_size": "h2",
         "image_width": "third",
         "image_ratio": "square",
@@ -108,7 +108,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Join the Pureleven Spice Journal",
+            "heading": "Join the Pure Leven Spices & Tea Journal",
             "heading_size": "h2"
           }
         },

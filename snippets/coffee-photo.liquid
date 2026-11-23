@@ -1,0 +1,10 @@
+{%- comment -%} name: asset base name (file name.webp + name-sm.webp), w/h: full size, alt, caption (optional), eager (optional), sizes (optional) {%- endcomment -%}
+{%- assign half_w = w | divided_by: 2 -%}
+<figure class="cf__photo">
+  <img src="{{ name | append: '.webp' | asset_url }}"
+       srcset="{{ name | append: '-sm.webp' | asset_url }} {{ half_w }}w, {{ name | append: '.webp' | asset_url }} {{ w }}w"
+       sizes="{{ sizes | default: '(min-width: 900px) 50vw, 100vw' }}"
+       width="{{ w }}" height="{{ h }}" alt="{{ alt | escape }}"
+       {% if eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+  {%- if caption != blank -%}<figcaption>{{ caption }}</figcaption>{%- endif -%}
+</figure>

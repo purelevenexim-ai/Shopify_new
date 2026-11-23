@@ -1,0 +1,27 @@
+{%- comment -%} group: milk | black | all (default). current: handle of the product being viewed. {%- endcomment -%}
+{%- liquid
+  assign g = group | default: 'all'
+  assign rows = 'robusta-filter-coffee-powder|Robusta Filter Coffee Powder|Robusta|53:47|53|Ground, for the steel filter|Strong, dark milk coffee|milk;arabica-filter-coffee-powder|Arabica Filter Coffee Powder|Arabica|53:47|53|Ground, for the steel filter|Smoother milk coffee|milk;special-coffee-blend-kerala|Special Coffee Blend from Kerala|Arabica + Robusta|60:40|60|Ground, for the steel filter|Milk coffee with more coffee flavour|milk;pure-robusta-coffee-powder|Pure Robusta Coffee Powder|Robusta|100%|100|Ground|Bold black coffee|black;pure-arabica-coffee-powder|Pure Arabica Coffee Powder|Arabica|100%|100|Ground|Smooth black coffee|black;robusta-coffee-beans|Robusta Coffee Beans|Robusta|100%|100|Whole bean|Grind at home, bold|black;arabica-coffee-beans|Arabica Coffee Beans|Arabica|100%|100|Whole bean|Grind at home, smooth|black' | split: ';'
+-%}
+<div class="cf__table-wrap">
+  <table class="cf__table">
+    <thead>
+      <tr><th scope="col">Coffee</th><th scope="col">Bean</th><th scope="col">Blend</th><th scope="col">Form</th><th scope="col">Cup</th></tr>
+    </thead>
+    <tbody>
+      {%- for row in rows -%}
+        {%- assign c = row | split: '|' -%}
+        {%- if g == 'all' or g == c[7] -%}
+          <tr{% if current == c[0] %} class="is-current"{% endif %}>
+            <td>{% render 'coffee-plink', handle: c[0], label: c[1] %}</td>
+            <td>{{ c[2] }}</td>
+            <td>{{ c[3] }}<div class="cf__ratio" aria-hidden="true"><span style="width:{{ c[4] }}%"></span></div></td>
+            <td>{{ c[5] }}</td>
+            <td>{{ c[6] }}</td>
+          </tr>
+        {%- endif -%}
+      {%- endfor -%}
+    </tbody>
+  </table>
+</div>
+<p class="cf__muted">All medium roast, in 100 g and 250 g packs. Robusta from Idukki and Wayanad, Kerala; Arabica from Chikmagalur, Karnataka.</p>

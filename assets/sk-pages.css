@@ -1,0 +1,214 @@
+/* Skillies layer for content pages: pages (wholesale, contact, policies, our story),
+   blog, article, search, 404 and customer account pages. Needs tc-design-tokens.css.
+   px only (theme root is 10px). Section style blocks use !important, so this does too. */
+
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']),
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent {
+  background: var(--sk-bg) !important;
+}
+
+/* ---------- type ---------- */
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(h1, .h0, .main-page-title, .title--primary, .article-template__title):not(.tc-product-card *) {
+  margin-bottom: 16px;
+  color: var(--sk-fg) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: clamp(38px, 5.6vw, 76px) !important;
+  font-weight: 500 !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.055em !important;
+  text-transform: none !important;
+}
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(h2, .h1, .h2):not(.tc-product-card *):not(.visually-hidden) {
+  color: var(--sk-fg) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: clamp(28px, 3.4vw, 44px) !important;
+  font-weight: 500 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.045em !important;
+  text-transform: none !important;
+}
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(h3, .h3, .card__heading):not(.tc-product-card *) {
+  color: var(--sk-fg) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: 19px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: none !important;
+}
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(h4, h5, .h4, .h5):not(.tc-product-card *) {
+  color: var(--sk-fg) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+}
+
+/* mono labels: kickers, breadcrumbs, dates, meta */
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(
+  .sk-page__eyebrow, .main-blog__kicker, .article-template__kicker, .main-blog__breadcrumbs, .article-template__breadcrumbs,
+  .article-template__meta, .article-template__rail-header, .article-template__guide-meta, .caption-with-letter-spacing,
+  .article-card__footer, .card__information .caption, .article-template__summary-title
+), html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.main-blog__breadcrumbs, .article-template__breadcrumbs, .article-template__meta) * {
+  opacity: 1 !important;
+  color: var(--sk-muted) !important;
+  font: 400 11px/1.5 var(--sk-mono) !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.main-blog__kicker, .article-template__kicker, .sk-page__eyebrow) i { font-style: normal; color: var(--sk-acc); }
+html body:is(.template-blog, .template-article) #MainContent :is(.main-blog__breadcrumbs, .article-template__breadcrumbs) a { text-decoration: none !important; }
+html body:is(.template-blog, .template-article) #MainContent :is(.main-blog__breadcrumbs, .article-template__breadcrumbs) a:hover { color: var(--sk-acc) !important; }
+
+/* long-form text */
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.rte, .article-template__content, .main-blog__intro, .main-blog__marketing-copy, .article-template__subtitle, .article-template__summary-text) :is(p, li):not(.tc-product-card *),
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.main-blog__intro, .article-template__subtitle, .article-template__summary-text) {
+  color: var(--sk-fg2) !important;
+  font-family: var(--sk-sans) !important;
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+  letter-spacing: -0.005em !important;
+}
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.rte, .article-template__content) :is(h2, h3) { margin: 1.6em 0 0.5em; }
+html body:is(.template-page, .template-blog, .template-article, .template-search, [class*='template-customers']) #MainContent :is(.rte, .article-template__content) a:not(.button):not([class*='btn']) {
+  color: var(--sk-acc) !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 3px !important;
+}
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.rte, .article-template__content) a:not(.button):hover { color: var(--sk-acc-hover) !important; }
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.rte, .article-template__content) strong { color: var(--sk-fg); font-weight: 600; }
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.rte, .article-template__content) blockquote {
+  margin: 24px 0; padding: 4px 0 4px 18px; border-left: 2px solid var(--sk-acc); color: var(--sk-fg); font-size: 18px; font-style: normal;
+}
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.rte, .article-template__content) img { border-radius: 3px; }
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.rte, .article-template__content) hr { margin: 32px 0; border: 0; border-top: 1px solid var(--sk-line); }
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.rte, .article-template__content) table {
+  display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse;
+  border: 1px solid var(--sk-line); border-radius: 3px; background: #fff; font-size: 14px;
+}
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.rte, .article-template__content) :is(th, td) {
+  padding: 10px 12px; border: 0; border-bottom: 1px solid var(--sk-line); text-align: left; vertical-align: top; color: var(--sk-fg2);
+}
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.rte, .article-template__content) th {
+  background: var(--sk-bg2); color: var(--sk-fg) !important; font: 600 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.08em !important; text-transform: uppercase;
+}
+
+/* ---------- buttons ---------- */
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.button, .main-blog__btn, .shopify-challenge__button):not(.tc-atc-btn):not(.sk-btn) {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 14px 24px !important;
+  background: var(--sk-dark) !important; background-image: none !important;
+  border: 1px solid var(--sk-dark) !important; border-radius: 2px !important; box-shadow: none !important;
+  color: #fff !important; text-decoration: none !important;
+  font-family: var(--sk-sans) !important; font-size: 13px !important; font-weight: 600 !important; letter-spacing: -0.01em !important; text-transform: none !important;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.25s var(--sk-ease);
+}
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.button, .main-blog__btn)::before,
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.button, .main-blog__btn)::after { box-shadow: none !important; display: none !important; }
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.button, .main-blog__btn):not(.tc-atc-btn):not(.sk-btn):hover {
+  background: var(--sk-acc) !important; border-color: var(--sk-acc) !important; transform: translateY(-1px);
+}
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.button--secondary, .main-blog__btn--secondary):not(.tc-atc-btn) {
+  background: transparent !important; color: var(--sk-fg) !important;
+}
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.button--secondary, .main-blog__btn--secondary):not(.tc-atc-btn):hover {
+  background: var(--sk-dark) !important; border-color: var(--sk-dark) !important; color: #fff !important;
+}
+
+/* ---------- panels, cards, chips ---------- */
+html body:is(.template-page, .template-blog, .template-article, .template-search) #MainContent :is(
+  .main-blog__conversion-shell, .article-template__summary, .article-template__rail-card, .article-template__spotlight,
+  .article-template__read-card, .article-template__mini-product, .article-template__hero-media-card, .article-template__guide-overview,
+  .article-card-wrapper .card, .multicolumn-card, .newsletter__wrapper, .contact form, .article-template__comments
+) {
+  background: #fff !important; background-image: none !important;
+  border: 1px solid var(--sk-line) !important; border-radius: 3px !important; box-shadow: none !important;
+}
+html body:is(.template-blog, .template-article) #MainContent :is(.main-blog__conversion-shell, .article-template__summary, .article-template__spotlight, .article-template__guide-overview) { padding: clamp(20px, 3vw, 36px) !important; }
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.main-blog__trust-item, .article-template__trust-item, .article-template__tag-list a) {
+  display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px !important;
+  background: #fff !important; border: 1px solid var(--sk-line) !important; border-radius: 2px !important; box-shadow: none !important;
+  color: var(--sk-fg2) !important; font: 400 11px/1.4 var(--sk-mono) !important; letter-spacing: 0.06em !important; text-transform: uppercase !important; text-decoration: none !important;
+}
+html body:is(.template-page, .template-blog, .template-article) #MainContent :is(.card__media, .article-card__image-wrapper, .article-template__hero-media, .article-template__read-card img, .article-template__mini-product-media) {
+  border-radius: 0 !important; box-shadow: none !important;
+}
+html body:is(.template-blog, .template-article) #MainContent .article-card-wrapper .card { overflow: hidden; }
+html body:is(.template-blog, .template-article) #MainContent .article-card .card__content { padding: 16px 16px 18px !important; }
+html body:is(.template-blog, .template-article) #MainContent .article-card__excerpt { opacity: 1 !important; color: var(--sk-muted) !important; font-size: 14px !important; line-height: 1.55 !important; }
+html body:is(.template-blog, .template-article) #MainContent .article-card-wrapper:hover .card { border-color: #BFC3CC !important; }
+html body:is(.template-blog, .template-article) #MainContent .article-card .card__heading a { color: var(--sk-fg) !important; text-decoration: none !important; }
+html body:is(.template-blog, .template-article) #MainContent .article-card .card__heading a:hover { color: var(--sk-acc) !important; }
+
+/* article hero: drop the big "PureLeven Journal" placeholder when there is no cover image */
+html body.template-article #MainContent .article-template__hero-media:has(.article-template__hero-media-fallback) { display: none !important; }
+html body.template-article #MainContent .article-template__hero-shell { background: none !important; border: 0 !important; box-shadow: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+html body.template-article .article-template__mobile-bar {
+  background: #fff !important; border-top: 1px solid var(--sk-line) !important; border-radius: 0 !important; box-shadow: none !important;
+}
+
+html body.template-article #MainContent :is(.article-merch-card__eyebrow, .article-merch-card__price--compare) { opacity: 1 !important; color: var(--sk-muted) !important; }
+html body.template-article #MainContent :is(.article-template__spotlight-media, .article-template__spotlight-media img, .article-merch-card img, .article-merch-card__media) { border-radius: 2px !important; }
+
+/* ---------- forms ---------- */
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.field__input, .select__select, .text-area, .search__input) {
+  min-height: 52px; background: #fff !important; border: 1px solid var(--sk-line2) !important; border-radius: 2px !important; box-shadow: none !important;
+  color: var(--sk-fg) !important; font-family: var(--sk-sans) !important; font-size: 15px !important; letter-spacing: 0 !important;
+}
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.field, .select)::before,
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.field, .select)::after { display: none !important; }
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent :is(.field__input, .text-area, .search__input):focus {
+  outline: none !important; border-color: var(--sk-acc) !important; box-shadow: 0 0 0 1px var(--sk-acc) !important;
+}
+html body:is(.template-page, .template-blog, .template-article, .template-search, .template-404, [class*='template-customers']) #MainContent .field__label {
+  color: var(--sk-muted) !important; font-family: var(--sk-sans) !important; font-size: 14px !important; letter-spacing: 0 !important;
+}
+html body.template-page #MainContent .contact form { padding: clamp(20px, 3vw, 32px) !important; }
+html body.template-page #MainContent .contact .field { margin-bottom: 12px; }
+html body.template-page #MainContent .contact__button .button { width: 100%; }
+
+/* ---------- page shell ---------- */
+.sk-page { max-width: 820px; margin: 0 auto; padding-left: var(--sk-gutter) !important; padding-right: var(--sk-gutter) !important; }
+.sk-page__eyebrow { margin: 0 0 12px !important; }
+.sk-page .rte { margin-top: 20px; }
+html body.template-page #MainContent .contact.page-width { max-width: 820px; padding-left: var(--sk-gutter) !important; padding-right: var(--sk-gutter) !important; }
+
+html body.template-page .sk-page .rte img { border-radius: 3px !important; }
+html body.template-page #MainContent .sk-page .rte h2:not(.visually-hidden) {
+  margin: 28px 0 10px !important; padding-top: 22px; border-top: 1px solid var(--sk-line);
+  font-size: clamp(22px, 2.6vw, 32px) !important; letter-spacing: -0.04em !important;
+}
+html body.template-page #MainContent .sk-page .rte > h2:first-child { margin-top: 8px !important; }
+/* a list made only of links reads as a hairline index */
+html body.template-page .sk-page .rte ul:has(> li > a:only-child) { margin: 12px 0 28px; padding: 0; border-top: 1px solid var(--sk-line); list-style: none; }
+html body.template-page .sk-page .rte ul:has(> li > a:only-child) > li { margin: 0; padding: 0; border-bottom: 1px solid var(--sk-line); list-style: none; }
+html body.template-page .sk-page .rte ul:has(> li > a:only-child) > li::marker { content: ''; }
+html body.template-page .sk-page .rte ul:has(> li > a:only-child) > li > a {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 2px;
+  color: var(--sk-fg) !important; font-weight: 500; text-decoration: none !important; transition: color 0.2s, padding 0.25s var(--sk-ease);
+}
+html body.template-page .sk-page .rte ul:has(> li > a:only-child) > li > a::after { content: '\2192'; color: var(--sk-acc); }
+html body.template-page .sk-page .rte ul:has(> li > a:only-child) > li > a:hover { padding-left: 6px; color: var(--sk-acc) !important; }
+
+/* multicolumn trust block on blog/article: compact */
+html body:is(.template-blog, .template-article) #MainContent .multicolumn-card { padding: 18px !important; }
+html body:is(.template-blog, .template-article) #MainContent .multicolumn-card__info { padding: 0 !important; }
+html body:is(.template-blog, .template-article) #MainContent .multicolumn-card :is(p, .rte p) { color: var(--sk-muted) !important; font-size: 14px !important; line-height: 1.55 !important; }
+
+html body.template-search #MainContent .badge {
+  background: var(--sk-acc-soft) !important; border: 1px solid var(--sk-line) !important; border-radius: 2px !important; color: var(--sk-acc) !important;
+  font: 600 10.5px/1.4 var(--sk-mono) !important; letter-spacing: 0.06em !important; text-transform: uppercase;
+}
+html body.template-404 #MainContent .template-404__links-title {
+  opacity: 1 !important; color: var(--sk-muted) !important; font: 400 11px/1.5 var(--sk-mono) !important; letter-spacing: 0.1em !important; text-transform: uppercase !important;
+}
+
+/* pagination */
+html body:is(.template-blog, .template-search) #MainContent .pagination__item { border-radius: 2px !important; font-family: var(--sk-mono) !important; }
+html body:is(.template-blog, .template-search) #MainContent .pagination__item--current { background: var(--sk-dark) !important; color: #fff !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  #MainContent .button, #MainContent .main-blog__btn { transition: none !important; }
+}

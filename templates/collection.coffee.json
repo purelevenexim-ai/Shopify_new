@@ -1,0 +1,144 @@
+{
+  "sections": {
+    "hub": {
+      "type": "pl-coffee-hub",
+      "settings": {}
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 36,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": false,
+        "filter_type": "horizontal",
+        "enable_sorting": false,
+        "padding_top": 12,
+        "padding_bottom": 36
+      }
+    },
+    "info": {
+      "type": "pl-coffee-info",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Which coffee powder is best for filter coffee?",
+            "answer": "<p>For milk coffee, use a South Indian filter coffee powder: our Robusta Filter Coffee Powder for a strong, dark cup, our Arabica Filter Coffee Powder for a smoother one, or the Special Coffee Blend from Kerala for more coffee flavour. For black coffee, use our 100% Pure Arabica or Pure Robusta Coffee Powder.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Arabica or Robusta: which is better?",
+            "answer": "<p>Robusta gives a bold, full-bodied cup with about twice the caffeine and stays strong under plenty of milk. Arabica is smoother and sweeter, with more aroma and less bitterness. We sell each on its own as filter coffee powder, pure coffee powder and whole beans, and mix both in the Special Coffee Blend.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Is filter coffee powder the same as instant coffee?",
+            "answer": "<p>No. Filter coffee powder is ground roasted coffee that has to be brewed first: hot water drips through it in a steel filter to make a decoction, which you mix with milk. Instant coffee dissolves straight into water or milk. All our coffee is filter coffee; we do not sell instant.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use filter coffee powder for black coffee?",
+            "answer": "<p>Our filter coffee powders are made for milk coffee and taste flat when drunk black. For black coffee, choose our Pure Arabica or Pure Robusta Coffee Powder, which are 100% coffee.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Where does your coffee come from?",
+            "answer": "<p>Our Robusta comes from Idukki and Wayanad in Kerala and our Arabica from Chikmagalur in Karnataka. All of it is roasted medium, then blended and packed in Kerala.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does coffee powder stay fresh?",
+            "answer": "<p>Our coffee has a shelf life of 3 months from the packing date. After opening, close the pouch tightly and keep it away from heat, light and moisture. Whole beans hold their aroma longer than ground coffee, so grind only what you need.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you make custom coffee blends?",
+            "answer": "<p>Yes. We blend to your own coffee and chicory ratio or bean mix on request. Message us on WhatsApp with what you would like.</p>"
+          }
+        },
+        "faq_9": {
+          "type": "faq",
+          "settings": {
+            "question": "How did coffee come to Kerala?",
+            "answer": "<p>Coffee reached India in the 1600s, when Baba Budan is said to have smuggled seven seeds from Yemen to Chikmagalur. In Kerala the East India Company planted coffee at Anjarakandy near Thalassery around 1800, and in 1825 Captain Bevan took plants up to Mananthavady in Wayanad. After leaf rust destroyed the Arabica estates from 1869, rust-tolerant Robusta took over, and it is still Kerala's main coffee.</p>"
+          }
+        },
+        "faq_10": {
+          "type": "faq",
+          "settings": {
+            "question": "Why is Wayanad famous for coffee?",
+            "answer": "<p>Wayanad grows most of Kerala's coffee: over 67,000 hectares, about 90% of the state's coffee area, almost all Robusta, farmed by around 60,000 small growers. Wayanad Robusta has had a Geographical Indication tag since 2019.</p>"
+          }
+        },
+        "faq_11": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Kerala coffee Arabica or Robusta?",
+            "answer": "<p>Almost all Robusta. Kerala's warm, wet, mid-height hills suit Robusta, and it is over 95% of Wayanad's coffee. Arabica in India grows mainly in the higher hills of Karnataka, such as Chikmagalur and Coorg.</p>"
+          }
+        },
+        "faq_12": {
+          "type": "faq",
+          "settings": {
+            "question": "Is your coffee organic?",
+            "answer": "<p>It is not certified organic, so we do not label it organic. Our own Robusta is grown without chemical pesticides or chemical fertilisers, picked by hand and sun-dried.</p>"
+          }
+        },
+        "faq_13": {
+          "type": "faq",
+          "settings": {
+            "question": "What is Monsooned Malabar coffee?",
+            "answer": "<p>A GI-tagged Indian coffee from the Malabar coast. Natural beans are left in open warehouses through the southwest monsoon until they swell, turn pale and lose acidity, recreating the taste coffee once picked up on long sea voyages to Europe.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_9",
+        "faq_10",
+        "faq_11",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_12",
+        "faq_13"
+      ],
+      "settings": {}
+    },
+    "story": {
+      "type": "pl-coffee-story",
+      "settings": {
+        "show_photo_note": false
+      }
+    }
+  },
+  "order": [
+    "hub",
+    "product-grid",
+    "story",
+    "info"
+  ]
+}
