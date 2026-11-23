@@ -81,6 +81,33 @@
       assign trend_word = 'Likely to stay steady'
   endcase
 
+  if mk != blank
+    capture day_sum
+      echo mk.t.long | append: ': small cardamom (elaichi) averaged ₹' | append: mk.t.avg | append: ' per kg at '
+      echo mk.t.n | append: ' Spices Board e-auction'
+      if mk.t.n != 1
+        echo 's'
+      endif
+      case mk.chg.dir
+        when 'up'
+          echo ', up ₹' | append: mk.chg.abs | append: ' (' | append: mk.chg.pct | append: '%) from ' | append: mk.p.long
+        when 'down'
+          echo ', down ₹' | append: mk.chg.abs | append: ' (' | append: mk.chg.pct | append: '%) from ' | append: mk.p.long
+      endcase
+      echo '. The highest lot sold for ₹' | append: mk.t.max | append: ' and the lowest for ₹' | append: mk.t.min | append: ', with ' | append: mk.t.sold | append: ' kg sold.'
+      if mk.d30.avg != blank
+        echo ' A month earlier, on ' | append: mk.d30.short | append: ', the average was ₹' | append: mk.d30.avg
+        case mk.d30.dir
+          when 'up'
+            echo ', so the price is ' | append: mk.d30.pct | append: '% higher now'
+          when 'down'
+            echo ', so the price is ' | append: mk.d30.pct | append: '% lower now'
+        endcase
+        echo '.'
+      endif
+    endcapture
+  endif
+
   assign wa_base = 'https://wa.me/' | append: wa | append: '?text='
   assign wa_hello = "Hi Pure Leven, I'd like today's wholesale cardamom rate." | url_encode
   assign wa_p1 = wa | slice: 2, 5
@@ -399,6 +426,21 @@
         <p class="plcm-eyebrow"><i>04</i> / Auction report</p>
         <h2 class="plcm-h2" id="plcm-report-h-{{ section.id }}">Cardamom auction price today</h2>
       </div>
+      {%- if mk != blank -%}
+      <div class="plcm-report rte plcm-sum" id="summary">
+        <h3>Cardamom price summary, {{ mk.t.mid }}</h3>
+        <p>{{ day_sum | strip }}</p>
+        {%- if mk.recent.size > 1 -%}
+        <h3>Day by day, last {{ mk.recent.size }} auction days</h3>
+        <ul>
+          {%- for r in mk.recent -%}
+            <li><time datetime="{{ r.date }}">{{ r.long }}</time>: average ₹{{ r.avg }} per kg{% if r.dir == 'up' %}, up ₹{{ r.chg }}{% elsif r.dir == 'down' %}, down ₹{{ r.chg }}{% endif %}. Highest ₹{{ r.max }}, lowest ₹{{ r.min }}, {{ r.sold }} kg sold at {{ r.n }} auction{% if r.n != 1 %}s{% endif %}.</li>
+          {%- endfor -%}
+        </ul>
+        {%- endif -%}
+        <p>These are prices for lots sold by growers to traders at the Spices Board e-auctions. Graded, cleaned cardamom sells for more; our <a href="#grades">wholesale rates by size</a> are above.</p>
+      </div>
+      {%- endif -%}
       {%- if mk != blank and mk.last.size > 0 -%}
       <div class="plcm-table-wrap">
         <table class="plcm-table plcm-table--num plcm-table--auct">
@@ -429,6 +471,7 @@
         {%- endfor -%}
       {%- endif -%}
     {%- endcapture -%}
+    {%- capture faq_dyn_0_q -%}What is the cardamom auction price today?{%- endcapture -%}
     {%- capture faq_dyn_1_q -%}What is the cardamom wholesale price today?{%- endcapture -%}
     {%- capture faq_dyn_1_a -%}
       {%- if prod != blank -%}Our wholesale rates{% if mk != blank %} on {{ mk.t.mid }}{% endif %} run from ₹{{ lo_ex | money_without_currency | remove: '.00' }} to ₹{{ hi_ex | money_without_currency | remove: '.00' }} per kg plus {{ gst }}% GST, depending on the size. {% endif -%}
@@ -445,6 +488,9 @@
         <h2 class="plcm-h2" id="plcm-faq-h-{{ section.id }}">Cardamom price and wholesale questions</h2>
       </div>
       <div class="plcm-faq">
+        {%- if mk != blank -%}
+          <details class="plcm-faq__item"><summary>{{ faq_dyn_0_q }}</summary><div class="plcm-faq__a"><p>{{ day_sum | strip }}</p></div></details>
+        {%- endif -%}
         {%- if prod != blank -%}
           <details class="plcm-faq__item"><summary>{{ faq_dyn_1_q }}</summary><div class="plcm-faq__a"><p>{{ faq_dyn_1_a | strip }}</p></div></details>
           <details class="plcm-faq__item"><summary>{{ faq_dyn_2_q }}</summary><div class="plcm-faq__a"><p>{{ faq_dyn_2_a | strip }}</p></div></details>
@@ -546,6 +592,9 @@
   assign tomorrow = 'now' | date: '%s' | plus: 172800 | date: '%Y-%m-%d'
 -%}
 {%- capture faq_ld -%}
+  {%- if mk != blank -%}
+    { "@type": "Question", "name": {{ faq_dyn_0_q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ day_sum | strip | json }} } }§
+  {%- endif -%}
   {%- if prod != blank -%}
     { "@type": "Question", "name": {{ faq_dyn_1_q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_dyn_1_a | strip | json }} } }§
     { "@type": "Question", "name": {{ faq_dyn_2_q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq_dyn_2_a | strip | json }} } }§
