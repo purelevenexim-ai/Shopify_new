@@ -217,6 +217,10 @@
     }
   },
   "templates": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "404"
+    },
     "search": {
       "no_results": "No results found for “{{ terms }}”. Check the spelling or use a different word or phrase.",
       "page": "Page",
@@ -260,10 +264,6 @@
         "post_success": "Thanks for contacting us. We'll get back to you as soon as possible.",
         "error_heading": "Please adjust the following:"
       }
-    },
-    "404": {
-      "title": "Page not found",
-      "subtext": "404"
     }
   },
   "sections": {
@@ -274,7 +274,6 @@
       "announcement": "Announcement",
       "announcement_bar": "Announcement bar"
     },
-
     "header": {
       "announcement": "Announcement",
       "menu": "Menu",
@@ -527,5 +526,21 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "tc_campaign": {
+    "delivery": "Buy any 2 packs and get free delivery",
+    "unlocked": "Free delivery unlocked",
+    "image_alt": "Real cardamom tea with green cardamom pods and a freshly brewed cup",
+    "origin": "Real Cardamom Tea Powder · Kerala",
+    "benefit_one": "Real green cardamom, no flavouring or essence",
+    "benefit_two": "Blended with tea from Vagamon",
+    "benefit_three": "Brew with milk for fragrant elaichi chai",
+    "dispatch": "Delivery across India in 6–9 working days. Secure checkout.",
+    "combo_link": "Try our three-tea combo for ₹365",
+    "sticky_title": "Cardamom tea",
+    "add": "Add to cart",
+    "offer": "Offer",
+    "farm_video": "Cardamom harvest video",
+    "video_fallback": "Watch the cardamom harvest video"
   }
 }

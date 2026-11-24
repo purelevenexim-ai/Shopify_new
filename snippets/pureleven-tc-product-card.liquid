@@ -1,3 +1,9 @@
+{% doc %}
+Renders a product card with optional campaign size labels.
+@param {product} product - The product to display
+@param {string} [delivery_rule] - Delivery promotion
+@param {boolean} [campaign] - Show campaign pricing options
+{% enddoc %}
 {%- comment -%}
 Shared product card (homepage, Tea & Coffee, honey).
 Props: product (required), delivery_rule ('two_items' optional)
@@ -33,6 +39,11 @@ CSS: tc-design-tokens.css + tc-product-card.css · JS: tc-product-card.js + tc-a
   {%- endif -%}
 {%- endfor -%}
 {%- assign first_variant = _default_variant | default: product.first_available_variant | default: product.variants.first -%}
+{%- if product.handle == 'cardamom-tea' -%}
+  {%- for v in product.variants -%}
+    {%- if v.title == '100g' and v.available -%}{%- assign first_variant = v -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
 {%- assign _on_sale = false -%}
 {%- if first_variant.compare_at_price > first_variant.price -%}
   {%- assign _on_sale = true -%}
@@ -109,7 +120,7 @@ CSS: tc-design-tokens.css + tc-product-card.css · JS: tc-product-card.js + tc-a
               {%- if variant.id == first_variant.id %} checked{%- endif %}
               {%- unless variant.available %} disabled{%- endunless %}
             >
-            <label for="v-{{ section.id }}-{{ variant.id }}" class="tc-sizes__opt{% unless variant.available %} is-out{% endunless %}">{{ variant.title | escape | replace: '+', '+<wbr>' }}</label>
+            <label for="v-{{ section.id }}-{{ variant.id }}" class="tc-sizes__opt{% unless variant.available %} is-out{% endunless %}">{%- if campaign -%}<span data-campaign-size>{{ variant.title | escape }}</span><small>{{ variant.price | money_without_trailing_zeros }}</small>{%- if variant.title == '100g' -%}<em>{{ 'tc_campaign.offer' | t }}</em>{%- endif -%}{%- else -%}{{ variant.title | escape | replace: '+', '+<wbr>' }}{%- endif -%}</label>
           {%- endfor -%}
         </div>
       {%- else -%}

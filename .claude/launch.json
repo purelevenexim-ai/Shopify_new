@@ -7,6 +7,13 @@
       "runtimeArgs": ["theme", "dev"],
       "port": 9292,
       "description": "Shopify theme development server - Theme ID: 188940321061"
+    },
+    {
+      "name": "Annaseo",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "../Annaseo/frontend", "run", "dev"],
+      "port": 5173,
+      "description": "Annaseo SEO tree tracker UI. Needs the backend running: cd ../Annaseo/backend && .venv/bin/uvicorn main:app --port 8020"
     }
   ]
 }

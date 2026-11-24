@@ -17,7 +17,7 @@ Tea & Coffee Trial Pack Section
       <div class="tc-trial-pack__wrapper">
         {%- comment -%} Text Content {%- endcomment -%}
         <div class="tc-trial-pack__content">
-          <p class="tc-eyebrow tc-eyebrow--left"><i>02</i> / Still Deciding?</p>
+          <p class="tc-eyebrow tc-eyebrow--left"><i>02</i> / Tea Combo</p>
           {%- if section.settings.heading -%}
             <h2 class="tc-trial-pack__heading tc-h2">{{ section.settings.heading }}</h2>
           {%- endif -%}
@@ -40,10 +40,7 @@ Tea & Coffee Trial Pack Section
               <span class="tc-trial-pack__content-icon">🧋</span>
               <span class="tc-trial-pack__content-text">Cardamom Tea 100g</span>
             </div>
-            <div class="tc-trial-pack__content-item">
-              <span class="tc-trial-pack__content-icon">☕</span>
-              <span class="tc-trial-pack__content-text">Coffee 100g</span>
-            </div>
+
           </div>
 
           {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
@@ -79,18 +76,12 @@ Tea & Coffee Trial Pack Section
         </div>
 
         {%- comment -%} Trial Pack Image {%- endcomment -%}
-        <div class="tc-trial-pack__visual">
-          {%- if product.featured_image -%}
-            {{
-              product.featured_image
-              | image_url: width: 600
-              | image_tag:
-                loading: 'lazy',
-                sizes: '(min-width: 990px) 40vw, 100vw',
-                widths: '300,400,600',
-                alt: product.featured_image.alt | default: product.title | escape
-            }}
-          {%- endif -%}
+        <div class="tc-trial-pack__visual tc-tea-combo">
+          {%- assign combo_handles = 'premium-milk-tea-powder,premium-black-tea-granules,cardamom-tea' | split: ',' -%}
+          {%- for combo_handle in combo_handles -%}
+            {%- assign combo_product = all_products[combo_handle] -%}
+            {{ combo_product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '160,240,400', sizes: '(min-width: 990px) 15vw, 30vw', alt: combo_product.title }}
+          {%- endfor -%}
         </div>
       </div>
     {%- endif -%}
