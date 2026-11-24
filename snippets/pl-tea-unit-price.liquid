@@ -1,0 +1,78 @@
+{%- comment -%}
+  Tea & coffee product pages only (rendered inside the price block, so it refreshes when the size changes):
+  Google proof line, outcome-first line, price per 100 g and per cup, and an honest size savings ladder
+  (savings = same grams bought in the smallest pack). The ladder drives the theme's own size inputs.
+{%- endcomment -%}
+{%- liquid
+  assign dose_x10 = 25
+  if product.handle == 'premium-black-tea-granules' or product.handle == 'orange-pekoe-powder'
+    assign dose_x10 = 30
+  elsif product.handle == 'naadan-kerala-coffee'
+    assign dose_x10 = 100
+  endif
+  case product.handle
+    when 'cardamom-tea'
+      assign outcome = 'Elaichi chai with real cardamom aroma, no essence'
+    when 'premium-milk-tea-powder'
+      assign outcome = 'Strong, colourful Kerala chaya in one boil'
+    when 'premium-black-tea-granules'
+      assign outcome = 'A bright, clean cup, black or with milk'
+    when 'orange-pekoe-powder'
+      assign outcome = 'A light, floral cup for black tea'
+    when 'starter-trial-pack-4-varieties'
+      assign outcome = 'Taste three teas, then pick your favourite'
+    when 'naadan-kerala-coffee'
+      assign outcome = 'A thick, strong decoction for milk coffee'
+  endcase
+  assign grams = variant.title | remove: 'g' | remove: ' ' | plus: 0
+  assign small = product.variants.first
+  assign small_g = small.title | remove: 'g' | remove: ' ' | plus: 0
+  for v in product.variants
+    assign vg = v.title | remove: 'g' | remove: ' ' | plus: 0
+    if vg > 0 and vg < small_g
+      assign small = v
+      assign small_g = vg
+    endif
+  endfor
+  assign best_id = 0
+  assign best_rate = 999999999
+  for v in product.variants
+    assign vg = v.title | remove: 'g' | remove: ' ' | plus: 0
+    if vg > 0 and v.available
+      assign rate = v.price | times: 100 | divided_by: vg
+      if rate < best_rate
+        assign best_rate = rate
+        assign best_id = v.id
+      endif
+    endif
+  endfor
+-%}
+<a class="pl-tea-proof" href="https://www.google.com/maps/place/Pure+Leven+Exim/@9.9734527,77.1686472,17z/data=!4m8!3m7!1s0x3b07a195f92f434b:0x46344c5caceb41de!8m2!3d9.9734527!4d77.1686472!9m1!1b1!16s%2Fg%2F11t6vqrzzb" target="_blank" rel="noopener"><span aria-hidden="true">★★★★★</span> 4.9 on Google · 62 reviews</a>
+{%- if outcome != blank -%}<p class="pl-tea-outcome">{{ outcome }}</p>{%- endif -%}
+{%- if grams > 0 -%}
+  {%- assign per100 = variant.price | times: 100 | divided_by: grams | divided_by: 100.0 | round -%}
+  {%- assign cups = grams | times: 10 | divided_by: dose_x10 -%}
+  <p class="pl-tea-unit">{% if product.variants.size == 1 %}{{ variant.title | replace: 'g', ' g' }} pack · {% endif %}&#8377;{{ per100 }} per 100 g{% if cups > 0 %} · about {{ cups }} cups{% endif %}</p>
+{%- endif -%}
+{%- if product.variants.size > 1 and small_g > 0 -%}
+  <div class="pl-ladder" data-tcx-ladder role="radiogroup" aria-label="Pack size">
+    {%- for v in product.variants -%}
+      {%- assign vg = v.title | remove: 'g' | remove: ' ' | plus: 0 -%}
+      {%- if vg > 0 -%}
+        {%- assign v_per100 = v.price | times: 100 | divided_by: vg | divided_by: 100.0 | round -%}
+        {%- assign same_in_small = small.price | times: vg | divided_by: small_g -%}
+        {%- assign save = same_in_small | minus: v.price | divided_by: 100 -%}
+        {%- assign packs = vg | divided_by: small_g -%}
+        {%- assign packs_g = packs | times: small_g -%}
+        <button type="button" class="pl-ladder__opt{% if v.id == variant.id %} is-on{% endif %}" data-tcx-ladder-opt="{{ v.title | escape }}" role="radio" aria-checked="{% if v.id == variant.id %}true{% else %}false{% endif %}"{% unless v.available %} disabled{% endunless %}>
+          <span class="pl-ladder__dot" aria-hidden="true"></span>
+          <span class="pl-ladder__main">
+            <span class="pl-ladder__size">{{ v.title | replace: 'g', ' g' }}{% if v.id == best_id and product.variants.size > 2 %} <i>Best value</i>{% endif %}</span>
+            <span class="pl-ladder__meta">&#8377;{{ v_per100 }} per 100 g{% if save > 0 and v.id != small.id %}<em>Save &#8377;{{ save }} vs {% if packs > 1 and vg == packs_g %}{{ packs }}×{{ small.title | replace: 'g', ' g' }}{% else %}{{ small.title | replace: 'g', ' g' }} packs{% endif %}</em>{% endif %}</span>
+          </span>
+          <b class="pl-ladder__price" data-price="&#8377;{{ v.price | divided_by: 100 }}">{% unless v.available %}Sold out{% else %}&#8377;{{ v.price | divided_by: 100 }}{% endunless %}</b>
+        </button>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

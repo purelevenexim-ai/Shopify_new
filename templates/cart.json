@@ -11,7 +11,9 @@
   "sections": {
     "cart-items": {
       "type": "main-cart-items",
-      "settings": {}
+      "settings": {
+        "google_review_count": "62"
+      }
     }
   },
   "order": [

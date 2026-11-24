@@ -8,16 +8,17 @@
   role="region"
   aria-label="Announcement"
 >
-  <p class="announcement-bar-minimal__message">
+  <p class="announcement-bar-minimal__message{% if section.blocks.size > 1 %} hh-ann{% endif %}">
     {%- if section.blocks.size > 0 -%}
-      {%- assign announcement = section.blocks.first -%}
-      {%- if announcement.settings.link != blank -%}
-        <a href="{{ announcement.settings.link }}" class="announcement-bar-minimal__link">
-          {{- announcement.settings.text | escape -}}
-        </a>
-      {%- else -%}
-        {{- announcement.settings.text | escape -}}
-      {%- endif -%}
+      {%- for announcement in section.blocks limit: 3 -%}
+        <span class="hh-ann__item" {{ announcement.shopify_attributes }}>
+          {%- if announcement.settings.link != blank -%}
+            <a href="{{ announcement.settings.link }}" class="announcement-bar-minimal__link">{{- announcement.settings.text | escape -}}</a>
+          {%- else -%}
+            {{- announcement.settings.text | escape -}}
+          {%- endif -%}
+        </span>
+      {%- endfor -%}
     {%- else -%}
       {{- 'Fresh Kerala spices shipped across India. Free shipping on orders ₹649 and above.' | escape -}}
     {%- endif -%}

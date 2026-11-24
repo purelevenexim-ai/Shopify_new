@@ -51,7 +51,9 @@ Tea & Coffee Hero Section
 
     {%- comment -%} Hero Background/Image {%- endcomment -%}
     <div class="tc-hero__visual">
-      {%- if section.settings.bg_image -%}
+      {%- if section.settings.art == 'hills' -%}
+        <img src="{{ 'tc-hills-art.svg' | asset_url }}" alt="Illustration of women plucking tea on the misty hills of Munnar" width="1200" height="900" loading="eager" fetchpriority="high">
+      {%- elsif section.settings.bg_image -%}
         {{
           section.settings.bg_image
           | image_url: width: 1200
@@ -80,6 +82,7 @@ Tea & Coffee Hero Section
 {
   "name": "Tea & Coffee Hero",
   "settings": [
+    { "type": "select", "id": "art", "label": "Banner picture", "default": "photo", "options": [ { "value": "photo", "label": "Photo" }, { "value": "hills", "label": "Tea hills illustration" } ] },
     {
       "type": "text",
       "id": "eyebrow",

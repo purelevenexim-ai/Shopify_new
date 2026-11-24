@@ -21,7 +21,7 @@ Tea & Coffee — Coffee Editorial Feature Section
     {%- if product -%}
       {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
       {%- assign best_for = product.metafields.custom.best_for.value | default: '' -%}
-      {%- assign short_desc = product.metafields.custom.short_description.value | default: product.description -%}
+      {%- assign short_desc = 'Medium-roast Robusta blended with chicory and ground for a South Indian steel filter. A bold, full-bodied cup with milk.' -%}
 
       <div class="tc-coffee__wrapper">
         <div class="tc-coffee__visual">

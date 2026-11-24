@@ -1,0 +1,84 @@
+{%- comment -%}
+  Every product page, inside the price block (it re-renders when the size changes):
+  Google rating, a one-line outcome, and size cards (size, price, original price, best value).
+  The cards drive the theme's own size inputs (assets/hh-product.js).
+{%- endcomment -%}
+{%- liquid
+  case product.handle
+    when 'cardamom-tea'
+      assign outcome = 'Elaichi chai with real cardamom, no essence'
+    when 'premium-milk-tea-powder'
+      assign outcome = 'Strong, colourful Kerala chaya'
+    when 'premium-black-tea-granules'
+      assign outcome = 'A bright, clean cup, black or with milk'
+    when 'orange-pekoe-powder'
+      assign outcome = 'A light, floral cup for black tea'
+    when 'starter-trial-pack-4-varieties'
+      assign outcome = 'Three teas to try, 100 g each'
+    when 'naadan-kerala-coffee'
+      assign outcome = 'A thick, strong decoction for milk coffee'
+    when 'kerala-cardamom'
+      assign outcome = 'Extra bold 8 mm green pods from Idukki'
+    when 'kerala-black-pepper'
+      assign outcome = 'Bold whole peppercorns from our farm'
+    when 'kerala-white-pepper'
+      assign outcome = 'Whole white peppercorns from Idukki'
+    when 'kerala-adimali-clove'
+      assign outcome = 'Whole clove buds from Adimali'
+    when 'kerala-spice-combo-pack'
+      assign outcome = 'Cardamom, black pepper and cloves, all whole'
+    when 'premium-cassia-cinnamon'
+      assign outcome = 'Thick, sweet-spicy dalchini sticks'
+    when 'aromatic-true-cinnamon-ceylon'
+      assign outcome = 'Thin, delicate quills from Sri Lanka'
+    when 'star-anise-chakra-phool-premium-whole-spice'
+      assign outcome = 'Whole stars for biryani and garam masala'
+    when 'naadan-pure-honey'
+      assign outcome = 'Wildflower and forest honey from Idukki'
+    when 'deluxe-combo-pack-tea-coffee-honey'
+      assign outcome = 'Tea, filter coffee and honey in one box'
+  endcase
+  assign simple = true
+  assign best_id = 0
+  assign best_rate = 999999999
+  for v in product.variants
+    assign t = v.title | downcase | remove: ' '
+    if t contains '+'
+      assign simple = false
+    endif
+    if t contains 'kg'
+      assign vg = t | remove: 'kg' | times: 1000
+    else
+      assign vg = t | remove: 'g' | plus: 0
+    endif
+    if vg > 0 and v.available
+      assign rate = v.price | times: 100 | divided_by: vg
+      if rate < best_rate
+        assign best_rate = rate
+        assign best_id = v.id
+      endif
+    endif
+  endfor
+  if simple == false or product.variants.size < 3
+    assign best_id = 0
+  endif
+-%}
+<a class="hh-proof" href="https://www.google.com/maps/place/Pure+Leven+Exim/@9.9734527,77.1686472,17z/data=!4m8!3m7!1s0x3b07a195f92f434b:0x46344c5caceb41de!8m2!3d9.9734527!4d77.1686472!9m1!1b1!16s%2Fg%2F11t6vqrzzb" target="_blank" rel="noopener"><span aria-hidden="true">★★★★★</span> 4.9 on Google · 62 reviews</a>
+{%- if outcome != blank -%}<p class="hh-outcome">{{ outcome }}</p>{%- endif -%}
+{%- if product.variants.size > 1 and product.options.size == 1 -%}
+  <div class="hh-sizes" data-hh-sizes role="radiogroup" aria-label="Pack size">
+    {%- for v in product.variants -%}
+      {%- assign label = v.title | replace: 'kg', 'KG' | replace: 'g', ' g' | replace: 'KG', ' kg' | replace: '+', ' + ' -%}
+      <button type="button" class="hh-size{% if v.id == variant.id %} is-on{% endif %}" data-hh-size="{{ v.title | escape }}" role="radio" aria-checked="{% if v.id == variant.id %}true{% else %}false{% endif %}"{% unless v.available %} disabled{% endunless %}>
+        <span class="hh-size__dot" aria-hidden="true"></span>
+        <span class="hh-size__name">{{ label }}{% if v.id == best_id %} <i>Best value</i>{% endif %}</span>
+        <span class="hh-size__price">
+          {%- unless v.available -%}Sold out{%- else -%}
+            {%- if v.compare_at_price > v.price -%}<s>{{ v.compare_at_price | money_without_currency | remove: '.00' | prepend: '&#8377;' }}</s> {% endif -%}
+            <b data-price="{{ v.price | money_without_currency | remove: '.00' | prepend: '&#8377;' }}">{{ v.price | money_without_currency | remove: '.00' | prepend: '&#8377;' }}</b>
+          {%- endunless -%}
+        </span>
+      </button>
+    {%- endfor -%}
+  </div>
+{%- endif -%}

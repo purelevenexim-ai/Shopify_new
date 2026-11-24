@@ -29,7 +29,7 @@ Tea & Coffee Final CTA Section
       {%- endif -%}
     </div>
 
-    {%- if section.settings.tertiary_text and section.settings.tertiary_cta_text and section.settings.tertiary_cta_link -%}
+    {%- if section.settings.tertiary_cta_text != blank and section.settings.tertiary_cta_link != blank -%}
       <p class="tc-final-cta__tertiary">
         {{ section.settings.tertiary_text }}
         <a href="{{ section.settings.tertiary_cta_link }}" class="tc-final-cta__tertiary-link">

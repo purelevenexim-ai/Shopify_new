@@ -39,7 +39,7 @@
     {% comment %}theme-check-disable RemoteAsset{% endcomment %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
     {%- liquid
       assign resolved_page_title = page_title
@@ -737,6 +737,7 @@
       {{ 'pl-product.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
     {{ 'pureleven-clean-system.css' | asset_url | stylesheet_tag }}
+    {{ 'pl-hills.css' | asset_url | stylesheet_tag }}
 
     <script>
       if (Shopify.designMode) {

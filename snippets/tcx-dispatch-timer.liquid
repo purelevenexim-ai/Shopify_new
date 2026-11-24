@@ -1,0 +1,15 @@
+{%- comment -%} Live same-day dispatch timer. Counts down to the real daily cut-off (India time) on dispatch days; tc-campaign.js updates it. {%- endcomment -%}
+{%- liquid
+  assign h = hour | default: 13 | plus: 0
+  if h == 12
+    assign h_label = '12 noon'
+  elsif h > 12
+    assign h_label = h | minus: 12 | append: ' pm'
+  else
+    assign h_label = h | append: ' am'
+  endif
+-%}
+<p class="tcx-cutoff" data-tcx-cutoff data-hour="{{ h }}" data-days="{{ days | default: '1,2,3,4,5,6' | remove: ' ' }}" data-label="{{ h_label }}">
+  <span class="tcx-cutoff__dot" aria-hidden="true"></span>
+  <span data-tcx-cutoff-text>Order before {{ h_label }} and it is dispatched the same day.</span>
+</p>

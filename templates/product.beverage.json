@@ -131,10 +131,24 @@
         "padding_top": 56,
         "padding_bottom": 56
       }
+    },
+    "pl_tea_pdp": {
+      "type": "pl-tea-pdp",
+      "settings": {
+        "rating": "4.9",
+        "rating_count": "62 Google reviews",
+        "reviews_url": "https://www.google.com/maps/place/Pure+Leven+Exim/@9.9734527,77.1686472,17z/data=!4m8!3m7!1s0x3b07a195f92f434b:0x46344c5caceb41de!8m2!3d9.9734527!4d77.1686472!9m1!1b1!16s%2Fg%2F11t6vqrzzb",
+        "orders_big": "700+",
+        "orders_small": "orders shipped from Adimali since 2023",
+        "tea_handles": "cardamom-tea,premium-milk-tea-powder,premium-black-tea-granules,orange-pekoe-powder,starter-trial-pack-4-varieties,naadan-kerala-coffee"
+      },
+      "blocks": {},
+      "block_order": []
     }
   },
   "order": [
     "main",
+    "pl_tea_pdp",
     "pl_beverage_guide",
     "product_description_section",
     "pl_what_were_cooking",

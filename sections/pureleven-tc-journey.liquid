@@ -1,0 +1,61 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'tc-campaign.css' | asset_url | stylesheet_tag }}
+
+<section class="tcx-journey" id="{{ section.settings.anchor | default: 'from-the-hills' }}">
+  <svg class="tcx-journey__hills" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M0 120V78c90-30 160-52 250-40s150 40 240 18 140-62 250-58 160 44 250 34 140-30 210-24v112Z" fill="#E7EFE7"/>
+    <path d="M0 120V96c110-20 200-30 300-18s170 22 270 6 160-40 270-34 170 30 240 24 80-10 120-8v54Z" fill="#D6E4D7"/>
+  </svg>
+  <div class="tcx-journey__wrap">
+    {%- if section.settings.eyebrow != blank -%}<p class="tcx-eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+    <h2 class="tcx-h2">{{ section.settings.heading | escape }}</h2>
+    {%- if section.settings.lede != blank -%}<p class="tcx-lede">{{ section.settings.lede | escape }}</p>{%- endif -%}
+    <div class="hh-journey">
+    {%- case section.settings.scene -%}
+      {%- when 'tea' -%}{%- assign scene = 'tc-hills-art.svg' -%}{%- assign scene_alt = 'Illustration: women plucking tea on the misty hills of Munnar' -%}
+      {%- when 'spice' -%}{%- assign scene = 'hh-spice-garden.svg' -%}{%- assign scene_alt = 'Illustration: picking cardamom and pepper under shade trees in Idukki' -%}
+      {%- when 'coffee' -%}{%- assign scene = 'hh-coffee-estate.svg' -%}{%- assign scene_alt = 'Illustration: picking coffee cherries under silver oaks' -%}
+      {%- when 'honey' -%}{%- assign scene = 'hh-honey-hills.svg' -%}{%- assign scene_alt = 'Illustration: bee boxes among wildflowers in the Idukki hills' -%}
+      {%- else -%}{%- assign scene = '' -%}
+    {%- endcase -%}
+    {%- if scene != blank -%}<img class="hh-scene hh-journey__scene" src="{{ scene | asset_url }}" width="1200" height="900" loading="lazy" alt="{{ scene_alt }}">{%- endif -%}
+    <ol class="tcx-journey__steps">
+      {%- for block in section.blocks -%}
+        <li class="tcx-journey__step" {{ block.shopify_attributes }}>
+          <span class="tcx-journey__icon" aria-hidden="true">{%- render 'tcx-icon', name: block.settings.icon -%}</span>
+          <div class="tcx-journey__text">
+            <p class="tcx-journey__title">{{ block.settings.title | escape }}</p>
+            {%- if block.settings.text != blank -%}<p class="tcx-journey__sub">{{ block.settings.text | escape }}</p>{%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hills to cup journey",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "from-the-hills" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our journey" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From the hills to your cup" },
+    { "type": "text", "id": "lede", "label": "Intro" },
+    { "type": "select", "id": "scene", "label": "Illustration", "default": "none", "options": [
+      { "value": "none", "label": "None" }, { "value": "tea", "label": "Tea hills" }, { "value": "spice", "label": "Spice garden" },
+      { "value": "coffee", "label": "Coffee estate" }, { "value": "honey", "label": "Honey hills" } ] }
+  ],
+  "blocks": [
+    { "type": "step", "name": "Step", "settings": [
+      { "type": "select", "id": "icon", "label": "Icon", "default": "hills", "options": [
+        { "value": "hills", "label": "Tea hills" }, { "value": "factory", "label": "Tea factory" }, { "value": "farm", "label": "Cardamom farm" },
+        { "value": "pack", "label": "Packed with care" }, { "value": "cup", "label": "Your cup" },
+        { "value": "blend", "label": "Blend" }, { "value": "glass", "label": "Chaya glass" }, { "value": "filter", "label": "Steel filter" }, { "value": "cherry", "label": "Coffee cherry" }, { "value": "roast", "label": "Roast" }, { "value": "van", "label": "Delivery van" },
+        { "value": "grade", "label": "Graded" }, { "value": "sun", "label": "Sun-dried" }, { "value": "vine", "label": "Pepper vine" }, { "value": "hive", "label": "Bee box" }, { "value": "jar", "label": "Jar" } ] },
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "text", "id": "text", "label": "Line" } ] }
+  ],
+  "presets": [{ "name": "Hills to cup journey" }]
+}
+{% endschema %}

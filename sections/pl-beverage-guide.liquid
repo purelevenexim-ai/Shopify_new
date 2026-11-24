@@ -154,99 +154,41 @@
 
       <p class="plb__eyebrow">{{ eyebrow }}</p>
       <h2 class="plb__title">{{ title }}</h2>
-      <p class="plb__lede">{{ lede }}</p>
 
-      <div class="plb__specs">
-        {%- if mf.brew_time != blank -%}
-          <div class="plb__spec"><span class="plb__spec-ico">&#9201;</span><span class="plb__spec-k">Brew</span><span class="plb__spec-v">{{ mf.brew_time }}</span></div>
+      {%- capture hh_pills -%}
+        {%- if kind == 'milktea' or kind == 'cardamom' -%}
+          <li><b>Per cup</b> 2–2.5 g (1 tsp)</li>
+          {%- if grams > 0 -%}{%- assign servings = grams | times: 10 | divided_by: 25 -%}<li><b>Largest pack</b> ~{{ servings }} cups</li>{%- endif -%}
+        {%- elsif mf.dose_g > 0 -%}
+          <li><b>Per cup</b> {% if kind == 'blacktea' or kind == 'pekoe' %}about {{ mf.dose_g }} g (1 tsp){% else %}{{ mf.dose_g }} g{% endif %}</li>
+          {%- if grams > 0 -%}{%- assign servings = grams | divided_by: mf.dose_g | round -%}<li><b>Largest pack</b> ~{{ servings }} cups</li>{%- endif -%}
         {%- endif -%}
-        {%- if mf.dose_g > 0 -%}
-          <div class="plb__spec"><span class="plb__spec-ico">&#9878;</span><span class="plb__spec-k">Per cup</span><span class="plb__spec-v">{{ mf.dose_g }} g</span></div>
-          {%- if grams > 0 -%}
-            {%- assign servings = grams | divided_by: mf.dose_g | round -%}
-            <div class="plb__spec"><span class="plb__spec-ico">&#9749;</span><span class="plb__spec-k">Largest pack</span><span class="plb__spec-v">~{{ servings }} cups</span></div>
-          {%- endif -%}
-        {%- endif -%}
-        {%- if mf.grade != blank -%}
-          <div class="plb__spec"><span class="plb__spec-ico">&#10022;</span><span class="plb__spec-k">Type</span><span class="plb__spec-v">{{ mf.grade }}</span></div>
-        {%- endif -%}
-        {%- if mf.origin != blank -%}
-          <div class="plb__spec"><span class="plb__spec-ico">&#9968;</span><span class="plb__spec-k">Origin</span><span class="plb__spec-v">{{ mf.origin }}</span></div>
-        {%- endif -%}
-        {%- if mf.harvest != blank -%}
-          <div class="plb__spec"><span class="plb__spec-ico">&#9728;</span><span class="plb__spec-k">Harvest</span><span class="plb__spec-v">{{ mf.harvest }}</span></div>
-        {%- endif -%}
-      </div>
+        {%- if mf.brew_time != blank -%}<li><b>Brew</b> {{ mf.brew_time }}</li>{%- endif -%}
+      {%- endcapture -%}
+      {%- if hh_pills != blank -%}<ul class="hh-brew__pills">{{ hh_pills }}</ul>{%- endif -%}
 
-      <div class="plb__method{% unless show_shot %} plb__method--solo{% endunless %}">
-        {%- comment -%}
-          All beverages share one template, so a section-level image picker would put
-          the same photo on every product. The image is chosen from the product type
-          instead; the picker stays available as a per-page override. Only the milk tea,
-          coffee, honey and combo have a matching photo; black tea, orange pekoe and
-          cardamom show no image rather than the milk-tea shot.
-        {%- endcomment -%}
-        {%- if show_shot -%}
-        <div class="plb__shot">
-          {%- if section.settings.image != blank -%}
-            {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400,600,900', alt: title | escape }}
-          {%- else -%}
-            {%- case kind -%}
-              {%- when 'coffee' -%}{%- assign auto_img = 'pl-brew-coffee.webp' -%}
-              {%- when 'honey' -%}{%- assign auto_img = 'pl-brew-honey.webp' -%}
-              {%- when 'combo' -%}{%- assign auto_img = 'pl-brew-combo.webp' -%}
-              {%- else -%}{%- assign auto_img = 'pl-brew-tea.webp' -%}
-            {%- endcase -%}
-            <img
-              src="{{ auto_img | asset_url }}"
-              alt="{{ title | escape }}"
-              width="900" height="900" loading="lazy">
-          {%- endif -%}
-        </div>
-        {%- endif -%}
-
-        <div class="plb__steps">
-          {%- case kind -%}
-            {%- when 'coffee' -%}
-              <div class="plb__step"><span class="plb__n">1</span><div><h4>Load the filter</h4><p>Roughly <b>1 part coffee to 5 parts water</b>. Press the grounds level — do not pack them tight.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>Let it drip</h4><p>Pour water just off the boil, cover, and leave it to drip for <b>10&ndash;15 minutes</b> in a steel filter. A rushed decoction tastes thin and sour.</p></div></div>
-              <div class="plb__step"><span class="plb__n">3</span><div><h4>Cut with hot milk</h4><p>About <b>1 part decoction to 3 parts milk</b>, heated separately. Cold milk kills the body.</p></div></div>
-              <div class="plb__step"><span class="plb__n">4</span><div><h4>Pull it</h4><p>Pour between two tumblers to aerate and cool. Sweeten while it is still hot.</p></div></div>
-            {%- when 'honey' -%}
-              <div class="plb__step"><span class="plb__n">1</span><div><h4>Keep it under 40&deg;C</h4><p>Stir into <b>warm</b> tea, milk or water &mdash; never boiling. Above 40&deg;C the live enzymes break down.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>A spoon in the morning</h4><p>One spoonful in warm water, on an empty stomach, is the traditional Kerala use.</p></div></div>
-              <div class="plb__step"><span class="plb__n">3</span><div><h4>Baking</h4><p>Swap <b>3/4 cup honey</b> for every 1 cup of sugar, and drop the oven about 15&deg;C.</p></div></div>
-              <div class="plb__step"><span class="plb__n">4</span><div><h4>If it crystallises</h4><p>That is proof it was never heated. Stand the jar in warm water &mdash; do not microwave it.</p></div></div>
-            {%- when 'combo' -%}
-              <div class="plb__step"><span class="plb__n">1</span><div><h4>Milk tea, every morning</h4><p>Boil milk and water together, add <b>1 teaspoon per cup</b> at half boil, bring to a full boil, then rest 30 seconds.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>Black tea granules, afternoons</h4><p><b>1 teaspoon</b> per cup at 95&deg;C for 3&ndash;5 min. Drink it black, with lemon, or with a splash of milk.</p></div></div>
-              <div class="plb__step"><span class="plb__n">3</span><div><h4>Cardamom tea, when you want elaichi</h4><p>Add <b>1 teaspoon per cup</b> to milk and water as it comes to the boil, boil for a minute and strain. Or steep it plain for 3&ndash;4 min.</p></div></div>
-              <div class="plb__step"><span class="plb__n">4</span><div><h4>Coffee, as decoction</h4><p><b>1 part coffee to 5 parts water</b> in a filter, then cut with hot milk.</p></div></div>
-              {%- if has_honey -%}
-                <div class="plb__step"><span class="plb__n">5</span><div><h4>Honey, off the heat</h4><p>Stir in once the cup is warm rather than boiling, so the enzymes survive.</p></div></div>
-              {%- endif -%}
-            {%- when 'milktea' -%}
-              <div class="plb__step"><span class="plb__n">1</span><div><h4>Boil milk and water together</h4><p>Take your preferred ratio of <b>milk and water</b> in one vessel and bring it to the boil together &mdash; not water first.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>Add the powder at half boil</h4><p>Once it is <b>half boiled</b>, stir in <b>1 teaspoon of tea powder per cup</b> (2 teaspoons for two cups).</p></div></div>
-              <div class="plb__step"><span class="plb__n">3</span><div><h4>Boil, then rest</h4><p>Let it come to a full boil, then take it off the heat and <b>rest at least 30 seconds</b> so the colour and body settle.</p></div></div>
-              <div class="plb__step"><span class="plb__n">4</span><div><h4>Pull for froth</h4><p>Pour between two tumblers from a height. The greater the drop, the better the froth &mdash; the &ldquo;one-metre chaya&rdquo; of Kerala tea shops.</p></div></div>
-            {%- when 'pekoe' -%}
-              <div class="plb__step"><span class="plb__n">1</span><div><h4>Measure</h4><p><b>1 teaspoon</b> per cup of 180 ml.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>Water just off the boil</h4><p>Around <b>95&deg;C</b>. Boiling water scorches the leaf and flattens the florals.</p></div></div>
-              <div class="plb__step"><span class="plb__n">3</span><div><h4>Steep, then strain</h4><p><b>3&ndash;4 minutes</b>, then strain into the cup.</p></div></div>
-              <div class="plb__step"><span class="plb__n">4</span><div><h4>Serve it without milk</h4><p>Plain, with lemon, or with a little honey. Milk masks the florals this grade is bought for.</p></div></div>
-            {%- when 'cardamom' -%}
-              <div class="plb__step"><span class="plb__n">1</span><div><h4>With milk, chaya style</h4><p>Add <b>1 teaspoon per cup</b> to milk and water as it comes to the boil. Boil for a minute, strain and sweeten.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>Or plain</h4><p><b>1 teaspoon</b> per cup of 180 ml, water just off the boil, steep for <b>3&ndash;4 minutes</b>.</p></div></div>
-              <div class="plb__step"><span class="plb__n">3</span><div><h4>Reseal the pack</h4><p>Cardamom&rsquo;s aroma fades when the pack is left open to the air, so close it tightly after each use.</p></div></div>
-            {%- else -%}
-              <div class="plb__step"><span class="plb__n">1</span><div><h4>Measure</h4><p><b>1 teaspoon</b> (about 3 g) per cup of 180 ml.</p></div></div>
-              <div class="plb__step"><span class="plb__n">2</span><div><h4>Water just off the boil</h4><p>Around <b>95&deg;C</b>. Boiling water scorches tea and pulls out harsh tannin.</p></div></div>
-              <div class="plb__step"><span class="plb__n">3</span><div><h4>Steep, then strain</h4><p><b>3&ndash;5 minutes</b>. Steep for less time if you like it lighter.</p></div></div>
-              <div class="plb__step"><span class="plb__n">4</span><div><h4>Serve</h4><p>Black, with lemon, or with milk to taste.</p></div></div>
-          {%- endcase -%}
-        </div>
-      </div>
+      {%- case kind -%}
+        {%- when 'coffee' -%}{%- assign hh_steps = 'filter|Load the filter|1 part coffee, 5 parts water;timer|Let it drip|10–15 minutes;boil|Heat the milk|1 part decoction, 3 parts milk;pour|Pull and serve|Between two tumblers' -%}
+        {%- when 'honey' -%}{%- assign hh_steps = 'glass|Stir into warm drinks|Warm, not boiling;spoon|By the spoon|Or over breakfast;jar|Bake with it|¾ cup for 1 cup sugar;water|If it sets|Stand the jar in warm water' -%}
+        {%- when 'combo' -%}
+          {%- assign hh_steps = 'glass|Milk tea|1 tsp per cup, at half boil;cup|Black tea|1 tsp, steep 3–5 min;spoon|Cardamom tea|1 tsp per cup, boil a minute' -%}
+          {%- if has_honey -%}{%- assign hh_steps = hh_steps | append: ';jar|Honey|Stir into warm cups' -%}{%- endif -%}
+        {%- when 'milktea' -%}{%- assign hh_steps = 'boil|Boil milk and water|Together, in one pan;spoon|Add 1 tsp per cup|At half boil;timer|Boil, then rest|30 seconds off the heat;pour|Strain and pull|Between two tumblers' -%}
+        {%- when 'pekoe' -%}{%- assign hh_steps = 'spoon|1 tsp per cup|180 ml water;water|Water at 95°C|Just off the boil;timer|Steep 3–4 min|Then strain;lemon|Serve without milk|Plain or with lemon' -%}
+        {%- when 'cardamom' -%}{%- assign hh_steps = 'boil|Milk and water to the boil|In one pan;spoon|Add 1 tsp per cup|Boil for a minute;strain|Strain and sweeten|Your elaichi chai;seal|Reseal the pack|Keeps the aroma' -%}
+        {%- else -%}{%- assign hh_steps = 'spoon|1 tsp per cup|About 3 g;water|Water at 95°C|Just off the boil;timer|Steep 3–5 min|Less for a lighter cup;cup|Serve|Black, lemon or milk' -%}
+      {%- endcase -%}
+      <ol class="hh-brew__steps">
+        {%- assign hh_list = hh_steps | split: ';' -%}
+        {%- for st in hh_list -%}
+          {%- assign bits = st | split: '|' -%}
+          <li class="hh-brew__step">
+            <span class="hh-brew__icon" aria-hidden="true">{%- render 'tcx-icon', name: bits[0] -%}<i>{{ forloop.index }}</i></span>
+            <p class="hh-brew__t">{{ bits[1] }}</p>
+            <p class="hh-brew__s">{{ bits[2] }}</p>
+          </li>
+        {%- endfor -%}
+      </ol>
 
       <div class="plb__cards">
         {%- case kind -%}
@@ -260,8 +202,8 @@
             <div class="plb__card"><h4>Wildflower, not monofloral</h4><p>Hives sit in forest clearings, so the flavour shifts with whatever is in bloom that season. Two jars will not taste identical.</p></div>
           {%- when 'combo' -%}
             <div class="plb__card"><h4>Made to compare</h4><p>Brew each at the same strength for a week and you will know which one you actually reach for &mdash; cheaper than committing to a full pack first.</p></div>
-            <div class="plb__card"><h4>Store them apart</h4><p>Tea takes on smells fast. Keep each pack sealed and away from {% if has_honey %}the honey and {% endif %}the coffee.</p></div>
-            <div class="plb__card"><h4>Ships as one box</h4><p>One package, one delivery charge, packed the day it leaves us.</p></div>
+            <div class="plb__card"><h4>Store them apart</h4><p>Tea takes on smells fast. Keep each pack sealed and away from spices{% if has_honey %}, honey{% endif %} and coffee.</p></div>
+            <div class="plb__card"><h4>Ships as one box</h4><p>Everything comes in one package. {% if product.price >= 64900 %}It ships free on its own.{% else %}Add any other pack and delivery is free.{% endif %}</p></div>
           {%- when 'milktea' -%}
             <div class="plb__card"><h4>CTC vs orthodox</h4><p>CTC &mdash; crush, tear, curl &mdash; is machine-processed into granules that brew fast and strong. Orthodox leaf is rolled whole and gives a lighter, more aromatic cup.</p></div>
             <div class="plb__card"><h4>Why a fine powder</h4><p>Fine powder gives up its colour and strength quickly, which is what lets it stand up to plenty of milk. It is built for milk, not for drinking black.</p></div>

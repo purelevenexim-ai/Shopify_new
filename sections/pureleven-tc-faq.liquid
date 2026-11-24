@@ -9,7 +9,7 @@ Tea & Coffee FAQ Section
 
 <section class="tc-faq">
   <div class="tc-faq__container">
-    <p class="tc-eyebrow"><i>09</i> / Questions</p>
+    <p class="tc-eyebrow">{% if section.settings.eyebrow_num != 'none' %}<i>{{ section.settings.eyebrow_num | default: '09' }}</i> / {% endif %}{{ section.settings.eyebrow_text | default: 'Questions' }}</p>
     {%- if section.settings.heading -%}
       <h2 class="tc-faq__heading tc-h2">{{ section.settings.heading }}</h2>
     {%- endif -%}
@@ -56,6 +56,8 @@ Tea & Coffee FAQ Section
 {
   "name": "TC FAQ",
   "settings": [
+    { "type": "text", "id": "eyebrow_num", "label": "Eyebrow number" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow text" },
     {
       "type": "text",
       "id": "heading",

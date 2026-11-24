@@ -54,8 +54,8 @@
       </div>
 
       <div class="cc-card__price-row">
-        <s class="cc-card__price-compare"{% unless has_compare %} style="display: none;"{% endunless %}>{{ compare | money }}</s>
-        <strong class="cc-card__price-sale" data-price>{{ price | money }}</strong>
+        <s class="cc-card__price-compare"{% unless has_compare %} style="display: none;"{% endunless %}>{{ compare | money_without_currency | remove: '.00' | prepend: '₹' }}</s>
+        <strong class="cc-card__price-sale" data-price>{{ price | money_without_currency | remove: '.00' | prepend: '₹' }}</strong>
       </div>
 
       {%- if card_product.variants.size > 1 -%}
@@ -107,7 +107,7 @@
           var compareEl = card.querySelector('.cc-card__price-compare');
           var badgeEl = card.querySelector('.cc-card__badge');
           var variantInput = card.querySelector('.cc-card__variant-id');
-          function fmt(cents) { return 'Rs. ' + (cents / 100).toFixed(2); }
+          function fmt(cents) { var v = cents / 100; return '\u20B9' + (v % 1 ? v.toFixed(2) : v.toLocaleString('en-IN')); }
           card.querySelectorAll('.cc-card__pill-input').forEach(function (input) {
             input.addEventListener('change', function () {
               var price = parseInt(this.dataset.price, 10);

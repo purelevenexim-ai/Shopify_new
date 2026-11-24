@@ -1,0 +1,100 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'tc-campaign.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer></script>
+
+<section class="tcx-combos" id="{{ section.settings.anchor | default: 'trial-pack' }}">
+  <div class="tcx-combos__wrap">
+    {%- if section.settings.eyebrow != blank -%}<p class="tcx-eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+    <h2 class="tcx-h2">{{ section.settings.heading | escape }}</h2>
+    {%- if section.settings.lede != blank -%}<p class="tcx-lede">{{ section.settings.lede | escape }}</p>{%- endif -%}
+
+    <div class="tcx-picks{% if section.blocks.size == 1 %} is-single{% endif %}">
+      {%- for block in section.blocks -%}
+        {%- assign p = all_products[block.settings.product_handle] -%}
+        {%- if p != blank -%}
+          {%- assign v = p.selected_or_first_available_variant -%}
+          {%- if block.settings.variant_title != blank -%}
+            {%- for pv in p.variants -%}{%- if pv.title == block.settings.variant_title -%}{%- assign v = pv -%}{%- endif -%}{%- endfor -%}
+          {%- endif -%}
+          <article class="tcx-pick{% if block.settings.featured %} is-featured{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.flag != blank -%}<span class="tcx-pick__flag">{{ block.settings.flag | escape }}</span>{%- endif -%}
+            {%- assign pics = block.settings.picture_handles | split: ',' -%}
+            <div class="tcx-pick__pics{% if pics.size > 1 %} is-stack{% endif %}">
+              {%- if pics.size > 1 -%}
+                {%- for h in pics limit: 3 -%}
+                  {%- assign pp = all_products[h] -%}
+                  {%- if pp.featured_image -%}{{ pp.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '120,240,360,480', sizes: '(min-width: 990px) 16vw, 32vw', alt: '' }}{%- endif -%}
+                {%- endfor -%}
+              {%- elsif p.featured_image -%}
+                {{ p.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '160,320,480', sizes: '(min-width: 990px) 28vw, 96px', alt: p.title }}
+              {%- endif -%}
+            </div>
+            <div class="tcx-pick__body">
+              <h3 class="tcx-pick__name">{{ block.settings.title | default: p.title | escape }}</h3>
+              {%- if block.settings.size_text != blank -%}<p class="tcx-pick__size">{{ block.settings.size_text | escape }}</p>{%- endif -%}
+              <p class="tcx-pick__price">
+                <b>&#8377;{{ v.price | divided_by: 100 }}</b>
+                {%- if v.compare_at_price > v.price -%}
+                  {%- assign save = v.compare_at_price | minus: v.price -%}
+                  {%- assign save_pct = save | times: 100.0 | divided_by: v.compare_at_price | round -%}
+                  <s>{% if block.settings.compare_label == 'mrp' %}MRP {% endif %}&#8377;{{ v.compare_at_price | divided_by: 100 }}</s>
+                  <small>Save &#8377;{{ save | divided_by: 100 }} ({{ save_pct }}%)</small>
+                {%- endif -%}
+              </p>
+              {%- if v.compare_at_price > v.price and block.settings.compare_label == 'separately' -%}
+                <p class="tcx-pick__note">&#8377;{{ v.compare_at_price | divided_by: 100 }} if bought separately</p>
+              {%- endif -%}
+              {%- if block.settings.note != blank -%}<p class="tcx-pick__note">{{ block.settings.note | escape }}</p>{%- endif -%}
+              {%- if block.settings.hook != blank -%}<p class="tcx-pick__hook">{{ block.settings.hook | escape }}</p>{%- endif -%}
+              {%- if block.settings.show_gift and section.settings.gift_line != blank -%}<p class="tcx-pick__gift">{{ section.settings.gift_line | escape }}</p>{%- endif -%}
+              {%- assign pick_form_id = 'tcx-pick-form-' | append: block.id -%}
+              {%- form 'product', p, id: pick_form_id, class: 'tc-product-form tcx-pick__form' -%}
+                <input type="hidden" name="id" value="{{ v.id }}">
+                <button type="submit" name="add" class="tcx-pick__btn"{% unless v.available %} disabled{% endunless %}>
+                  {%- if v.available -%}{{ block.settings.button | default: 'Add to cart' | escape }}{%- else -%}Sold out{%- endif -%}
+                </button>
+              {%- endform -%}
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.footnote != blank -%}<p class="tcx-picks__foot">{{ section.settings.footnote | escape }}</p>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pack picker",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "trial-pack" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "01 / Pick your pack" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "One tea, three teas, or the whole kitchen." },
+    { "type": "text", "id": "lede", "label": "Intro" },
+    { "type": "text", "id": "gift_line", "label": "Free gift line (shown on packs with Free gift ticked)", "info": "Only a gift you really send, e.g. Free: 10 g whole cardamom from our farm. Leave empty to hide." },
+    { "type": "text", "id": "footnote", "label": "Footnote" }
+  ],
+  "blocks": [
+    {
+      "type": "combo",
+      "name": "Pack",
+      "settings": [
+        { "type": "text", "id": "product_handle", "label": "Product handle" },
+        { "type": "text", "id": "variant_title", "label": "Variant (e.g. 100g, optional)" },
+        { "type": "text", "id": "title", "label": "Title (optional)" },
+        { "type": "text", "id": "size_text", "label": "Size line" },
+        { "type": "text", "id": "flag", "label": "Flag (optional)" },
+        { "type": "select", "id": "compare_label", "label": "Show compare-at price as", "default": "mrp", "options": [
+          { "value": "mrp", "label": "MRP (strike-through)" }, { "value": "separately", "label": "If bought separately" } ] },
+        { "type": "text", "id": "note", "label": "Note" },
+        { "type": "text", "id": "hook", "label": "Value hook" },
+        { "type": "text", "id": "picture_handles", "label": "Picture product handles (comma-separated, optional)" },
+        { "type": "text", "id": "button", "label": "Button label", "default": "Add to cart" },
+        { "type": "checkbox", "id": "featured", "label": "Highlight", "default": false },
+        { "type": "checkbox", "id": "show_gift", "label": "Free gift", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Pack picker" }]
+}
+{% endschema %}

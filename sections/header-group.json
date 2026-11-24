@@ -37,13 +37,21 @@
         "announcement_TMRxiR": {
           "type": "announcement",
           "settings": {
-            "text": "Farm-to-Home Spices from Kerala · Free Shipping ₹649+",
+            "text": "Free delivery on any 2 packs or ₹649+",
+            "link": ""
+          }
+        },
+        "announcement_hh_dispatch": {
+          "type": "announcement",
+          "settings": {
+            "text": "Order by 1 pm for same-day dispatch, Mon–Sat",
             "link": ""
           }
         }
       },
       "block_order": [
-        "announcement_TMRxiR"
+        "announcement_TMRxiR",
+        "announcement_hh_dispatch"
       ],
       "name": "t:sections.announcement-bar.presets.name",
       "settings": {

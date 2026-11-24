@@ -1,24 +1,44 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "tc-hero": {
-      "type": "pureleven-tc-hero",
+      "type": "pureleven-tc-campaign",
       "settings": {
-        "heading": "Tea Powder & Filter Coffee from Kerala",
-        "subheading": "Kadak chai · BOP black tea · Orange Pekoe · South Indian filter coffee",
-        "trust_line": "Tea powder for milk tea & kadak chai • BOP black tea • South Indian filter coffee • Pan India delivery",
-        "cta_1_text": "Shop Tea",
-        "cta_1_link": "#tea-collection",
-        "cta_2_text": "Shop Coffee",
-        "cta_2_link": "#coffee-section"
+        "strip_text": "",
+        "page_title": "Featured tea",
+        "heading": "Real cardamom. Your everyday chai.",
+        "subheading": "Vagamon tea blended with green cardamom from our own farm in Rajakumari. No flavouring, no essence. Brew it like any tea powder.",
+        "image_badge": "Cardamom from our farm in Rajakumari",
+        "rating_text": "4.9 · 62 Google reviews",
+        "product_handle": "cardamom-tea",
+        "default_size": "100g",
+        "sticky_title": "Real Cardamom Tea",
+        "assure_1": "Cash on delivery",
+        "assure_2": "Same-day dispatch",
+        "assure_3": "FSSAI licensed",
+        "low_stock_at": 40,
+        "offer_end": "",
+        "offer_label": "Offer ends in",
+        "show_whatsapp": true,
+        "whatsapp_number": "918848265849",
+        "whatsapp_label": "Ask us on WhatsApp",
+        "whatsapp_message": "Hi Pure Leven, I have a question about your cardamom tea.",
+        "rating_url": "https://www.google.com/maps/place/Pure+Leven+Exim/@9.9734527,77.1686472,17z/data=!4m8!3m7!1s0x3b07a195f92f434b:0x46344c5caceb41de!8m2!3d9.9734527!4d77.1686472!9m1!1b1!16s%2Fg%2F11t6vqrzzb",
+        "batch_text": "Fresh batch from the factory every week",
+        "batch_date": "",
+        "cups_per_100g": 40,
+        "price_note": "",
+        "nudge_one": "2 packs ship free.",
+        "free_items": 2,
+        "free_total": 649,
+        "picker_link_text": "Or try 3 teas in one box ↓",
+        "picker_anchor": "trial-pack",
+        "hide_compare_prices": false,
+        "show_low_stock": false,
+        "kicker_is_h1": false,
+        "product_title": "Real Cardamom Tea Powder",
+        "show_cutoff": true,
+        "cutoff_hour": 13,
+        "dispatch_days": "1,2,3,4,5,6"
       }
     },
     "tc-drink-selector": {
@@ -32,11 +52,13 @@
       "type": "pureleven-tc-products",
       "settings": {
         "section_id": "tea-collection",
-        "heading": "Tea Powder for Every Cup",
-        "description": "Milk tea powder, BOP black tea, Orange Pekoe & cardamom tea — selected for taste and colour",
-        "product_handles": "premium-milk-tea-powder,premium-black-tea-granules,orange-pekoe-powder,cardamom-tea",
+        "heading": "All our teas and filter coffee",
+        "description": "Any 2 packs ship free.",
+        "product_handles": "premium-milk-tea-powder,premium-black-tea-granules,orange-pekoe-powder,naadan-kerala-coffee",
         "grid_columns_desktop": 4,
-        "grid_columns_mobile": "2"
+        "grid_columns_mobile": "2",
+        "eyebrow_num": "none",
+        "eyebrow_text": "The full range"
       }
     },
     "tc-comparison": {
@@ -44,16 +66,18 @@
       "settings": {
         "heading": "Which tea powder is right for you?",
         "show_sizes": true
-      }
+      },
+      "disabled": true
     },
     "tc-trial-pack": {
       "type": "pureleven-tc-trial-pack",
       "settings": {
-        "heading": "Still not sure which one you'll like?",
-        "subheading": "Try all four first.",
+        "heading": "Three teas. One easy combo.",
+        "subheading": "Milk Tea 100g + Black Tea 100g + Cardamom Tea 100g. Tea only, 300g total.",
         "product_handle": "starter-trial-pack-4-varieties",
-        "button_text": "Try All Four"
-      }
+        "button_text": "Add tea combo"
+      },
+      "disabled": true
     },
     "tc-coffee-feature": {
       "type": "pureleven-tc-coffee",
@@ -65,7 +89,8 @@
         "spec_1": "Medium Roast Robusta",
         "spec_2": "Filter Grind",
         "spec_3": "Coffee-Chicory Blend"
-      }
+      },
+      "disabled": true
     },
     "tc-other-categories": {
       "type": "pureleven-tc-other-categories",
@@ -77,7 +102,8 @@
         "honey_label": "Naadan Honey",
         "honey_sub": "Raw, unfiltered Kerala honey",
         "honey_link": "/products/naadan-pure-honey"
-      }
+      },
+      "disabled": true
     },
     "tc-brewing-guide": {
       "type": "pureleven-tc-brewing",
@@ -137,12 +163,13 @@
         }
       },
       "block_order": [
+        "tab-cardamom",
         "tab-milk",
         "tab-black",
         "tab-pekoe",
-        "tab-cardamom",
         "tab-coffee"
-      ]
+      ],
+      "disabled": true
     },
     "tc-story": {
       "type": "pureleven-tc-story",
@@ -155,7 +182,8 @@
         "step_2_copy": "We choose the best tea from each factory for taste, aroma, flavour and colour.",
         "step_3_title": "Blend for balance",
         "step_3_copy": "Tea blenders around Munnar blend our picks, so every pack gives the same balanced cup."
-      }
+      },
+      "disabled": true
     },
     "tc-reviews": {
       "type": "pureleven-tc-reviews",
@@ -194,14 +222,23 @@
         "review-1",
         "review-2",
         "review-3"
-      ]
+      ],
+      "disabled": true
     },
     "tc-faq": {
       "type": "pureleven-tc-faq",
       "settings": {
-        "heading": "Questions about our tea & coffee?"
+        "heading": "Questions about our tea & coffee?",
+        "eyebrow_num": "none"
       },
       "blocks": {
+        "faq_tea_origin": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where does your tea come from?",
+            "answer": "<p>Mostly from tea factories in Kolukkumalai, with more from Suryanelli and Vagamon. We visit them every week, pick the best tea from each, and have it blended by tea blenders around Munnar. <a href=\"/pages/our-tea\">Read where our tea comes from</a>.</p>"
+          }
+        },
         "faq-1": {
           "type": "faq_item",
           "settings": {
@@ -216,13 +253,6 @@
             "answer": "<p>Premium Black Tea Granules or Orange Pekoe both work well without milk.</p>"
           }
         },
-        "faq-3": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What is the difference between Milk Tea Powder and Black Tea Granules?",
-            "answer": "<p>Milk Tea Powder is a fine CTC dust, SRD grade, that brews fast and strong for milk tea. Black Tea Granules are CTC BOP (Broken Orange Pekoe), a granule grade and not a powder, for a brighter, cleaner cup.</p>"
-          }
-        },
         "faq-4": {
           "type": "faq_item",
           "settings": {
@@ -234,14 +264,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Does the coffee contain chicory?",
-            "answer": "<p>Our standard Naadan Kerala Coffee is a coffee and chicory blend, usually 53 parts coffee to 47 parts chicory. Chicory is a roasted root with no caffeine. It gives the decoction body and a darker colour. If you prefer a different mix, we also make 0% (no chicory), 10%, 20%, 30% and 43% chicory on request. Message us on WhatsApp at +91 88482 65849 and tell us the ratio you want.</p>"
-          }
-        },
-        "faq-6": {
-          "type": "faq_item",
-          "settings": {
-            "question": "How should I store tea and coffee?",
-            "answer": "<p>Keep in an airtight container, away from direct sunlight and moisture.</p>"
+            "answer": "<p>Yes. Our Naadan Filter Coffee contains coffee and chicory. It is ground for South Indian filter preparation.</p>"
           }
         },
         "faq-7": {
@@ -251,13 +274,6 @@
             "answer": "<p>We use 2 to 2.5 g of tea, about one level teaspoon, for a 180 ml cup of water and milk. Add a little more if you like it stronger.</p>"
           }
         },
-        "faq-8": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What are the available pack sizes?",
-            "answer": "<p>Milk Tea Powder: 250g, 500g, 1kg. Black Tea Granules: 200g, 400g, 800g. Cardamom Tea: 250g, 400g, 800g. Orange Pekoe: 50g, 100g, 200g. Filter Coffee: 250g, 400g.</p>"
-          }
-        },
         "faq-9": {
           "type": "faq_item",
           "settings": {
@@ -265,32 +281,11 @@
             "answer": "<p>Add any 2 items and delivery is free — two different teas or coffees, two sizes, or 2 packs of the same one. Orders above ₹649 also ship free.</p>"
           }
         },
-        "faq-10": {
+        "faq-cod": {
           "type": "faq_item",
           "settings": {
-            "question": "Which is the best tea powder for kadak chai?",
-            "answer": "<p>Premium Milk Tea Powder is selected specifically for strong, flavourful milk tea — it gives the colour, taste and aroma that makes a proper kadak chai. It works equally well for everyday chai patti.</p>"
-          }
-        },
-        "faq-11": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What is BOP tea? How is it different from dust tea?",
-            "answer": "<p>BOP stands for Broken Orange Pekoe — a CTC broken-leaf grade that brews a brighter, cleaner cup than dust grades (like SRD). It gives more body and colour than dust with less bitterness. Our Premium Black Tea Granules are BOP grade, ideal for black tea and lighter milk tea.</p>"
-          }
-        },
-        "faq-12": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Is the filter coffee chicory-free?",
-            "answer": "<p>Our standard pack is not chicory-free: it is a coffee and chicory blend, usually 53 parts coffee to 47 parts chicory, the hotel-style mix many South Indian homes grew up with. But we do make chicory-free filter coffee (0% chicory), plus 10%, 20%, 30% and 43% chicory, and a Robusta and Arabica mix, on request. Message us on WhatsApp at +91 88482 65849. All of it is ground for South Indian filter preparation.</p>"
-          }
-        },
-        "faq_tea_origin": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Where does your tea come from?",
-            "answer": "<p>Mostly from tea factories in Kolukkumalai, with more from Suryanelli and Vagamon. We visit them every week, pick the best tea from each, and have it blended by tea blenders around Munnar. <a href=\"/pages/our-tea\">Read where our tea comes from</a>.</p>"
+            "question": "Can I pay cash on delivery?",
+            "answer": "<p>Yes. Choose Cash on Delivery at checkout, or pay by UPI, card or net banking.</p>"
           }
         }
       },
@@ -298,29 +293,24 @@
         "faq_tea_origin",
         "faq-1",
         "faq-2",
-        "faq-3",
         "faq-4",
         "faq-5",
-        "faq-6",
         "faq-7",
-        "faq-8",
         "faq-9",
-        "faq-10",
-        "faq-11",
-        "faq-12"
+        "faq-cod"
       ]
     },
     "tc-final-cta": {
       "type": "pureleven-tc-final-cta",
       "settings": {
-        "heading": "Your everyday cup, selected better.",
-        "primary_cta_text": "Shop Tea",
-        "primary_cta_link": "#tea-collection",
-        "secondary_cta_text": "Shop Coffee",
-        "secondary_cta_link": "#coffee-section",
-        "tertiary_text": "Not sure?",
-        "tertiary_cta_text": "Try the Starter Pack",
-        "tertiary_cta_link": "#trial-pack"
+        "heading": "Make room for a better chai.",
+        "primary_cta_text": "Shop Cardamom Tea",
+        "primary_cta_link": "#cardamom-tea",
+        "secondary_cta_text": "Shop Tea Combo",
+        "secondary_cta_link": "#trial-pack",
+        "tertiary_text": "",
+        "tertiary_cta_text": "",
+        "tertiary_cta_link": "#tea-collection"
       }
     },
     "tc-spices": {
@@ -333,22 +323,290 @@
         "products_to_show": 4,
         "button_label": "See more spices",
         "button_link": "/"
+      },
+      "disabled": true
+    },
+    "tc-campaign-media": {
+      "type": "pureleven-tc-media",
+      "settings": {
+        "heading": "A closer look at our cardamom"
+      },
+      "disabled": true
+    },
+    "tc-combos": {
+      "type": "pureleven-tc-combos",
+      "settings": {
+        "anchor": "trial-pack",
+        "eyebrow": "For first-timers",
+        "heading": "New here? Start with our Tea Combo",
+        "lede": "Taste three teas, then pick your favourite.",
+        "gift_line": "",
+        "footnote": ""
+      },
+      "blocks": {
+        "pick-combo": {
+          "type": "combo",
+          "settings": {
+            "product_handle": "starter-trial-pack-4-varieties",
+            "variant_title": "",
+            "title": "Tea Combo",
+            "size_text": "Cardamom · Milk · Black tea, 100 g each",
+            "flag": "First-timer pick",
+            "compare_label": "mrp",
+            "note": "",
+            "hook": "Add Cardamom Tea 100 g = 2 items, free delivery",
+            "picture_handles": "cardamom-tea,premium-milk-tea-powder,premium-black-tea-granules",
+            "button": "Add Tea Combo",
+            "featured": true,
+            "show_gift": true
+          }
+        }
+      },
+      "block_order": [
+        "pick-combo"
+      ]
+    },
+    "tc-trust": {
+      "type": "pureleven-tc-trust",
+      "settings": {
+        "eyebrow": "Who we are",
+        "heading": "Real people, real farm",
+        "lede": "",
+        "quote": "",
+        "quote_by": "Basil, Pure Leven",
+        "photo_1_caption": "Sorting fresh cardamom",
+        "photo_2_caption": "Freshly picked cardamom",
+        "show_video": true,
+        "video_caption": "Cardamom harvest",
+        "rating": "",
+        "rating_count": "",
+        "reviews_url": "https://www.google.com/maps/place/Pure+Leven+Exim/@9.9734527,77.1686472,17z/data=!4m8!3m7!1s0x3b07a195f92f434b:0x46344c5caceb41de!8m2!3d9.9734527!4d77.1686472!9m1!1b1!16s%2Fg%2F11t6vqrzzb",
+        "reviews_note": "",
+        "anchor": "why-us",
+        "tone": "cream",
+        "show_story": true,
+        "orders_big": "",
+        "orders_small": ""
+      },
+      "blocks": {
+        "fact-fssai": {
+          "type": "fact",
+          "settings": {
+            "icon": "shield",
+            "title": "FSSAI licensed",
+            "text": "No. 10020042013756"
+          }
+        },
+        "fact-cod": {
+          "type": "fact",
+          "settings": {
+            "icon": "cash",
+            "title": "Cash on delivery",
+            "text": "Or UPI and cards"
+          }
+        },
+        "fact-free": {
+          "type": "fact",
+          "settings": {
+            "icon": "truck",
+            "title": "Free delivery",
+            "text": "Any 2 packs, or ₹649+"
+          }
+        },
+        "fact-dispatch": {
+          "type": "fact",
+          "settings": {
+            "icon": "clock",
+            "title": "Same-day dispatch",
+            "text": "Order before 1 pm"
+          }
+        }
+      },
+      "block_order": [
+        "fact-fssai",
+        "fact-cod",
+        "fact-free",
+        "fact-dispatch"
+      ]
+    },
+    "tc-proof": {
+      "type": "pureleven-tc-trust",
+      "settings": {
+        "anchor": "reviews",
+        "tone": "cream",
+        "show_story": false,
+        "eyebrow": "Reviews",
+        "heading": "What customers say",
+        "lede": "",
+        "rating": "4.9",
+        "rating_count": "62 Google reviews",
+        "reviews_url": "https://www.google.com/maps/place/Pure+Leven+Exim/@9.9734527,77.1686472,17z/data=!4m8!3m7!1s0x3b07a195f92f434b:0x46344c5caceb41de!8m2!3d9.9734527!4d77.1686472!9m1!1b1!16s%2Fg%2F11t6vqrzzb",
+        "orders_big": "7000+",
+        "orders_small": "orders shipped from Adimali since 2023",
+        "reviews_note": "",
+        "show_video": false
+      },
+      "blocks": {
+        "rev-1": {
+          "type": "review",
+          "settings": {
+            "name": "Narendranathan KP",
+            "date": "June 2026",
+            "stars": 5,
+            "text": "Very prompt delivery. Packing and quality of ingredients are very good. Thank you",
+            "source": "Google review",
+            "town": ""
+          }
+        },
+        "rev-2": {
+          "type": "review",
+          "settings": {
+            "name": "Md. Kalim",
+            "date": "June 2026",
+            "stars": 5,
+            "text": "Quality is very good and quick delivery same quality for each and every dispatch. I am regular buyer must give 6 star rating",
+            "source": "Google review",
+            "town": ""
+          }
+        }
+      },
+      "block_order": [
+        "rev-1",
+        "rev-2"
+      ]
+    },
+    "tc-steps": {
+      "type": "pureleven-tc-steps",
+      "settings": {
+        "anchor": "how-to-brew",
+        "eyebrow": "How to brew",
+        "heading": "Cardamom chai in 3 steps",
+        "lede": "",
+        "help": "Need help? <a href=\"https://wa.me/918848265849?text=Hi%20Pure%20Leven%2C%20how%20should%20I%20brew%20the%20cardamom%20tea%3F\" target=\"_blank\">WhatsApp us</a>.",
+        "button_text": "Get the cardamom tea",
+        "button_link": "#cardamom-tea"
+      },
+      "blocks": {
+        "step-1": {
+          "type": "step",
+          "settings": {
+            "title": "Boil milk and water",
+            "text": ""
+          }
+        },
+        "step-2": {
+          "type": "step",
+          "settings": {
+            "title": "Add 1 tsp per cup, boil 1 min",
+            "text": ""
+          }
+        },
+        "step-3": {
+          "type": "step",
+          "settings": {
+            "title": "Strain and sweeten",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "step-1",
+        "step-2",
+        "step-3"
+      ]
+    },
+    "tc-banner": {
+      "type": "pureleven-tc-hero",
+      "settings": {
+        "heading": "Tea Powder & Filter Coffee from Kerala",
+        "subheading": "Kadak chai · BOP black tea · Orange Pekoe · South Indian filter coffee",
+        "trust_line": "",
+        "cta_1_text": "Shop Tea",
+        "cta_1_link": "#cardamom-tea",
+        "cta_2_text": "Shop Coffee",
+        "cta_2_link": "#tea-collection",
+        "art": "hills"
       }
+    },
+    "tc-journey": {
+      "type": "pureleven-tc-journey",
+      "settings": {
+        "anchor": "from-the-hills",
+        "eyebrow": "Our journey",
+        "heading": "From the hills to your cup",
+        "lede": ""
+      },
+      "blocks": {
+        "j1": {
+          "type": "step",
+          "settings": {
+            "icon": "hills",
+            "title": "Tea gardens",
+            "text": "Kolukkumalai, Suryanelli, Vagamon"
+          }
+        },
+        "j2": {
+          "type": "step",
+          "settings": {
+            "icon": "factory",
+            "title": "Tea factory",
+            "text": "We pick the best, every week"
+          }
+        },
+        "j3": {
+          "type": "step",
+          "settings": {
+            "icon": "farm",
+            "title": "Our cardamom farm",
+            "text": "Rajakumari, Idukki"
+          }
+        },
+        "j4": {
+          "type": "step",
+          "settings": {
+            "icon": "pack",
+            "title": "Packed with care",
+            "text": "Pure Leven, Adimali"
+          }
+        },
+        "j5": {
+          "type": "step",
+          "settings": {
+            "icon": "cup",
+            "title": "Your cup",
+            "text": "At your door in 6–9 days"
+          }
+        }
+      },
+      "block_order": [
+        "j1",
+        "j2",
+        "j3",
+        "j4",
+        "j5"
+      ]
     }
   },
   "order": [
+    "tc-banner",
     "tc-hero",
-    "tc-other-categories",
+    "tc-combos",
     "tc-products-tea",
-    "tc-trial-pack",
-    "tc-coffee-feature",
-    "tc-spices",
-    "tc-drink-selector",
-    "tc-reviews",
-    "tc-comparison",
-    "tc-brewing-guide",
-    "tc-story",
+    "tc-journey",
+    "tc-proof",
+    "tc-trust",
+    "tc-steps",
     "tc-faq",
-    "tc-final-cta"
+    "tc-final-cta",
+    "tc-coffee-feature",
+    "tc-brewing-guide",
+    "tc-comparison",
+    "tc-story",
+    "tc-trial-pack",
+    "tc-reviews",
+    "tc-campaign-media",
+    "tc-other-categories",
+    "tc-spices",
+    "tc-drink-selector"
   ]
 }

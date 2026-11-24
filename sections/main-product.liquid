@@ -10,6 +10,7 @@
   {% endif %}
 >
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'hh-product.js' | asset_url }}" defer></script>
   {{ 'component-card.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -409,20 +410,7 @@
                     price_class: 'price--large'
                   -%}
                   <span class="pl-variant-spinner" aria-hidden="true"></span>
-                </div>
-                {%- if product.metafields.custom.short_description != blank -%}
-                  <p class="pl-short-desc">{{ product.metafields.custom.short_description }}</p>
-                {%- elsif product.description != blank -%}
-                  <p class="pl-short-desc">{{ product.description | strip_html | split: '. ' | first }}.</p>
-                {%- endif -%}
-                <div class="pl-freeship">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                  {%- if pl_variant.price >= pl_freeship_threshold -%}
-                    <span>Qualifies for <strong>FREE delivery</strong></span>
-                  {%- else -%}
-                    {%- assign pl_remaining = pl_freeship_threshold | minus: pl_variant.price -%}
-                    <span>Add <strong>{{ pl_remaining | money_without_currency | remove: '.00' | prepend: '₹' }}</strong> more for free delivery</span>
-                  {%- endif -%}
+                  {%- render 'hh-buy-box', product: product, variant: pl_variant -%}
                 </div>
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
@@ -1244,14 +1232,7 @@
   }
   #shopify-section-{{ section.id }} .product-form__input--pill input[type='radio']:focus-visible + label { outline: 2px solid var(--sk-acc); outline-offset: -3px; }
   #shopify-section-{{ section.id }} .product-form__input--pill input[type='radio'].disabled + label { color: var(--sk-faint) !important; text-decoration: line-through; }
-  #shopify-section-{{ section.id }} .product-form__input--pill input[type='radio'] + label { flex-direction: column; gap: 3px; line-height: 1.2 !important; }
-  #shopify-section-{{ section.id }} .pl-var-label { font: inherit !important; letter-spacing: inherit !important; color: inherit !important; line-height: 1.2 !important; }
-  #shopify-section-{{ section.id }} .pl-var-save {
-    display: block; margin: 0 !important; color: var(--sk-acc) !important;
-    font: 600 11px/1.2 var(--sk-mono) !important; letter-spacing: 0.04em !important; text-transform: uppercase !important;
-  }
-  #shopify-section-{{ section.id }} .product-form__input--pill input[type='radio']:checked + label .pl-var-save { color: var(--sk-acc-hover) !important; }
-  #shopify-section-{{ section.id }} .product-form__input--pill input[type='radio'].disabled + label .pl-var-save { color: var(--sk-muted) !important; }
+  #shopify-section-{{ section.id }} .pl-var-label { font: inherit !important; letter-spacing: inherit !important; color: inherit !important; }
 
   /* quantity + add to cart */
   #shopify-section-{{ section.id }} .quantity__label { display: none !important; }

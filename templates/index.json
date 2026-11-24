@@ -15,33 +15,33 @@
         "trust_1": {
           "type": "trust_item",
           "settings": {
-            "icon": "🌿",
-            "title": "No middlemen",
-            "subtitle": "Farm → your door"
+            "icon": "cash",
+            "title": "Cash on delivery",
+            "subtitle": "UPI and cards too"
           }
         },
         "trust_2": {
           "type": "trust_item",
           "settings": {
-            "icon": "📦",
-            "title": "Free shipping",
-            "subtitle": "Orders above ₹649"
+            "icon": "van",
+            "title": "Free delivery",
+            "subtitle": "Any 2 packs or ₹649+"
           }
         },
         "trust_3": {
           "type": "trust_item",
           "settings": {
-            "icon": "⚡",
-            "title": "Dispatched in 24h",
-            "subtitle": "Mon – Sat"
+            "icon": "timer",
+            "title": "Same-day dispatch",
+            "subtitle": "Order by 1 pm, Mon–Sat"
           }
         },
         "trust_4": {
           "type": "trust_item",
           "settings": {
-            "icon": "✦",
-            "title": "Small batch only",
-            "subtitle": "Seasonal harvests"
+            "icon": "shield",
+            "title": "FSSAI licensed",
+            "subtitle": "No. 10020042013756"
           }
         }
       },
@@ -58,12 +58,12 @@
         "cover_image": "shopify://shop_images/pl-home-process-poster.webp",
         "eyebrow": "Rajakumari, Idukki · Kerala",
         "heading": "Fresh Kerala Spices and Tea, Chosen at Origin",
-        "subtext": "Pure Leven Spices & Tea sells Kerala spices packed whole by farming families around Rajakumari and Adimali in Idukki: extra bold cardamom, black pepper, white pepper and Adimali cloves, plus Ceylon cinnamon, coffee and honey, and tea from factories in Kolukkumalai, Suryanelli and Vagamon. Orders ship across India in 6 to 9 working days, with free shipping above ₹649.",
-        "cta1_label": "Shop Spices",
-        "cta1_url": "/collections/all",
-        "cta2_label": "Read our guides",
-        "cta2_url": "/blogs/cooking-spices",
-        "stat_number": "12+",
+        "subtext": "Whole spices from our farm in Rajakumari and tea from the Munnar hills, packed in Adimali and sent across India.",
+        "cta1_label": "Shop spices",
+        "cta1_url": "/collections/spices",
+        "cta2_label": "Shop tea & coffee",
+        "cta2_url": "/collections/tea-coffee",
+        "stat_number": "",
         "stat_label": "Farmer partners",
         "stat_place": "Idukki & beyond"
       }
@@ -77,16 +77,16 @@
         "heading": "",
         "kicker": "",
         "note": "",
-        "delivery_note": "Free delivery ₹649+",
+        "delivery_note": "Any 2 packs ship free",
         "stat1_label": "",
         "stat1_value": "",
         "stat2_label": "",
         "stat2_value": "",
         "stat3_label": "",
         "stat3_value": "",
-        "show_reviews": true,
+        "show_reviews": false,
         "reviews_score": "4.9",
-        "reviews_count": "56 Google reviews",
+        "reviews_count": "62 Google reviews",
         "r1_name": "",
         "r1_text": "",
         "r1_avatar": "",
@@ -105,10 +105,10 @@
       "type": "pureleven-category-showcase",
       "name": "Category Showcase",
       "settings": {
-        "eyebrow": "FRESH ESSENTIALS",
-        "title": "Categories",
+        "eyebrow": "Shop",
+        "title": "Spices, tea and honey",
         "heading_size": "h2",
-        "description": "<p>Fresh essentials for daily cooking, gifting, chai, baking, and traditional recipes.</p>",
+        "description": "<p>Packed in Adimali. Any 2 packs ship free.</p>",
         "collection_a": "spices",
         "label_a": "Kerala Spices",
         "collection_b": "tea-coffee",
@@ -158,7 +158,8 @@
         "color_scheme": "scheme-1",
         "padding_top": 24,
         "padding_bottom": 24
-      }
+      },
+      "disabled": true
     },
     "featured_product_xC3rVR": {
       "type": "featured-product",
@@ -218,7 +219,8 @@
         "enable_video_looping": true,
         "padding_top": 16,
         "padding_bottom": 20
-      }
+      },
+      "disabled": true
     },
     "custom_google_reviews_pl_mMPU4E": {
       "type": "custom-google-reviews-pl",
@@ -307,7 +309,7 @@
       "settings": {
         "business_name": "Pure Leven Exim",
         "overall_rating": "4.9",
-        "review_count": "56",
+        "review_count": "62",
         "review_url": "https://www.google.com/maps/place/Pure+Leven+Exim/@9.9734527,77.1686472,17z/data=!3m1!4b1!4m6!3m5!1s0x3b07a195f92f434b:0x46344c5caceb41de!8m2!3d9.9734527!4d77.1686472!16s%2Fg%2F11t6vqrzzb"
       }
     },
@@ -316,7 +318,8 @@
       "settings": {
         "padding_top": 40,
         "padding_bottom": 40
-      }
+      },
+      "disabled": true
     },
     "homepage_faq_MX2P8R": {
       "type": "homepage-faq",
@@ -328,34 +331,6 @@
     "custom_liquid_kerala_heritage": {
       "type": "pureleven-heritage-banner",
       "blocks": {
-        "spice_cardamom": {
-          "type": "spice",
-          "settings": {
-            "emoji": "🫙",
-            "label": "Cardamom"
-          }
-        },
-        "spice_black_pepper": {
-          "type": "spice",
-          "settings": {
-            "emoji": "🌶️",
-            "label": "Black Pepper"
-          }
-        },
-        "spice_cloves": {
-          "type": "spice",
-          "settings": {
-            "emoji": "🌸",
-            "label": "Cloves"
-          }
-        },
-        "spice_turmeric": {
-          "type": "spice",
-          "settings": {
-            "emoji": "🫚",
-            "label": "Turmeric"
-          }
-        },
         "pill_preservatives": {
           "type": "pill",
           "settings": {
@@ -371,47 +346,96 @@
         "pill_fssai": {
           "type": "pill",
           "settings": {
-            "text": "FSSAI Certified"
-          }
-        },
-        "pill_export": {
-          "type": "pill",
-          "settings": {
-            "text": "Export Quality"
+            "text": "FSSAI licensed"
           }
         }
       },
       "block_order": [
-        "spice_cardamom",
-        "spice_black_pepper",
-        "spice_cloves",
-        "spice_turmeric",
         "pill_preservatives",
         "pill_farm_to_table",
-        "pill_fssai",
-        "pill_export"
+        "pill_fssai"
       ],
       "name": "Kerala Heritage Banner",
       "settings": {
         "eyebrow": "From the Hills of Kerala",
-        "title": "Build a better spice shelf.",
-        "description": "<p>Start with the ingredients you use most: fresh pepper, real cardamom, warming cloves, raw honey, and everyday kitchen staples from Kerala.</p><p>Many grow in misty hill regions where slower cycles help hold aroma and natural oils. The difference shows up as soon as the spice hits heat.</p><p>Cardamom and black pepper are the big two Kerala spices. Idukki grows most of Kerala's cardamom, and pepper vines climb the same shade trees on many hill farms. Cloves from Adimali round out the three spices that lose their aroma fastest once ground, which is why they are the best to buy whole from the farm first. New to Kerala spices? Our <a href=\"/blogs/cooking-spices/kerala-spices-list\">list of Kerala spices</a> explains what each one is for, and our <a href=\"/blogs/cooking-spices/spice-names-malayalam-english\">spice names in Malayalam and English</a> helps if a recipe uses local words. Not sure what to pick? Message us on WhatsApp at +91 88482 65849 and tell us what you cook.</p>",
+        "title": "Build a better spice shelf",
+        "description": "<p>Cardamom and black pepper grow together on our farm in Rajakumari, where pepper vines climb the same shade trees. Cloves come from Adimali.</p><p>New to Kerala spices? Read our <a href=\"/blogs/cooking-spices/kerala-spices-list\">list of Kerala spices</a> or the <a href=\"/blogs/cooking-spices/spice-names-malayalam-english\">spice names in Malayalam and English</a>.</p>",
         "button_label": "Shop Fresh Kerala Spices",
         "button_link": "/collections/all",
         "padding_top": 64,
         "padding_bottom": 64
       }
+    },
+    "hh_journey": {
+      "type": "pureleven-tc-journey",
+      "settings": {
+        "anchor": "from-our-hills",
+        "eyebrow": "Our journey",
+        "heading": "From our hills to your kitchen",
+        "lede": "",
+        "scene": "spice"
+      },
+      "blocks": {
+        "step1": {
+          "type": "step",
+          "settings": {
+            "icon": "farm",
+            "title": "Our farm",
+            "text": "Rajakumari, Idukki"
+          }
+        },
+        "step2": {
+          "type": "step",
+          "settings": {
+            "icon": "hills",
+            "title": "Tea gardens",
+            "text": "Munnar hills"
+          }
+        },
+        "step3": {
+          "type": "step",
+          "settings": {
+            "icon": "grade",
+            "title": "Cleaned and graded",
+            "text": "Whole, never ground"
+          }
+        },
+        "step4": {
+          "type": "step",
+          "settings": {
+            "icon": "pack",
+            "title": "Packed with care",
+            "text": "Pure Leven, Adimali"
+          }
+        },
+        "step5": {
+          "type": "step",
+          "settings": {
+            "icon": "van",
+            "title": "At your door",
+            "text": "6–9 days across India"
+          }
+        }
+      },
+      "block_order": [
+        "step1",
+        "step2",
+        "step3",
+        "step4",
+        "step5"
+      ]
     }
   },
   "order": [
     "pl_hero_video_main",
-    "custom_google_reviews_pl_mMPU4E",
     "featured_collection_xT3MCp",
     "pureleven_featured_strip_bxBawH",
+    "custom_google_reviews_pl_mMPU4E",
+    "hh_journey",
+    "homepage_faq_MX2P8R",
+    "custom_liquid_kerala_heritage",
     "custom_liquid_nrxnGY",
     "featured_product_xC3rVR",
-    "homepage_value_props_NK5J",
-    "homepage_faq_MX2P8R",
-    "custom_liquid_kerala_heritage"
+    "homepage_value_props_NK5J"
   ]
 }

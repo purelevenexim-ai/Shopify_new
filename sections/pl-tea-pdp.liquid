@@ -1,0 +1,263 @@
+{%- comment -%}
+  Every product page (beverage and default templates): trust facts, free-delivery pairing on teas,
+  "From the hills" journey with the matching illustration, Google rating and the WhatsApp button.
+  Page-wide product styles live in assets/pl-hills.css.
+{%- endcomment -%}
+{%- liquid
+  assign tea_handles = section.settings.tea_handles | remove: ' ' | split: ','
+  assign is_tea = false
+  if tea_handles contains product.handle
+    assign is_tea = true
+  endif
+-%}
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'tc-campaign.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer></script>
+{%- liquid
+  assign wa_number = section.settings.whatsapp_number | remove: '+' | remove: ' '
+  assign wa_text = section.settings.whatsapp_message | append: ' ' | append: product.title | url_encode
+  if product.handle == section.settings.combo_handle
+    assign pair = all_products[section.settings.pair_handle]
+    assign pair_title = section.settings.pair_title
+    assign pair_line = section.settings.pair_line_combo
+  elsif is_tea
+    assign pair = all_products[section.settings.combo_handle]
+    assign pair_title = section.settings.combo_title
+    assign pair_line = section.settings.pair_line_tea
+  endif
+  assign j_heading = 'From the hills to your kitchen'
+  assign scene = ''
+  assign scene_alt = ''
+  assign door = 'van|At your door|In 6–9 days'
+  case product.handle
+    when 'cardamom-tea'
+      assign journey = 'hills|Tea gardens|Vagamon;factory|Tea factory|We pick every week;farm|Our cardamom farm|Rajakumari, Idukki;blend|Blended by us|60 g cardamom per kg;glass|Your elaichi chai|At your door in 6–9 days'
+    when 'premium-milk-tea-powder'
+      assign journey = 'hills|Tea gardens|Kolukkumalai, Suryanelli, Vagamon;factory|Tea factories|We pick the best every week;blend|Blended near Munnar|For colour and strength;pack|Packed with care|Pure Leven, Adimali;glass|Your chaya|At your door in 6–9 days'
+    when 'premium-black-tea-granules'
+      assign journey = 'hills|Tea gardens|Kolukkumalai, Suryanelli, Vagamon;factory|CTC factory|BOP granules;blend|Picked every week|For a bright cup;pack|Packed with care|Pure Leven, Adimali;cup|Your black tea|At your door in 6–9 days'
+    when 'orange-pekoe-powder'
+      assign journey = 'hills|Kolukkumalai garden|Young, small leaves;factory|Kolukkumalai factory|Orange Pekoe grade;pack|Packed with care|Pure Leven, Adimali;cup|Your black tea|At your door in 6–9 days'
+    when 'starter-trial-pack-4-varieties'
+      assign journey = 'hills|Tea gardens|Kolukkumalai, Suryanelli, Vagamon;farm|Our cardamom farm|For the cardamom tea;blend|Three teas|100 g each;pack|One box|Packed in Adimali;glass|Find your favourite|At your door in 6–9 days'
+    when 'naadan-kerala-coffee'
+      assign journey = 'hills|Coffee estates|Adimali and Wayanad;cherry|Coffee cherries|Picked and sun-dried;roast|Medium roast|For a strong decoction;filter|Ground for the filter|South Indian steel filter;glass|Your filter coffee|At your door in 6–9 days'
+      assign scene = 'hh-coffee-estate.svg'
+      assign scene_alt = 'Illustration: picking coffee cherries under silver oaks'
+    when 'kerala-cardamom'
+      assign journey = 'farm|Our cardamom farm|Rajakumari, Idukki;sun|Picked and dried|Fresh green pods;grade|Graded 8 mm|Bold pods only;pack|Packed with care|Pure Leven, Adimali;' | append: door
+    when 'kerala-black-pepper'
+      assign journey = 'vine|Pepper vines|Our farm, Rajakumari;water|Hot-water dip|Then sun-dried;grade|Cleaned and graded|Bold, heavy corns;pack|Packed with care|Pure Leven, Adimali;' | append: door
+    when 'kerala-white-pepper'
+      assign journey = 'vine|Pepper vines|Idukki;water|Ripe berries soaked|Outer skin removed;sun|Dried|Smooth, pale corns;pack|Packed with care|Pure Leven, Adimali;' | append: door
+    when 'kerala-adimali-clove'
+      assign journey = 'tree|Clove trees|Adimali, Idukki;bud|Buds picked|Before they open;sun|Dried|Whole buds;pack|Packed with care|Pure Leven, Adimali;' | append: door
+    when 'kerala-spice-combo-pack'
+      assign journey = 'farm|Cardamom|Our farm, Rajakumari;vine|Black pepper|Idukki;bud|Cloves|Adimali;pack|One order|Packed in Adimali;' | append: door
+    when 'premium-cassia-cinnamon'
+      assign journey = 'tree|Cassia bark|Bought in, checked by us;roll|Whole sticks|Never ground;pack|Packed with care|Pure Leven, Adimali;' | append: door
+    when 'aromatic-true-cinnamon-ceylon'
+      assign journey = 'tree|Ceylon cinnamon|Sri Lanka;roll|Thin inner bark|Rolled into quills;pack|Packed with care|Pure Leven, Adimali;' | append: door
+    when 'star-anise-chakra-phool-premium-whole-spice'
+      assign journey = 'tree|Star anise|Illicium verum;sun|Dried whole|Eight-pointed pods;pack|Packed with care|Pure Leven, Adimali;' | append: door
+    when 'naadan-pure-honey'
+      assign journey = 'hive|Beekeepers|Around Adimali, Idukki;bud|Wildflowers and forest|Thick, full honey;jar|Packed as it is|Nothing added;' | append: door
+      assign j_heading = 'From the hills to your table'
+      assign scene = 'hh-honey-hills.svg'
+      assign scene_alt = 'Illustration: bee boxes among wildflowers in the Idukki hills'
+    when 'deluxe-combo-pack-tea-coffee-honey'
+      assign journey = 'hills|Tea|Munnar hills;cherry|Filter coffee|Adimali and Wayanad;hive|Honey|Idukki beekeepers;pack|One box|Packed in Adimali;' | append: door
+      assign j_heading = 'From the hills to your table'
+  endcase
+  if is_tea and product.handle != 'naadan-kerala-coffee'
+    assign j_heading = 'From the hills to your cup'
+    if product.handle != 'cardamom-tea'
+      assign scene = 'tc-hills-art.svg'
+      assign scene_alt = 'Illustration: women plucking tea on the misty hills of Munnar'
+    endif
+  elsif product.handle == 'naadan-kerala-coffee'
+    assign j_heading = 'From the hills to your cup'
+  endif
+  assign farm_spices = 'kerala-cardamom,kerala-black-pepper,kerala-white-pepper,kerala-adimali-clove,kerala-spice-combo-pack' | split: ','
+  if farm_spices contains product.handle
+    assign scene = 'hh-spice-garden.svg'
+    assign scene_alt = 'Illustration: picking cardamom and pepper under shade trees in Idukki'
+  endif
+  if pair
+    assign pv = pair.selected_or_first_available_variant
+    if product.handle == section.settings.combo_handle and section.settings.pair_variant != blank
+      for v in pair.variants
+        if v.title == section.settings.pair_variant
+          assign pv = v
+        endif
+      endfor
+    endif
+  endif
+-%}
+
+<section class="tcx-pdp" aria-label="Why buy from us">
+  <div class="tcx-pdp__wrap">
+    <ul class="tcx-facts tcx-pdp__facts">
+      <li class="tcx-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v5M18 9.5v5"/></svg><p class="tcx-fact__title">Cash on delivery</p><p class="tcx-fact__text">Or UPI and cards</p></li>
+      <li class="tcx-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3v3h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><p class="tcx-fact__title">Free delivery</p><p class="tcx-fact__text">Any 2 packs, or ₹649+</p></li>
+      <li class="tcx-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><p class="tcx-fact__title">Same-day dispatch</p><p class="tcx-fact__text">Order before 1 pm</p></li>
+      <li class="tcx-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.1 7.5 9.5 4.4-1.4 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.8 12.2 2.2 2.2 4.3-4.6"/></svg><p class="tcx-fact__title">FSSAI licensed</p><p class="tcx-fact__text"><a href="https://foscos.fssai.gov.in/index/consumer-search?regno=10020042013756" target="_blank" rel="noopener">No. 10020042013756</a></p></li>
+    </ul>
+
+    {%- if pair and pv.available -%}
+      <div class="tcx-pdp__pair">
+        <div class="tcx-pdp__pair-pics" aria-hidden="true">
+          {%- if product.handle == section.settings.combo_handle -%}
+            {%- if pair.featured_image -%}{{ pair.featured_image | image_url: width: 240 | image_tag: loading: 'lazy', width: 72, height: 72, alt: '' }}{%- endif -%}
+          {%- else -%}
+            {%- assign pics = section.settings.combo_pictures | remove: ' ' | split: ',' -%}
+            {%- for h in pics limit: 3 -%}
+              {%- assign pp = all_products[h] -%}
+              {%- if pp.featured_image -%}{{ pp.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', width: 44, height: 44, alt: '' }}{%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+        <div class="tcx-pdp__pair-text">
+          <p class="tcx-pdp__pair-hook">{{ pair_line | escape }}</p>
+          <p class="tcx-pdp__pair-name">{{ pair_title | escape }}</p>
+          <p class="tcx-pdp__pair-price"><b>&#8377;{{ pv.price | divided_by: 100 }}</b>{%- if pv.compare_at_price > pv.price -%} <s>&#8377;{{ pv.compare_at_price | divided_by: 100 }}</s>{%- endif -%}</p>
+        </div>
+        {%- assign pair_form_id = 'tcx-pdp-pair-' | append: section.id -%}
+        {%- form 'product', pair, id: pair_form_id, class: 'tc-product-form tcx-pdp__pair-form' -%}
+          <input type="hidden" name="id" value="{{ pv.id }}">
+          <button type="submit" name="add" class="tcx-pdp__pair-btn">+ Add {{ pair_title | split: ' · ' | first | escape }}</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+    {%- if journey != blank -%}
+      {%- assign steps = journey | split: ';' -%}
+      <div class="tcx-journey tcx-journey--pdp">
+        <svg class="tcx-journey__band" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 90V58c90-26 170-44 260-32s150 32 240 14 150-52 250-48 160 38 250 30 130-24 200-20v88Z" fill="#E4EDE4"/><path d="M0 90V72c110-16 200-24 300-14s170 18 270 4 160-32 270-28 170 24 240 20 80-8 120-6v42Z" fill="#D3E2D4"/></svg>
+        <p class="tcx-eyebrow">Our journey</p>
+        <h2 class="tcx-h2 tcx-pdp__h2">{{ j_heading }}</h2>
+        <div class="hh-journey">
+        {%- if scene != blank -%}
+          <img class="hh-scene hh-journey__scene" src="{{ scene | asset_url }}" width="1200" height="900" loading="lazy" alt="{{ scene_alt }}">
+        {%- endif -%}
+        <ol class="tcx-journey__steps">
+          {%- for st in steps -%}
+            {%- assign bits = st | split: '|' -%}
+            <li class="tcx-journey__step{% if bits[0] == 'farm' %} is-farm{% endif %}">
+              <span class="tcx-journey__icon" aria-hidden="true">{%- render 'tcx-icon', name: bits[0] -%}</span>
+              <div class="tcx-journey__text">
+                <p class="tcx-journey__title">{{ bits[1] }}</p>
+                <p class="tcx-journey__sub">{{ bits[2] }}</p>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ol>
+        </div>
+        {%- if product.handle == 'cardamom-tea' or product.handle == 'kerala-cardamom' -%}
+          <div class="tcx-pdp__photos">
+            <img src="{{ 'tc-farm-pods-600.webp' | asset_url }}" width="600" height="400" loading="lazy" alt="Freshly picked cardamom from our farm">
+            <img src="{{ 'tc-farm-sorting-600.webp' | asset_url }}" width="600" height="400" loading="lazy" alt="Sorting fresh cardamom">
+          </div>
+        {%- endif -%}
+        {%- if product.handle == 'naadan-kerala-coffee' -%}
+          <a class="tcx-pdp__link" href="/pages/kerala-coffee-from-wayanad">Our coffee story →</a>
+        {%- elsif is_tea -%}
+          <a class="tcx-pdp__link" href="{{ section.settings.story_link }}">{{ section.settings.story_link_text | escape }}</a>
+        {%- else -%}
+          <a class="tcx-pdp__link" href="/pages/our-story">Our story →</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.rating != blank or section.settings.orders_big != blank -%}
+      <div class="tcx-reviews tcx-pdp__reviews">
+        <div class="tcx-reviews__stats">
+          {%- if section.settings.rating != blank -%}
+            <div class="tcx-stat">
+              <p class="tcx-stat__big">{{ section.settings.rating | escape }} <span class="tcx-stars" aria-hidden="true">★★★★★</span></p>
+              <p class="tcx-stat__small">{{ section.settings.rating_count | escape }}{% if section.settings.reviews_url != blank %} · <a href="{{ section.settings.reviews_url }}" target="_blank" rel="noopener">Read them</a>{% endif %}</p>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.orders_big != blank -%}
+            <div class="tcx-stat">
+              <p class="tcx-stat__big">{{ section.settings.orders_big | escape }}</p>
+              <p class="tcx-stat__small">{{ section.settings.orders_small | escape }}</p>
+            </div>
+          {%- endif -%}
+        </div>
+        {%- if section.blocks.size > 0 -%}<div class="tcx-reviews__list">
+          {%- for block in section.blocks -%}
+            <figure class="tcx-review" {{ block.shopify_attributes }}>
+              <div class="tcx-review__top">
+                <span class="tcx-review__avatar" aria-hidden="true">{{ block.settings.name | slice: 0 }}</span>
+                <div>
+                  <p class="tcx-review__name">{{ block.settings.name | escape }}</p>
+                  <p class="tcx-review__date"><span class="tcx-stars" aria-label="{{ block.settings.stars }} out of 5 stars">{% for i in (1..block.settings.stars) %}★{% endfor %}</span>{% if block.settings.date != blank %} · {{ block.settings.date | escape }}{% endif %}</p>
+                  {%- if block.settings.source != blank -%}<p class="tcx-review__src">{{ block.settings.source | escape }}</p>{%- endif -%}
+                </div>
+              </div>
+              <blockquote class="tcx-review__text">{{ block.settings.text | escape }}</blockquote>
+            </figure>
+          {%- endfor -%}
+        </div>{%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if section.settings.show_whatsapp and wa_number != blank -%}
+  <a class="tcx-wa tcx-wa--pdp" href="https://wa.me/{{ wa_number }}?text={{ wa_text }}" target="_blank" rel="noopener">
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.04 3C8.86 3 3.03 8.82 3.03 16c0 2.3.6 4.53 1.74 6.5L3 29l6.68-1.75A12.96 12.96 0 0 0 16.04 29C23.2 29 29 23.18 29 16S23.2 3 16.04 3Zm0 23.62c-1.98 0-3.92-.53-5.61-1.54l-.4-.24-3.97 1.04 1.06-3.86-.26-.4A10.6 10.6 0 0 1 5.4 16c0-5.86 4.77-10.63 10.64-10.63 5.86 0 10.6 4.77 10.6 10.63 0 5.87-4.75 10.62-10.6 10.62Zm5.83-7.95c-.32-.16-1.9-.94-2.2-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.1-.21.05-.4-.03-.56-.08-.16-.72-1.73-.98-2.37-.26-.62-.52-.54-.72-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.12 1.09-1.12 2.66s1.14 3.08 1.3 3.3c.16.2 2.25 3.43 5.44 4.81.76.33 1.35.52 1.81.67.76.24 1.46.2 2.01.12.61-.09 1.9-.78 2.16-1.53.27-.75.27-1.39.19-1.53-.08-.13-.29-.21-.61-.37Z"/></svg>
+    <span>{{ section.settings.whatsapp_label | escape }}</span>
+  </a>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product page extras",
+  "settings": [
+    { "type": "text", "id": "tea_handles", "label": "Tea and coffee products (handles)", "default": "cardamom-tea,premium-milk-tea-powder,premium-black-tea-granules,orange-pekoe-powder,starter-trial-pack-4-varieties,naadan-kerala-coffee" },
+    { "type": "text", "id": "hide_compare_handles", "label": "Hide strike-through price on (handles)", "default": "premium-black-tea-granules", "info": "Until the old price is confirmed as a real recent price." },
+    { "type": "header", "content": "Free-delivery pairing" },
+    { "type": "text", "id": "combo_handle", "label": "Tea Combo handle", "default": "starter-trial-pack-4-varieties" },
+    { "type": "text", "id": "combo_title", "label": "Tea Combo name", "default": "Tea Combo · 3 teas" },
+    { "type": "text", "id": "combo_pictures", "label": "Tea Combo pictures (handles)", "default": "cardamom-tea,premium-milk-tea-powder,premium-black-tea-granules" },
+    { "type": "text", "id": "pair_line_tea", "label": "Hook on tea pages", "default": "+ Tea Combo = free delivery" },
+    { "type": "text", "id": "pair_handle", "label": "Pair on the Tea Combo page (handle)", "default": "cardamom-tea" },
+    { "type": "text", "id": "pair_variant", "label": "Pair size", "default": "100g" },
+    { "type": "text", "id": "pair_title", "label": "Pair name", "default": "Real Cardamom Tea · 100 g" },
+    { "type": "text", "id": "pair_line_combo", "label": "Hook on the Tea Combo page", "default": "+ Cardamom Tea 100 g = free delivery" },
+    { "type": "header", "content": "Origin" },
+    { "type": "text", "id": "cardamom_heading", "label": "Cardamom tea heading", "default": "Cardamom from our own farm" },
+    { "type": "textarea", "id": "cardamom_text", "label": "Cardamom tea text", "default": "Grown in Rajakumari, Idukki. 60 g per kilo of Vagamon tea, nothing else." },
+    { "type": "text", "id": "tea_heading", "label": "Other teas heading", "default": "Picked by us, every week" },
+    { "type": "textarea", "id": "tea_text", "label": "Other teas text", "default": "From factories in Kolukkumalai, Suryanelli and Vagamon. Nothing added." },
+    { "type": "text", "id": "story_link", "label": "Story link", "default": "/pages/our-tea" },
+    { "type": "text", "id": "story_link_text", "label": "Story link text", "default": "Our tea story →" },
+    { "type": "header", "content": "Reviews" },
+    { "type": "text", "id": "rating", "label": "Google rating (must match Google)" },
+    { "type": "text", "id": "rating_count", "label": "Review count line" },
+    { "type": "url", "id": "reviews_url", "label": "Google reviews link" },
+    { "type": "text", "id": "orders_big", "label": "Orders stat" },
+    { "type": "text", "id": "orders_small", "label": "Orders stat sub-line" },
+    { "type": "header", "content": "Same-day dispatch" },
+    { "type": "checkbox", "id": "show_cutoff", "label": "Show same-day dispatch timer", "default": true },
+    { "type": "range", "id": "cutoff_hour", "label": "Cut-off (hour, India time)", "min": 8, "max": 20, "step": 1, "default": 13 },
+    { "type": "text", "id": "dispatch_days", "label": "Dispatch days (0 = Sunday … 6 = Saturday)", "default": "1,2,3,4,5,6" },
+    { "type": "header", "content": "WhatsApp" },
+    { "type": "checkbox", "id": "show_whatsapp", "label": "Show floating WhatsApp button", "default": true },
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number", "default": "918848265849" },
+    { "type": "text", "id": "whatsapp_label", "label": "Button label", "default": "Ask us on WhatsApp" },
+    { "type": "text", "id": "whatsapp_message", "label": "Pre-filled message (product name is added)", "default": "Hi Pure Leven, I have a question about" }
+  ],
+  "blocks": [
+    { "type": "review", "name": "Review", "settings": [
+      { "type": "text", "id": "name", "label": "Name" },
+      { "type": "text", "id": "date", "label": "Date" },
+      { "type": "text", "id": "source", "label": "Source", "default": "Google review" },
+      { "type": "range", "id": "stars", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+      { "type": "textarea", "id": "text", "label": "Review text (word for word)" } ] }
+  ],
+  "presets": [{ "name": "Product page extras" }]
+}
+{% endschema %}

@@ -1,0 +1,229 @@
+{{ 'tc-design-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'tc-campaign.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap">
+<script src="{{ 'tc-ajax-cart.js' | asset_url }}" defer></script>
+<script src="{{ 'tc-campaign.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign tea = all_products[section.settings.product_handle]
+  assign low_at = section.settings.low_stock_at
+  assign cups = section.settings.cups_per_100g
+  assign wa_number = section.settings.whatsapp_number | remove: '+' | remove: ' '
+  assign wa_text = section.settings.whatsapp_message | url_encode
+
+  assign sel = tea.selected_or_first_available_variant
+  for v in tea.variants
+    if v.title == section.settings.default_size and v.available
+      assign sel = v
+    endif
+  endfor
+
+  assign best_id = 0
+  assign best_rate = 999999999
+  for v in tea.variants
+    assign grams = v.title | remove: 'g' | remove: ' ' | plus: 0
+    if grams > 0 and v.available
+      assign rate = v.price | times: 100 | divided_by: grams
+      if rate < best_rate
+        assign best_rate = rate
+        assign best_id = v.id
+      endif
+    endif
+  endfor
+
+  assign offer_end_ts = 0
+  if section.settings.offer_end != blank
+    assign offer_end_ts = section.settings.offer_end | append: ' +0530' | date: '%s' | plus: 0
+    assign now_ts = 'now' | date: '%s' | plus: 0
+    if offer_end_ts <= now_ts
+      assign offer_end_ts = 0
+    endif
+  endif
+-%}
+
+{%- if section.settings.hide_compare_prices -%}
+  <style>
+    html body .tc-products .tc-product-card [data-tc-compare],
+    html body .tc-products .tc-product-card [data-tc-save] { display: none !important; }
+  </style>
+{%- endif -%}
+
+{%- if tea != blank -%}
+<section class="tcx-hero" id="cardamom-tea" data-tcx-hero data-cart-count="{{ cart.item_count }}" data-cart-total="{{ cart.total_price }}" data-free-total="{{ section.settings.free_total | times: 100 }}" data-free-items="{{ section.settings.free_items }}" data-cups="{{ cups }}">
+  {%- if section.settings.strip_text != blank -%}<p class="tcx-strip">{{ section.settings.strip_text | escape }}</p>{%- endif -%}
+
+  <div class="tcx-hero__wrap">
+    <header class="tcx-hero__head">
+      {%- if section.settings.kicker_is_h1 -%}<h1 class="tcx-hero__kicker">{{ section.settings.page_title | escape }}</h1>{%- else -%}<p class="tcx-hero__kicker">{{ section.settings.page_title | escape }}</p>{%- endif -%}
+      <h2 class="tcx-hero__title">{{ section.settings.product_title | default: tea.title | escape }}</h2>
+      {%- if section.settings.heading != blank -%}<p class="tcx-hero__tagline">{{ section.settings.heading | escape }}</p>{%- endif -%}
+      {%- if section.settings.rating_text != blank -%}
+        <a class="tcx-rating" href="{{ section.settings.rating_url }}" target="_blank" rel="noopener">
+          <span class="tcx-stars" aria-hidden="true">★★★★★</span>
+          <span>{{ section.settings.rating_text | escape }}</span>
+        </a>
+      {%- endif -%}
+    </header>
+
+    <div class="tcx-hero__media">
+      <div class="tcx-hero__photo">
+        <img
+          src="{{ 'tc-cardamom-800.webp' | asset_url }}"
+          srcset="{{ 'tc-cardamom-480.webp' | asset_url }} 480w, {{ 'tc-cardamom-800.webp' | asset_url }} 800w, {{ 'tc-cardamom-1200.webp' | asset_url }} 1200w"
+          sizes="(min-width: 990px) 44vw, 92vw"
+          width="1200" height="1200" fetchpriority="high" loading="eager"
+          alt="{{ section.settings.image_alt | escape }}">
+        {%- if section.settings.batch_text != blank -%}
+          <p class="hh-over hh-over--top"><span class="hh-over__dot" aria-hidden="true"></span>{{ section.settings.batch_text | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.image_badge != blank -%}
+          <p class="hh-over hh-over--bottom"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14Z"/><path d="M5 19 13 11"/></svg>{{ section.settings.image_badge | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="tcx-hero__body">
+
+      <p class="tcx-hero__sub">{{ section.settings.subheading | escape }}</p>
+
+      <script type="application/json" data-tcx-variants>
+        [{%- for v in tea.variants -%}{%- assign q = 0 -%}{%- if section.settings.show_low_stock and v.inventory_management == 'shopify' and v.inventory_policy == 'deny' and v.inventory_quantity > 0 and v.inventory_quantity <= low_at -%}{%- assign q = v.inventory_quantity -%}{%- endif -%}{"id":{{ v.id }},"title":{{ v.title | json }},"price":{{ v.price }},"available":{{ v.available }},"low":{{ q }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+      </script>
+
+      {%- assign form_id = 'tcx-form-' | append: section.id -%}
+      {%- form 'product', tea, id: form_id, class: 'tc-product-form tcx-buy', data-tcx-form: '' -%}
+        {%- if tea.variants.size > 1 -%}
+          <fieldset class="tcx-sizes">
+            <legend class="tcx-visually-hidden">Choose a pack size</legend>
+            {%- for v in tea.variants -%}
+              {%- assign grams = v.title | remove: 'g' | remove: ' ' | plus: 0 -%}
+              <input type="radio" class="tcx-sizes__input" name="id" value="{{ v.id }}" id="tcx-{{ section.id }}-{{ v.id }}"
+                {%- if v.id == sel.id %} checked{% endif %}{% unless v.available %} disabled{% endunless %}>
+              <label class="tcx-sizes__opt" for="tcx-{{ section.id }}-{{ v.id }}">
+                {%- if v.id == best_id and tea.variants.size > 2 -%}<em>Best value</em>{%- endif -%}
+                <span>{{ v.title | replace: 'g', ' g' }}</span>
+                <b>&#8377;{{ v.price | divided_by: 100 }}</b>
+                {%- if v.compare_at_price > v.price -%}<s>&#8377;{{ v.compare_at_price | divided_by: 100 }}</s>{%- endif -%}
+                {%- unless v.available -%}<small>Sold out</small>{%- endunless -%}
+              </label>
+            {%- endfor -%}
+          </fieldset>
+        {%- else -%}
+          <input type="hidden" name="id" value="{{ sel.id }}">
+        {%- endif -%}
+
+        {%- assign sel_grams = sel.title | remove: 'g' | remove: ' ' | plus: 0 -%}
+        {%- if section.settings.price_note != blank -%}<p class="tcx-price-note">{{ section.settings.price_note | escape }}</p>{%- endif -%}
+
+        {%- assign sel_low = false -%}
+        {%- if section.settings.show_low_stock and sel.inventory_management == 'shopify' and sel.inventory_policy == 'deny' and sel.inventory_quantity > 0 and sel.inventory_quantity <= low_at -%}{%- assign sel_low = true -%}{%- endif -%}
+        <p class="tcx-stock" data-tcx-stock{% unless sel_low %} hidden{% endunless %}>
+          <span class="tcx-stock__dot" aria-hidden="true"></span>
+          <span data-tcx-stock-text>{% if sel_low %}Only {{ sel.inventory_quantity }} packs of {{ sel.title }} left{% endif %}</span>
+        </p>
+
+        <div class="tcx-buy__row">
+          <div class="tcx-qty">
+            <button type="button" class="tcx-qty__btn" data-tcx-qty="-1" aria-label="One less">−</button>
+            <input class="tcx-qty__input" type="number" name="quantity" value="1" min="1" max="20" inputmode="numeric" aria-label="Quantity" data-tcx-qty-input>
+            <button type="button" class="tcx-qty__btn" data-tcx-qty="1" aria-label="One more">+</button>
+          </div>
+          <button type="submit" name="add" class="tcx-atc" data-tcx-atc{% unless sel.available %} disabled{% endunless %}>
+            {%- if sel.available -%}Add to cart · <span data-tcx-total>&#8377;{{ sel.price | divided_by: 100 }}</span>{%- else -%}Sold out{%- endif -%}
+          </button>
+        </div>
+
+      {%- endform -%}
+
+      {%- if offer_end_ts > 0 -%}
+        <div class="tcx-offer" data-tcx-offer data-end="{{ offer_end_ts }}">
+          <p class="tcx-offer__label">{{ section.settings.offer_label | escape }}</p>
+          <p class="tcx-offer__clock" role="timer" aria-live="off">
+            <span><b data-d>0</b>days</span><span><b data-h>00</b>hrs</span><span><b data-m>00</b>min</span><span><b data-s>00</b>sec</span>
+          </p>
+        </div>
+      {%- endif -%}
+
+      <ul class="tcx-trustrow">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg>{{ section.settings.assure_1 | escape }}</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3v3h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>{{ section.settings.assure_2 | escape }}</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.1 7.5 9.5 4.4-1.4 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.8 12.2 2.2 2.2 4.3-4.6"/></svg>{{ section.settings.assure_3 | default: 'FSSAI licensed' | escape }}</li>
+      </ul>
+
+      {%- if section.settings.picker_link_text != blank -%}
+        <a class="tcx-hero__more" href="#{{ section.settings.picker_anchor }}">{{ section.settings.picker_link_text | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="tcx-sticky" data-tcx-sticky aria-hidden="true">
+    {%- if tea.featured_image -%}{{ tea.featured_image | image_url: width: 96 | image_tag: loading: 'lazy', width: 44, height: 44, alt: '', class: 'tcx-sticky__img' }}{%- endif -%}
+    <div class="tcx-sticky__text">
+      <strong data-tcx-sticky-title>{{ section.settings.sticky_title | escape }}</strong>
+      <span data-tcx-sticky-sel>{{ sel.title }} · &#8377;{{ sel.price | divided_by: 100 }}</span>
+      <span class="tcx-sticky__bar" data-tcx-sticky-bar hidden><i></i></span>
+    </div>
+    <button type="submit" name="add" form="{{ form_id }}" class="tcx-sticky__btn" data-tcx-sticky-add tabindex="-1"{% unless sel.available %} disabled{% endunless %}>Add to cart</button>
+    <a class="tcx-sticky__btn tcx-sticky__btn--cart" href="{{ routes.cart_url }}" data-tcx-sticky-cart tabindex="-1" hidden>View cart</a>
+  </div>
+</section>
+{%- endif -%}
+
+{%- if section.settings.show_whatsapp and wa_number != blank -%}
+  <a class="tcx-wa" href="https://wa.me/{{ wa_number }}?text={{ wa_text }}" target="_blank" rel="noopener" data-tcx-wa>
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.04 3C8.86 3 3.03 8.82 3.03 16c0 2.3.6 4.53 1.74 6.5L3 29l6.68-1.75A12.96 12.96 0 0 0 16.04 29C23.2 29 29 23.18 29 16S23.2 3 16.04 3Zm0 23.62c-1.98 0-3.92-.53-5.61-1.54l-.4-.24-3.97 1.04 1.06-3.86-.26-.4A10.6 10.6 0 0 1 5.4 16c0-5.86 4.77-10.63 10.64-10.63 5.86 0 10.6 4.77 10.6 10.63 0 5.87-4.75 10.62-10.6 10.62Zm5.83-7.95c-.32-.16-1.9-.94-2.2-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.1-.21.05-.4-.03-.56-.08-.16-.72-1.73-.98-2.37-.26-.62-.52-.54-.72-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.12 1.09-1.12 2.66s1.14 3.08 1.3 3.3c.16.2 2.25 3.43 5.44 4.81.76.33 1.35.52 1.81.67.76.24 1.46.2 2.01.12.61-.09 1.9-.78 2.16-1.53.27-.75.27-1.39.19-1.53-.08-.13-.29-.21-.61-.37Z"/></svg>
+    <span>{{ section.settings.whatsapp_label | escape }}</span>
+  </a>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cardamom tea campaign",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "strip_text", "label": "Top strip", "default": "Any 2 packs ship free · Cash on delivery available" },
+    { "type": "text", "id": "page_title", "label": "Small label above the heading", "default": "Featured tea" },
+    { "type": "checkbox", "id": "kicker_is_h1", "label": "Use the label as the page H1", "default": false, "info": "Only when no other section on the page has an H1." },
+    { "type": "text", "id": "product_title", "label": "Product name (big heading)", "default": "Real Cardamom Tea Powder" },
+    { "type": "text", "id": "heading", "label": "Tagline", "default": "Real cardamom. Your everyday chai." },
+    { "type": "textarea", "id": "subheading", "label": "Description", "default": "Vagamon tea blended with green cardamom from our own farm in Rajakumari. No flavouring, no essence. Brew it like any tea powder." },
+    { "type": "text", "id": "image_badge", "label": "Image badge", "default": "Cardamom from our farm in Rajakumari" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Real cardamom tea powder with green cardamom pods and a cup of tea" },
+    { "type": "text", "id": "rating_text", "label": "Rating line (must match Google)", "default": "4.9 on Google · 62 reviews" },
+    { "type": "url", "id": "rating_url", "label": "Rating link" },
+    { "type": "text", "id": "batch_text", "label": "Freshness line", "default": "Blended in small batches · this batch packed" },
+    { "type": "text", "id": "batch_date", "label": "Batch date (optional)" },
+    { "type": "header", "content": "Product" },
+    { "type": "text", "id": "product_handle", "label": "Product handle", "default": "cardamom-tea" },
+    { "type": "text", "id": "default_size", "label": "Size selected first", "default": "100g" },
+    { "type": "range", "id": "cups_per_100g", "label": "Cups per 100 g (0 hides the per-cup price)", "min": 0, "max": 60, "step": 5, "default": 40, "info": "About 40 at one level teaspoon (2.5 g) per cup." },
+    { "type": "text", "id": "price_note", "label": "Price note (e.g. Back to ₹249 on 10 Dec)", "info": "Only for a real price change. Leave empty to hide." },
+    { "type": "text", "id": "sticky_title", "label": "Sticky bar title", "default": "Real Cardamom Tea" },
+    { "type": "text", "id": "nudge_one", "label": "Delivery nudge", "default": "1 pack pays delivery (from ₹40). 2 packs ship free." },
+    { "type": "range", "id": "free_items", "label": "Free delivery from (items)", "min": 1, "max": 5, "step": 1, "default": 2 },
+    { "type": "number", "id": "free_total", "label": "Free delivery from (₹)", "default": 649 },
+    { "type": "text", "id": "assure_1", "label": "Reassurance 1", "default": "Cash on delivery, UPI or card" },
+    { "type": "text", "id": "assure_2", "label": "Reassurance 2", "default": "Dispatched within 2 working days" },
+    { "type": "text", "id": "assure_3", "label": "Reassurance 3 (risk promise)", "info": "Only a promise you keep, e.g. Damaged pack? We replace it or refund. Leave empty to hide." },
+    { "type": "text", "id": "picker_link_text", "label": "Link to the pack picker", "default": "Or try 3 teas in one box ↓" },
+    { "type": "text", "id": "picker_anchor", "label": "Pack picker anchor", "default": "trial-pack" },
+    { "type": "checkbox", "id": "hide_compare_prices", "label": "Hide strike-through prices in the tea grid", "default": true, "info": "Turn off once the old prices are confirmed as real recent prices." },
+    { "type": "header", "content": "Honest urgency" },
+    { "type": "paragraph", "content": "Everything here hides itself until you fill it with something real." },
+    { "type": "checkbox", "id": "show_low_stock", "label": "Show low-stock line", "default": false, "info": "Only switch on once Shopify stock numbers are real." },
+    { "type": "range", "id": "low_stock_at", "label": "Show stock line at or below", "min": 5, "max": 60, "step": 5, "default": 40 },
+    { "type": "checkbox", "id": "show_cutoff", "label": "Show same-day dispatch timer", "default": false },
+    { "type": "range", "id": "cutoff_hour", "label": "Same-day dispatch cut-off (hour, India time)", "min": 8, "max": 20, "step": 1, "default": 13 },
+    { "type": "text", "id": "dispatch_days", "label": "Dispatch days (0 = Sunday … 6 = Saturday)", "default": "1,2,3,4,5,6" },
+    { "type": "text", "id": "offer_end", "label": "Offer ends (YYYY-MM-DD HH:MM, India time)", "info": "Leave empty when there is no real offer. The timer hides itself at the end." },
+    { "type": "text", "id": "offer_label", "label": "Offer label", "default": "Offer ends in" },
+    { "type": "header", "content": "WhatsApp" },
+    { "type": "checkbox", "id": "show_whatsapp", "label": "Show floating WhatsApp button", "default": true },
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number (with country code)", "default": "918848265849" },
+    { "type": "text", "id": "whatsapp_label", "label": "Button label", "default": "Ask us on WhatsApp" },
+    { "type": "text", "id": "whatsapp_message", "label": "Pre-filled message", "default": "Hi Pure Leven, I have a question about your cardamom tea." }
+  ],
+  "presets": [{ "name": "Cardamom tea campaign" }]
+}
+{% endschema %}

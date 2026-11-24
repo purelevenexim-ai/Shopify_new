@@ -1,0 +1,28 @@
+{%- comment -%} Contact page (/pages/contact): quick ways to reach us, the drawing, then the page text. Styles in assets/pl-hills.css. {%- endcomment -%}
+<div class="hh-contact">
+  <div class="hh-contact__head hh-page-head">
+    <p class="hh-eyebrow">We are in Idukki, Kerala</p>
+    <h1 class="hh-contact__title">Talk to us</h1>
+    <p class="hh-lede">Questions about an order, a spice or a bulk pack? WhatsApp is the fastest.</p>
+  </div>
+  <div class="hh-contact__grid">
+    <div class="hh-contact__ways">
+      <a class="hh-contact__way hh-contact__way--wa" href="https://wa.me/918848265849?text={{ 'Hi Pure Leven, I have a question' | url_encode }}" target="_blank" rel="noopener">
+        <span class="hh-contact__ico" aria-hidden="true"><svg viewBox="0 0 32 32" width="26" height="26"><path fill="currentColor" d="M16.04 3C8.86 3 3.03 8.82 3.03 16c0 2.3.6 4.53 1.74 6.5L3 29l6.68-1.75A12.96 12.96 0 0 0 16.04 29C23.2 29 29 23.18 29 16S23.2 3 16.04 3Zm0 23.62c-1.98 0-3.92-.53-5.61-1.54l-.4-.24-3.97 1.04 1.06-3.86-.26-.4A10.6 10.6 0 0 1 5.4 16c0-5.86 4.77-10.63 10.64-10.63 5.86 0 10.6 4.77 10.6 10.63 0 5.87-4.75 10.62-10.6 10.62Zm5.83-7.95c-.32-.16-1.9-.94-2.2-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.1-.21.05-.4-.03-.56-.08-.16-.72-1.73-.98-2.37-.26-.62-.52-.54-.72-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.12 1.09-1.12 2.66s1.14 3.08 1.3 3.3c.16.2 2.25 3.43 5.44 4.81.76.33 1.35.52 1.81.67.76.24 1.46.2 2.01.12.61-.09 1.9-.78 2.16-1.53.27-.75.27-1.39.19-1.53-.08-.13-.29-.21-.61-.37Z"/></svg></span>
+        <span><b>WhatsApp</b><small>+91 88482 65849</small></span>
+      </a>
+      <a class="hh-contact__way" href="tel:+918848265849">
+        <span class="hh-contact__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
+        <span><b>Call us</b><small>+91 88482 65849</small></span>
+      </a>
+      <a class="hh-contact__way" href="mailto:hello@pureleven.com">
+        <span class="hh-contact__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+        <span><b>Email</b><small>hello@pureleven.com</small></span>
+      </a>
+    </div>
+    <img class="hh-scene hh-contact__scene" src="{{ 'hh-spice-garden.svg' | asset_url }}" width="1200" height="900" loading="lazy" alt="Illustration: picking cardamom and pepper under shade trees in Idukki">
+  </div>
+  <div class="hh-contact__body rte">
+    {{ page.content }}
+  </div>
+</div>

@@ -13,7 +13,7 @@ Tea & Coffee Products Grid Section
 
 <section class="tc-products" id="{{ section.settings.section_id }}">
   <div class="tc-products__container">
-    <p class="tc-eyebrow tc-eyebrow--left"><i>01</i> / Our Teas</p>
+    <p class="tc-eyebrow tc-eyebrow--left">{% if section.settings.eyebrow_num != 'none' %}<i>{{ section.settings.eyebrow_num | default: '01' }}</i> / {% endif %}{{ section.settings.eyebrow_text | default: 'Our Teas' }}</p>
     {%- if section.settings.heading -%}
       <h2 class="tc-products__heading tc-h2">{{ section.settings.heading }}</h2>
     {%- endif -%}
@@ -43,6 +43,8 @@ Tea & Coffee Products Grid Section
 {
   "name": "Tea & Coffee Products",
   "settings": [
+    { "type": "text", "id": "eyebrow_num", "label": "Eyebrow number" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow text" },
     {
       "type": "text",
       "id": "section_id",
