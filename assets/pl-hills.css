@@ -473,3 +473,15 @@ html body .hn-banner__img img, html body .hn-banner__img { border-radius: var(--
 html body.template-cart .plb-item__rm a:not(#hh-a):not(#hh-b), html body.template-cart .plb-item__rm:not(#hh-a):not(#hh-b) { font-size: 13px !important; text-transform: none !important; }
 html body :is(.hn-cta, section.hn-cta, .hn-cta-wrap):not(#hh-a) { background: var(--hh-green) !important; }
 html body .hn-cta :is(.hn-cta__kicker):not(#hh-a):not(#hh-b):not(#hh-c) { color: #E9C98A !important; }
+
+/* add-to-cart toast on grids and the Tea & Coffee page (assets/tc-ajax-cart.js) */
+html body .tc-toast:not(#hh-a):not(#hh-b) { border: 0 !important; border-radius: 18px !important; background: var(--hh-card) !important; box-shadow: var(--hh-shadow-lg) !important; }
+html body .tc-toast .tc-toast__tick:not(#hh-a):not(#hh-b) { border-radius: 50% !important; background: var(--hh-green) !important; }
+html body .tc-toast :is(.tc-toast__title, .tc-toast__name):not(#hh-a):not(#hh-b) { font-size: 15.5px !important; font-weight: 800 !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--hh-ink) !important; }
+html body .tc-toast :is(.tc-toast__variant, .tc-toast__msg):not(#hh-a):not(#hh-b) { font-size: 14px !important; color: var(--hh-muted) !important; letter-spacing: 0 !important; text-transform: none !important; }
+html body .tc-toast .tc-toast__ship:not(#hh-a):not(#hh-b) { border: 0 !important; border-radius: 12px !important; background: var(--hh-green-soft) !important; color: var(--hh-green) !important; font-size: 14px !important; font-weight: 800 !important; letter-spacing: 0 !important; text-transform: none !important; }
+html body .tc-toast .tc-toast__img, html body .tc-toast .tc-toast__img img { border-radius: 10px !important; }
+html body .tc-toast .tc-toast__btn:not(#hh-a):not(#hh-b) { min-height: 48px; border-radius: 12px !important; font-size: 15px !important; font-weight: 800 !important; letter-spacing: 0 !important; text-transform: none !important; }
+html body .tc-toast .tc-toast__btn--primary:not(#hh-a):not(#hh-b) { background: var(--hh-cta) !important; border-color: var(--hh-cta) !important; color: var(--hh-on-cta) !important; }
+html body .tc-toast .tc-toast__btn--ghost:not(#hh-a):not(#hh-b) { background: #fff !important; border: 1.5px solid var(--hh-green) !important; color: var(--hh-green) !important; }
+html body.template-cart :is(.plb-item__rm, .plb-item__rm a, .plb-up__h, .plb-xs__h, .plb-up__h *, .plb-xs__h *):not(#hh-a):not(#hh-b) { letter-spacing: 0.02em !important; text-transform: none !important; }
