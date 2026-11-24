@@ -83,15 +83,9 @@
       timestamp: new Date().toISOString()
     };
 
+    // fetch, not sendBeacon: a beacon always sends cookies, and the relay's
+    // CORS answer does not allow credentialed requests.
     try {
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(
-          crmEventEndpoint,
-          new Blob([JSON.stringify(payload)], { type: 'application/json' })
-        );
-        return;
-      }
-
       fetch(crmEventEndpoint, {
         method: 'POST',
         headers: {
