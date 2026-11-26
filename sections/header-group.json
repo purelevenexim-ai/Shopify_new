@@ -55,6 +55,8 @@
       ],
       "name": "t:sections.announcement-bar.presets.name",
       "settings": {
+        "fixed_text": "",
+        "fixed_link": "https://wa.me/918848265849?text=Hi%2C%20I%27d%20like%20to%20order%20with%20cash%20on%20delivery",
         "auto_rotate": true,
         "change_slides_speed": 5,
         "color_scheme": "scheme-1",
@@ -63,9 +65,17 @@
         "enable_country_selector": false,
         "enable_language_selector": false
       }
+    },
+    "pl_cod_strip": {
+      "type": "pl-cod-strip",
+      "settings": {
+        "text": "For cash on delivery, order on WhatsApp",
+        "link": ""
+      }
     }
   },
   "order": [
+    "pl_cod_strip",
     "header",
     "announcement_bar_ppNjcD"
   ]

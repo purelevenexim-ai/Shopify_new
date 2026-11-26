@@ -24,6 +24,9 @@
     <span>Arrives <b data-plb-eta>soon</b></span>
     {%- if settings.pl_cod_enabled -%}
       <span>Cash on delivery</span>
+    {%- else -%}
+      {%- capture pl_cod_msg -%}Hi, I'd like to order with cash on delivery:{% for item in cart.items %} {{ item.quantity }} x {{ item.product.title }}{% unless item.variant.title contains 'Default' %} ({{ item.variant.title }}){% endunless %}{% unless forloop.last %},{% endunless %}{% endfor %}{%- endcapture -%}
+      {%- render 'pl-cod-wa', msg: pl_cod_msg, variant: 'inline' -%}
     {%- endif -%}
   </p>
   <div class="plb-co__row">

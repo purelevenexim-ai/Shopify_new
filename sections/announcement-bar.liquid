@@ -23,7 +23,24 @@
       {{- 'Fresh Kerala spices shipped across India. Free shipping on orders ₹649 and above.' | escape -}}
     {%- endif -%}
   </p>
+  {%- if section.settings.fixed_text != blank -%}
+    <p class="hh-ann-fixed">
+      {%- if section.settings.fixed_link != blank -%}
+        <a href="{{ section.settings.fixed_link }}"{% if section.settings.fixed_link contains 'wa.me' %} target="_blank" rel="noopener"{% endif %}>{{ section.settings.fixed_text | escape }}</a>
+      {%- else -%}
+        {{- section.settings.fixed_text | escape -}}
+      {%- endif -%}
+    </p>
+  {%- endif -%}
 </div>
+{%- if section.settings.fixed_text != blank -%}
+  {%- style -%}
+    html body .announcement-bar-minimal .hh-ann-fixed { margin: 5px auto 0; padding: 5px 12px 0; max-width: 520px; border-top: 1px solid rgba(255, 253, 247, 0.22); text-align: center; }
+    html body .announcement-bar-minimal .hh-ann-fixed:not(#hh-a):not(#hh-b):not(#hh-c),
+    html body .announcement-bar-minimal .hh-ann-fixed a:not(#hh-a):not(#hh-b):not(#hh-c) { color: #FCE477 !important; text-decoration: none; }
+    html body .announcement-bar-minimal .hh-ann-fixed a:not(#hh-a):not(#hh-b):not(#hh-c):hover { text-decoration: underline; }
+  {%- endstyle -%}
+{%- endif -%}
 
 {% schema %}
 {
@@ -50,6 +67,17 @@
       "label": "t:sections.announcement-bar.settings.change_slides_speed.label",
       "default": 5
     },    
+    {
+      "type": "text",
+      "id": "fixed_text",
+      "label": "Always-on line",
+      "info": "Shown under the rotating messages on every page. Leave blank to hide."
+    },
+    {
+      "type": "url",
+      "id": "fixed_link",
+      "label": "Always-on line link"
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",

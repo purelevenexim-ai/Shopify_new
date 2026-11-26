@@ -1,0 +1,36 @@
+{%- if section.settings.text != blank -%}
+  {%- liquid
+    assign link = section.settings.link
+    if link == blank
+      assign link = 'https://wa.me/918848265849?text=Hi%2C%20I%27d%20like%20to%20order%20with%20cash%20on%20delivery'
+    endif
+  -%}
+  <div class="pl-cod-strip">
+    <a class="pl-cod-strip__link" href="{{ link }}"{% if link contains 'wa.me' %} target="_blank" rel="noopener"{% endif %}>
+      {%- if link contains 'wa.me' -%}
+        <svg class="pl-cod-strip__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 20.5 11.8Z"/><path d="M9.2 8.3c-.3 3.4 3 6.8 6.5 6.5l.8-1.5-1.9-1-.9.8c-1.2-.5-2.2-1.5-2.7-2.7l.8-.9-1-1.9Z"/></svg>
+      {%- endif -%}
+      <span>{{ section.settings.text | escape }}</span>
+    </a>
+  </div>
+  {%- style -%}
+    html body .pl-cod-strip:not(#pl-a):not(#pl-b) { background: var(--hh-green-soft, #EEF4EF); border-bottom: 1px solid var(--hh-line, #ECE5D8); padding: 7px 16px; text-align: center; }
+    html body .pl-cod-strip__link:not(#pl-a):not(#pl-b) { display: inline-flex; align-items: center; gap: 7px; color: var(--hh-green, #24503F) !important; font-family: var(--hh-font, 'Nunito', sans-serif) !important; font-size: 13px !important; font-weight: 800; letter-spacing: 0.01em; line-height: 1.3; text-decoration: none !important; }
+    html body .pl-cod-strip__link:not(#pl-a):not(#pl-b) span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: rgba(36, 80, 63, 0.35); }
+    html body .pl-cod-strip__link:not(#pl-a):not(#pl-b):hover span { text-decoration-color: currentColor; }
+    html body .pl-cod-strip__icon { flex: 0 0 auto; }
+  {%- endstyle -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "COD notice strip",
+  "class": "pl-cod-strip-section",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "text", "id": "text", "label": "Text", "default": "For cash on delivery, order on WhatsApp", "info": "Shown at the very top of every page. Leave blank to hide." },
+    { "type": "url", "id": "link", "label": "Link", "info": "Leave blank to open WhatsApp with a COD order message." }
+  ],
+  "presets": [{ "name": "COD notice strip" }]
+}
+{% endschema %}

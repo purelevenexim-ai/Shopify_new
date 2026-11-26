@@ -16,8 +16,8 @@
           "type": "trust_item",
           "settings": {
             "icon": "cash",
-            "title": "Cash on delivery",
-            "subtitle": "UPI and cards too"
+            "title": "UPI and cards",
+            "subtitle": "COD on WhatsApp only"
           }
         },
         "trust_2": {

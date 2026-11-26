@@ -770,6 +770,8 @@
                     section_id: section.id,
                     show_pickup_availability: true
                   -%}
+                  {%- capture pl_cod_msg -%}Hi, I'd like to order {{ product.title }} with cash on delivery{%- endcapture -%}
+                  {%- render 'pl-cod-wa', msg: pl_cod_msg -%}
                   {%- if block.settings.show_dynamic_checkout -%}
                     {%- unless product.selected_or_first_available_variant.available -%}
                       <style>.sr-headless-checkout{opacity:0.5;cursor:not-allowed;pointer-events:none;}</style>

@@ -1,0 +1,25 @@
+{%- comment -%}
+  COD is not offered at checkout; COD orders are taken on WhatsApp.
+  Params: msg (prefilled WhatsApp text), variant ('' | 'inline')
+{%- endcomment -%}
+{%- unless settings.pl_cod_enabled -%}
+  {%- liquid
+    assign wa_msg = msg | default: "Hi, I'd like to order with cash on delivery"
+    assign wa_text = wa_msg | url_encode | replace: '+', '%20'
+    assign wa_url = 'https://wa.me/918848265849?text=' | append: wa_text
+  -%}
+  {%- if variant == 'inline' -%}
+    <span class="pl-cod-wa pl-cod-wa--inline">COD? <a href="{{ wa_url }}" target="_blank" rel="noopener">Order on WhatsApp</a></span>
+  {%- else -%}
+    <p class="pl-cod-wa">
+      <svg class="pl-cod-wa__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 20.5 11.8Z"/><path d="M9.2 8.3c-.3 3.4 3 6.8 6.5 6.5l.8-1.5-1.9-1-.9.8c-1.2-.5-2.2-1.5-2.7-2.7l.8-.9-1-1.9Z"/></svg>
+      <span>Cash on delivery? <a href="{{ wa_url }}" target="_blank" rel="noopener">Order on WhatsApp</a></span>
+    </p>
+  {%- endif -%}
+  {%- style -%}
+    html body .pl-cod-wa:not(#pl-a):not(#pl-b) { display: flex; align-items: center; gap: 10px; grid-column: 1 / -1; width: 100%; box-sizing: border-box; margin: 12px 0 0; padding: 10px 14px; background: var(--hh-green-soft, #EEF4EF); border: 1px solid rgba(36, 80, 63, 0.12); border-radius: var(--hh-r-sm, 10px); font-family: var(--hh-font, 'Nunito', sans-serif) !important; font-size: 14px !important; line-height: 1.4; color: var(--hh-ink, #1F1B16); }
+    html body .pl-cod-wa__icon { flex: 0 0 auto; color: var(--hh-green, #24503F); }
+    html body .pl-cod-wa--inline:not(#pl-a):not(#pl-b) { display: inline; margin: 0; padding: 0; background: none; border: 0; border-radius: 0; font-size: inherit !important; color: inherit; }
+    html body .pl-cod-wa:not(#pl-a):not(#pl-b):not(#pl-c) a { color: var(--hh-green, #24503F) !important; background: none !important; box-shadow: none !important; border: 0 !important; border-radius: 0 !important; padding: 0 !important; font-weight: 800; text-decoration: underline !important; text-decoration-thickness: 1px !important; text-underline-offset: 3px; }
+  {%- endstyle -%}
+{%- endunless -%}

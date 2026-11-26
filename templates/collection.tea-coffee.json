@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "tc-hero": {
@@ -12,7 +21,7 @@
         "product_handle": "cardamom-tea",
         "default_size": "100g",
         "sticky_title": "Real Cardamom Tea",
-        "assure_1": "Cash on delivery",
+        "assure_1": "UPI and cards · COD on WhatsApp",
         "assure_2": "Same-day dispatch",
         "assure_3": "FSSAI licensed",
         "low_stock_at": 40,
@@ -285,7 +294,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Can I pay cash on delivery?",
-            "answer": "<p>Yes. Choose Cash on Delivery at checkout, or pay by UPI, card or net banking.</p>"
+            "answer": "<p>Not at checkout. Online orders are paid by UPI, card or net banking. For cash on delivery, order on WhatsApp at <a href=\"https://wa.me/918848265849\">+91 88482 65849</a>.</p>"
           }
         }
       },
@@ -401,8 +410,8 @@
           "type": "fact",
           "settings": {
             "icon": "cash",
-            "title": "Cash on delivery",
-            "text": "Or UPI and cards"
+            "title": "UPI and cards",
+            "text": "COD on WhatsApp only"
           }
         },
         "fact-free": {

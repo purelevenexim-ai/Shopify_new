@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "pl_cod_enabled": false,
     "pl_checkout_url": "/checkout",
     "pl_delay_tags": true,
     "pl_batch_load": true,
